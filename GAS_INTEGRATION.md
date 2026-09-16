@@ -177,8 +177,14 @@ function doPost(e) {
   }
 }
 
+// Joylashtirilgan (deploy qilingan) kod versiyasini bildiruvchi belgi.
+// Kodni o'zgartirgach yangi versiya deploy qilinmasa, bu qator eski qiymatda qoladi.
+const CODE_VERSION = "v4-2026-09-16-debug";
+
 function doGet(e) {
-  return HtmlService.createHtmlOutput("TAT Darslar Test Integratsiya API faol ishlamoqda");
+  return HtmlService.createHtmlOutput(
+    "TAT Darslar Test Integratsiya API faol ishlamoqda | versiya: " + CODE_VERSION
+  );
 }
 
 // ----------------------------------------------------------------------
@@ -401,6 +407,7 @@ function sendDebugInfo(ss, chatId) {
 
   msg += "-----------------------------------\n";
   msg += "Guruh ustuni [3] bo'lishi kerak.";
+  msg += "\nKod versiyasi: " + CODE_VERSION;
 
   sendLongMessage(chatId, msg);
 }
@@ -785,3 +792,5 @@ Tayyor! Endi Google va Telegram o'rtasida hech qanday qayta takrorlanish (302 re
 | Dars tugmalari ko'rinmaydi | Jadvalda hali birorta ham list yaratilmagan | Bitta test topshirilsa, `5-Dars` listi avtomatik yaratiladi |
 | Deploy'dan keyin bot yana jim bo'lib qoldi | Yangi joylashtirishda manzil o'zgargan | `WEB_APP_URL` ni yangilab, `setupTelegramWebhook` ni qayta Run qiling |
 | `Who has access` — `Anyone` emas | Telegram Apps Script'ga POST yubora olmaydi | Deploy sozlamasida `Anyone` ni tanlang |
+| Kod o'zgartirildi, lekin bot eski holicha ishlayapti | **Apps Script kodni saqlashda emas, faqat yangi versiya Deploy qilinganda jonli ilovaga chiqaradi** | Deploy -> Manage deployments -> qalamcha -> Version: **New version** -> Deploy |
+| Qaysi versiya jonli ekanini bilmoqchisiz | Kodda `CODE_VERSION` belgisi bor | Botga `/debug` yozing yoki veb-ilova manzilini brauzerda oching |
