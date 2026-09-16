@@ -11,8 +11,11 @@ Ushbu tizim Shahrisabz Tibbiyot Texnikumi "Tibbiyotda axborot texnologiyalari" (
      - Guruhlar tugmalari: `26-01 guruhi`, `26-02 guruhi`, `26-03 guruhi`, `26-04 guruhi`, `26-05 guruhi`, `26-06 guruhi`, `26-07 guruhi`
      - Hisobot yuklab olish: `PDF hisobot yuklab olish`, `Excel (.xlsx) yuklab olish`
      - Umumiy reyting: `Barcha natijalar (Umumiy reyting)`
-2. **Guruhlar Bo'yicha To'liq Alifbo Tartibi (A dan Z gacha):**
-   - Istalgan guruh tugmasi bosilganda (masalan, `26-01 guruhi`), bot Google Sheets bazasidan ushbu guruh talabalarini oladi va ularning **F.I.SH bo'yicha alifbo tartibida (A dan Z gacha)** to'liq ro'yxati, to'plagan bali, foizi va bahosini ko'rsatadi.
+2. **Ikki Bosqichli Sodda Ro'yxat (Guruh -> Dars):**
+   - Guruh tugmasi bosilganda (masalan, `26-01 guruhi`) bot avval **qaysi darsdan natija kerakligini** so'raydi va jadvaldagi mavjud listlar (5-Dars, 4-Dars va h.k.) tugmalar ko'rinishida chiqadi.
+   - Dars tanlangach, faqat kerakli ma'lumot beriladi: **familiya, ism va baho**, alifbo tartibida (A dan Z gacha).
+   - Ro'yxat uzun bo'lsa, bot uni avtomatik ravishda bir nechta xabarga bo'lib yuboradi (Telegram 4096 belgi cheklovi).
+   - Guruh tanlamasdan to'g'ridan-to'g'ri dars tugmasi bosilsa, o'sha darsning barcha guruhlari bo'yicha ro'yxati chiqadi.
 3. **Bitta Bosishda PDF va Excel Yuklab Olish:**
    - `PDF hisobot yuklab olish` tugmasi bosilganda Google Sheets jadvalining tayyor A4 formatdagi gorizontal PDF hisobotini yuklab olish havolasini beradi.
    - `Excel (.xlsx) yuklab olish` bosilganda kompyuterga to'liq elektron jadval yuklanadi.
@@ -174,119 +177,208 @@ function doGet(e) {
 // TELEGRAM FOYDALANUVCHISI BUYRUQLARINI QAYTA ISHLASH
 // ----------------------------------------------------------------------
 function handleTelegramUserCommand(ss, chatId, text) {
-  // 1. Guruh natijalarini olish (26-01 dan 26-07 gacha)
-  if (text.indexOf("26-0") !== -1 || text.indexOf("guruhi") !== -1) {
-    const groupMatch = text.match(/26-0[1-7]/);
-    const targetGroup = groupMatch ? groupMatch[0] : text.replace("guruhi", "").trim();
-    sendGroupResultsAlphabetical(ss, chatId, targetGroup);
+  const props = PropertiesService.getScriptProperties();
+  const pendingKey = "pending_group_" + chatId;
+
+  // 0. Bekor qilish
+  if (text.indexOf("Bekor qilish") !== -1) {
+    props.deleteProperty(pendingKey);
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, "Bekor qilindi. Kerakli guruh tugmasini tanlang.", BOT_KEYBOARD);
     return;
   }
 
-  // 2. PDF hisobot yuklab olish
+  // 1. Dars (list) nomi tanlanishi — oldin guruh tanlangan bo'lsa natijalar chiqadi
+  const sheetNames = ss.getSheets().map(function (sh) { return sh.getName(); });
+  if (sheetNames.indexOf(text) !== -1) {
+    const savedGroup = props.getProperty(pendingKey);
+    props.deleteProperty(pendingKey);
+
+    if (savedGroup) {
+      sendGroupResultsSimple(ss, chatId, savedGroup, text);
+    } else {
+      sendSheetResultsSimple(ss, chatId, text);
+    }
+    return;
+  }
+
+  // 2. Guruh tugmasi bosilishi — endi qaysi darsdan olish so'raladi
+  if (text.indexOf("26-0") !== -1 || text.indexOf("guruhi") !== -1) {
+    const groupMatch = text.match(/26-0[1-7]/);
+    const targetGroup = groupMatch ? groupMatch[0] : text.replace("guruhi", "").trim();
+
+    props.setProperty(pendingKey, targetGroup);
+    askWhichSheet(ss, chatId, targetGroup);
+    return;
+  }
+
+  // 3. PDF hisobot yuklab olish
   if (text.indexOf("PDF") !== -1) {
     sendPdfExportLink(ss, chatId);
     return;
   }
 
-  // 3. Excel (.xlsx) hisobot yuklab olish
+  // 4. Excel (.xlsx) hisobot yuklab olish
   if (text.indexOf("Excel") !== -1 || text.indexOf(".xlsx") !== -1) {
     sendExcelExportLink(ss, chatId);
     return;
   }
 
-  // 4. Barcha natijalar (Umumiy reyting)
+  // 5. Barcha natijalar (Umumiy reyting)
   if (text.indexOf("Barcha natijalar") !== -1 || text.indexOf("reyting") !== -1) {
     sendAllResultsSummary(ss, chatId);
     return;
   }
 
-  // 5. /start yoki boshqa matn
-  const welcomeText = 
+  // 6. /start yoki boshqa matn
+  props.deleteProperty(pendingKey);
+
+  const welcomeText =
     "<b>TAT Darslar — O'qituvchi Boshqaruv Paneli</b>\n" +
     "-----------------------------------\n" +
-    "Kerakli guruh natijalarini <b>alifbo tartibida</b> olish uchun quyidagi guruh tugmasini bosing.\n\n" +
-    "Shuningdek, umumiy hisobotni <b>PDF</b> yoki <b>Excel</b> formatida bitta bosishda yuklab olishingiz mumkin.";
+    "Guruh tugmasini bosing — so'ngra qaysi darsdan natija kerakligini tanlaysiz.\n" +
+    "Ro'yxat familiya bo'yicha alifbo tartibida chiqadi.\n\n" +
+    "Umumiy hisobotni <b>PDF</b> yoki <b>Excel</b> formatida ham yuklab olishingiz mumkin.";
 
   sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, welcomeText, BOT_KEYBOARD);
 }
 
 // ----------------------------------------------------------------------
-// GURUH TALABALARINI ALIFBO TARTIBIDA CHIQARISH (A dan Z gacha)
+// QAYSI DARS (LIST) DAN NATIJA OLISHNI SO'RASH
 // ----------------------------------------------------------------------
-function sendGroupResultsAlphabetical(ss, chatId, groupCode) {
-  const sheet = ss.getSheetByName("5-Dars") || ss.getSheets()[0];
-  const lastRow = sheet.getLastRow();
+function askWhichSheet(ss, chatId, groupCode) {
+  const names = ss.getSheets().map(function (sh) { return sh.getName(); });
 
-  if (lastRow <= 1) {
-    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, "Hozircha jadvalda hech qanday test natijalari mavjud emas.", BOT_KEYBOARD);
+  // Tugmalarni har qatorga 2 tadan joylashtirish
+  const rows = [];
+  for (let k = 0; k < names.length; k += 2) {
+    const row = [{ text: names[k] }];
+    if (names[k + 1]) row.push({ text: names[k + 1] });
+    rows.push(row);
+  }
+  rows.push([{ text: "Bekor qilish" }]);
+
+  const sheetKeyboard = {
+    keyboard: rows,
+    resize_keyboard: true,
+    one_time_keyboard: true
+  };
+
+  const msg =
+    "<b>" + escapeHtml(groupCode) + " guruhi tanlandi</b>\n" +
+    "-----------------------------------\n" +
+    "Qaysi darsning natijalari kerak? Pastdagi ro'yxatdan tanlang.";
+
+  sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, msg, sheetKeyboard);
+}
+
+// ----------------------------------------------------------------------
+// GURUH NATIJALARI — SODDA RO'YXAT (FAMILIYA ISM + BAHO, ALIFBO TARTIBIDA)
+// ----------------------------------------------------------------------
+function sendGroupResultsSimple(ss, chatId, groupCode, sheetName) {
+  const rows = readSheetRows(ss, sheetName);
+
+  if (rows === null) {
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
+      "<b>" + escapeHtml(sheetName) + "</b> darsida hozircha natijalar yo'q.", BOT_KEYBOARD);
     return;
   }
 
-  const values = sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
-
-  // Guruh bo'yicha filtrlash
-  const groupStudents = values.filter(row => {
-    const grp = (row[3] || "").toString().trim();
-    return grp.indexOf(groupCode) !== -1;
+  const students = rows.filter(function (row) {
+    return (row[3] || "").toString().trim().indexOf(groupCode) !== -1;
   });
 
-  if (groupStudents.length === 0) {
-    const emptyMsg = 
-      "<b>" + escapeHtml(groupCode) + " GURUHI NATIJALARI</b>\n" +
+  if (students.length === 0) {
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
+      "<b>" + escapeHtml(groupCode) + " guruhi — " + escapeHtml(sheetName) + "</b>\n" +
       "-----------------------------------\n" +
-      "Ushbu guruhdan hozircha hech kim test topshirmagan.";
-    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, emptyMsg, BOT_KEYBOARD);
+      "Bu guruhdan hozircha hech kim test topshirmagan.", BOT_KEYBOARD);
     return;
   }
 
-  // F.I.SH BO'YICHA ALIFBO TARTIBIDA SARALASH (A dan Z gacha)
-  groupStudents.sort((a, b) => {
+  sendSimpleList(chatId,
+    escapeHtml(groupCode) + " GURUHI — " + escapeHtml(sheetName),
+    sortByName(students));
+}
+
+// ----------------------------------------------------------------------
+// BITTA DARS BO'YICHA BARCHA TALABALAR (GURUH TANLANMAGAN HOLAT)
+// ----------------------------------------------------------------------
+function sendSheetResultsSimple(ss, chatId, sheetName) {
+  const rows = readSheetRows(ss, sheetName);
+
+  if (rows === null || rows.length === 0) {
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
+      "<b>" + escapeHtml(sheetName) + "</b> darsida hozircha natijalar yo'q.", BOT_KEYBOARD);
+    return;
+  }
+
+  sendSimpleList(chatId, escapeHtml(sheetName) + " — BARCHA GURUHLAR", sortByName(rows));
+}
+
+// ----------------------------------------------------------------------
+// YORDAMCHI FUNKSIYALAR
+// ----------------------------------------------------------------------
+function readSheetRows(ss, sheetName) {
+  const sheet = ss.getSheetByName(sheetName);
+  if (!sheet) return null;
+
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= 1) return null;
+
+  return sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
+}
+
+function sortByName(rows) {
+  return rows.slice().sort(function (a, b) {
     const nameA = (a[2] || "").toString().trim();
     const nameB = (b[2] || "").toString().trim();
     return nameA.localeCompare(nameB, "uz", { sensitivity: "base" });
   });
+}
 
-  // Guruh statistikasi
-  let sumScore = 0;
-  let gradeCounts = { "5": 0, "4": 0, "3": 0, "2": 0 };
-
-  groupStudents.forEach(row => {
-    const p = parseInt(row[7]);
-    if (!isNaN(p)) sumScore += p;
-    const g = (row[8] || "").toString().charAt(0);
-    if (gradeCounts[g] !== undefined) gradeCounts[g]++;
-  });
-
-  const avgScore = Math.round(sumScore / groupStudents.length);
-
-  let message = 
-    "<b>" + escapeHtml(groupCode) + " GURUHI NATIJALARI (ALIFBO TARTIBIDA)</b>\n" +
+// Sodda ro'yxat: faqat familiya, ism va baho
+function sendSimpleList(chatId, title, students) {
+  let message =
+    "<b>" + title + "</b>\n" +
     "-----------------------------------\n" +
-    "Jami talabalar: <b>" + groupStudents.length + " nafar</b>\n" +
-    "O'rtacha o'zlashtirish: <b>" + avgScore + "%</b>\n" +
-    "Baholar statistikasi: 5: " + gradeCounts["5"] + " ta | 4: " + gradeCounts["4"] + " ta | 3: " + gradeCounts["3"] + " ta\n" +
+    "Jami: <b>" + students.length + " nafar</b> (alifbo tartibida)\n" +
     "-----------------------------------\n\n";
 
-  groupStudents.forEach((row, idx) => {
-    const tR = idx + 1;
-    const name = row[2] || "Noma'lum";
-    const result = row[5] + "/" + row[6] + " (" + row[7] + ")";
-    const grade = row[8] || "-";
-    const timeSpent = row[9] || "-";
-    const pcNumber = row[10] || "-";
-    const date = row[1] || "-";
-
-    message += 
-      "<b>" + tR + ". " + escapeHtml(name) + "</b>\n" +
-      "   Natija: <b>" + result + "</b> | Baho: <b>" + escapeHtml(grade) + "</b>\n" +
-      "   Kompyuter: <b>" + escapeHtml(pcNumber) + "</b> | Vaqt: " + escapeHtml(timeSpent) + "\n" +
-      "   Sana: " + escapeHtml(date) + "\n\n";
+  students.forEach(function (row, idx) {
+    const name = (row[2] || "Noma'lum").toString().trim();
+    const grade = (row[8] || "-").toString().trim();
+    message += (idx + 1) + ". <b>" + escapeHtml(name) + "</b> — " + escapeHtml(grade) + "\n";
   });
 
-  message += "-----------------------------------\n";
+  message += "\n-----------------------------------\n";
   message += "<i>Shahrisabz Tibbiyot Texnikumi — TAT</i>";
 
-  sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, message, BOT_KEYBOARD);
+  // Telegram xabari 4096 belgidan oshsa, bo'laklab yuboriladi
+  sendLongMessage(chatId, message);
+}
+
+function sendLongMessage(chatId, message) {
+  const LIMIT = 3800;
+
+  if (message.length <= LIMIT) {
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, message, BOT_KEYBOARD);
+    return;
+  }
+
+  const lines = message.split("\n");
+  let buffer = "";
+
+  lines.forEach(function (line) {
+    if ((buffer + line + "\n").length > LIMIT) {
+      sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, buffer, BOT_KEYBOARD);
+      buffer = "";
+    }
+    buffer += line + "\n";
+  });
+
+  if (buffer.trim() !== "") {
+    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, buffer, BOT_KEYBOARD);
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -601,5 +693,7 @@ Tayyor! Endi Google va Telegram o'rtasida hech qanday qayta takrorlanish (302 re
 | Botga `/start` yozilsa javob yo'q, tugmalar ishlamaydi | Webhook o'rnatilmagan (`"url":""`) | 5-bo'lim: `setupTelegramWebhook` ni Run qiling |
 | Test natijasi Telegramga kelmaydi, lekin bot tugmalari ishlaydi | Saytdagi `BACKEND_API_URL` eski joylashtirish manzilini ko'rsatmoqda | `test-5.html` dagi manzilni yangi **Web app URL** ga almashtiring |
 | Bot javob beradi, lekin guruh ro'yxati bo'sh | Ushbu guruhdan hali hech kim test topshirmagan | Bitta sinov testi topshirib ko'ring |
+| Guruh tugmasi bosilganda natija emas, dars ro'yxati chiqadi | Bu normal holat — endi bot qaysi darsdan natija kerakligini so'raydi | Chiqqan tugmalardan kerakli darsni tanlang |
+| Dars tugmalari ko'rinmaydi | Jadvalda hali birorta ham list yaratilmagan | Bitta test topshirilsa, `5-Dars` listi avtomatik yaratiladi |
 | Deploy'dan keyin bot yana jim bo'lib qoldi | Yangi joylashtirishda manzil o'zgargan | `WEB_APP_URL` ni yangilab, `setupTelegramWebhook` ni qayta Run qiling |
 | `Who has access` — `Anyone` emas | Telegram Apps Script'ga POST yubora olmaydi | Deploy sozlamasida `Anyone` ni tanlang |
