@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.next-offline/
+out/
+offline/
+coverage/
+.DS_Store
+*.log
+tsconfig.tsbuildinfo
+.env*
+!.env.example

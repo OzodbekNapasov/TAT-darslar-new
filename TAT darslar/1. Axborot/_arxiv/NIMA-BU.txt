@@ -1,0 +1,8 @@
+Bu papkada qo'lda yozilgan ESKI offline nusxa saqlanmoqda.
+
+Endi offline versiya React kodidan avtomatik yig'iladi:
+    npm run build:offline   ->   offline/ papkasi
+
+Shuning uchun bu fayllar boshqa ishlatilmaydi va yangilanmaydi.
+Yangi offline nusxa to'g'ri ishlayotganiga ishonch hosil qilgach,
+bu papkani o'chirib tashlashingiz mumkin.

@@ -1,0 +1,366 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN TOKENS
+   Semantic names so the same markup works in light and dark.
+   Deliberately-dark surfaces (terminals, monitor screens, hero cards) keep
+   their raw slate-800 / blue-950 / teal-900 classes and stay dark in both
+   themes on purpose.
+   ========================================================================== */
+
+@theme inline {
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui,
+    -apple-system, Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", ui-sans-serif,
+    system-ui, Inter, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", "SF Mono",
+    Consolas, monospace;
+
+  /* neutral chrome */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  /* accent families: tint = soft fill, edge = border, ink = readable text */
+  --color-blue-tint: var(--blue-tint);
+  --color-blue-tint-strong: var(--blue-tint-strong);
+  --color-blue-edge: var(--blue-edge);
+  --color-blue-ink: var(--blue-ink);
+
+  --color-emerald-tint: var(--emerald-tint);
+  --color-emerald-tint-strong: var(--emerald-tint-strong);
+  --color-emerald-edge: var(--emerald-edge);
+  --color-emerald-ink: var(--emerald-ink);
+
+  --color-rose-tint: var(--rose-tint);
+  --color-rose-tint-strong: var(--rose-tint-strong);
+  --color-rose-edge: var(--rose-edge);
+  --color-rose-ink: var(--rose-ink);
+
+  --color-purple-tint: var(--purple-tint);
+  --color-purple-tint-strong: var(--purple-tint-strong);
+  --color-purple-edge: var(--purple-edge);
+  --color-purple-ink: var(--purple-ink);
+
+  --color-indigo-tint: var(--indigo-tint);
+  --color-indigo-tint-strong: var(--indigo-tint-strong);
+  --color-indigo-edge: var(--indigo-edge);
+  --color-indigo-ink: var(--indigo-ink);
+
+  --color-amber-tint: var(--amber-tint);
+  --color-amber-tint-strong: var(--amber-tint-strong);
+  --color-amber-edge: var(--amber-edge);
+  --color-amber-ink: var(--amber-ink);
+
+  --color-teal-tint: var(--teal-tint);
+  --color-teal-tint-strong: var(--teal-tint-strong);
+  --color-teal-edge: var(--teal-edge);
+  --color-teal-ink: var(--teal-ink);
+
+  --color-cyan-tint: var(--cyan-tint);
+  --color-cyan-tint-strong: var(--cyan-tint-strong);
+  --color-cyan-edge: var(--cyan-edge);
+  --color-cyan-ink: var(--cyan-ink);
+
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.04),
+    0 8px 24px -12px oklch(0% 0 0 / 0.14);
+  --shadow-lift: 0 2px 4px oklch(0% 0 0 / 0.05),
+    0 18px 40px -18px oklch(0% 0 0 / 0.22);
+
+  --animate-rise: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade: fade 0.35s ease both;
+  --animate-pop: pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ----------------------------- LIGHT (default) ---------------------------- */
+:root {
+  color-scheme: light;
+
+  --canvas: #f3f6fb;
+  --surface: #ffffff;
+  --subtle: #f7fafc;
+  --line: #e5ecf4;
+  --line-strong: #d2dde9;
+  --fg: #0d1730;
+  --fg-muted: #4c5c74;
+  /* 4.9:1 on --subtle, 5.1:1 on --surface: small muted labels stay legible */
+  --fg-subtle: #5f7089;
+
+  --grid-line: oklch(55% 0.05 258 / 0.07);
+
+  --blue-tint: #eff6ff;
+  --blue-tint-strong: #dbeafe;
+  --blue-edge: #bfdbfe;
+  --blue-ink: #1d4ed8;
+
+  --emerald-tint: #ecfdf5;
+  --emerald-tint-strong: #d1fae5;
+  --emerald-edge: #a7f3d0;
+  --emerald-ink: #047857;
+
+  --rose-tint: #fff1f2;
+  --rose-tint-strong: #ffe4e6;
+  --rose-edge: #fecdd3;
+  /* rose-800: keeps 5.6:1 on --rose-edge, which rose-700 missed */
+  --rose-ink: #9f1239;
+
+  --purple-tint: #faf5ff;
+  --purple-tint-strong: #f3e8ff;
+  --purple-edge: #e9d5ff;
+  --purple-ink: #7e22ce;
+
+  --indigo-tint: #eef2ff;
+  --indigo-tint-strong: #e0e7ff;
+  --indigo-edge: #c7d2fe;
+  --indigo-ink: #4338ca;
+
+  --amber-tint: #fffbeb;
+  --amber-tint-strong: #fef3c7;
+  --amber-edge: #fde68a;
+  --amber-ink: #b45309;
+
+  --teal-tint: #f0fdfa;
+  --teal-tint-strong: #ccfbf1;
+  --teal-edge: #99f6e4;
+  --teal-ink: #0f766e;
+
+  --cyan-tint: #ecfeff;
+  --cyan-tint-strong: #cffafe;
+  --cyan-edge: #a5f3fc;
+  --cyan-ink: #0e7490;
+}
+
+/* -------------------------------- DARK ----------------------------------- */
+/* The inline boot script in layout.tsx always resolves data-theme to a
+   concrete "light" or "dark", so no prefers-color-scheme duplication is
+   needed here. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #060b15;
+  --surface: #0f1a2b;
+  --subtle: #0a1220;
+  --line: #1d2a3e;
+  --line-strong: #2a3950;
+  --fg: #eef3fa;
+  --fg-muted: #a8b7cc;
+  --fg-subtle: #7a8ba5;
+
+  --grid-line: oklch(80% 0.05 258 / 0.06);
+
+  --blue-tint: #0d1b33;
+  --blue-tint-strong: #122547;
+  --blue-edge: #1e3a6b;
+  --blue-ink: #7cb0ff;
+
+  --emerald-tint: #05201a;
+  --emerald-tint-strong: #082f22;
+  --emerald-edge: #12503a;
+  --emerald-ink: #4ade9f;
+
+  --rose-tint: #2b0d15;
+  --rose-tint-strong: #3a121d;
+  --rose-edge: #5f1d2e;
+  --rose-ink: #ff8fa8;
+
+  --purple-tint: #1d0f2e;
+  --purple-tint-strong: #27153d;
+  --purple-edge: #422165;
+  --purple-ink: #c99bff;
+
+  --indigo-tint: #131634;
+  --indigo-tint-strong: #1a1f47;
+  --indigo-edge: #2e3573;
+  --indigo-ink: #a5b0ff;
+
+  --amber-tint: #241804;
+  --amber-tint-strong: #33220a;
+  --amber-edge: #573a12;
+  --amber-ink: #fbbf4b;
+
+  --teal-tint: #04211f;
+  --teal-tint-strong: #062e2b;
+  --teal-edge: #0d4f49;
+  --teal-ink: #45dfd0;
+
+  --cyan-tint: #05212a;
+  --cyan-tint-strong: #072d38;
+  --cyan-edge: #0d4d5e;
+  --cyan-ink: #4dd8ef;
+}
+
+/* ------------------------------- BASE ------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--blue-ink);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--blue-tint-strong);
+    color: var(--blue-ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border: 3px solid var(--canvas);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--fg-subtle);
+  }
+}
+
+/* ----------------------------- UTILITIES --------------------------------- */
+@layer utilities {
+  /* Panels that are deliberately dark in BOTH themes - terminals, the monitor
+     screen, the keyboard plate, the hero banners. Inside them the neutral and
+     accent tokens must use their dark-theme values, otherwise light-theme
+     muted text lands as dark-on-dark. Redefining the variables locally fixes
+     every descendant utility at once. */
+  .on-dark {
+    color-scheme: dark;
+
+    --surface: #0f1a2b;
+    --subtle: #0a1220;
+    --line: #263449;
+    --line-strong: #35455e;
+    --fg: #f1f5f9;
+    --fg-muted: #cbd5e1;
+    --fg-subtle: #94a3b8;
+
+    --blue-tint: #0d1b33;
+    --blue-tint-strong: #122547;
+    --blue-edge: #1e3a6b;
+    --blue-ink: #93c5fd;
+
+    --emerald-tint: #05201a;
+    --emerald-tint-strong: #082f22;
+    --emerald-edge: #12503a;
+    --emerald-ink: #6ee7b7;
+
+    --rose-tint: #2b0d15;
+    --rose-tint-strong: #3a121d;
+    --rose-edge: #5f1d2e;
+    --rose-ink: #fda4af;
+
+    --purple-tint: #1d0f2e;
+    --purple-tint-strong: #27153d;
+    --purple-edge: #422165;
+    --purple-ink: #d8b4fe;
+
+    --indigo-tint: #131634;
+    --indigo-tint-strong: #1a1f47;
+    --indigo-edge: #2e3573;
+    --indigo-ink: #a5b4fc;
+
+    --amber-tint: #241804;
+    --amber-tint-strong: #33220a;
+    --amber-edge: #573a12;
+    --amber-ink: #fcd34d;
+
+    --teal-tint: #04211f;
+    --teal-tint-strong: #062e2b;
+    --teal-edge: #0d4f49;
+    --teal-ink: #5eead4;
+
+    --cyan-tint: #05212a;
+    --cyan-tint-strong: #072d38;
+    --cyan-edge: #0d4d5e;
+    --cyan-ink: #67e8f9;
+  }
+
+  /* soft dotted grid used behind headers / heroes */
+  .bg-grid {
+    background-image: radial-gradient(var(--grid-line) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .glass {
+    background: color-mix(in oklab, var(--surface) 80%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+  }
+
+  /* chrome-only crossfade when the theme flips; never animates layout */
+  .theme-tween,
+  .theme-tween * {
+    transition: background-color 0.28s ease, border-color 0.28s ease,
+      color 0.28s ease, fill 0.28s ease, stroke 0.28s ease;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

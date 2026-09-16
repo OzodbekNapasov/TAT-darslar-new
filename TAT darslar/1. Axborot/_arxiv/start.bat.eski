@@ -1,0 +1,27 @@
+@echo off
+chcp 65001 > nul
+title Shahrisabz Tibbiyot Texnikumi - 1-Dars
+
+echo ======================================================================
+echo   Shahrisabz Tibbiyot Texnikumi
+echo   1-Dars: Hamshiralik ishi va kompyuter savodxonligi
+echo   Mavzu: Axborot haqida tushuncha. Axborot texnologiyalari.
+echo ======================================================================
+echo.
+echo Dastur offline rejimda brauzeringizda ochilmoqda...
+echo Hech qanday internet yoki qo'shimcha o'rnatish talab qilinmaydi!
+echo.
+
+if exist "%~dp0index.html" (
+    start "" "%~dp0index.html"
+) else if exist "%~dp0public\index.html" (
+    start "" "%~dp0public\index.html"
+) else (
+    echo Xatolik: index.html fayli topilmadi!
+    pause
+    exit /b
+)
+
+echo Dastur muvaffaqiyatli ishga tushirildi.
+timeout /t 3 > nul
+exit

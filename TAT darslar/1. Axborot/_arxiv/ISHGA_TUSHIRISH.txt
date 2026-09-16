@@ -1,0 +1,17 @@
+======================================================================
+  Shahrisabz Tibbiyot Texnikumi
+  "Tibbiyotda axborot texnologiyalari" — 1-Dars
+  Interaktiv elektron qo'llanma va amaliy simulyator
+======================================================================
+
+DASTURNI OFFLINE (INTERNETSIZ) ISHGA TUSHIRISH:
+--------------------------------------------------
+1. "start.bat" faylini sichqoncha bilan 2 marta bosing.
+2. Dastur avtomatik tarzda kompyuteringizdagi brauzerda (Google Chrome, Microsoft Edge, Opera va boshqalar) offline rejimda ochiladi.
+3. Internet talab qilinmaydi! Barcha ma'lumotlar, interaktiv sichqoncha/klaviatura sxemalari, hamshira simulyatori va test offline ishlaydi.
+
+TARKIBI:
+- 1-Qism: Kirish (Tibbiyotda IT ning 4 ta hayotiy ustuni va qog'oz vs elektron solishtirma)
+- 2-Qism: Nazariya (Axborotning 7 ta shakli, idrok a'zolari va 5 ta xususiyati)
+- 3-Qism: Amaliyot (Kompyuter qurilmalari, yoqish/o'chirish algoritmi, sichqoncha, klaviatura va virtual hamshira ish stoli)
+- 4-Qism: Bilimni sinash (7 ta test savoli, darhol tushuntirish va baholash)

@@ -1,0 +1,37 @@
+# Dependencies and heavy packages
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+.next-offline/
+**/.next-offline/
+.cache/
+**/.cache/
+dist/
+**/dist/
+build/
+**/build/
+.claude/
+**/.claude/
+
+# Cache and build artifacts
+*.tsbuildinfo
+**/*.tsbuildinfo
+*.bak
+**/*.bak
+
+# Root junction ignore (canonical folder is in 'TAT darslar/4-dars')
+/4-dars
+
+# Logs and temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+

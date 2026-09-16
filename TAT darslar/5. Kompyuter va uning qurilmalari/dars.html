@@ -1,0 +1,3684 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5-Dars: Kompyuter va uning qurilmalari — Axborot Texnologiyalari</title>
+  <meta name="description" content="5-dars: Kompyuter va uning ichki hamda tashqi qurilmalari, xotira (HDD va SSD) bo'yicha mukammal elektron qo'llanma.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z'/></svg>">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+      --primary-light: #eef2ff;
+      --primary-border: #c7d2fe;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --success-border: #a7f3d0;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --danger-border: #fecaca;
+      --warn: #f59e0b;
+      --warn-light: #fffbeb;
+      --warn-border: #fde68a;
+      --purple: #8b5cf6;
+      --purple-light: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --teal: #0d9488;
+      --teal-light: #f0fdfa;
+      --teal-border: #99f6e4;
+      --dark: #0f172a;
+      --text: #1e293b;
+      --muted: #64748b;
+      --subtle: #94a3b8;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --card-hover: #ffffff;
+      --border: #e2e8f0;
+      --table-border: #cbd5e1;
+      --radius-sm: 8px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 14px 30px -6px rgba(15, 23, 42, 0.12);
+      --shadow-hover: 0 12px 30px -4px rgba(79, 70, 229, 0.14);
+    }
+
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-hover: #17223b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --subtle: #64748b;
+      --border: #1e293b;
+      --table-border: #334155;
+      --dark: #f8fafc;
+      --primary-light: rgba(79, 70, 229, 0.16);
+      --primary-border: rgba(99, 102, 241, 0.35);
+      --success-light: rgba(16, 185, 129, 0.15);
+      --success-border: rgba(16, 185, 129, 0.3);
+      --danger-light: rgba(239, 68, 68, 0.15);
+      --danger-border: rgba(239, 68, 68, 0.3);
+      --warn-light: rgba(245, 158, 11, 0.15);
+      --warn-border: rgba(245, 158, 11, 0.3);
+      --purple-light: rgba(139, 92, 246, 0.15);
+      --purple-border: rgba(139, 92, 246, 0.3);
+      --teal-light: rgba(13, 148, 136, 0.15);
+      --teal-border: rgba(13, 148, 136, 0.3);
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 14px 32px -6px rgba(0, 0, 0, 0.6);
+      --shadow-hover: 0 12px 32px -4px rgba(99, 102, 241, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1560px;
+      width: 96%;
+      margin: 0 auto;
+      padding: 1.5rem 1.75rem 4rem 1.75rem;
+    }
+
+    /* ====================================================================== */
+    /* 1. SARLAVHA (HERO) BLOKI                                               */
+    /* ====================================================================== */
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .brand-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .header-titles h1 {
+      font-size: 1.85rem;
+      font-weight: 850;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .header-titles .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.6rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .hero-intro {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .badge-primary { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .badge-success { background: var(--success-light); color: var(--success); border: 1px solid var(--success-border); }
+    .badge-warn    { background: var(--warn-light);    color: #b45309;        border: 1px solid var(--warn-border); }
+    .badge-purple  { background: var(--purple-light);  color: var(--purple);  border: 1px solid var(--purple-border); }
+    .badge-teal    { background: var(--teal-light);    color: var(--teal);    border: 1px solid var(--teal-border); }
+
+    /* ====================================================================== */
+    /* 2. MAQSADLI TUSHUNTIRISH & DAFTARGA YOZISH RO'YXATI (KONSPEKT)        */
+    /* ====================================================================== */
+    .classification-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+
+    .classification-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .classification-title {
+      font-size: 1.3rem;
+      font-weight: 850;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .concept-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .concept-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .concept-card.internal-concept {
+      border-top: 4px solid var(--primary);
+    }
+
+    .concept-card.external-concept {
+      border-top: 4px solid var(--teal);
+    }
+
+    .concept-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.2rem;
+    }
+
+    .concept-header h3 {
+      font-size: 1.18rem;
+      font-weight: 850;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .konspekt-def-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .konspekt-list-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-top: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .konspekt-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .konspekt-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .konspekt-item:hover {
+      border-color: var(--primary);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .external-concept .konspekt-item:hover {
+      border-color: var(--teal);
+    }
+
+    .konspekt-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 850;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .external-concept .konspekt-num {
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    .konspekt-item-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .konspekt-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .konspekt-item-name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .konspekt-item-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .konspekt-group-badge-wrap {
+      margin-top: 0.4rem;
+      margin-bottom: 0.1rem;
+    }
+
+    /* ====================================================================== */
+    /* 3. 2 USTUNLI TEZKOR RO'YXAT                                           */
+    /* ====================================================================== */
+    .overview-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .overview-header h2 {
+      font-size: 1.2rem;
+      font-weight: 850;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .overview-col {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overview-col.col-main {
+      border-top: 4px solid var(--primary);
+    }
+
+    .overview-col.col-extra {
+      border-top: 4px solid var(--teal);
+    }
+
+    .col-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .col-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quick-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .quick-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      transition: all 0.18s ease;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .quick-item:hover {
+      border-color: var(--primary);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .quick-item-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .col-extra .quick-item-num {
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    .quick-item-role {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: normal;
+    }
+
+    /* ====================================================================== */
+    /* 4. NAVIGATSIYA TABS                                                    */
+    /* ====================================================================== */
+    .tabs-nav-container {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      margin-bottom: 1.75rem;
+    }
+
+    .tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      background: var(--card);
+      padding: 0.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.1rem;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 750;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .tab-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .tab-btn:hover {
+      color: var(--dark);
+      background: rgba(79, 70, 229, 0.07);
+    }
+
+    .tab-btn.active {
+      background: var(--primary-gradient);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    }
+
+    .tab-btn.active svg {
+      stroke: #ffffff;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeInTab 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeInTab {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+    /* Hayotiy misol va Upgrade imkoniyati bloklari */
+    .device-insights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .insight-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .insight-box.insight-example {
+      border-left: 3.5px solid var(--teal);
+    }
+
+    .insight-box.insight-upgrade {
+      border-left: 3.5px solid var(--success);
+    }
+
+    .insight-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .insight-example .insight-title {
+      color: var(--teal);
+    }
+
+    .insight-upgrade .insight-title {
+      color: var(--success);
+    }
+
+    .insight-text {
+      font-size: 0.84rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Section card */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem 2.25rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 850;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 0.25rem;
+    }
+
+    .sub-section-divider {
+      margin: 2rem 0 1.25rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .sub-section-divider h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ====================================================================== */
+    /* 5. RO'YXAT USLUBIDAGI QURILMA KARTASI (DEVICE LIST ITEM)               */
+    /* ====================================================================== */
+    .devices-list-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .device-list-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      align-items: stretch;
+    }
+
+    .device-list-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-border);
+      background: var(--card-hover);
+    }
+
+    /* Rasm sig'ishi uchun keng va moslashuvchan media-box */
+    .device-media-box {
+      background: radial-gradient(ellipse at center, #1e293b 0%, #0b1120 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 250px;
+      padding: 16px;
+    }
+
+    .device-media-img {
+      max-width: 100%;
+      max-height: 225px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      transition: transform 0.35s ease;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+    }
+
+    .device-list-item:hover .device-media-img {
+      transform: scale(1.04);
+    }
+
+    .media-badge-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .device-info-content {
+      padding: 1.35rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .device-info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .device-heading-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .device-index-num {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--primary);
+      opacity: 0.85;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .device-heading-title {
+      font-size: 1.25rem;
+      font-weight: 850;
+      color: var(--dark);
+      line-height: 1.3;
+    }
+
+    .device-tech-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin-top: 0.15rem;
+    }
+
+    .device-description-text {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .device-fact-box {
+      background: var(--bg);
+      border-left: 3.5px solid var(--warn);
+      padding: 0.7rem 0.95rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .device-fact-box strong {
+      color: #b45309;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    [data-theme="dark"] .device-fact-box strong {
+      color: #f59e0b;
+    }
+
+    .device-specs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .spec-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* ====================================================================== */
+    /* 6. XOTIRA: HDD VA SSD BO'LIMI                                          */
+    /* ====================================================================== */
+    .storage-header-banner {
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .storage-header-banner h3 {
+      font-size: 1.35rem;
+      font-weight: 850;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .storage-header-banner p {
+      color: #cbd5e1;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    .storage-deep-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .storage-deep-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+
+    .storage-deep-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .storage-deep-media {
+      height: 250px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #1e293b 0%, #0b1120 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+    }
+
+    .storage-deep-img {
+      max-width: 100%;
+      max-height: 220px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));
+    }
+
+    .storage-deep-card:hover .storage-deep-img {
+      transform: scale(1.04);
+    }
+
+    .storage-deep-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      flex-grow: 1;
+    }
+
+    .storage-deep-body h3 {
+      font-size: 1.3rem;
+      font-weight: 850;
+      color: var(--dark);
+    }
+
+    .principle-box {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .principle-box h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--primary);
+    }
+
+    .bullet-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .bullet-features li {
+      font-size: 0.85rem;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .bullet-features li svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* Comparison Table */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .custom-table th {
+      background: var(--bg);
+      color: var(--dark);
+      font-weight: 800;
+      padding: 1rem 1.25rem;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .custom-table td {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .custom-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table tbody tr:hover {
+      background: rgba(79, 70, 229, 0.03);
+    }
+
+    .val-better {
+      color: var(--success);
+      font-weight: 750;
+    }
+
+    .advice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .advice-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem;
+    }
+
+    .advice-card.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .advice-card h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .advice-card p {
+      font-size: 0.87rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ====================================================================== */
+    /* 7. TEST BO'LIMI (QUIZ)                                                 */
+    /* ====================================================================== */
+    .quiz-container {
+      margin-top: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .quiz-title {
+      font-size: 1.35rem;
+      font-weight: 850;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quiz-subtitle {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .quiz-question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz-q-num {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .quiz-q-text {
+      font-size: 1rem;
+      font-weight: 750;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .quiz-opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s ease;
+      width: 100%;
+    }
+
+    .quiz-opt-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    .quiz-opt-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .quiz-opt-btn.correct {
+      background: var(--success-light) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+      font-weight: 700;
+    }
+
+    .quiz-opt-btn.correct .quiz-opt-letter {
+      background: var(--success);
+      color: #ffffff;
+      border-color: var(--success);
+    }
+
+    .quiz-opt-btn.wrong {
+      background: var(--danger-light) !important;
+      border-color: var(--danger) !important;
+      color: var(--danger) !important;
+    }
+
+    .quiz-opt-btn.wrong .quiz-opt-letter {
+      background: var(--danger);
+      color: #ffffff;
+      border-color: var(--danger);
+    }
+
+    .quiz-explanation {
+      margin-top: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      display: none;
+      line-height: 1.55;
+    }
+
+    .quiz-explanation.show {
+      display: block;
+    }
+
+    .quiz-explanation.correct-exp {
+      background: var(--success-light);
+      color: #065f46;
+      border: 1px solid var(--success-border);
+    }
+
+    .quiz-explanation.wrong-exp {
+      background: var(--danger-light);
+      color: #991b1b;
+      border: 1px solid var(--danger-border);
+    }
+
+    .quiz-score-banner {
+      display: none;
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .quiz-score-banner.show {
+      display: block;
+    }
+
+    .quiz-score-banner h3 {
+      font-size: 1.4rem;
+      font-weight: 850;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .restart-btn {
+      background: var(--primary-gradient);
+      color: #ffffff;
+      border: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 1rem;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    /* ====================================================================== */
+    /* RESPONSIVE DIZAYN                                                      */
+    /* ====================================================================== */
+    @media (max-width: 1200px) {
+      .device-list-item {
+        grid-template-columns: 320px 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .tabs-nav {
+        grid-template-columns: 1fr 1fr;
+      }
+      .overview-grid,
+      .concept-cards-grid,
+      .storage-deep-grid {
+        grid-template-columns: 1fr;
+      }
+      .device-list-item {
+        grid-template-columns: 1fr;
+      }
+      .device-media-box {
+        min-height: 230px;
+      }
+      .device-media-img {
+        max-height: 200px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem 0.75rem 3rem 0.75rem;
+      }
+      .hero-card,
+      .section-card {
+        padding: 1.25rem;
+      }
+      .header-titles h1 {
+        font-size: 1.4rem;
+      }
+      .tabs-nav {
+        grid-template-columns: 1fr;
+      }
+      .tab-btn {
+        justify-content: flex-start;
+      }
+      .device-info-content {
+        padding: 1.15rem;
+      }
+    }
+
+    @media print {
+      .tabs-nav-container,
+      .theme-toggle-btn,
+      .quiz-container {
+        display: none !important;
+      }
+      .tab-pane {
+        display: block !important;
+      }
+      .device-list-item {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ================================================================== -->
+    <!-- 1. SARLAVHA BLOKI                                                  -->
+    <!-- ================================================================== -->
+    <header class="hero-card" id="top">
+      <div class="header-top-row">
+        <div class="header-brand">
+          <div class="brand-icon" title="Informatika 5-Dars">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <div class="header-titles">
+            <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.25rem;">
+              <span class="badge badge-primary">5-DARS</span>
+              <span class="badge badge-purple">APPARAT TA’MINOTI (HARDWARE)</span>
+            </div>
+            <h1>Kompyuter va uning qurilmalari</h1>
+            <p class="subtitle">
+              Informatika va axborot texnologiyalari — Ichki va tashqi qurilmalar elektron qo‘llanmasi
+            </p>
+          </div>
+        </div>
+
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mavzuni almashtirish">
+          <span id="themeIcon" style="display: inline-flex; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+          <span id="themeLabel">Qorong‘i rejim</span>
+        </button>
+      </div>
+
+      <div class="hero-intro">
+        <strong>Kompyuter nima?</strong> Kompyuter — turli axborotlarni qabul qilish, qayta ishlash, doimiy saqlash va foydalanuvchiga taqdim etishga mo‘ljallangan universal elektron hisoblash mashinasidir. 
+        Qurilmalarning tuzilishi va vazifasini bilish sizga vazifangizga mos kompyuterni to‘g‘ri tanlash va undan unumli foydalanish imkonini beradi.
+      </div>
+    </header>
+
+    <!-- ================================================================== -->
+    <!-- 2. KOMPYUTER QURILMALARINING TASNIFI VA TO'LIQ RO'YXATI (KONSPEKT) -->
+    <!-- ================================================================== -->
+    <section class="classification-box" id="konspekt">
+      <div class="classification-title-wrap">
+        <h2 class="classification-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Kompyuter Qurilmalarining Tasnifi: Ichki va Tashqi Qurilmalar
+        </h2>
+        <span class="badge badge-warn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -1px; margin-right: 5px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Daftarga yozib olish uchun konspekt</span>
+      </div>
+
+      <p style="font-size: 0.95rem; color: var(--text); line-height: 1.6; margin-bottom: 1.25rem;">
+        Kompyuterning barcha apparat vositalari (Hardware) joylashgan o‘rni va bajaradigan vazifasiga ko‘ra <strong>2 ta katta guruhga</strong> bo‘linadi:
+      </p>
+
+      <div class="concept-cards-grid">
+        <!-- 1-Ustun: Tashqi qurilmalar -->
+        <div class="concept-card external-concept">
+          <div class="concept-header">
+            <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 6px;"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 2v6"></path><path d="M18 8v5a6 6 0 0 1-12 0V8z"></path></svg>1. Tashqi qurilmalar</h3>
+            <span class="badge badge-teal">Tizimli blokdan tashqarida</span>
+          </div>
+
+          <div class="konspekt-def-box">
+            <strong>Ta’rifi:</strong> Inson bilan kompyuter o‘rtasidagi axborot almashinuvi (kiritish va chiqarish)ni ta’minlovchi vositalar bo‘lib, tashqi portlar (USB, HDMI, Audio) orqali ulanadi.
+            <div style="margin-top: 0.45rem; color: var(--teal); font-weight: 750; font-size: 0.84rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-2l-2-2V5a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v8l-2 2v2z"></path></svg>Vazifasiga ko‘ra 2 ta guruhga bo‘linadi:
+            </div>
+          </div>
+
+          <!-- A) Asosiy tashqi -->
+          <div class="konspekt-group-badge-wrap">
+            <span class="badge badge-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align: -1px; margin-right: 4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>A) ASOSIY TASHQI QURILMALAR (Ishlash uchun shart — 3 ta)</span>
+          </div>
+
+          <ul class="konspekt-list">
+            <li>
+              <a href="#dev-monitor" class="konspekt-item" onclick="switchTab('tab-external')" title="Monitor haqida to‘liq o‘qish">
+                <span class="konspekt-num">1</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Monitor (Displey)</strong>
+                    <span class="badge badge-primary" style="font-size: 0.68rem;">Asosiy chiqarish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Kompyuterdagi barcha matn, rasm va hisoblash natijalarini ekranda tasviriy tarzda ko‘rsatadi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-kb" class="konspekt-item" onclick="switchTab('tab-external')" title="Klaviatura haqida to‘liq o‘qish">
+                <span class="konspekt-num">2</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Klaviatura</strong>
+                    <span class="badge badge-primary" style="font-size: 0.68rem;">Asosiy kiritish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Kompyuterga matnli axborot, sonlar va boshqaruvchi buyruqlarni kiritish uchun asosiy qurilma.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-mouse" class="konspekt-item" onclick="switchTab('tab-external')" title="Sichqoncha haqida to‘liq o‘qish">
+                <span class="konspekt-num">3</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Sichqoncha (Mouse)</strong>
+                    <span class="badge badge-primary" style="font-size: 0.68rem;">Asosiy boshqarish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Ekrandagi grafik ko‘rsatkich (kursor) yordamida obyektlar va buyruqlarni oson boshqaradi.
+                  </p>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <!-- B) Qo'shimcha tashqi -->
+          <div class="konspekt-group-badge-wrap" style="margin-top: 0.6rem;">
+            <span class="badge badge-teal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align: -1px; margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>B) QO‘SHIMCHA TASHQI QURILMALAR (Zaruriyatga ko‘ra — 5 ta)</span>
+          </div>
+
+          <ul class="konspekt-list">
+            <li>
+              <a href="#dev-printer" class="konspekt-item" onclick="switchTab('tab-external')" title="Printer haqida to‘liq o‘qish">
+                <span class="konspekt-num">4</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Printer</strong>
+                    <span class="spec-badge">Qog‘ozga chiqarish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Kompyuterdagi elektron matn, hujjat va rasmlarni qog‘oz varag‘iga chop etib chiqaradi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-scanner" class="konspekt-item" onclick="switchTab('tab-external')" title="Skaner haqida to‘liq o‘qish">
+                <span class="konspekt-num">5</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Skaner</strong>
+                    <span class="spec-badge">Raqamli kiritish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Qog‘ozdagi hujjat, kitob yoki fotosuratlarni raqamli elektron nusxaga aylantirib kiritadi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-audio" class="konspekt-item" onclick="switchTab('tab-external')" title="Kolonka va naushnik haqida to‘liq o‘qish">
+                <span class="konspekt-num">6</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Kolonka va Naushnik</strong>
+                    <span class="spec-badge">Ovoz chiqarish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Kompyuterdagi musiqiy, tovushli va nutqiy signallarni inson qulog‘iga eshittiradi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-cam" class="konspekt-item" onclick="switchTab('tab-external')" title="Veb-kamera haqida to‘liq o‘qish">
+                <span class="konspekt-num">7</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Veb-kamera</strong>
+                    <span class="spec-badge">Video kiritish</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Jonli video tasvirlarni yozib oladi va onlayn muloqot qilish uchun kompyuterga uzatadi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-usb" class="konspekt-item" onclick="switchTab('tab-external')" title="Fleshka haqida to‘liq o‘qish">
+                <span class="konspekt-num">8</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Flash-disk (Fleshka)</strong>
+                    <span class="spec-badge">Tashqi xotira</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Fayllarni bir kompyuterdan boshqasiga oson ko‘chirish va saqlash uchun ixcham xotira.
+                  </p>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 2-Ustun: Ichki qurilmalar -->
+        <div class="concept-card internal-concept">
+          <div class="concept-header">
+            <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 6px;"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>2. Ichki qurilmalar</h3>
+            <span class="badge badge-primary">Tizimli blok ichida</span>
+          </div>
+
+          <div class="konspekt-def-box">
+            <strong>Ta’rifi:</strong> Kompyuterning ishlashi, hisob-kitoblar, ma’lumotlarni qayta ishlash va tizim barqarorligini ta’minlovchi yuragi va miyasi. Tizimli blok korpusi ichida yagona elektron tizim sifatida birlashadi.
+            <div style="margin-top: 0.45rem; color: var(--primary); font-weight: 750; font-size: 0.84rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Muhim xususiyati: Ushbu qurilmalarsiz kompyuter umuman ishga tusha olmaydi!
+            </div>
+          </div>
+
+          <div class="konspekt-list-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 5px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg><strong>Daftarga yozish uchun asosiy ro‘yxat (7 ta qism):</strong>
+          </div>
+
+          <ul class="konspekt-list">
+            <li>
+              <a href="#dev-cpu" class="konspekt-item" onclick="switchTab('tab-internal')" title="Protsessor haqida to‘liq o‘qish">
+                <span class="konspekt-num">1</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Protsessor (CPU)</strong>
+                    <span class="spec-badge">Bosh miya</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Kompyuterning asosiy hisoblash markazi — barcha arifmetik-mantiqiy amallar va dastur buyruqlarini bajaradi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-ram" class="konspekt-item" onclick="switchTab('tab-internal')" title="Operativ xotira haqida to‘liq o‘qish">
+                <span class="konspekt-num">2</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Operativ xotira (RAM)</strong>
+                    <span class="spec-badge">Tezkor xotira</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Ayni paytda ishlab turgan dasturlar, ochiq fayllar uchun o‘ta tezkor vaqtinchalik xotira (o‘chsa tozalanadi).
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-mb" class="konspekt-item" onclick="switchTab('tab-internal')" title="Ona plata haqida to‘liq o‘qish">
+                <span class="konspekt-num">3</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Ona plata (Motherboard)</strong>
+                    <span class="spec-badge">Birlashtiruvchi</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Barcha ichki qismlar va tashqi portlarni yagona elektron zanjirga mustahkam bog‘lovchi bosh platadir.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-gpu" class="konspekt-item" onclick="switchTab('tab-internal')" title="Videokarta haqida to‘liq o‘qish">
+                <span class="konspekt-num">4</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Videokarta (GPU)</strong>
+                    <span class="spec-badge">Grafik ishlovchi</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Grafik axborotlarni qayta ishlab, monitor ekraniga tasvir shaklida chiqaruvchi ixtisoslashgan qurilma.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-psu" class="konspekt-item" onclick="switchTab('tab-internal')" title="Quvvat bloki haqida to‘liq o‘qish">
+                <span class="konspekt-num">5</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Quvvat bloki (PSU)</strong>
+                    <span class="spec-badge">Elektr manbai</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    220V tokni past kuchlanishli doimiy tokka aylantirib, har bir detalga xavfsiz elektr quvvati yetkazadi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-cooler" class="konspekt-item" onclick="switchTab('tab-internal')" title="Sovutish tizimi haqida to‘liq o‘qish">
+                <span class="konspekt-num">6</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Sovutish tizimi (Kuler)</strong>
+                    <span class="spec-badge">Harorat sovutgichi</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Protsessor va detallar ishlaganda ajraladigan yuqori issiqlikni tashqariga chiqarib sovutadi.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="#dev-case" class="konspekt-item" onclick="switchTab('tab-internal')" title="Korpus haqida to‘liq o‘qish">
+                <span class="konspekt-num">7</span>
+                <div class="konspekt-item-body">
+                  <div class="konspekt-item-head">
+                    <strong class="konspekt-item-name">Kompyuter korpusi (Case)</strong>
+                    <span class="spec-badge">Himoya qutisi</span>
+                  </div>
+                  <p class="konspekt-item-desc">
+                    Barcha ichki qismlarni chang va zarbalardan himoyalovchi hamda tartibli joylashtiruvchi metall quti.
+                  </p>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <div style="font-size: 0.82rem; color: var(--muted); padding-top: 0.5rem; border-top: 1px dashed var(--border);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg><em>Eslatma: Doimiy axborot saqlovchi disklar (SSD va HDD) ham tizimli blok korpusi ichida joylashadi.</em>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 4. NAVIGATSIYA TABS                                                -->
+    <!-- ================================================================== -->
+    <nav class="tabs-nav-container" aria-label="Mavzu bo‘limlari">
+      <div class="tabs-nav">
+        <button type="button" class="tab-btn active" onclick="switchTab('tab-external')">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          Tashqi qurilmalar
+        </button>
+        <button type="button" class="tab-btn" onclick="switchTab('tab-internal')">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          Ichki qurilmalar
+        </button>
+        <button type="button" class="tab-btn" onclick="switchTab('tab-storage')">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Xotira: HDD va SSD
+        </button>
+        <button type="button" class="tab-btn" onclick="switchTab('tab-summary')">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Taqqoslash & Test
+        </button>
+      </div>
+    </nav>
+
+    <!-- ================================================================== -->
+    <!-- 5. TAB 1: TASHQI QURILMALAR (ASOSIY VA QO‘SHIMCHA)                 -->
+    <!-- ================================================================== -->
+    <div id="tab-external" class="tab-pane active">
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>
+              <span class="badge badge-teal">1-GURUH</span>
+              Tashqi Qurilmalar (Asosiy va Qo‘shimcha)
+            </h2>
+            <p>Tizimli blokdan tashqarida joylashib, axborot kiritish va chiqarishni ta’minlovchi vositalar</p>
+          </div>
+          <span class="badge badge-teal">Asosiy & Qo‘shimcha</span>
+        </div>
+
+        <!-- 1-Bo'lim: Asosiy Tashqi Qurilmalar -->
+        <div class="sub-section-divider">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color: var(--warn); vertical-align: -2px; margin-right: 6px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Asosiy Tashqi Qurilmalar (Minimal Ishchi To‘plam)</h3>
+          <span class="badge badge-primary">3 ta zaruriy qurilma</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem;">
+          Ushbu qurilmalarsiz foydalanuvchi kompyuter bilan odatiy tarzda ishlay olmaydi:
+        </p>
+
+        <div class="devices-list-stack">
+
+          <!-- 1. Monitor -->
+          <article class="device-list-item" id="dev-monitor">
+            <div class="device-media-box">
+              <img
+                src="images/monitor.png"
+                alt="AGON zamonaviy kompyuter monitori fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Monitor</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#01</span>
+                    <div>
+                      <h3 class="device-heading-title">Monitor (Displey)</h3>
+                      <div class="device-tech-name">Monitor / Display (Asosiy Chiqarish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Asosiy Chiqarish Qurilmasi</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Monitor — videokartadan uzatilgan elektr signallarini inson ko‘zi ilg‘aydigan tasvirlar, matnlar va videoga aylantiruvchi asosiy vizual chiqarish vositasidir.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Katta va tiniq deraza oynasi — kompyuter ichidagi butun raqamli olamni xira emas, yorqin va haqiqiy ranglarda ko‘rish imkonini beradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Yuqori aniqlikdagi (2K/4K) va yuqori chastotali (144Hz+) monitor bilan harakatlar o‘ta ravon bo‘ladi, matnlar tiniq ko‘rinadi va uzoq soat ishlaganda ham ko‘z aslo charchamaydi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Monitorning kadr yangilanish chastotasi (masalan, 60Hz, 144Hz) soniyasiga kadr necha marta yangilanishini bildiradi — chastota qancha yuqori bo‘lsa, ko‘z shuncha kam toliqadi va harakatlar silliq ko‘rinadi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Diagonal: 24", 27", 32"</span>
+                <span class="spec-badge">Matritsa turi: IPS, OLED, VA</span>
+                <span class="spec-badge">Ruxsati: Full HD, 2K QHD, 4K UHD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Klaviatura -->
+          <article class="device-list-item" id="dev-kb">
+            <div class="device-media-box">
+              <img
+                src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80"
+                alt="Mexanik kompyuter klaviaturasi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1541140532154-b024d705b909?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Klaviatura</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#02</span>
+                    <div>
+                      <h3 class="device-heading-title">Klaviatura</h3>
+                      <div class="device-tech-name">Keyboard (Asosiy Kiritish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-success">Asosiy Kiritish Qurilmasi</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Klaviatura — kompyuterga matn, raqamlar va boshqaruvchi buyruqlarni kiritish uchun xizmat qiluvchi asosiy vositadir. Tugma bosilganda maxsus skan-kod protsessorga uzatiladi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Yozuv mashinkasi yoki pianino klavishlari — har bir bosilgan tugma o‘ziga xos tovush va belgi kodiga aylanib kompyuterga aniq uzatiladi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Sifatli (mexanik) klaviatura matn terish tezligini oshiradi, 50–100 million martagacha bosishga chidaydi va ergonomik shakli tufayli uzoq yozganda barmoq hamda bilak toliqmaydi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Klaviaturalar membrana (ovozsiz, arzon) va mexanik (har bir tugmada mustaqil prujinali pereklyuchatel bo‘lib, 50–100 mln marta bosishga chidamli) turlarga bo‘linadi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Turi: Membrana / Mexanik</span>
+                <span class="spec-badge">Ulanish: USB simli / Bluetooth</span>
+                <span class="spec-badge">Tugmalar soni: 104 (Full) / 87 (TKL)</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Sichqoncha -->
+          <article class="device-list-item" id="dev-mouse">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/22/3-Tasten-Maus_Microsoft.jpg"
+                alt="Optik kompyuter sichqonchasi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Sichqoncha</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#03</span>
+                    <div>
+                      <h3 class="device-heading-title">Sichqoncha</h3>
+                      <div class="device-tech-name">Mouse (Grafik Manipulyator)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-success">Asosiy Kiritish / Boshqarish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Sichqoncha — grafik interfeysdagi obyektlarni qulay boshqarish uchun manipulyatordir. U kursor harakatini ta’minlaydi, fayllarni ochish va dasturlarni boshqarish imkonini beradi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Virtual ekrandagi qo‘lingiz — xuddi barmog‘ingiz bilan obyektlarni ushlab, kerakli joyga surayotgandek ekranda erkin boshqaruvni ta’minlaydi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Yuqori sezgirlikdagi optik sensor (DPI) orqali kursor ekranda mikron aniqligida yuradi, ergonomik shakli tufayli qo‘l mushaklari toliqmaydi va qo‘shimcha dasturlanuvchi tugmalar beradi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Zamonaviy optik va lazerli sichqonchalar stol yuzasini soniyasiga minglab marta mikrosuratga olib, harakat yo‘nalishi va tezligini (DPI aniqligida) yuqori aniqlikda hisoblaydi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Datchik turi: Optik / Lazerli</span>
+                <span class="spec-badge">Sezgirlik: 800 – 16000 DPI</span>
+                <span class="spec-badge">Format: Simli / 2.4GHz Simsiz</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- 2-Bo'lim: Qo'shimcha Tashqi Qurilmalar -->
+        <div class="sub-section-divider">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--teal); vertical-align: -2px; margin-right: 6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Qo‘shimcha Tashqi Qurilmalar (Ixtiyoriy Vositalar)</h3>
+          <span class="badge badge-teal">5 ta kengaytma qurilmasi</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem;">
+          Ushbu qurilmalar muayyan vazifalar (chop etish, skanerlash, masofaviy aloqa) uchun ehtiyojga qarab qo‘shiladi:
+        </p>
+
+        <div class="devices-list-stack">
+
+          <!-- 4. Printer -->
+          <article class="device-list-item" id="dev-printer">
+            <div class="device-media-box">
+              <img
+                src="images/printer.png"
+                alt="Canon i-SENSYS lazerli printeri fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/7/72/HP_Laserjet_5_DN_1.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Printer</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#04</span>
+                    <div>
+                      <h3 class="device-heading-title">Printer</h3>
+                      <div class="device-tech-name">Printer (Qog‘ozga Chiqarish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Qo‘shimcha Chiqarish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Printer — elektron hujjatlar, jadvallar, retseptlar va fotosuratlarni qog‘ozga yoki maxsus plyonkalarga bosib chiqaruvchi (chop etuvchi) qurilmadir.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Shaxsiy mini-bosmaxona — ekrandagi virtual hujjat, rasm va topshiriqlarni jismonan ushlab bo‘ladigan qog‘oz varag‘iga aylantirib beradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Lazerli yoki uzluksiz siyohli zamonaviy printer bilan 1 ta varaq tannarxi bir necha tiyinga tushadi, daqiqasiga 30+ varaq tez bosadi va oylab ishlatilmasa ham siyohi qurib qolmaydi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Ofis va ta’limda asosan Lazerli printerlar (quruq toner kukuni bilan daqiqasiga 25–40 varaqni juda tez va arzon chiqaradi) hamda rangli Siyohli printerlar keng qo‘llaniladi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Turi: Lazerli / Siyohli (Inkjet)</span>
+                <span class="spec-badge">Tezlik: 20–40 ppm (varaq/daq)</span>
+                <span class="spec-badge">Ulanish: USB / Wi-Fi tarmoqli</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Skaner -->
+          <article class="device-list-item" id="dev-scanner">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Epson_V850_scanner_open_20230920.jpg"
+                alt="Epson planshetli fotoxrom skaneri fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Epson_V850_scanner_open_20230920.jpg/800px-Epson_V850_scanner_open_20230920.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Skaner</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#05</span>
+                    <div>
+                      <h3 class="device-heading-title">Skaner</h3>
+                      <div class="device-tech-name">Scanner (Optik Kiritish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-success">Qo‘shimcha Kiritish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Skaner — qog‘ozdagi hujjatlar, fotosuratlar yoki kitob sahifalarini yorug‘lik nurlari bilan o‘qib, kompyuterda saqlanadigan raqamli fayl (PDF, JPG) shakliga aylantiruvchi vositadir.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Hujjatlar uchun yuqori aniqlikdagi skaner-kamera — qog‘ozdagi matn va fotosuratlarning har bir nuqtasini raqamli faylga aylantiradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Yuqori optik aniqlik (1200+ DPI) qog‘ozdagi eng mayda detallarni ham tiniq saqlaydi, avtomatik qog‘oz uzatgich (ADF) esa 50 varaqli kitobni bir necha daqiqada to‘liq arxivlab beradi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Skanerlar OCR dasturlari yordamida qog‘ozdagi matnlarni avtomatik tarzda Word dasturida tahrirlanadigan oddiy matnga aylantirib bera oladi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Optik aniqlik: 1200 – 4800 DPI</span>
+                <span class="spec-badge">Format: A4 planshetli / Hujjat o‘tkazgichli (ADF)</span>
+                <span class="spec-badge">Chiqish formati: PDF, JPEG, TIFF</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Kolonka va Naushnik -->
+          <article class="device-list-item" id="dev-audio">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg"
+                alt="AKG audio naushniklar fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1545454675-3531b543be5d?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Audio</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#06</span>
+                    <div>
+                      <h3 class="device-heading-title">Kolonka va Naushnik</h3>
+                      <div class="device-tech-name">Speakers & Headphones (Audio Chiqarish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Qo‘shimcha Chiqarish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Kolonka va naushniklar — kompyuterning ovoz kartasi uzatgan elektr signallarini inson eshitadigan tovush to‘lqinlariga aylantiruvchi akustik vositalardir.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Jonli konsert zali yoki teatr akustikasi — kompyuterdagi elektr to‘lqinlarini inson qulog‘i quvonib eshitadigan jonli havo tebranishiga aylantiradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Sifatli akustika yoki naushnik fazoviy 7.1 atrof-muhit tovushini (Spatial Audio) yaratadi, musiqadagi barcha nozik notalarni eshittiradi va tashqi shovqinlarni to‘liq yutadi (ANC).</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Zamonaviy naushniklarda faol shovqinni so‘ndirish (ANC) tizimi mavjud bo‘lib, u tashqi atrof-muhit shovqinlarini mikroskopik teskari to‘lqinlar orqali bartaraf etadi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Chastota diapazoni: 20Hz – 20000Hz</span>
+                <span class="spec-badge">Ulanish: 3.5 mm Jack, USB, Bluetooth</span>
+                <span class="spec-badge">Format: Stereo 2.0 / Surround 7.1</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7. Veb-kamera -->
+          <article class="device-list-item" id="dev-cam">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Logicool_StreamCam_%28cropped%29.jpg"
+                alt="Logitech StreamCam tashqi USB veb-kamerasi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1588508065123-287b28e013da?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Veb-Kamera</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#07</span>
+                    <div>
+                      <h3 class="device-heading-title">Veb-kamera</h3>
+                      <div class="device-tech-name">Webcam (Video Kiritish)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-success">Qo‘shimcha Kiritish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Veb-kamera — real vaqt rejimida video tasvir va ovozni raqamli formatga o‘tkazib, kompyuterga kirituvchi optik qurilmadir. U masofaviy darslar va videokonferensiyalar uchun xizmat qiladi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Televideniye telekamerasi — sizning harakatingiz va yuz ifodalaringizni soniyasiga 30–60 marta suratga olib, internetdagi suhbatdoshingizga yetkazadi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Full HD / 4K kamera qorong‘i xonada ham tiniq tasvir uzatadi, yuzingizga avtomatik fokus qiladi va o‘rnatilgan aqlli mikrofoni xonadagi begona shovqinlarni filtrlab ovozingizni tiniq oladi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Zamonaviy veb-kameralardagi infraqizil (IR) datchiklar foydalanuvchining yuzini 3D formatda tanib, kompyuterga parolsiz kirish (Windows Hello) xavfsizligini ta’minlaydi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Tasvir ruxsati: 1080p FHD / 4K</span>
+                <span class="spec-badge">Kadr tezligi: 30 / 60 FPS</span>
+                <span class="spec-badge">O‘rnatilgan mikrofon va avtofokus</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 8. Flash-disk -->
+          <article class="device-list-item" id="dev-usb">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/17/SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg"
+                alt="SanDisk Cruzer USB Flash drayveri fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Flesh-disk</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#08</span>
+                    <div>
+                      <h3 class="device-heading-title">Flash-disk (Fleshka)</h3>
+                      <div class="device-tech-name">USB Flash Drive (Tashqi Xotira)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-teal">Kiritish / Chiqarish</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Flash-disk — ma’lumotlarni kompyuterlar o‘rtasida oson ko‘chirish va saqlash uchun mo‘ljallangan ixcham vositadir. Unga fayl yozish ham, undan fayl o‘qish ham mumkin.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Hujjatlar uchun ixcham cho‘ntak sumkasi — barcha kerakli fayllarni cho‘ntakka solib, uydan maktabga yoki ofisga olib yurish imkonini beradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Tezkor USB 3.2 yoki Type-C fleshka yordamida 10–20 GB hajmli og‘ir filmlar va arxivlarni daqiqalab kutmasdan, bir necha soniya ichida o‘ta tez ko‘chirib olish mumkin.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Fleshkalarda hech qanday aylanuvchi mexanik qism yo‘q — ma’lumotlar yarimo‘tkazgichli flesh-chiplarda elektr quvvatisiz ham 10 yildan ortiq xavfsiz saqlanadi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Sig‘imi: 16GB, 64GB, 256GB</span>
+                <span class="spec-badge">Interfeys: USB 3.2 / Type-C</span>
+                <span class="spec-badge">O‘qish tezligi: 100–400 MB/s</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- 6. TAB 2: ICHKI QURILMALAR (TIZIMLI BLOK TARKIBI)                  -->
+    <!-- ================================================================== -->
+    <div id="tab-internal" class="tab-pane">
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>
+              <span class="badge badge-primary">2-GURUH</span>
+              Ichki Qurilmalar (Tizimli Blok Tarkibi)
+            </h2>
+            <p>Kompyuterning hisoblash, xotira, quvvat va aloqa vazifalarini bajaruvchi asosiy a’zolari</p>
+          </div>
+          <span class="badge badge-primary">7 ta asosiy komponent</span>
+        </div>
+
+        <div class="devices-list-stack">
+
+          <!-- 1. CPU -->
+          <article class="device-list-item" id="dev-cpu">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Intel_i9-14900KF_CPU.jpg"
+                alt="Intel Core i9 Protsessor chipining haqiqiy fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: CPU</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#01</span>
+                    <div>
+                      <h3 class="device-heading-title">Protsessor</h3>
+                      <div class="device-tech-name">CPU — Central Processing Unit</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Ichki Asosiy Qurilma</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Protsessor — kompyuterning asosiy hisoblash markazi (miyasi) hisoblanadi. U barcha arifmetik-mantiqiy amallarni va dastur buyruqlarini bajaradi hamda boshqa barcha qurilmalar ishini muvofiqlashtiradi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Katta korxonaning bosh direktori yoki oliy toifali hisobchisi — kelgan topshiriqlarni navbati bilan bir zumda hisob-kitob qilib, qolgan barcha bo‘limlarga vazifa taqsimlaydi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Kuchliroq protsessor bilan og‘ir dasturlar (video montaj, 3D modellashtirish, dasturlash) umuman qotmaydi, o‘yinlarda kadrlar tezligi (FPS) oshadi va operatsiyalar soniyada bajariladi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Zamonaviy protsessorlar soniyasiga milliardlab amal bajaradi (3–5 GHz) va ularning mitti kremniy kristali ichiga inson sochidan minglab marta ingichka bo‘lgan milliardlab mikroskopik tranzistorlar joylashtirilgan.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Takt chastotasi (GHz)</span>
+                <span class="spec-badge">Yadrolar soni (Cores/Threads)</span>
+                <span class="spec-badge">Kesh xotira (L1, L2, L3)</span>
+                <span class="spec-badge">Ishlab chiqaruvchilar: Intel / AMD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. RAM -->
+          <article class="device-list-item" id="dev-ram">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/d/db/Swissbit_2GB_PC2-5300U-555.jpg"
+                alt="Operativ xotira (RAM) modulining haqiqiy platasi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1562976540-1502c2145186?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: RAM</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#02</span>
+                    <div>
+                      <h3 class="device-heading-title">Operativ Xotira</h3>
+                      <div class="device-tech-name">RAM — Random Access Memory</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-warn">Vaqtinchalik Xotira</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Operativ xotira — ayni paytda ishlab turgan dasturlar, ochiq fayllar va operatsion tizim jarayonlari ma’lumotlarini saqlab turadigan o‘ta tezkor xotiradir. Protsessor barcha amallarni bevosita RAM orqali tez bajaradi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Ish stolining kengligi — stol qancha katta bo‘lsa, usta shuncha ko‘p kitob, hujjat va asboblarni yoyib qo‘yib, arxivga bormasdan birdaniga tez ishlay oladi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Hajmi katta bo‘lsa (masalan 16–32 GB), bir vaqtning o‘zida 40 ta brauzer sahifasi, Photoshop, o‘yin va musiqani ochiq qoldirsangiz ham kompyuter sekinlashmaydi va qotib qolmaydi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                RAM uchuvchan xotiradir — ya’ni kompyuter o‘chirilishi bilan uning ichidagi barcha ma’lumotlar tozalanadi. RAM qancha ko‘p bo‘lsa, bir vaqtning o‘zida shuncha ko‘p dastur qotmasdan ishlaydi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Sig‘imi: 8GB, 16GB, 32GB</span>
+                <span class="spec-badge">Turi: DDR4 / DDR5</span>
+                <span class="spec-badge">Tezligi: 3200–6000 MHz</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Ona plata -->
+          <article class="device-list-item" id="dev-mb">
+            <div class="device-media-box">
+              <img
+                src="images/mothboard.png"
+                alt="Zamonaviy ona platasining haqiqiy fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/6/68/Computer_motherboard.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Ona plata</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#03</span>
+                    <div>
+                      <h3 class="device-heading-title">Ona plata (Tizimli Plata)</h3>
+                      <div class="device-tech-name">Motherboard / Mainboard</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Birlashtiruvchi Plata</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Ona plata — barcha ichki qismlarni (protsessor, xotira, videokarta, disklar) va tashqi portlarni yagona elektron zanjirga bog‘lovchi bosh platadir. U qismlar o‘rtasida elektr quvvati va tezkor axborot almashinuvini ta’minlaydi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Shaharning zamonaviy avtomagistrallari va asab tizimi — shahardagi barcha binolar va barcha tana a’zolari bir-biri bilan shu keng yo‘llar orqali tezkor bog‘lanadi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Sifatliroq ona plata kompyuterga kelajakda kuchliroq yangi protsessor va videokartalar qo‘yish (upgrade) imkonini beradi, barqaror elektr yetkazib detallar umrini uzaytiradi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Ona platada kompyuterni yoqish paytida barcha qurilmalarni sinovdan o‘tkazuvchi va operatsion tizimni ishga tushiruvchi maxsus BIOS / UEFI mikrosxemasi joylashgan.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Soket: LGA 1700 / AM5</span>
+                <span class="spec-badge">Format: ATX, Micro-ATX</span>
+                <span class="spec-badge">Chipset (B760, Z790, B650)</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Videokarta -->
+          <article class="device-list-item" id="dev-gpu">
+            <div class="device-media-box">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b9/MSI_GeForce_RTX_3070_VENTUS_3X_OC.jpg"
+                alt="MSI GeForce RTX 3070 diskret video kartasi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Video Karta</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#04</span>
+                    <div>
+                      <h3 class="device-heading-title">Video Karta</h3>
+                      <div class="device-tech-name">GPU — Graphics Processing Unit</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-purple">Grafik Ishlovchi</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Video karta — kompyuterdagi raqamli grafik axborotni qayta ishlab, monitor ekraniga tasvir shaklida chiqaradi. U 3D grafika, video tahrirlash, muhandislik dasturlari va sun’iy intellekt hisoblashlari uchun xizmat qiladi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">O‘ta tezkor professional rassom — protsessor aytgan sonli buyruqlarni soniyasiga 100–200 martalab to‘liq rang-barang tasvirlarga va harakatli animatsiyalarga aylantirib chizib beradi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Zamonaviy kuchli videokarta 3D o‘yinlarni 2K/4K ultra grafikalarda o‘ynash, murakkab 3D videolarni daqiqalarda render qilish va sun’iy intellekt (AI) modellarini lokal ishlatish imkonini beradi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Zamonaviy video karta o‘zining mustaqil grafik protsessori (GPU) va maxsus video xotirasi (VRAM) bilan jihozlangan bo‘lib, markaziy protsessordan grafik yuklamani to‘liq olib tashlaydi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Video xotira: 6GB – 24GB GDDR6X</span>
+                <span class="spec-badge">NVIDIA GeForce / AMD Radeon</span>
+                <span class="spec-badge">Portlar: HDMI, DisplayPort</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Quvvat bloki -->
+          <article class="device-list-item" id="dev-psu">
+            <div class="device-media-box">
+              <img
+                src="images/psu.png"
+                alt="Thermaltake Smart RGB 700W Quvvat ta’minoti bloki fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/a/af/ATX_Computer_power_supply_unit.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Quvvat Bloki</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#05</span>
+                    <div>
+                      <h3 class="device-heading-title">Quvvat Bloki</h3>
+                      <div class="device-tech-name">PSU — Power Supply Unit</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-warn">Elektr Ta’minoti</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Quvvat bloki — rozetkadagi 220 Voltli o‘zgaruvchan tokni kompyuter qismlari talab qiladigan past kuchlanishli doimiy tokka (+12V, +5V, +3.3V) aylantirib, har bir detalga xavfsiz yetkazib beradi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Xonadondagi transformator va inson yuragi — ko‘chadagi yuqori kuchlanishni xavfsiz holatga keltirib, barcha organlarga kerakli o‘lchamda quvvat (tok) haydaydi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Sifatli quvvat bloki (80 PLUS Gold/Platinum) elektr toki to‘satdan o‘ynaganda qimmat detallarni yonib ketishdan asraydi, elektr energiyani kam sarflaydi va mutlaqo shovqinsiz ishlaydi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Quvvat bloki kompyuterning xavfsizlik qalqonidir. Elektr toki keskin o‘zgarganda u qimmatbaho protsessor va ona platani kuyishdan asraydi. Sifat belgisi "80 PLUS" sertifikatidir.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Quvvati: 500W – 1000W</span>
+                <span class="spec-badge">Samaradorlik: 80 PLUS Bronze / Gold</span>
+                <span class="spec-badge">Turi: Modulli / Standart</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Sovutish tizimi -->
+          <article class="device-list-item" id="dev-cooler">
+            <div class="device-media-box">
+              <img
+                src="images/cooler.jpg"
+                alt="Thermalright minora shaklidagi protsessor sovutish kuleri fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/c/c9/Alpenf%C3%B6hn_Nordwand_%E2%80%93_CPU_tower_cooler-front_oblique_PNr%C2%B00303.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Kuler</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#06</span>
+                    <div>
+                      <h3 class="device-heading-title">Sovutish Tizimi</h3>
+                      <div class="device-tech-name">CPU Cooler & Radiator</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Termal Nazorat</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Sovutish tizimi — protsessor va boshqa qismlar ishlaganda ajralib chiqadigan yuqori issiqlikni o‘ziga yutib, tashqariga chiqaradi. U qismlarning qizib ketishi va ishdan chiqishining oldini oladi.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Avtomobil radiatori yoki muzdek konditsioner — dvigatel qizib ketib to‘xtab qolmasligi uchun unga tinimsiz sovuq havo puflab, issiqlikni tashqariga haydaydi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Kuchli kuler o‘rnatilsa, protsessor qizib sekinlashmaydi (trottling bo‘lmaydi), og‘ir yuklamada ham kompyuter parraklari baqirmay jimjit ishlaydi va protsessor umri bir necha yilga uzayadi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Yuklama ostida protsessorlar 80–90°C gacha qiziydi. Agar kuler yoki termopasta bo‘lmasa, protsessor bir necha soniya ichida qizib ketib, avtomatik ravishda o‘z-o‘zidan o‘chadi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">Turi: Havo sovutish (Kuler) / Suyuqlik (SVO)</span>
+                <span class="spec-badge">Issiqlik tarqatish (TDP 150–250W)</span>
+                <span class="spec-badge">Termopasta sifati</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7. Korpus -->
+          <article class="device-list-item" id="dev-case">
+            <div class="device-media-box">
+              <img
+                src="images/case.png"
+                alt="Cougar zamonaviy kompyuter korpusi fotosurati"
+                class="device-media-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/3/3e/Computer_case_-_Full_Tower.jpg';"
+              >
+              <span class="media-badge-tag">Haqiqiy mahsulot: Korpus</span>
+            </div>
+            <div class="device-info-content">
+              <div>
+                <div class="device-info-header">
+                  <div class="device-heading-group">
+                    <span class="device-index-num">#07</span>
+                    <div>
+                      <h3 class="device-heading-title">Kompyuter Korpusi</h3>
+                      <div class="device-tech-name">Chassis / PC Case (Tizimli Blok Qobig‘i)</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-primary">Himoya va Konstruksiya</span>
+                </div>
+                <p class="device-description-text" style="margin-top: 0.65rem;">
+                  Korpus — kompyuterning barcha ichki qismlarini mexanik zarba, chang va shikastlanishdan himoya qiluvchi metall va shisha qoplamadir. U barcha qismlarni mustahkam va tartibli joylashtirish asosidir.
+                </p>
+              </div>
+                            <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Mustahkam zamonaviy uy karkasi — jihozlarni chang, shamol va zarbalardan asraydi hamda shamollatish tirqishlari orqali toza havo aylanishini ta’minlaydi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Sifatli korpusda to‘g‘ri havo oqimi (airflow) hosil bo‘lib detallar 10–15°C salqinroq ishlaydi, chang filtrlari ichini toza tutadi va katta o‘lchamli videokartalar bemalol sig‘adi.</p>
+                </div>
+              </div>
+              <div class="device-fact-box">
+                <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>Muhim fakt:</strong>
+                Korpus shunchaki metall quti emas — uning ichidagi to‘g‘ri aerodinamik havo oqimi (old paneldan sovuq havoni kiritib, orqadan issiq havoni chiqarish) qismlarning uzoq yillar barqaror ishlashini ta’minlaydi.
+              </div>
+              <div class="device-specs-bar">
+                <span class="spec-badge">O‘lchamlari: Mid-Tower, Full-Tower</span>
+                <span class="spec-badge">Ventilyatsiya panjaralari</span>
+                <span class="spec-badge">Chang filtrlari</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- 7. TAB 3: XOTIRA QURILMALARI: HDD VA SSD                           -->
+    <!-- ================================================================== -->
+    <div id="tab-storage" class="tab-pane">
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>
+              <span class="badge badge-purple">3-BO‘LIM</span>
+              Doimiy Xotira Qurilmalari: HDD va SSD
+            </h2>
+            <p>Magnit va yarimo‘tkazgichli xotira vositalarining ishlash tamoyillari hamda amaliy farqlari</p>
+          </div>
+          <span class="badge badge-purple">Chuqurlashtirilgan tahlil</span>
+        </div>
+
+        <div class="storage-header-banner">
+          <h3>Doimiy Xotira nima uchun kerak?</h3>
+          <p>
+            Operativ xotiradan (RAM) farqli o‘laroq, doimiy xotira (ROM/Storage) kompyuter o‘chirilganda ham ma’lumotlarni butunlay saqlab qoladi.
+            Operatsion tizim (Windows, Linux), barcha o‘rnatilgan dasturlar, hujjatlar, fotosuratlar va videolar aynan ushbu qurilmalarda saqlanadi.
+          </p>
+        </div>
+
+        <!-- 2 ta karta: HDD va SSD -->
+        <div class="storage-deep-grid">
+
+          <!-- HDD Karta -->
+          <article class="storage-deep-card">
+            <div class="storage-deep-media">
+              <img
+                src="images/hdd.png"
+                alt="Western Digital WD Black 1TB qattiq disk (HDD) fotosurati"
+                class="storage-deep-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/b/b2/Hatachi_500_GB_hard_drive%2C_2011.jpg';"
+              >
+            </div>
+            <div class="storage-deep-body">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>HDD (Qattiq Disk)</h3>
+                <span class="badge badge-warn">Magnitli Texnologiya</span>
+              </div>
+              <div class="principle-box">
+                <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Ishlash tamoyili:</h4>
+                Aylanuvchi magnit disklar (plastinalar) va o‘qish/yozish kallagidan iborat elektromexanik qurilma. Kallak disk yuzasiga tegmasdan, magnit qatlamdagi 0 va 1 zaryadlarini o‘qiydi.
+              </div>
+              <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Katta kutubxona arxivi — kitoblar juda arzon va terabaytlab uzoq saqlanadi, lekin kerakli kitobni topish uchun mexanik javonlarni aylantirib biroz kutish kerak.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Yuqori tezlikdagi (7200 RPM, katta keshli) HDD o‘nlab yillik oilaviy foto, video va zaxira arxivlarni o‘ta hamyonbop narxda xavfsiz saqlash imkonini beradi.</p>
+                </div>
+              </div>
+              <ul class="bullet-features">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Afzalligi:</strong> 1 Gigabayt hajm narxi juda arzon; katta hajmli zaxira arxivlar uchun juda qulay.</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  <span><strong>Kamchiligi:</strong> Sekin ishlaydi (80–160 MB/s), mexanik harakat tufayli zarbaga o‘ta ta’sirchan, shitirlagan shovqini bor.</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- SSD Karta -->
+          <article class="storage-deep-card">
+            <div class="storage-deep-media">
+              <img
+                src="images/ssd.png"
+                alt="SanDisk SSD PLUS 2.5 dyuymli yarimo‘tkazgichli SSD drayveri fotosurati"
+                class="storage-deep-img"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/5/52/256GB_2230_NVME_SSD_%2B_256GB_NGFF_SSD.jpg';"
+              >
+            </div>
+            <div class="storage-deep-body">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>SSD (Yarimo‘tkazgichli Disk)</h3>
+                <span class="badge badge-success">Elektron Flash-xotira</span>
+              </div>
+              <div class="principle-box">
+                <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Ishlash tamoyili:</h4>
+                Hech qanday harakatlanuvchi mexanik qismlarga ega emas. Ma’lumotlar NAND flesh-xotira mikrosxemalariga elektr zaryadlari ko‘rinishida bir zumda yoziladi va o‘qiladi.
+              </div>
+              <div class="device-insights-grid">
+                <div class="insight-box insight-example">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Hayotiy misol:</span>
+                  </div>
+                  <p class="insight-text">Har bir ma’lumotni bir zumda aytib beruvchi chaqqon yordamchi — mexanik qismlari yo‘q, barcha fayllar elektr signallari orqali soniyaning mingdan birida ochiladi.</p>
+                </div>
+                <div class="insight-box insight-upgrade">
+                  <div class="insight-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    <span>Yaxshiroq bo‘lsa nima beradi?</span>
+                  </div>
+                  <p class="insight-text">Tezkor NVMe M.2 SSD bilan kompyuter 6–8 soniyada yonadi, eng og‘ir dastur va o‘yinlar bir zumda ochiladi, kompyuter qimirlaganda yoki tushib ketganda ham ma’lumotlar shikastlanmaydi.</p>
+                </div>
+              </div>
+              <ul class="bullet-features">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Afzalligi:</strong> O‘ta yuqori tezlik (500 – 7000 MB/s), mutlaqo shovqinsiz (0 dB), zarba va silkinishga o‘ta chidamli.</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  <span><strong>Kamchiligi:</strong> 1 Gigabayt narxi HDD ga nisbatan qimmatroq; yozish sikllari soni cheklangan.</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- HDD vs SSD Taqqoslash Jadvali -->
+        <h3 style="font-size: 1.25rem; font-weight: 850; color: var(--dark); margin-bottom: 0.9rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -3px; margin-right: 6px;"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>HDD va SSD: Asosiy Ko‘rsatkichlar Taqqosi
+        </h3>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Xususiyat va parametr</th>
+                <th>HDD (Klassik qattiq disk)</th>
+                <th>SSD (Yarimo‘tkazgichli drayver)</th>
+                <th>G‘olib / Tavsiya</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>O‘qish va yozish tezligi</strong></td>
+                <td>80 – 160 MB/s (Sekin)</td>
+                <td><span class="val-better">500 – 7000 MB/s (40 baravargacha tez)</span></td>
+                <td><span class="badge badge-success">SSD (Mutlaq g‘olib)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tizim (Windows) yuklanishi</strong></td>
+                <td>40 – 90 soniya</td>
+                <td><span class="val-better">6 – 12 soniya</span></td>
+                <td><span class="badge badge-success">SSD</span></td>
+              </tr>
+              <tr>
+                <td><strong>1 GB xotira narxi</strong></td>
+                <td><span class="val-better">Ancha arzon</span> (arzon katta hajm)</td>
+                <td>Nisbatan qimmatroq</td>
+                <td><span class="badge badge-warn">HDD (Hamyonbop)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Zarba va silkinishga chidamlilik</strong></td>
+                <td>Zaif (tushib ketsa shikastlanadi)</td>
+                <td><span class="val-better">Juda mustahkam (qismlar qo‘zg‘almas)</span></td>
+                <td><span class="badge badge-success">SSD</span></td>
+              </tr>
+              <tr>
+                <td><strong>Shovqin darajasi</strong></td>
+                <td>Mexanik shitirlash eshitiladi</td>
+                <td><span class="val-better">0 dB — Mutlaqo jimjit</span></td>
+                <td><span class="badge badge-success">SSD</span></td>
+              </tr>
+              <tr>
+                <td><strong>Elektr energiya sarfi</strong></td>
+                <td>6 – 10 Watt (ko‘proq energiya sarflaydi)</td>
+                <td><span class="val-better">1 – 3 Watt (energiyani tejaydi)</span></td>
+                <td><span class="badge badge-success">SSD</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Qaysi birini tanlash kerak? -->
+        <div style="margin-top: 2rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 850; color: var(--dark); margin-bottom: 0.9rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -3px; margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>Qaysi birini tanlash kerak? Amaliy maslahatlar
+          </h3>
+
+          <div class="advice-grid">
+            <div class="advice-card highlight">
+              <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>Faqat SSD oling, agar:</h4>
+              <p>
+                Kompyuteringiz chaqqon ishlashini, Windows bir necha soniyada yuklanishini, dasturlar bir lahzada ochilishini istasangiz. Noutbuklar uchun albatta SSD tanlanishi shart.
+              </p>
+            </div>
+
+            <div class="advice-card">
+              <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align: -2px; margin-right: 5px;"><line x1="16.5" y1="9.4" x2="7.55" y2="4.24"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg>HDD oling, agar:</h4>
+              <p>
+                Katta hajmli arxiv ma’lumotlarni, videolarni, seriallarni, videokuzatuv kameralari yozuvlarini arzon narxda saqlash kerak bo‘lsa. Tezlik emas, arzon katta sig‘im muhim bo‘lganda HDD ayni muddao.
+              </p>
+            </div>
+
+            <div class="advice-card highlight">
+              <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color: var(--warn); vertical-align: -2px; margin-right: 5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Oltin qoida (Gibrid tizim):</h4>
+              <p>
+                Eng ideal konfiguratsiya: <strong>512 GB M.2 NVMe SSD</strong> (operatsion tizim va dasturlar uchun) + <strong>1 TB yoki 2 TB HDD</strong> (katta hajmli arxivlar uchun).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- 8. TAB 4: YAKUNIY TAQQOSLASH & O'ZINGIZNI TEKSHIRING               -->
+    <!-- ================================================================== -->
+    <div id="tab-summary" class="tab-pane">
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>
+              <span class="badge badge-primary">4-QISM</span>
+              Umumiy Xulosa va Taqqoslash Jadvali
+            </h2>
+            <p>Darsdagi barcha qurilmalarning joylashuvi, toifasi va asosiy vazifalari jamlanmasi</p>
+          </div>
+          <span class="badge badge-success">Xulosa ma’lumotnoma</span>
+        </div>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Qurilma nomi</th>
+                <th>Inglizcha atamasi</th>
+                <th>Joylashuvi</th>
+                <th>Qurilma toifasi</th>
+                <th>Asosiy bajaradigan vazifasi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1</strong></td>
+                <td><strong>Protsessor</strong></td>
+                <td>CPU (Central Processing Unit)</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Hisoblash miyasi</td>
+                <td>Barcha hisob-kitoblar, mantiqiy amallar va dastur buyruqlarini bajaruvchi bosh markaz</td>
+              </tr>
+              <tr>
+                <td><strong>2</strong></td>
+                <td><strong>Operativ xotira</strong></td>
+                <td>RAM (Random Access Memory)</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Vaqtinchalik xotira</td>
+                <td>Ayni paytda ishlab turgan dastur va jarayonlar ma’lumotlarini saqlovchi tezkor xotira</td>
+              </tr>
+              <tr>
+                <td><strong>3</strong></td>
+                <td><strong>Ona plata</strong></td>
+                <td>Motherboard / Mainboard</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Bosh bosma plata</td>
+                <td>Barcha qismlarni yagona zanjirga bog‘lab, o‘zaro aloqani ta’minlovchi asab tizimi</td>
+              </tr>
+              <tr>
+                <td><strong>4</strong></td>
+                <td><strong>Video karta</strong></td>
+                <td>GPU (Graphics Processing Unit)</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Grafik ishlovchi</td>
+                <td>Grafik axborotni qayta ishlab, monitor ekraniga tasvirni chiqarish</td>
+              </tr>
+              <tr>
+                <td><strong>5</strong></td>
+                <td><strong>Quvvat bloki</strong></td>
+                <td>PSU (Power Supply Unit)</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Elektr ta’minoti</td>
+                <td>220V tokni past kuchlanishli doimiy tokka aylantirib, qismlarga taqsimlash</td>
+              </tr>
+              <tr>
+                <td><strong>6</strong></td>
+                <td><strong>Sovutish tizimi</strong></td>
+                <td>Cooler / Radiator</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Termal himoya</td>
+                <td>Protsessor va qismlardan chiquvchi yuqori issiqlikni tashqariga chiqarib sovutish</td>
+              </tr>
+              <tr>
+                <td><strong>7</strong></td>
+                <td><strong>Korpus</strong></td>
+                <td>Chassis / PC Case</td>
+                <td><span class="badge badge-primary">Ichki</span></td>
+                <td>Konstruksiya va himoya</td>
+                <td>Ichki qismlarni jismoniy shikastdan himoyalash va to‘g‘ri havo oqimini tashkil qilish</td>
+              </tr>
+              <tr>
+                <td><strong>8</strong></td>
+                <td><strong>Monitor</strong></td>
+                <td>Display / Screen</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Asosiy vizual chiqarish</td>
+                <td>Raqamli axborotni inson ko‘zi ko‘radigan tasvir va matnga aylantirib berish</td>
+              </tr>
+              <tr>
+                <td><strong>9</strong></td>
+                <td><strong>Klaviatura</strong></td>
+                <td>Keyboard</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Asosiy matn kiritish</td>
+                <td>Matn, son va boshqaruv buyruqlarini kompyuterga kiritish</td>
+              </tr>
+              <tr>
+                <td><strong>10</strong></td>
+                <td><strong>Sichqoncha</strong></td>
+                <td>Mouse</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Asosiy manipulyator</td>
+                <td>Ekrandagi kursor yordamida obyektlarni boshqarish va buyruq berish</td>
+              </tr>
+              <tr>
+                <td><strong>11</strong></td>
+                <td><strong>Printer</strong></td>
+                <td>Printer</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Qo‘shimcha chiqarish</td>
+                <td>Hujjatlar va tasvirlarni qog‘ozga chop etib berish</td>
+              </tr>
+              <tr>
+                <td><strong>12</strong></td>
+                <td><strong>Skaner</strong></td>
+                <td>Scanner</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Qo‘shimcha kiritish</td>
+                <td>Qog‘ozdagi tasvir va matnlarni raqamli faylga aylantirib kiritish</td>
+              </tr>
+              <tr>
+                <td><strong>13</strong></td>
+                <td><strong>Kolonka / Naushnik</strong></td>
+                <td>Speakers / Headphones</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Qo‘shimcha chiqarish</td>
+                <td>Audio signallarni inson eshitadigan tovush to‘lqinlariga aylantirib berish</td>
+              </tr>
+              <tr>
+                <td><strong>14</strong></td>
+                <td><strong>Veb-kamera</strong></td>
+                <td>Webcam</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Qo‘shimcha kiritish</td>
+                <td>Jonli video tasvir va ovozni yozib olib kompyuterga uzatish</td>
+              </tr>
+              <tr>
+                <td><strong>15</strong></td>
+                <td><strong>Flash-disk (Fleshka)</strong></td>
+                <td>USB Flash Drive</td>
+                <td><span class="badge badge-teal">Tashqi</span></td>
+                <td>Kiritish va chiqarish</td>
+                <td>Fayllarni kompyuterlar o‘rtasida oson ko‘chirish va saqlash</td>
+              </tr>
+              <tr>
+                <td><strong>16</strong></td>
+                <td><strong>Qattiq disk (HDD)</strong></td>
+                <td>Hard Disk Drive</td>
+                <td><span class="badge badge-purple">Ichki / Tashqi</span></td>
+                <td>Doimiy magnit xotira</td>
+                <td>Katta hajmdagi ma’lumotlar va arxivlarni arzon narxda uzoq muddat saqlash</td>
+              </tr>
+              <tr>
+                <td><strong>17</strong></td>
+                <td><strong>SSD drayver</strong></td>
+                <td>Solid State Drive</td>
+                <td><span class="badge badge-purple">Ichki / Tashqi</span></td>
+                <td>Tezkor doimiy xotira</td>
+                <td>Operatsion tizim va dasturlarni bir necha soniyada ochuvchi yuqori tezlikdagi xotira</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- O'zingizni tekshiring (Quiz) -->
+        <div class="quiz-container">
+          <h3 class="quiz-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -3px; margin-right: 6px;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"></path></svg>O‘zingizni Tekshiring: 20 ta Savolli Katta Test
+          </h3>
+          <p class="quiz-subtitle">
+            Ushbu darsda o‘rganilgan barcha 17 ta qurilma, ichki va tashqi tasnif, xotira turlari bo‘yicha bilimlaringizni sinovdan o‘tkazing:
+          </p>
+
+          <div id="quizQuestionsContainer">
+            <!-- 1-Savol -->
+            <div class="quiz-question-card" data-q="1">
+              <div class="quiz-q-num">1-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuter o‘chirilganda undagi barcha ma’lumotlar o‘chib ketadigan, faol dasturlar ishlaydigan tezkor xotira qaysi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(1, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>HDD (Qattiq disk)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(1, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>SSD drayveri</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(1, 2, true)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>RAM (Operativ xotira)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(1, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>ROM (Doimiy xotira)</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-1">
+                <strong>To‘g‘ri javob: C (RAM).</strong>  Operativ xotira uchuvchan (vaqtinchalik) xotira bo‘lib, u faqat kompyuter ishlab turgan vaqtda ma’lumotlarni saqlaydi. Elektr toki uzilishi bilan undagi ma’lumotlar tozalanadi.
+              </div>
+            </div>
+            <!-- 2-Savol -->
+            <div class="quiz-question-card" data-q="2">
+              <div class="quiz-q-num">2-Savol / 20</div>
+              <div class="quiz-q-text">Quyidagi qurilmalardan qaysi biri tashqi ASOSIY kiritish qurilmasi hisoblanadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(2, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Monitor</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(2, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(2, 2, true)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Klaviatura</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(2, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Quvvat bloki</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-2">
+                <strong>To‘g‘ri javob: C (Klaviatura).</strong>  Klaviatura kompyuterga matn, son va boshqaruv buyruqlarini kiritish uchun xizmat qiluvchi asosiy tashqi kiritish vositasidir. Monitor — chiqarish, Printer — qo‘shimcha chiqarish qurilmasidir.
+              </div>
+            </div>
+            <!-- 3-Savol -->
+            <div class="quiz-question-card" data-q="3">
+              <div class="quiz-q-num">3-Savol / 20</div>
+              <div class="quiz-q-text">SSD drayverining klassik magnitli HDD qattiq diskiga nisbatan eng asosiy ustunligi nimada?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(3, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>1 GB xotira narxining arzonligi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(3, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>O‘ta yuqori tezlik, mutlaqo shovqinsizlik va zarbaga chidamlilik</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(3, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Aylanuvchi magnit disklarga egaligi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(3, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Ko‘proq elektr toki sarflashi</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-3">
+                <strong>To‘g‘ri javob: B.</strong>  SSD drayveri flesh-mikrosxemalarda ishlagani uchun harakatlanuvchi mexanik qismlarga ega emas, shovqinsiz ishlaydi va HDD dan 5–40 baravargacha tezroqdir.
+              </div>
+            </div>
+            <!-- 4-Savol -->
+            <div class="quiz-question-card" data-q="4">
+              <div class="quiz-q-num">4-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuterning barcha ichki qismlarini yagona elektron zanjirga bog‘lovchi bosh bosma plata nima deyiladi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(4, 0, true)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Ona plata (Motherboard)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(4, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Videokarta (GPU)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(4, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Quvvat bloki (PSU)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(4, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Kuler</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-4">
+                <strong>To‘g‘ri javob: A (Ona plata).</strong>  Ona plata barcha ichki komponentlar (CPU, RAM, GPU, disklar) va tashqi portlarni o‘zaro bog‘lovchi bosh elektron magistraldir.
+              </div>
+            </div>
+            <!-- 5-Savol -->
+            <div class="quiz-question-card" data-q="5">
+              <div class="quiz-q-num">5-Savol / 20</div>
+              <div class="quiz-q-text">Quyidagilardan qaysi biri tizimli blok ichida joylashgan ICHKI qurilma hisoblanadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(5, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Skaner</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(5, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Veb-kamera</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(5, 2, true)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Quvvat bloki (PSU)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(5, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Printer</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-5">
+                <strong>To‘g‘ri javob: C (Quvvat bloki).</strong>  Quvvat bloki tizimli blok korpusi ichida joylashib, 220V tokni past kuchlanishga aylantirib beradi. Skaner, printer va veb-kamera esa tashqi qurilmalardir.
+              </div>
+            </div>
+            <!-- 6-Savol -->
+            <div class="quiz-question-card" data-q="6">
+              <div class="quiz-q-num">6-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuterda barcha arifmetik-mantiqiy amallarni va dasturiy buyruqlarni bajaruvchi bosh hisoblash markazi nima?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(6, 0, true)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Protsessor (CPU)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(6, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Kesh xotira</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(6, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>BIOS mikrosxemasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(6, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Videokarta</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-6">
+                <strong>To‘g‘ri javob: A (Protsessor).</strong>  Protsessor (CPU) — kompyuterning "miyasi" bo‘lib, barcha hisob-kitoblarni amalga oshiradi va tizim qurilmalari ishini muvofiqlashtiradi.
+              </div>
+            </div>
+            <!-- 7-Savol -->
+            <div class="quiz-question-card" data-q="7">
+              <div class="quiz-q-num">7-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuterdagi raqamli axborotlarni inson ko‘zi ilg‘aydigan tasvir, matn va videoga aylantirib beruvchi ASOSIY chiqarish qurilmasi qaysi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(7, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(7, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Monitor (Displey)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(7, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Skaner</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(7, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Proyektor</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-7">
+                <strong>To‘g‘ri javob: B (Monitor).</strong>  Monitor — kompyuter bilan ishlash uchun zarur bo‘lgan eng asosiy tashqi vizual chiqarish qurilmasidir.
+              </div>
+            </div>
+            <!-- 8-Savol -->
+            <div class="quiz-question-card" data-q="8">
+              <div class="quiz-q-num">8-Savol / 20</div>
+              <div class="quiz-q-text">3D grafika, kompyuter o‘yinlari, video montaj va tasvirlarni ekranga chiqarish yukini o‘z zimmasiga oladigan maxsus qurilma qaysi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(8, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Ovoz kartasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(8, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Video karta (GPU)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(8, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Tarmoq kartasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(8, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Protsessor kuleri</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-8">
+                <strong>To‘g‘ri javob: B (Video karta).</strong>  Video karta raqamli grafik axborotlarni qayta ishlab, monitorga tasvir chiqarishga ixtisoslashgan alohida grafik protsessorga (GPU) va shaxsiy VRAM xotirasiga ega.
+              </div>
+            </div>
+            <!-- 9-Savol -->
+            <div class="quiz-question-card" data-q="9">
+              <div class="quiz-q-num">9-Savol / 20</div>
+              <div class="quiz-q-text">Protsessor va boshqa qismlar ishlaganda ajralib chiqadigan yuqori issiqlikni o‘ziga yutib, tashqariga haydab chiqaruvchi tizim nima?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(9, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Quvvat bloki</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(9, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Sovutish tizimi (Kuler/Radiator)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(9, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Korpus chang filtri</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(9, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Tizimli shina</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-9">
+                <strong>To‘g‘ri javob: B (Sovutish tizimi).</strong>  Havo yoki suyuqlik sovutish tizimi protsessorni me’yordan ortiq qizib ketishdan (80–90°C dan oshishdan) va buzilishdan himoya qiladi.
+              </div>
+            </div>
+            <!-- 10-Savol -->
+            <div class="quiz-question-card" data-q="10">
+              <div class="quiz-q-num">10-Savol / 20</div>
+              <div class="quiz-q-text">Qog‘ozdagi hujjat, fotosurat yoki rasmlarni yorug‘lik nurlari yordamida o‘qib, kompyuterga raqamli fayl shaklida kirituvchi vosita qaysi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(10, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(10, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Plotter</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(10, 2, true)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Skaner</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(10, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Strimer</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-10">
+                <strong>To‘g‘ri javob: C (Skaner).</strong>  Skaner — qog‘ozdagi tasvir va matnlarni kompyuter xotirasiga raqamli shaklda (PDF, JPEG) kiritish uchun xizmat qiladi.
+              </div>
+            </div>
+            <!-- 11-Savol -->
+            <div class="quiz-question-card" data-q="11">
+              <div class="quiz-q-num">11-Savol / 20</div>
+              <div class="quiz-q-text">Klassik magnitli qattiq disk (HDD) ichida ma’lumotlar qanday fizik element yuzasida saqlanadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(11, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Silikon kristalli mikrosxemada</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(11, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Aylanuvchi magnit plastinkalarda</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(11, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Optik lazer diskida</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(11, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Kondensatorlar kataklarida</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-11">
+                <strong>To‘g‘ri javob: B.</strong>  HDD ichida soniyasiga 5400–7200 marta aylanadigan magnit disklari va uning ustida mikroskopik masofada harakatlanuvchi o‘qish/yozish kallagi mavjud.
+              </div>
+            </div>
+            <!-- 12-Savol -->
+            <div class="quiz-question-card" data-q="12">
+              <div class="quiz-q-num">12-Savol / 20</div>
+              <div class="quiz-q-text">Nima uchun USB Flash-disk (fleshka) ham kiritish, ham chiqarish qurilmasi toifasiga kiradi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(12, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Unga monitor va sichqoncha ulanishi sababli</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(12, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Undan faylni kompyuterga o‘qish (kirish) va unga yangi fayllarni yozish (chiqish) mumkin bo‘lgani uchun</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(12, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>U faqat internet orqali ishlagani sababli</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(12, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>U elektr quvvatisiz umuman ishlamagani uchun</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-12">
+                <strong>To‘g‘ri javob: B.</strong>  Fleshka axborotni kompyuterga kiritish (o‘qish) va kompyuterdan tashqariga chiqarib saqlash (yozish) imkonini beruvchi universal tashqi xotira vositasidir.
+              </div>
+            </div>
+            <!-- 13-Savol -->
+            <div class="quiz-question-card" data-q="13">
+              <div class="quiz-q-num">13-Savol / 20</div>
+              <div class="quiz-q-text">Har bir tugmasi ostida mustaqil prujinali pereklyuchatel (switch) bo‘lgan, o‘ta chidamli klaviatura turi qanday ataladi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(13, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Membranali klaviatura</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(13, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Mexanik klaviatura</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(13, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Sensorli klaviatura</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(13, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Proyeksiyali klaviatura</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-13">
+                <strong>To‘g‘ri javob: B (Mexanik klaviatura).</strong>  Mexanik klaviaturalarda har bir tugma mustaqil kalitga ega bo‘lib, 50–100 million marta bosishga bardosh beradi va aniq bosish tuyg‘usini ta’minlaydi.
+              </div>
+            </div>
+            <!-- 14-Savol -->
+            <div class="quiz-question-card" data-q="14">
+              <div class="quiz-q-num">14-Savol / 20</div>
+              <div class="quiz-q-text">Katta hajmdagi matnli hujjatlarni daqiqasiga 25–40 varaq tezlikda va arzon tannarxda chop etish uchun qaysi printer turi eng maqbul hisoblanadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(14, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Siyohli (Inkjet) printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(14, 1, false)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Matritsali printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(14, 2, true)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Lazerli printer</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(14, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>3D printer</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-14">
+                <strong>To‘g‘ri javob: C (Lazerli printer).</strong>  Lazerli printerlar quruq toner kukuni yordamida matnlarni juda yuqori tezlikda, o‘chib ketmaydigan qilib va arzon tannarxda bosib chiqaradi.
+              </div>
+            </div>
+            <!-- 15-Savol -->
+            <div class="quiz-question-card" data-q="15">
+              <div class="quiz-q-num">15-Savol / 20</div>
+              <div class="quiz-q-text">Protsessorning soniyasiga necha milliard amal bajara olishini bildiruvchi takt chastotasi qaysi birlikda o‘lchanadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(15, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Gigabayt (GB)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(15, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Gigagers (GHz)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(15, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Megabit (Mbps)</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(15, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Nanometr (nm)</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-15">
+                <strong>To‘g‘ri javob: B (Gigagers).</strong>  Takt chastotasi Gers (Hz), Megagers (MHz) va Gigagers (GHz) birliklarida o‘lchanadi. 1 GHz = sekundiga 1 milliard amal/takt.
+              </div>
+            </div>
+            <!-- 16-Savol -->
+            <div class="quiz-question-card" data-q="16">
+              <div class="quiz-q-num">16-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuter korpusining (Case) asosiy vazifalari nimalardan iborat?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(16, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Faqat tashqi ko‘rinishni chiroyli qilish</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(16, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Ichki nozik qismlarni zarbadan himoyalash va to‘g‘ri havo oqimini ta’minlash</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(16, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Elektr tokini kuchaytirish</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(16, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Ma’lumotlarni zaxiralash</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-16">
+                <strong>To‘g‘ri javob: B.</strong>  Korpus ichki qismlarni jismoniy shikastlanish va changdan himoyalaydi hamda aerodinamik sovuq havo oqimini tashkil qiladi.
+              </div>
+            </div>
+            <!-- 17-Savol -->
+            <div class="quiz-question-card" data-q="17">
+              <div class="quiz-q-num">17-Savol / 20</div>
+              <div class="quiz-q-text">Kompyuter sichqonchasi xarakteristikasidagi DPI (Dots Per Inch) ko‘rsatkichi nimani anglatadi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(17, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Sichqoncha og‘irligini</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(17, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Datchik sezgirligi va harakat aniqligini</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(17, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Simining uzunligini</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(17, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Tugmalar sonini</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-17">
+                <strong>To‘g‘ri javob: B.</strong>  DPI (Dots Per Inch) — datchik sezgirligi bo‘lib, sichqoncha 1 dyuym surilganda kursor ekranda necha pikselga siljishini belgilaydi.
+              </div>
+            </div>
+            <!-- 18-Savol -->
+            <div class="quiz-question-card" data-q="18">
+              <div class="quiz-q-num">18-Savol / 20</div>
+              <div class="quiz-q-text">Zamonaviy kompyuterlar uchun eng maqbul gibrid doimiy xotira konfiguratsiyasi qaysi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(18, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Faqat ikkita sekin HDD o‘rnatish</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(18, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Tizim va dasturlar uchun tezkor SSD + katta arxivlar uchun sig‘imli HDD</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(18, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Faqat USB fleshkadan foydalanish</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(18, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Doimiy xotirasiz faqat RAM bilan ishlash</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-18">
+                <strong>To‘g‘ri javob: B.</strong>  Tezkor SSD (operatsion tizim va dasturlar uchun) hamda arzon katta sig‘imli HDD (video va arxivlar uchun) eng ideal kombinatsiya hisoblanadi.
+              </div>
+            </div>
+            <!-- 19-Savol -->
+            <div class="quiz-question-card" data-q="19">
+              <div class="quiz-q-num">19-Savol / 20</div>
+              <div class="quiz-q-text">Kolonka va naushniklar qanday turdagi qurilmalar guruhiga kiradi?</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(19, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Asosiy kiritish qurilmasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(19, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Tashqi qo‘shimcha chiqarish qurilmasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(19, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Ichki hisoblash qurilmasi</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(19, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Optik saqlash vositasi</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-19">
+                <strong>To‘g‘ri javob: B.</strong>  Kolonka va naushniklar elektr signallarini tovush to‘lqinlariga aylantirib beruvchi tashqi qo‘shimcha chiqarish vositalaridir.
+              </div>
+            </div>
+            <!-- 20-Savol -->
+            <div class="quiz-question-card" data-q="20">
+              <div class="quiz-q-num">20-Savol / 20</div>
+              <div class="quiz-q-text">Shaxsiy kompyuter (PC) bilan standart ishlashni ta’minlash uchun zarur bo‘lgan 3 ta ASOSIY TASHQI qurilma to‘g‘ri ko‘rsatilgan qatorni toping:</div>
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(20, 0, false)">
+                  <span class="quiz-opt-letter">A</span>
+                  <span>Skaner, printer, veb-kamera</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(20, 1, true)">
+                  <span class="quiz-opt-letter">B</span>
+                  <span>Monitor, klaviatura, sichqoncha</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(20, 2, false)">
+                  <span class="quiz-opt-letter">C</span>
+                  <span>Quvvat bloki, kuler, korpus</span>
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkAnswer(20, 3, false)">
+                  <span class="quiz-opt-letter">D</span>
+                  <span>Fleshka, quloqchin, mikrofon</span>
+                </button>
+              </div>
+              <div class="quiz-explanation" id="exp-20">
+                <strong>To‘g‘ri javob: B.</strong>  Monitor (asosiy chiqarish), Klaviatura (asosiy kiritish) va Sichqoncha (asosiy manipulyator) shaxsiy kompyuter bilan ishlash uchun zaruriy minimal to‘plamdir.
+              </div>
+            </div>
+          </div>
+
+          <!-- Natija banneri -->
+          <div class="quiz-score-banner" id="quizScoreBanner">
+            <h3 id="quizScoreText">Siz 5 tadan 5 ta to‘g‘ri javob berdingiz!</h3>
+            <p id="quizScoreFeedback" style="color: var(--muted); font-size: 0.95rem;">A’lo natija! Siz kompyuter qurilmalari mavzusini a’lo darajada o‘zlashtirdingiz.</p>
+            <button type="button" class="restart-btn" onclick="restartQuiz()">Testni qayta topshirish</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p><strong>Informatika va Axborot Texnologiyalari</strong> — 5-Dars Elektron Qo‘llanmasi</p>
+      <p style="margin-top: 0.35rem; font-size: 0.8rem; color: var(--subtle);">
+        Barcha huquqlar himoyalangan. Ta’lim maqsadlarida foydalanish uchun tavsiya etiladi.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIKASI -->
+  <script>
+    // 1. Tab navigatsiyasi
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(tabId)) {
+          btn.classList.add('active');
+        }
+      });
+
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('active');
+      });
+
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+    }
+
+    // 2. Mavzuni almashtirish (Dark/Light mode)
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('tat_theme', newTheme);
+      updateThemeUI(newTheme);
+    }
+
+    function updateThemeUI(theme) {
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      const sunSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+      const moonSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+      if (theme === 'dark') {
+        icon.innerHTML = sunSvg;
+        label.textContent = 'Yorug‘ rejim';
+      } else {
+        icon.innerHTML = moonSvg;
+        label.textContent = 'Qorong‘i rejim';
+      }
+    }
+
+    // Saqlangan mavzuni tiklash
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('tat_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeUI(savedTheme);
+    })();
+
+    // 3. Test (Quiz) logikasi
+    const userAnswers = {};
+    let correctCount = 0;
+    const totalQuestions = 20;
+
+    function checkAnswer(questionNum, optionIndex, isCorrect) {
+      if (userAnswers[questionNum] !== undefined) return; // Allaqachon javob berilgan
+      
+      userAnswers[questionNum] = isCorrect;
+      const card = document.querySelector('.quiz-question-card[data-q="' + questionNum + '"]');
+      const buttons = card.querySelectorAll('.quiz-opt-btn');
+      
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === optionIndex) {
+          btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        }
+      });
+
+      const exp = document.getElementById('exp-' + questionNum);
+      if (exp) {
+        exp.classList.add('show');
+        exp.classList.add(isCorrect ? 'correct-exp' : 'wrong-exp');
+      }
+
+      if (isCorrect) correctCount++;
+
+      // Barcha savollarga javob berildimi?
+      if (Object.keys(userAnswers).length === totalQuestions) {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      const banner = document.getElementById('quizScoreBanner');
+      const scoreText = document.getElementById('quizScoreText');
+      const feedback = document.getElementById('quizScoreFeedback');
+
+      scoreText.textContent = 'Siz ' + totalQuestions + ' tadan ' + correctCount + ' ta to‘g‘ri javob berdingiz!';
+      if (correctCount >= 18) {
+        feedback.textContent = 'A’lo natija! Siz darsdagi barcha ichki va tashqi qurilmalarni a’lo darajada (5 baho) o‘zlashtirdingiz.';
+      } else if (correctCount >= 14) {
+        feedback.textContent = 'Yaxshi natija! Siz mavzuni yetarli darajada yaxshi (4 baho) tushungansiz.';
+      } else if (correctCount >= 10) {
+        feedback.textContent = 'Qoniqarli natija (3 baho). Xato qilgan savollaringizni yana bir bor ko‘rib chiqishingizni tavsiya qilamiz.';
+      } else {
+        feedback.textContent = 'Mavzu materiallarini qaytadan diqqat bilan o‘qib chiqishingizni tavsiya qilamiz.';
+      }
+      banner.classList.add('show');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function restartQuiz() {
+      for (let k in userAnswers) delete userAnswers[k];
+      correctCount = 0;
+
+      document.querySelectorAll('.quiz-question-card').forEach(card => {
+        card.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+          btn.disabled = false;
+          btn.classList.remove('correct', 'wrong');
+        });
+        const exp = card.querySelector('.quiz-explanation');
+        if (exp) {
+          exp.classList.remove('show', 'correct-exp', 'wrong-exp');
+        }
+      });
+
+      const banner = document.getElementById('quizScoreBanner');
+      banner.classList.remove('show');
+    }
+  </script>
+</body>
+</html>

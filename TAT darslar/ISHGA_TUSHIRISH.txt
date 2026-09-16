@@ -1,0 +1,25 @@
+======================================================================
+  Shahrisabz Tibbiyot Texnikumi
+  "Tibbiyotda axborot texnologiyalari" fani
+  Bosh Mundarija — Interaktiv elektron darsliklar portali
+======================================================================
+
+DASTURNI ISHGA TUSHIRISH:
+--------------------------------------------------
+1. "start.bat" faylini sichqoncha bilan 2 marta bosing.
+2. Darslar mundarijasi avtomatik tarzda kompyuteringizdagi brauzerda
+   (Google Chrome, Microsoft Edge, Opera va boshqalar) offline rejimda ochiladi.
+3. Mundarijadan kerakli darsni tanlang (masalan, 1-Dars yoki 2-Dars) va
+   o'rganishni boshlang!
+
+XUSUSIYATLARI:
+- 100% Offline: Internet talab qilinmaydi.
+- Hamshiralik ishi yo'nalishiga moslashtirilgan.
+- Har bir darsda: Kirish, Nazariya, Amaliy simulyatorlar va Bilimni sinash testi.
+
+Darslar ro'yxati:
+- 1-Dars: Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.
+- 2-Dars: Axborot turlari va sanoq sistemalari. Texnika xavfsizligi.
+- 3-Dars: Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda axborot texnologiyalari.
+- 4-Dars: Klaviatura va sichqoncha asoslari (TezType va amaliyot).
+- 5-Dars: Tibbiy axborot tizimlari (MIS/EMR) va telemeditsina (Tez kunda)

@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tibbiyotda Axborot Texnologiyalari — 1-Dars | Shahrisabz Tibbiyot Texnikumi</title>
+  <style>
+    /* ==========================================================================
+       COMPLETE OFFLINE STANDALONE CSS (ZERO EXTERNAL DEPENDENCIES, 100% OFFLINE)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    /* Header */
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      .header-inner {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      background-color: #2563eb;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 640px) {
+      .brand-text h1 {
+        font-size: 1.45rem;
+      }
+    }
+
+    .brand-badges {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .lesson-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      background-color: #dbeafe;
+      color: #1e40af;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid #bfdbfe;
+    }
+
+    .date-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .brand-text p {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1d4ed8;
+      margin-top: 2px;
+    }
+
+    .college-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .college-badge {
+        width: auto;
+      }
+    }
+
+    .college-badge-icon {
+      color: #1d4ed8;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .college-badge-text .label {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .college-badge-text .val {
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    /* Tabs Navigation */
+    .tabs-nav {
+      background-color: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0.6rem 0;
+      position: sticky;
+      top: 85px;
+      z-index: 45;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      background-color: #e2e8f0;
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+    }
+
+    @media (min-width: 1024px) {
+      .tabs-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #334155;
+      transition: all 0.2s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    @media (min-width: 640px) {
+      .tab-btn {
+        font-size: 0.925rem;
+        padding: 0.85rem 1rem;
+      }
+    }
+
+    .tab-btn:hover {
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #0f172a;
+    }
+
+    .tab-btn.active {
+      background-color: #ffffff;
+      color: #1e40af;
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .tab-btn .badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      background-color: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Main Content Layout */
+    main {
+      flex: 1;
+      padding: 1.5rem 0 2.5rem 0;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background-color: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #e2e8f0;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .card {
+        padding: 2rem;
+      }
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    @media (min-width: 640px) {
+      .card-title {
+        font-size: 1.45rem;
+      }
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e3a8a, #1e40af, #0f172a);
+      color: #ffffff;
+      padding: 1.75rem;
+      border-radius: 20px;
+      border: 2px solid #3b82f6;
+      box-shadow: 0 4px 15px rgba(30, 64, 175, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .hero-banner {
+        padding: 2.25rem;
+      }
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Pillar Cards */
+    .pillar-card {
+      background-color: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .pillar-card:hover {
+      border-color: #93c5fd;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+    }
+
+    .pillar-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1d4ed8;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .pillar-card h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .pillar-card p {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-footer {
+      padding-top: 0.75rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Interactive Comparison Box */
+    .compare-container {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .compare-toggle {
+      display: inline-flex;
+      background-color: #e2e8f0;
+      padding: 0.35rem;
+      border-radius: 12px;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .compare-btn {
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #475569;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .compare-btn.active-digital {
+      background-color: #ffffff;
+      color: #1d4ed8;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .compare-btn.active-paper {
+      background-color: #ffffff;
+      color: #b91c1c;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* 7 Types of Information */
+    .type-card {
+      background-color: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .type-card:hover {
+      border-color: #93c5fd;
+      background-color: #ffffff;
+    }
+
+    .type-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .type-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: #dbeafe;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .type-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .type-card p {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .type-card .example {
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1d4ed8;
+    }
+
+    /* 5 Properties List */
+    .prop-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .prop-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .prop-text h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.2rem;
+    }
+
+    .prop-text p {
+      font-size: 0.875rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* Hardware Cards */
+    .hw-card {
+      background-color: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hw-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background-color: #dbeafe;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+
+    .hw-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.35rem;
+    }
+
+    .hw-card p {
+      font-size: 0.8rem;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    /* Algorithm steps */
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: #1e293b;
+    }
+
+    .step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #dbeafe;
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* LED Bezel Panel */
+    .led-panel-box {
+      background: linear-gradient(to right, #0f172a, #1e293b, #090d16);
+      border: 2px solid #334155;
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .led-bezel {
+      background-color: rgba(2, 6, 23, 0.95);
+      border: 2px solid #334155;
+      border-radius: 14px;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+      flex-wrap: wrap;
+    }
+
+    .led-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .led-lamp {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background-color: #334155;
+      border: 1px solid #475569;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .led-lamp.active {
+      background-color: #22c55e;
+      box-shadow: 0 0 16px 5px rgba(34, 197, 94, 0.9), inset 0 0 4px #ffffff;
+      border-color: #86efac;
+    }
+
+    .led-name {
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: monospace;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+    }
+
+    .led-unit.active .led-name {
+      color: #4ade80;
+    }
+
+    .led-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      background-color: #1e293b;
+      color: #64748b;
+    }
+
+    .led-unit.active .led-tag {
+      background-color: #064e3b;
+      color: #6ee7b7;
+      border: 1px solid #059669;
+    }
+
+    .switch-btn-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .switch-btn {
+      padding: 0.65rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      font-family: monospace;
+      cursor: pointer;
+      border: 1px solid #475569;
+      background-color: #1e293b;
+      color: #e2e8f0;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .switch-btn:hover {
+      background-color: #334155;
+    }
+
+    .switch-btn.active {
+      background-color: #0d9488;
+      border-color: #2dd4bf;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.4);
+    }
+
+    /* Screen Playground */
+    .playground-box {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 1.25rem;
+      color: #ffffff;
+      margin-top: 1.25rem;
+    }
+
+    .screen-output {
+      background-color: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: monospace;
+      color: #34d399;
+      font-size: 0.95rem;
+      min-height: 50px;
+      margin-top: 0.75rem;
+      word-break: break-all;
+    }
+
+    .screen-output.caps-on {
+      text-transform: uppercase;
+      color: #fde047;
+    }
+
+    /* Test Questions */
+    .quiz-card {
+      background-color: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-card.answered-correct {
+      border-color: #10b981;
+      background-color: #f0fdf4;
+    }
+
+    .quiz-card.answered-incorrect {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      margin-top: 0.6rem;
+      cursor: pointer;
+      font-size: 0.925rem;
+      transition: all 0.2s ease;
+      background-color: #ffffff;
+      color: #1e293b;
+    }
+
+    .quiz-option:hover:not(.disabled) {
+      background-color: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .quiz-option.correct {
+      background-color: #dcfce7 !important;
+      border-color: #10b981 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+
+    .quiz-option.incorrect {
+      background-color: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+      font-weight: 800;
+    }
+
+    .quiz-option.dimmed {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .explanation-box {
+      margin-top: 0.85rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .explanation-box.correct-exp {
+      background-color: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .explanation-box.incorrect-exp {
+      background-color: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #9f1239;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.925rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: #1e293b;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: #cbd5e1;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      padding: 1.5rem 0;
+      margin-top: auto;
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+              <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/>
+              <circle cx="20" cy="10" r="2"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-badges">
+              <span class="lesson-badge">1-DARS: HAMSHIRALIK ISHI VA KOMPYUTER SAVODXONLIGI</span>
+              <span class="date-badge" id="header-date">
+                📅 <span id="current-date-text">2026-yil</span>
+              </span>
+            </div>
+            <h1>Tibbiyotda axborot texnologiyalari</h1>
+            <p>Mavzu: Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.</p>
+          </div>
+        </div>
+
+        <div class="college-badge">
+          <svg class="college-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+          <div class="college-badge-text">
+            <div class="label">O'quv Muassasasi</div>
+            <div class="val">Shahrisabz Tibbiyot Texnikumi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= TABS NAVIGATION ================= -->
+  <div class="tabs-nav">
+    <div class="container">
+      <div class="tabs-grid">
+        <button id="nav-btn-intro" class="tab-btn active" onclick="switchTab('intro')">
+          <span>💡 KIRISH: NIMA UCHUN IT?</span>
+        </button>
+        <button id="nav-btn-theory" class="tab-btn" onclick="switchTab('theory')">
+          <span>📖 1. NAZARIYA</span>
+        </button>
+        <button id="nav-btn-practice" class="tab-btn" onclick="switchTab('practice')">
+          <span>⌨️ 2. AMALIYOT VA QURILMALAR</span>
+        </button>
+        <button id="nav-btn-quiz" class="tab-btn" onclick="switchTab('quiz')">
+          <span>📝 3. BILIMNI SINASH (TEST)</span>
+          <span id="nav-quiz-badge" class="badge">0/7</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main>
+    <div class="container">
+
+      <!-- ========================================================================= -->
+      <!-- TAB 0: KIRISH (INSPIRING INTRODUCTION & 4 PILLARS)                        -->
+      <!-- ========================================================================= -->
+      <div id="pane-intro" class="tab-pane active">
+        
+        <!-- Hero Intro Card -->
+        <div class="card">
+          <div style="font-size:0.8rem; font-weight:800; color:#0f766e; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem;">
+            ● Bo'lajak hamshiralar uchun kirish so'zi
+          </div>
+          <h2 class="card-title">
+            Nima uchun zamonaviy hamshiraga kompyuter va axborot texnologiyalari zarur?
+          </h2>
+          <p style="font-size:1rem; color:#334155; line-height:1.6; margin-bottom:1.25rem;">
+            Hurmatli bo'lajak hamshira! Siz inson salomatligi va hayotini saqlashdek eng sharafli, mas'uliyatli kasbni tanladingiz. Bugungi zamonaviy shifoxonada kompyuter va axborot texnologiyalari shunchaki qo'shimcha uskunalar emas — ular sizning eng ishonchli, tezkor va xatosiz yordamchingizdir.
+          </p>
+
+          <div style="background-color:#eff6ff; border:2px solid #bfdbfe; border-radius:14px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start;">
+            <div style="color:#2563eb; font-size:1.75rem; flex-shrink:0;">🩺</div>
+            <div>
+              <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:0.25rem;">
+                Hamshiralik san'ati va raqamli qudrat:
+              </strong>
+              <p style="font-size:0.925rem; color:#1e293b; line-height:1.5;">
+                Axborot texnologiyalarini puxta egallagan hamshira ortiqcha qog'ozbozlikdan xalos bo'ladi, bemorga ko'proq mehr va e'tibor ajratadi, shifokor bilan uzluksiz hamkorlikda inson hayotini saqlab qolishda muhim daqiqalarni yutib oladi.
+              </p>
+            </div>
+          </div>
+
+          <!-- Visual Diagram Banner -->
+          <div style="background:linear-gradient(135deg, #0f172a, #1e3a8a, #090d16); border:2px solid #3b82f6; border-radius:16px; padding:1.5rem; color:#ffffff; margin-top:1.5rem;">
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div>
+                <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; background:rgba(59,130,246,0.3); padding:0.25rem 0.6rem; border-radius:6px; color:#93c5fd; display:inline-block; margin-bottom:0.4rem;">
+                  Vizual O'quv Sxemasi
+                </span>
+                <h3 style="font-size:1.25rem; font-weight:900; margin-bottom:0.4rem;">
+                  Zamonaviy Raqamli Klinika va Hamshira Ish Stoli Integratsiyasi
+                </h3>
+                <p style="font-size:0.875rem; color:#cbd5e1; margin-bottom:1rem;">
+                  Bugungi shifoxonada hamshira kompyuteri orqali bemorning kardiogrammasi, laboratoriya tahlillari va dori ko'rsatkichlari markaziy bazaga biriktirilgan holda uzluksiz nazorat qilinadi:
+                </p>
+
+                <div class="grid-4" style="text-align:center;">
+                  <div style="background:rgba(15, 23, 42, 0.8); border:1px solid #334155; padding:0.85rem; border-radius:10px;">
+                    <strong style="color:#67e8f9; font-size:0.85rem; display:block;">1. EMR Baza</strong>
+                    <span style="font-size:0.75rem; color:#94a3b8;">Barcha kasallik tarixi</span>
+                  </div>
+                  <div style="background:rgba(15, 23, 42, 0.8); border:1px solid #334155; padding:0.85rem; border-radius:10px;">
+                    <strong style="color:#67e8f9; font-size:0.85rem; display:block;">2. Vital Monitor</strong>
+                    <span style="font-size:0.75rem; color:#94a3b8;">EKG va Bosim onlayn</span>
+                  </div>
+                  <div style="background:rgba(15, 23, 42, 0.8); border:1px solid #334155; padding:0.85rem; border-radius:10px;">
+                    <strong style="color:#67e8f9; font-size:0.85rem; display:block;">3. Laboratoriya</strong>
+                    <span style="font-size:0.75rem; color:#94a3b8;">Tahlillar 3 soniyada</span>
+                  </div>
+                  <div style="background:rgba(15, 23, 42, 0.8); border:1px solid #334155; padding:0.85rem; border-radius:10px;">
+                    <strong style="color:#67e8f9; font-size:0.85rem; display:block;">4. E-Retsept</strong>
+                    <span style="font-size:0.75rem; color:#94a3b8;">Dori xatosiz beriladi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SVG Network -->
+              <div style="background:rgba(2, 6, 23, 0.8); border:1px solid #334155; border-radius:12px; padding:1rem; text-align:center;">
+                <svg viewBox="0 0 300 180" style="width:100%; max-width:360px; height:auto; margin:0 auto; display:block;">
+                  <rect x="110" y="65" width="80" height="50" rx="8" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"/>
+                  <text x="150" y="88" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">KLINIKA BAZASI</text>
+                  <text x="150" y="100" fill="#93c5fd" font-size="7.5" text-anchor="middle">Markaziy Server</text>
+                  <circle cx="150" cy="74" r="2.5" fill="#22c55e" />
+
+                  <rect x="110" y="10" width="80" height="32" rx="6" fill="#0f766e" stroke="#2dd4bf" stroke-width="1.5"/>
+                  <text x="150" y="26" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">Hamshira Posti</text>
+                  <text x="150" y="36" fill="#99f6e4" font-size="6.5" text-anchor="middle">Kiritish & Nazorat</text>
+                  <line x1="150" y1="42" x2="150" y2="65" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="2,2"/>
+
+                  <rect x="10" y="75" width="75" height="32" rx="6" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
+                  <text x="47" y="91" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">Bemor Palatasi</text>
+                  <text x="47" y="100" fill="#c7d2fe" font-size="6.5" text-anchor="middle">EKG & Monitor</text>
+                  <line x1="85" y1="91" x2="110" y2="91" stroke="#818cf8" stroke-width="2" stroke-dasharray="2,2"/>
+
+                  <rect x="215" y="75" width="75" height="32" rx="6" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/>
+                  <text x="252" y="91" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">Laboratoriya</text>
+                  <text x="252" y="100" fill="#bae6fd" font-size="6.5" text-anchor="middle">Qon tahlillari</text>
+                  <line x1="190" y1="91" x2="215" y2="91" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2,2"/>
+
+                  <rect x="110" y="138" width="80" height="32" rx="6" fill="#7e22ce" stroke="#c084fc" stroke-width="1.5"/>
+                  <text x="150" y="154" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">Dorixona & Vrach</text>
+                  <text x="150" y="163" fill="#e9d5ff" font-size="6.5" text-anchor="middle">E-Retsept & Tasdiq</text>
+                  <line x1="150" y1="115" x2="150" y2="138" stroke="#c084fc" stroke-width="2" stroke-dasharray="2,2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Pillars Cards Grid -->
+        <div style="margin-bottom:1.5rem;">
+          <h3 class="card-title" style="margin-bottom:1rem;">
+            Hamshira faoliyatida IT ning 4 ta hayotiy ustuni
+          </h3>
+
+          <div class="grid-2">
+            <!-- Pillar 1 -->
+            <div class="pillar-card">
+              <div>
+                <div class="pillar-icon">📄</div>
+                <h4>1. Qog'ozbozlikdan qutulish va bemorga e'tibor</h4>
+                <p>
+                  Ilgari bemorning kasallik tarixini arxivdagi qalin daftarlardan qidirish 20-30 daqiqa vaqtni olar edi. Zamonaviy elektron tizimda esa bemor ismini yozish bilan sanoqli soniyalarda uning <strong>qon guruhi, o'tkazgan kasalliklari va allergiyalari</strong> ekranda paydo bo'ladi.
+                </p>
+              </div>
+              <div class="pillar-footer">
+                ✅ Natija: Vaqt qog'oz to'ldirishga emas, bemor parvarishiga sarflanadi.
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="pillar-card">
+              <div>
+                <div class="pillar-icon" style="background-color:#ecfdf5; border-color:#a7f3d0; color:#059669;">🛡️</div>
+                <h4>2. Tibbiy xatoliklarning oldini olish va xavfsizlik</h4>
+                <p>
+                  Qo'lda yozilgan noaniq shifokor yozuvini tushunmaslik oqibatida dori dozasini yanglishtirish inson salomatligiga jiddiy xavf soladi. Elektron tizimda <strong>dori nomi, berilish vaqti va aniq dozasi (masalan, 5 mg o'rniga 50 mg emas)</strong> aniq ko'rsatiladi va xatolar oldi olinadi.
+                </p>
+              </div>
+              <div class="pillar-footer" style="color:#059669;">
+                ✅ Natija: Inson omili sababli kelib chiqadigan xatolar 95% gacha yo'qoladi.
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="pillar-card">
+              <div>
+                <div class="pillar-icon">📊</div>
+                <h4>3. Zamonaviy tibbiy uskunalar bilan professional ishlash</h4>
+                <p>
+                  Bemorning yurak urishi va nafasini uzluksiz kuzatuvchi reanimatsion monitorlar, kardiogramma asboblari hamda avtomatlashgan dori yuborish uskunalarining bari <strong>maxsus dasturlashtirilgan kompyuterlardir</strong>. Ularni sozlash uchun hamshiraga IT savodxonlik zarur.
+                </p>
+              </div>
+              <div class="pillar-footer">
+                ✅ Natija: Hamshira har qanday ilg'or apparatni ishonch bilan boshqaradi.
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="pillar-card">
+              <div>
+                <div class="pillar-icon" style="background-color:#faf5ff; border-color:#e9d5ff; color:#7e22ce;">⚡</div>
+                <h4>4. Tezkor yordam va tahlillarni zudlik bilan olish</h4>
+                <p>
+                  Og'ir vaziyatlarda laboratoriyadan qon tahlili natijalarini qog'ozda kutib vaqt yo'qotilmaydi. Tahlil tayyor bo'lishi bilan natijalar to'g'ridan-to'g'ri <strong>hamshiraning ish stoli kompyuteriga soniyalarda yetib keladi</strong>. Bu esa shoshilinch yordamda qimmatli daqiqalarni yutadi.
+                </p>
+              </div>
+              <div class="pillar-footer" style="color:#7e22ce;">
+                ✅ Natija: Shifokor va hamshira bemorga darhol to'g'ri muolajani boshlaydi.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Comparison Box -->
+        <div class="compare-container">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
+            <div>
+              <h3 style="font-size:1.15rem; font-weight:900; color:#0f172a;">
+                Interaktiv Sinov: Qog'ozli Usul vs Zamonaviy Raqamli Tizim
+              </h3>
+              <p style="font-size:0.85rem; color:#64748b;">
+                Tugmalarni bosib, kasalxona amaliyotidagi farqni solishtiring:
+              </p>
+            </div>
+
+            <div class="compare-toggle">
+              <button id="btn-comp-digital" class="compare-btn active-digital" onclick="setCompareMode('digital')">
+                💻 Raqamli Tizim
+              </button>
+              <button id="btn-comp-paper" class="compare-btn" onclick="setCompareMode('paper')">
+                📄 Qog'ozli Usul
+              </button>
+            </div>
+          </div>
+
+          <div id="compare-digital-box" style="background-color:#f0fdf4; border:2px solid #86efac; border-radius:14px; padding:1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+              <strong style="color:#166534; font-size:0.95rem;">
+                ✅ Zamonaviy Tibbiyot Axborot Tizimi (EMR - Elektron Karta)
+              </strong>
+              <span style="font-size:0.75rem; font-weight:800; background:#ffffff; color:#15803d; padding:0.25rem 0.6rem; border-radius:6px; border:1px solid #bbf7d0;">
+                Qidiruv vaqti: 2 soniya
+              </span>
+            </div>
+
+            <div style="background:#ffffff; border:1px solid #bbf7d0; border-radius:10px; padding:1rem; margin-bottom:0.75rem;">
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                <input type="text" value="Alimov Sanjarbek" readonly style="flex:1; padding:0.5rem 0.75rem; border-radius:8px; border:1px solid #cbd5e1; font-size:0.9rem; font-weight:600; background:#f8fafc;">
+                <button class="btn-primary" style="padding:0.5rem 1rem; font-size:0.85rem;" onclick="alert('Bemor ma\'lumotlari 0.2 soniyada topildi!')">Topish</button>
+              </div>
+
+              <div class="grid-3" style="font-size:0.85rem;">
+                <div style="background:#f8fafc; padding:0.6rem; border-radius:8px; border:1px solid #e2e8f0;">
+                  <span style="font-size:0.7rem; color:#64748b; text-transform:uppercase; font-weight:700; display:block;">Qon Guruhi:</span>
+                  <strong style="color:#1e40af;">A(II) Rh+ (Musbat)</strong>
+                </div>
+                <div style="background:#fff1f2; padding:0.6rem; border-radius:8px; border:1px solid #fecdd3;">
+                  <span style="font-size:0.7rem; color:#be123c; text-transform:uppercase; font-weight:700; display:block;">Allergik Reaksiya:</span>
+                  <strong style="color:#9f1239;">Penitsillin guruhiga BOR</strong>
+                </div>
+                <div style="background:#f0fdf4; padding:0.6rem; border-radius:8px; border:1px solid #bbf7d0;">
+                  <span style="font-size:0.7rem; color:#15803d; text-transform:uppercase; font-weight:700; display:block;">Laboratoriya Holati:</span>
+                  <strong style="color:#166534;">Qon tahlili: Tayyor</strong>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-size:0.85rem; color:#166534; font-weight:600;">
+              Hamshira barcha ma'lumotlarni darhol ko'radi va bemorga noto'g'ri dori yuborilishining oldi to'liq olinadi.
+            </p>
+          </div>
+
+          <div id="compare-paper-box" style="display:none; background-color:#fff1f2; border:2px solid #fca5a5; border-radius:14px; padding:1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+              <strong style="color:#9f1239; font-size:0.95rem;">
+                ❌ Eski An'anaviy Qog'oz Daftarlar Usuli
+              </strong>
+              <span style="font-size:0.75rem; font-weight:800; background:#ffffff; color:#be123c; padding:0.25rem 0.6rem; border-radius:6px; border:1px solid #fecdd3;">
+                Qidiruv vaqti: 25-30 daqiqa
+              </span>
+            </div>
+
+            <div style="background:#ffffff; border:1px solid #fecdd3; border-radius:10px; padding:1rem; margin-bottom:0.75rem; font-size:0.875rem; color:#881337; line-height:1.6;">
+              • Qalin kartoteka javonlaridan bemorning qog'oz kasallik tarixini qidirish talab etiladi.<br>
+              • Shifokorning qo'lyozmasini tushunish qiyin, allergik ma'lumotlar boshqa varaqda qolib ketishi mumkin.<br>
+              • Laboratoriyaga tahlil qog'ozini olib kelish uchun shaxsan borib-kelishga to'g'ri keladi.
+            </div>
+
+            <p style="font-size:0.85rem; color:#9f1239; font-weight:700;">
+              Qimmatli vaqt behuda qog'oz qidirishga sarflanadi va shoshilinch yordam ko'rsatish kechikishi mumkin.
+            </p>
+          </div>
+        </div>
+
+        <!-- Next Action Button -->
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="btn-primary" onclick="switchTab('theory')">
+            <span>1-Bo'lim: Nazariyaga o'tish</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- TAB 1: NAZARIYA (MEDICAL INFORMATION & 7 FORMS)                           -->
+      <!-- ========================================================================= -->
+      <div id="pane-theory" class="tab-pane">
+        
+        <!-- Top Theory Hero -->
+        <div class="hero-banner">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+            <span style="font-size:0.75rem; font-weight:900; background:rgba(255,255,255,0.2); padding:0.25rem 0.65rem; border-radius:6px; text-transform:uppercase;">
+              1-Dars Nazariyasi
+            </span>
+            <span style="font-size:0.85rem; color:#bfdbfe; font-weight:700;">
+              Shahrisabz Tibbiyot Texnikumi
+            </span>
+          </div>
+          <h2 style="font-size:1.5rem; font-weight:900; line-height:1.25; margin-bottom:0.5rem;">
+            Mavzu: Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.
+          </h2>
+          <p style="font-size:0.95rem; color:#dbeafe; line-height:1.5;">
+            Tibbiyot sohasida axborot tushunchasi, uning 5 ta asosiy xususiyati, 7 ta taqdim etilish shakli hamda zamonaviy hamshira faoliyatida tibbiy axborot texnologiyalarining o'rni.
+          </p>
+        </div>
+
+        <!-- Card: What is Medical Info -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>💡</span> Tibbiy axborot nima?
+          </h2>
+          <p style="font-size:0.95rem; color:#334155; line-height:1.6; margin-bottom:1.5rem;">
+            Tibbiyotda axborot — bu bemorning holati, shikoyati, tahlil natijalari va davolash jarayoni haqidagi ma'lumotlar majmuidir. Masalan, hamshira bemorning tana haroratini o'lchaganda olingan <strong style="color:#0f172a;">38.5°C</strong> ko'rsatkichi — bu xom ma'lumot. Ushbu ma'lumotni <em>"Isitma baland, shifokorga xabar berish kerak"</em> deb baholash esa <strong style="color:#2563eb;">axborot</strong> hisoblanadi.
+          </p>
+
+          <h3 style="font-size:1.15rem; font-weight:900; color:#0f172a; margin-bottom:1rem;">
+            Tibbiyotda axborotning 7 ta asosiy taqdim etilish shakli:
+          </h3>
+
+          <div class="grid-3" style="margin-bottom:1.5rem;">
+            <!-- 1. Matnli -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">📄</div>
+                  <h4>1. Matnli axborot</h4>
+                </div>
+                <p>Bemorning shikoyatlari, anamnez (kasallik tarixi), shifokor kundaligi, epikriz va hamshiralik parvarish rejasi.</p>
+              </div>
+              <div class="example">Misol: "Bemor bosh og'rig'idan shikoyat qilmoqda"</div>
+            </div>
+
+            <!-- 2. Raqamli -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">🔢</div>
+                  <h4>2. Raqamli axborot</h4>
+                </div>
+                <p>Qon bosimi (120/80 mm sim.ust), puls (74 ur/daq), harorat (36.6°C), glyukoza (5.2 mmol/l), gemoglobin.</p>
+              </div>
+              <div class="example">Misol: 120/80 mm sim.ust, 37.2°C, 5.5 mmol/l</div>
+            </div>
+
+            <!-- 3. Grafik va Tasviriy -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">📈</div>
+                  <h4>3. Grafik & Tasviriy</h4>
+                </div>
+                <p>Rentgen suratlari, MRT, MSKT (tomografiya), ultratovush (UTT/UZI) va elektrokardiogramma (EKG) to'lqinlari.</p>
+              </div>
+              <div class="example">Misol: Rentgen plyonkasi, EKG qog'oz tasmasi</div>
+            </div>
+
+            <!-- 4. Tovushli (Audio) -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">🔊</div>
+                  <h4>4. Tovushli (Audio)</h4>
+                </div>
+                <p>Fonendoskop orqali yurak tonlari va nafas shovqinlarini eshitish (auskultatsiya), audiometriya signallari.</p>
+              </div>
+              <div class="example">Misol: Yurak urish tovushlari, o'pka xirillashi</div>
+            </div>
+
+            <!-- 5. Video va Dinamik -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">🎥</div>
+                  <h4>5. Video & Dinamik</h4>
+                </div>
+                <p>Endoskopiya, gastroskopiya, laparoskopik video-jarrohlik jarayoni hamda exokardiografiya videolari.</p>
+              </div>
+              <div class="example">Misol: Laparoskopik operatsiya video yozuvi</div>
+            </div>
+
+            <!-- 6. Taktil (Sezgi) -->
+            <div class="type-card">
+              <div>
+                <div class="type-card-header">
+                  <div class="type-card-icon">✋</div>
+                  <h4>6. Taktil (Sezgi)</h4>
+                </div>
+                <p>Qo'l bilan paypaslab tekshirish (palpatsiya), terining harorati, elastikligi, shishlar va bionik sensorlar.</p>
+              </div>
+              <div class="example">Misol: Qorin palpatsiyasi, terining tarangligi</div>
+            </div>
+          </div>
+
+          <!-- 7. Bio-kodli (Full width) -->
+          <div style="background:#f8fafc; border:2px solid #e2e8f0; border-radius:14px; padding:1.25rem; display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem;">
+            <div style="width:44px; height:44px; border-radius:10px; background:#ffe4e6; color:#e11d48; display:flex; align-items:center; justify-content:center; font-size:1.25rem; font-weight:800; flex-shrink:0;">
+              🧬
+            </div>
+            <div>
+              <h4 style="font-size:1.05rem; font-weight:800; color:#1e293b; margin-bottom:0.25rem;">
+                7. Maxsus Bio-kodli va Identifikatsiya axboroti
+              </h4>
+              <p style="font-size:0.875rem; color:#475569; line-height:1.5;">
+                Bemor bilaguzugidagi QR va Shtrix-kodlar (shaxsni xatosiz aniqlash), DNK va genetik kod sekvensiyasi, dori vositalarining raqamli markirovkasi hamda shifrlangan elektron retsept kodlari.
+              </p>
+            </div>
+          </div>
+
+          <!-- Senses Breakdown -->
+          <div style="background:linear-gradient(135deg, #1e3a8a, #0f172a); color:#ffffff; padding:1.5rem; border-radius:16px;">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+              <span>👁️</span> Inson idrok a'zolari bo'yicha axborot qabul qilish ulushlari:
+            </h4>
+
+            <div class="grid-4" style="text-align:center; gap:0.75rem;">
+              <div style="background:rgba(255,255,255,0.1); padding:0.75rem; border-radius:10px;">
+                <strong style="font-size:1.35rem; color:#93c5fd; display:block;">80% - 90%</strong>
+                <span style="font-size:0.8rem; font-weight:700;">Vizual (Ko'rish)</span>
+                <p style="font-size:0.7rem; color:#cbd5e1; margin-top:2px;">Ko'z orqali</p>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); padding:0.75rem; border-radius:10px;">
+                <strong style="font-size:1.35rem; color:#5eead4; display:block;">8% - 10%</strong>
+                <span style="font-size:0.8rem; font-weight:700;">Audial (Eshitish)</span>
+                <p style="font-size:0.7rem; color:#cbd5e1; margin-top:2px;">Quloq orqali</p>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); padding:0.75rem; border-radius:10px;">
+                <strong style="font-size:1.35rem; color:#c084fc; display:block;">1% - 2%</strong>
+                <span style="font-size:0.8rem; font-weight:700;">Taktil (Sezish)</span>
+                <p style="font-size:0.7rem; color:#cbd5e1; margin-top:2px;">Teri orqali</p>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); padding:0.75rem; border-radius:10px;">
+                <strong style="font-size:1.35rem; color:#fde047; display:block;">~1%</strong>
+                <span style="font-size:0.8rem; font-weight:700;">Hid va Ta'm</span>
+                <p style="font-size:0.7rem; color:#cbd5e1; margin-top:2px;">Burun va til</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Essential Properties -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>🛡️</span> Hamshiralik amaliyotida axborotning 5 ta asosiy xususiyati
+          </h2>
+          <p class="card-subtitle">
+            Tibbiy ma'lumotlar bilan ishlashda har bir hamshira qat'iy amal qilishi shart bo'lgan talablar:
+          </p>
+
+          <div class="prop-item">
+            <div class="prop-num">1</div>
+            <div class="prop-text">
+              <h4>Aniqlik (To'g'rilik)</h4>
+              <p>Dori dozasini xatosiz yozish: masalan, <strong>50 mg emas</strong>, shifokor buyurgan aniq <strong>5 mg</strong> miqdorini kiritish.</p>
+            </div>
+          </div>
+
+          <div class="prop-item">
+            <div class="prop-num">2</div>
+            <div class="prop-text">
+              <h4>O'z vaqtidalik (Tezkorlik)</h4>
+              <p>Shoshilinch qon tahlillari va keskin ko'tarilgan qon bosimini shifokorga darhol yetkazish.</p>
+            </div>
+          </div>
+
+          <div class="prop-item">
+            <div class="prop-num">3</div>
+            <div class="prop-text">
+              <h4>To'liqlik</h4>
+              <p>Bemorning barcha shikoyatlari, avvalgi operatsiyalari va dorilarga allergik reaksiyalarini to'liq qayd etish.</p>
+            </div>
+          </div>
+
+          <div class="prop-item">
+            <div class="prop-num">4</div>
+            <div class="prop-text">
+              <h4>Ishonchlilik</h4>
+              <p>Faqat tekshirilgan va to'g'ri sozlangan tibbiy asboblar (bosim o'lchagich, kardiograf, analizator) ma'lumotlariga tayanish.</p>
+            </div>
+          </div>
+
+          <div class="prop-item">
+            <div class="prop-num">5</div>
+            <div class="prop-text">
+              <h4>Maxfiylik (Tibbiy sir)</h4>
+              <p>Bemorning tashxisi va davolash ma'lumotlarini begonalar yoki ruxsatsiz shaxslarga aslo oshkor qilmaslik.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Nav -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <button class="btn-secondary" onclick="switchTab('intro')">
+            ← Kirish qismiga qaytish
+          </button>
+          <button class="btn-primary" onclick="switchTab('practice')">
+            <span>2-Bo'lim: Amaliyotga o'tish</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- TAB 2: AMALIYOT VA QURILMALAR (PRACTICE, MOUSE, KEYBOARD & SIMULATOR)     -->
+      <!-- ========================================================================= -->
+      <div id="pane-practice" class="tab-pane">
+        
+        <!-- 1. Computer Hardware Structure -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>🖥️</span> 1. Tibbiy kompyuterning tuzilishi (Grafik sxema)
+          </h2>
+          <p class="card-subtitle">
+            Hamshira ish stantsiyasidagi shaxsiy kompyuter quyidagi 4 ta asosiy qismdan tashkil topgan:
+          </p>
+
+          <div class="grid-4">
+            <div class="hw-card">
+              <div class="hw-icon">🖥️</div>
+              <h4>1. Monitor (Ekran)</h4>
+              <p>Axborotni chiqarish: Bemor anketasi, tahlillar va kardiogrammani ko'rsatadi.</p>
+            </div>
+            <div class="hw-card">
+              <div class="hw-icon">🖲️</div>
+              <h4>2. Tizim bloki</h4>
+              <p>Kompyuterning miyasi: Barcha hisob-kitoblar va ma'lumotlarni saqlaydi.</p>
+            </div>
+            <div class="hw-card">
+              <div class="hw-icon">⌨️</div>
+              <h4>3. Klaviatura</h4>
+              <p>Axborot kiritish: Bemor ismi, dori dozasi va raqamlarni terish.</p>
+            </div>
+            <div class="hw-card">
+              <div class="hw-icon">🖱️</div>
+              <h4>4. Sichqoncha</h4>
+              <p>Boshqaruv: Ekrandagi kursorni harakatlantirish va buyruqlarni tanlash.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Power On & Safe Shutdown Algorithm -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>⚡</span> 2. Kompyuterni to'g'ri yoqish va xavfsiz o'chirish algoritmi
+          </h2>
+
+          <div class="grid-2" style="margin-bottom:1rem;">
+            <!-- Power On -->
+            <div style="background:#eff6ff; border:2px solid #bfdbfe; border-radius:14px; padding:1.25rem;">
+              <h4 style="font-size:1.05rem; font-weight:800; color:#1e3a8a; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>🔌</span> Kompyuterni to'g'ri yoqish tartibi:
+              </h4>
+              <ul class="step-list">
+                <li class="step-item">
+                  <span class="step-badge">1</span>
+                  <span><strong>Elektr toki:</strong> Rozetka va uzatgich (stabilizator) yoqilganligini tekshiring.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge">2</span>
+                  <span><strong>Tizim bloki:</strong> Old panelidagi yirik <strong>Power</strong> tugmasini 1 marta bosing.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge">3</span>
+                  <span><strong>Monitor:</strong> Agar monitor avtomatik yoqilmasa, quvvat tugmasini bosing.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge">4</span>
+                  <span><strong>Tizimga kirish:</strong> Windows yuklangach, o'z hamshiralik login/parolingizni kiriting.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Shutdown -->
+            <div style="background:#fff1f2; border:2px solid #fecdd3; border-radius:14px; padding:1.25rem;">
+              <h4 style="font-size:1.05rem; font-weight:800; color:#9f1239; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>🛑</span> Xavfsiz o'chirish (Qat'iy qoida):
+              </h4>
+              <ul class="step-list">
+                <li class="step-item">
+                  <span class="step-badge" style="background:#fecdd3; color:#9f1239;">1</span>
+                  <span><strong>Ma'lumotlarni saqlash:</strong> Bemorlar kartochkasi va muolajalarini saqlang.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge" style="background:#fecdd3; color:#9f1239;">2</span>
+                  <span><strong>Dasturlarni yopish:</strong> Ochiq tibbiy dasturlardan to'g'ri chiqing.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge" style="background:#fecdd3; color:#9f1239;">3</span>
+                  <span><strong>Boshlash menyusi:</strong> Ekranning pastki burchagidagi <strong>"Boshlash" (Пуск/Start)</strong> tugmasini bosing.</span>
+                </li>
+                <li class="step-item">
+                  <span class="step-badge" style="background:#fecdd3; color:#9f1239;">4</span>
+                  <span><strong>O'chirish:</strong> <strong>"Tizimni o'chirish" (Завершение работы)</strong> buyrug'ini tanlang.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.85rem 1rem; font-size:0.85rem; color:#92400e; display:flex; align-items:center; gap:0.5rem;">
+            <span>🔒</span>
+            <span><strong>Palataga chiqishda ekranni tezkor qulflash:</strong> Begonalar ko'rmasligi uchun klaviaturadagi <kbd style="background:#fff; border:1px solid #fcd34d; padding:0.15rem 0.4rem; border-radius:4px; font-weight:800;">Win + L</kbd> tugmalarini birga bosing.</span>
+          </div>
+        </div>
+
+        <!-- 3. Mouse Interactive Section -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>🖱️</span> 3. Sichqoncha (Manipulyator) tuzilishi va amaliy vazifalari
+          </h2>
+          <p class="card-subtitle">
+            Sichqonchaning qismlari ustiga bosing va ularning kasalxona tizimidagi aniq vazifasini bilib oling:
+          </p>
+
+          <div class="grid-2" style="align-items:center;">
+            <!-- SVG Interactive Mouse -->
+            <div style="background:#f8fafc; border:2px solid #e2e8f0; border-radius:16px; padding:1.5rem; text-align:center;">
+              <svg viewBox="0 0 200 280" style="width:160px; height:auto; margin:0 auto; display:block; user-select:none;">
+                <!-- Mouse Body -->
+                <path id="svg-mouse-body" d="M 40,80 C 40,25 160,25 160,80 L 160,190 C 160,250 40,250 40,190 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="4" onclick="selectMousePart('body')" style="cursor:pointer; transition:all 0.2s;" />
+                
+                <!-- Left Button -->
+                <path id="svg-mouse-left" d="M 42,80 C 42,35 95,35 95,35 L 95,110 L 42,110 Z" fill="#2563eb" stroke="#1e293b" stroke-width="2.5" onclick="selectMousePart('left')" style="cursor:pointer; transition:all 0.2s;" />
+                
+                <!-- Right Button -->
+                <path id="svg-mouse-right" d="M 105,35 C 105,35 158,35 158,80 L 158,110 L 105,110 Z" fill="#cbd5e1" stroke="#1e293b" stroke-width="2.5" onclick="selectMousePart('right')" style="cursor:pointer; transition:all 0.2s;" />
+                
+                <!-- Scroll Wheel -->
+                <rect id="svg-mouse-wheel" x="92" y="55" width="16" height="35" rx="8" fill="#64748b" stroke="#1e293b" stroke-width="2" onclick="selectMousePart('wheel')" style="cursor:pointer; transition:all 0.2s;" />
+
+                <text x="52" y="75" fill="#ffffff" font-size="10" font-weight="bold">Chap</text>
+                <text x="115" y="75" fill="#1e293b" font-size="10" font-weight="bold">O'ng</text>
+                <text x="75" y="200" fill="#64748b" font-size="11" font-weight="bold">Korpus</text>
+              </svg>
+
+              <div style="display:flex; justify-content:center; gap:0.5rem; margin-top:1rem; flex-wrap:wrap;">
+                <button id="btn-mouse-left" class="btn-primary" style="padding:0.4rem 0.85rem; font-size:0.75rem;" onclick="selectMousePart('left')">Chap tugma</button>
+                <button id="btn-mouse-right" class="btn-secondary" style="padding:0.4rem 0.85rem; font-size:0.75rem;" onclick="selectMousePart('right')">O'ng tugma</button>
+                <button id="btn-mouse-wheel" class="btn-secondary" style="padding:0.4rem 0.85rem; font-size:0.75rem;" onclick="selectMousePart('wheel')">G'ildirakcha</button>
+              </div>
+            </div>
+
+            <!-- Mouse Explanation Box -->
+            <div id="mouse-detail-box" style="background:#eff6ff; border:2px solid #93c5fd; border-radius:16px; padding:1.5rem;">
+              <h4 id="mouse-detail-title" style="font-size:1.15rem; font-weight:900; color:#1e3a8a; margin-bottom:0.5rem;">
+                Sichqonchaning Chap Tugmasi (Asosiy ishchi tugma)
+              </h4>
+              <div id="mouse-detail-desc" style="font-size:0.9rem; color:#1e293b; line-height:1.6;">
+                <strong>1 marta bosish (Tanlash):</strong> Bemorlar ro'yxatidan kerakli bemorni tanlash, qon guruhi katakchasini belgilash yoki buyruq tugmasini bosish.<br><br>
+                <strong>2 marta tez bosish (Ochish):</strong> Bemorning to'liq elektron kasallik tarixi faylini yoki tahlil natijalari varaqasini ochish.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Keyboard 5 Zones Interactive Section -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>⌨️</span> 4. Klaviatura tuzilishi: 5 ta asosiy hudud
+          </h2>
+          <p class="card-subtitle">
+            Klaviaturaning asosiy hududlarini tanlang va ularning tibbiyotdagi vazifalarini ko'ring:
+          </p>
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <button id="btn-kb-numpad" class="btn-primary" style="font-size:0.8rem; padding:0.5rem 0.9rem;" onclick="selectKbZone('numpad')">1. Raqamli blok (Numpad)</button>
+            <button id="btn-kb-alpha" class="btn-secondary" style="font-size:0.8rem; padding:0.5rem 0.9rem;" onclick="selectKbZone('alpha')">2. Alifbo-matnli blok</button>
+            <button id="btn-kb-special" class="btn-secondary" style="font-size:0.8rem; padding:0.5rem 0.9rem;" onclick="selectKbZone('special')">3. Boshqaruv (Tab, Enter, Ctrl)</button>
+            <button id="btn-kb-function" class="btn-secondary" style="font-size:0.8rem; padding:0.5rem 0.9rem;" onclick="selectKbZone('function')">4. Funksional (F1-F12)</button>
+            <button id="btn-kb-arrows" class="btn-secondary" style="font-size:0.8rem; padding:0.5rem 0.9rem;" onclick="selectKbZone('arrows')">5. Strelkalar (Navigatsiya)</button>
+          </div>
+
+          <div id="kb-zone-detail" style="background:#f8fafc; border:2px solid #e2e8f0; border-radius:14px; padding:1.25rem;">
+            <h4 id="kb-zone-title" style="font-size:1.1rem; font-weight:900; color:#0f766e; margin-bottom:0.5rem;">
+              1. Raqamli blok (Numpad) — Hamshiraning eng asosiy quroli
+            </h4>
+            <p id="kb-zone-desc" style="font-size:0.9rem; color:#334155; line-height:1.6;">
+              Klaviaturaning o'ng tomonidagi kalkulyatorga o'xshash blok. Bemorning qon bosimi (120/80), pulsi (74), harorati (36.6) va dori dozasini bir qo'l bilan 3 barobar tez kiritish imkonini beradi. Yoqish uchun <strong>[Num Lock]</strong> tugmasi bosiladi.
+            </p>
+          </div>
+        </div>
+
+        <!-- 5. Keyboard 3 Indicator Lights (LED Panel) -->
+        <div class="card" style="border:2px solid #0d9488;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <span style="font-size:0.75rem; font-weight:900; background:#ccfbf1; color:#0f766e; padding:0.25rem 0.6rem; border-radius:6px; text-transform:uppercase;">
+                Asosiy Amaliy Mavzu
+              </span>
+              <h2 class="card-title" style="margin-top:0.35rem;">
+                💡 Klaviaturadagi 3 ta Indikator Chirog'i (NUM, CAPS, SCROLL)
+              </h2>
+            </div>
+          </div>
+          <p class="card-subtitle">
+            Ularning vazifasi, qanday yoqish/o'chirish va tibbiyotda kiritish jarayonidagi roli
+          </p>
+
+          <!-- REALISTIC LED INDICATOR PANEL -->
+          <div class="led-panel-box">
+            <div style="display:flex; flex-direction:column; gap:1.25rem;">
+              <div style="display:flex; flex-direction:column; align-items:center;">
+                <div style="font-size:0.75rem; font-family:monospace; color:#94a3b8; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.75rem;">
+                  KLAVIATURA INDIKATORLAR PANELI (LED)
+                </div>
+
+                <!-- 3 Lamps Bezel -->
+                <div class="led-bezel">
+                  <!-- NUM -->
+                  <div id="led-unit-num" class="led-unit active" onclick="toggleNumLock()">
+                    <div id="lamp-num" class="led-lamp active"></div>
+                    <span class="led-name">NUM</span>
+                    <span id="tag-num" class="led-tag">YONIQ</span>
+                  </div>
+
+                  <div style="width:1px; height:40px; background:#334155;"></div>
+
+                  <!-- CAPS -->
+                  <div id="led-unit-caps" class="led-unit" onclick="toggleCapsLock()">
+                    <div id="lamp-caps" class="led-lamp"></div>
+                    <span class="led-name">CAPS</span>
+                    <span id="tag-caps" class="led-tag">O'CHIQ</span>
+                  </div>
+
+                  <div style="width:1px; height:40px; background:#334155;"></div>
+
+                  <!-- SCROLL -->
+                  <div id="led-unit-scroll" class="led-unit" onclick="toggleScrollLock()">
+                    <div id="lamp-scroll" class="led-lamp"></div>
+                    <span class="led-name">SCROLL</span>
+                    <span id="tag-scroll" class="led-tag">O'CHIQ</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Switch Buttons -->
+              <div>
+                <div style="font-size:0.8rem; color:#cbd5e1; font-weight:700; margin-bottom:0.5rem; text-align:center;">
+                  Tugmalarni bosib tekshirib ko'ring:
+                </div>
+                <div class="switch-btn-group">
+                  <button id="btn-toggle-num" class="switch-btn active" onclick="toggleNumLock()">
+                    <span>[Num Lock]</span>
+                    <small>O'chirish / Yoqish</small>
+                  </button>
+                  <button id="btn-toggle-caps" class="switch-btn" onclick="toggleCapsLock()">
+                    <span>[Caps Lock]</span>
+                    <small>O'chirish / Yoqish</small>
+                  </button>
+                  <button id="btn-toggle-scroll" class="switch-btn" onclick="toggleScrollLock()">
+                    <span>[Scroll Lock]</span>
+                    <small>O'chirish / Yoqish</small>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Detailed Explanation Cards -->
+          <div class="grid-3" style="margin-bottom:1.5rem;">
+            <!-- NUM LOCK -->
+            <div class="pillar-card" style="border:1.5px solid #60a5fa; background:#f0f9ff;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                  <span style="font-weight:900; background:#dbeafe; color:#1e40af; padding:0.2rem 0.5rem; border-radius:6px; font-family:monospace;">NUM</span>
+                  <span id="card-status-num" style="font-size:0.75rem; font-weight:800; color:#059669;">● Hozir Yoniq</span>
+                </div>
+                <h4 style="font-size:1.05rem;">1. NUM (Num Lock) — Raqamlar Qulfi</h4>
+                <p style="font-size:0.75rem; font-weight:800; color:#1e40af; text-transform:uppercase; margin-bottom:0.5rem;">
+                  Yoqish: [Num Lock] tugmasi
+                </p>
+                <div style="font-size:0.85rem; color:#334155; line-height:1.5;">
+                  <strong>🟢 Yoniq bo'lsa:</strong> Klaviaturaning o'ng tomonidagi kalkulyator bloki (0-9) faol bo'ladi. Bosim (120/80), puls (74), harorat (36.6) kabi vital ko'rsatkichlarni bir qo'l bilan 3 barobar tez kiritasiz.<br><br>
+                  <strong>🔴 O'chiq bo'lsa:</strong> Raqamlar yozilmaydi, strelka navigatsiyasiga aylanadi.
+                </div>
+              </div>
+            </div>
+
+            <!-- CAPS LOCK -->
+            <div class="pillar-card" style="border:1.5px solid #818cf8; background:#eef2ff;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                  <span style="font-weight:900; background:#e0e7ff; color:#3730a3; padding:0.2rem 0.5rem; border-radius:6px; font-family:monospace;">CAPS</span>
+                  <span id="card-status-caps" style="font-size:0.75rem; font-weight:800; color:#64748b;">○ Hozir O'chiq</span>
+                </div>
+                <h4 style="font-size:1.05rem;">2. CAPS (Caps Lock) — Katta Harflar</h4>
+                <p style="font-size:0.75rem; font-weight:800; color:#3730a3; text-transform:uppercase; margin-bottom:0.5rem;">
+                  Yoqish: [Caps Lock] tugmasi
+                </p>
+                <div style="font-size:0.85rem; color:#334155; line-height:1.5;">
+                  <strong>🟢 Yoniq bo'lsa:</strong> Yozilayotgan barcha harflar doimiy KATTA harf bilan yoziladi. Masalan: <b>ALIYEV VALI, EKG, MRT, COVID-19</b>.<br><br>
+                  <strong>⚪ O'chiq bo'lsa:</strong> Kichik harflar bilan yozadi. Faqat birinchi harfni katta qilish uchun <code>Shift</code> bosiladi.
+                </div>
+              </div>
+            </div>
+
+            <!-- SCROLL LOCK -->
+            <div class="pillar-card" style="border:1.5px solid #c084fc; background:#faf5ff;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                  <span style="font-weight:900; background:#f3e8ff; color:#6b21a8; padding:0.2rem 0.5rem; border-radius:6px; font-family:monospace;">SCROLL</span>
+                  <span id="card-status-scroll" style="font-size:0.75rem; font-weight:800; color:#64748b;">○ Hozir O'chiq</span>
+                </div>
+                <h4 style="font-size:1.05rem;">3. SCROLL (Scroll Lock) — Varaqlash</h4>
+                <p style="font-size:0.75rem; font-weight:800; color:#6b21a8; text-transform:uppercase; margin-bottom:0.5rem;">
+                  Yoqish: [Scroll Lock] tugmasi
+                </p>
+                <div style="font-size:0.85rem; color:#334155; line-height:1.5;">
+                  <strong>🟢 Yoniq bo'lsa:</strong> Excel va tibbiy elektron jadvallarda kursor katakda turgan holda butun sahifani strelkalar bilan varaqlash imkonini beradi.<br><br>
+                  <strong>⚪ O'chiq bo'lsa:</strong> Strelkalar kursorni katakdan katakka siljitadi.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Playground -->
+          <div class="playground-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
+              <div style="font-weight:800; font-size:0.9rem; color:#34d399;">
+                ⚡ Jonli Kiritish Sinov Maydoni:
+              </div>
+              <div id="playground-status-text" style="font-size:0.75rem; font-family:monospace; color:#94a3b8;">
+                NUM: ON | CAPS: OFF | SCROLL: OFF
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+              <button onclick="insertSampleText('Bemor: Aliyev Vali ')" style="background:#1e293b; color:#fff; border:1px solid #475569; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                + Bemor F.I.SH
+              </button>
+              <button onclick="insertSampleNumber('120/80 ')" style="background:#064e3b; color:#6ee7b7; border:1px solid #059669; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                + 120/80 (Bosim)
+              </button>
+              <button onclick="insertSampleNumber('74 ur/daq ')" style="background:#064e3b; color:#6ee7b7; border:1px solid #059669; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                + 74 (Puls)
+              </button>
+              <button onclick="insertSampleNumber('36.6 C ')" style="background:#064e3b; color:#6ee7b7; border:1px solid #059669; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                + 36.6 °C (Harorat)
+              </button>
+              <button onclick="clearSampleText()" style="background:#7f1d1d; color:#fca5a5; border:1px solid #991b1b; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                Tozalash
+              </button>
+            </div>
+
+            <div id="screen-display" class="screen-output">
+              Bemor: Aliyev Vali, Qon bosimi: 120/80, Harorat: 36.6 C
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Virtual Nurse Desk Simulator -->
+        <div class="card">
+          <h2 class="card-title">
+            <span>💉</span> 6. Hamshira Ish Stoli va Bemor Ko'rsatkichlarini Kiritish
+          </h2>
+          <p class="card-subtitle">
+            Elektron jurnalga vital ko'rsatkichlarni tezkor kiritish simulyatori:
+          </p>
+
+          <div class="grid-2">
+            <!-- Form -->
+            <form onsubmit="handlePatientSubmit(event)" style="display:flex; flex-direction:column; gap:0.9rem;">
+              <div>
+                <label style="display:block; font-size:0.85rem; font-weight:700; color:#334155; margin-bottom:0.25rem;">
+                  Bemor Familiyasi va Ismi:
+                </label>
+                <input id="inp-patient" type="text" value="Karimov Anvar Saidovich" required style="width:100%; padding:0.65rem 0.85rem; border-radius:8px; border:1.5px solid #cbd5e1; font-size:0.95rem;">
+              </div>
+
+              <div class="grid-3" style="gap:0.5rem;">
+                <div>
+                  <label style="display:block; font-size:0.75rem; font-weight:700; color:#334155; margin-bottom:0.25rem;">
+                    Qon Bosimi:
+                  </label>
+                  <input id="inp-bp" type="text" value="120/80" required style="width:100%; padding:0.6rem 0.75rem; border-radius:8px; border:1.5px solid #cbd5e1; font-size:0.9rem; font-family:monospace; font-weight:700;">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.75rem; font-weight:700; color:#334155; margin-bottom:0.25rem;">
+                    Puls (ur/daq):
+                  </label>
+                  <input id="inp-pulse" type="text" value="74" required style="width:100%; padding:0.6rem 0.75rem; border-radius:8px; border:1.5px solid #cbd5e1; font-size:0.9rem; font-family:monospace; font-weight:700;">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.75rem; font-weight:700; color:#334155; margin-bottom:0.25rem;">
+                    Harorat (°C):
+                  </label>
+                  <input id="inp-temp" type="text" value="36.6" required style="width:100%; padding:0.6rem 0.75rem; border-radius:8px; border:1.5px solid #cbd5e1; font-size:0.9rem; font-family:monospace; font-weight:700;">
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <input type="checkbox" id="inp-med-given" checked style="width:18px; height:18px; cursor:pointer;">
+                <label for="inp-med-given" style="font-size:0.875rem; font-weight:700; color:#1e293b; cursor:pointer;">
+                  Dori berildi (Sichqoncha chap tugmasi bilan belgilang)
+                </label>
+              </div>
+
+              <button type="submit" class="btn-primary" style="align-self:flex-start;">
+                💾 EMR Bazaga Saqlash
+              </button>
+
+              <div id="patient-save-msg" style="display:none; padding:0.75rem 1rem; border-radius:8px; background:#ecfdf5; border:1px solid #10b981; color:#065f46; font-weight:700; font-size:0.85rem;">
+                ✅ Ko'rsatkichlar markaziy bazaga muvaffaqiyatli saqlandi!
+              </div>
+            </form>
+
+            <!-- Live Database Log -->
+            <div style="background:#0f172a; border-radius:12px; padding:1rem; color:#e2e8f0; font-family:monospace; font-size:0.8rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:0.5rem; margin-bottom:0.75rem;">
+                  <span style="color:#60a5fa; font-weight:bold;">TIZIM JURNALI (EMR BAZA)</span>
+                  <span style="background:#064e3b; color:#6ee7b7; padding:0.15rem 0.45rem; border-radius:4px; font-size:0.7rem;">JONLI</span>
+                </div>
+                <div id="sim-log-list" style="display:flex; flex-direction:column; gap:0.5rem;">
+                  <div style="background:#1e293b; padding:0.5rem 0.75rem; border-radius:6px; border:1px solid #334155; color:#34d399;">
+                    [08:30] Karimov Anvar Saidovich: Qon bosimi: 120/80 mm.sim.ust, Puls: 74 ur/daq, Harorat: 36.6°C. Tizimga dastlabki qabul kiritildi.
+                  </div>
+                </div>
+              </div>
+              <div style="color:#64748b; font-size:0.7rem; border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.75rem;">
+                Kiritilgan ko'rsatkichlar markaziy serverga xavfsiz yozilmoqda.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <button class="btn-secondary" onclick="switchTab('theory')">
+            ← Nazariyaga qaytish
+          </button>
+          <button class="btn-primary" onclick="switchTab('quiz')">
+            <span>3-Bo'lim: Bilimni sinash (Test)</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- TAB 3: BILIMNI SINASH (7 COMPREHENSIVE CLINICAL IT QUESTIONS)             -->
+      <!-- ========================================================================= -->
+      <div id="pane-quiz" class="tab-pane">
+        
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h2 class="card-title">
+                <span>📝</span> 1-Dars: Bilimni Sinash Testi
+              </h2>
+              <p class="card-subtitle" style="margin-bottom:0;">
+                Savollarga javob bering, tizim to'g'ri javobni va uning izohini darhol ko'rsatadi (7 ta savol)
+              </p>
+            </div>
+            <div id="score-badge" style="background:#1e40af; color:#ffffff; padding:0.45rem 1.25rem; border-radius:9999px; font-weight:800; font-size:0.9rem;">
+              Natija: 0 / 7
+            </div>
+          </div>
+
+          <!-- Question 1 -->
+          <div class="quiz-card" id="q-card-1">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              1. Bemor qon bosimi 120/80 mm sim. ust. va tana harorati 36.6°C ekanligi haqidagi ma'lumot tibbiyotda qaysi axborot turiga kiradi?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(1, 0)">
+              <span>A) Raqamli axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(1, 1)">
+              <span>B) Ovozli axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(1, 2)">
+              <span>C) Grafik axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(1, 3)">
+              <span>D) Faqat tasviriy axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-1" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz-card" id="q-card-2">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              2. Hamshira shifokor tomonidan bemorga buyurilgan dori dozasini (masalan, 5 mg o'rniga 50 mg emas) xatosiz kiritishi axborotning qaysi muhim xususiyatiga misol bo'ladi?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(2, 0)">
+              <span>A) Axborotning ochiqligi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(2, 1)">
+              <span>B) Axborotning aniqligi va to'g'riligi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(2, 2)">
+              <span>C) Axborotning faqat og'zaki bo'lishi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(2, 3)">
+              <span>D) Axborotning qimmatligi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-2" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz-card" id="q-card-3">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              3. Navbatchi hamshira kompyuterdagi bemorlar ro'yxatidan kerakli bemor ismini tanlash uchun sichqonchaning qaysi amalini bajarishi lozim?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(3, 0)">
+              <span>A) Sichqonchaning chap tugmasini bir marta bosish (Tanlash)</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(3, 1)">
+              <span>B) Sichqonchaning o'ng tugmasini ketma-ket uch marta bosish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(3, 2)">
+              <span>C) Faqat kompyuter quvvat tugmasini bosish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(3, 3)">
+              <span>D) Klaviaturadagi probel tugmasini bosib turish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-3" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="quiz-card" id="q-card-4">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              4. Bemorning tana harorati (masalan, 37.8) yoki qon bosimini tizimga tezkor kiritish uchun klaviaturaning qaysi qismidan foydalanish eng qulay hisoblanadi?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(4, 0)">
+              <span>A) Faqat yuqori funksional tugmalar</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(4, 1)">
+              <span>B) Klaviaturaning o'ng tarafidagi raqamli blok (Numpad / Raqamlar maydoni)</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(4, 2)">
+              <span>C) Faqat katta harflar tugmasi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(4, 3)">
+              <span>D) Sichqoncha g'ildirakchasi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-4" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="quiz-card" id="q-card-5">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              5. Ish kuni yakunida bemorlar ma'lumotlar bazasi shikastlanmasligi va xavfsiz saqlanishi uchun kompyuter qanday o'chirilishi kerak?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(5, 0)">
+              <span>A) Kompyuter elektr vilkasini darhol rozetkadan uzib qo'yish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(5, 1)">
+              <span>B) Barcha kiritilgan ma'lumotlarni saqlab, dasturlardan chiqib, 'Boshlash' menyusi orqali tizimni xavfsiz o'chirish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(5, 2)">
+              <span>C) Faqatgina monitorni o'chirib, asosiy blokni yoqiq qoldirish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(5, 3)">
+              <span>D) Kompyuter quvvat tugmasini 10 soniya bosib ushlab turish</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-5" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 6 -->
+          <div class="quiz-card" id="q-card-6">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              6. Elektrokardiogramma egri chiziqlari, rentgen va ultratovush (UTT) tasvirlari tibbiyotda axborotning qaysi turiga kiradi?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(6, 0)">
+              <span>A) Grafik va tasviriy axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(6, 1)">
+              <span>B) Faqat matnli axborot</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(6, 2)">
+              <span>C) Ovozli nutq axboroti</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(6, 3)">
+              <span>D) Faqat shifrlangan kod</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-6" class="explanation-box"></div>
+          </div>
+
+          <!-- Question 7 -->
+          <div class="quiz-card" id="q-card-7">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem; color:#0f172a;">
+              7. Bemorning kasallik tarixi va shaxsiy ma'lumotlarini ruxsatsiz begona kishilarga oshkor qilmaslik axborotning qaysi tamoyiliga to'g'ri keladi?
+            </h4>
+            <div class="quiz-option" onclick="handleQuizAnswer(7, 0)">
+              <span>A) Axborot maxfiyligi va hamshiralik siri</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(7, 1)">
+              <span>B) Axborotning ommaviyligi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(7, 2)">
+              <span>C) Axborotning bepul tarqatilishi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div class="quiz-option" onclick="handleQuizAnswer(7, 3)">
+              <span>D) Axborotning doimiy o'zgaruvchanligi</span>
+              <span class="opt-icon"></span>
+            </div>
+            <div id="exp-7" class="explanation-box"></div>
+          </div>
+
+          <!-- Certificate Result Box -->
+          <div id="cert-box" style="display:none; background:linear-gradient(135deg, #1e40af, #0f172a); color:#ffffff; padding:2.5rem 1.5rem; border-radius:20px; text-align:center; border:2px solid #60a5fa; margin-top:2rem; box-shadow:0 10px 25px rgba(30,64,175,0.3);">
+            <div style="font-size:3rem; margin-bottom:0.5rem;">🎓</div>
+            <span style="font-size:0.75rem; font-weight:900; background:#3b82f6; color:#ffffff; padding:0.3rem 0.8rem; border-radius:9999px; text-transform:uppercase; letter-spacing:0.05em; display:inline-block; margin-bottom:0.75rem;">
+              Shahrisabz Tibbiyot Texnikumi
+            </span>
+            <h3 style="font-size:1.6rem; font-weight:900; margin-bottom:0.35rem;">
+              1-Dars Test Sinovi Yakunlandi!
+            </h3>
+            <p style="font-size:0.95rem; color:#bfdbfe; margin-bottom:1.5rem;">
+              Fan: Tibbiyotda axborot texnologiyalari • Yo'nalish: Hamshiralik ishi
+            </p>
+
+            <div id="cert-score-display" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:14px; padding:1.25rem; max-width:400px; margin:0 auto 1.5rem auto;">
+              <div id="cert-score-text" style="font-size:1.75rem; font-weight:900; color:#4ade80;">
+                Ball: 7 / 7 (100%)
+              </div>
+              <div id="cert-grade-text" style="font-size:1.1rem; font-weight:800; color:#fde047; margin-top:0.25rem;">
+                Baho: 5 (A'lo)
+              </div>
+            </div>
+
+            <button onclick="resetQuiz()" class="btn-primary" style="background:#ffffff; color:#1e40af; font-size:1rem; padding:0.85rem 1.75rem;">
+              🔄 Testni qaytadan topshirish
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= BOTTOM METHODOLOGY & GLOSSARY ================= -->
+      <section style="margin-top:2rem; padding-top:2rem; border-top:2px solid #e2e8f0;">
+        <div class="grid-3">
+          
+          <!-- Metodik tavsiya -->
+          <div style="background:#0f766e; color:#ffffff; border-radius:16px; padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <h3 style="font-size:1.1rem; font-weight:900; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>💡</span> Metodik tavsiya
+              </h3>
+              <p style="font-size:0.875rem; color:#ccfbf1; line-height:1.5; margin-bottom:1rem;">
+                Hurmatli talaba! Tibbiyotda IT — bu bemor hayotini asrashda tezkor va to'g'ri qaror qabul qilish vositasidir. Avval kirish va nazariyani o'zlashtiring, so'ng amaliyot va testga o'ting.
+              </p>
+            </div>
+            <button id="btn-bottom-next" onclick="handleBottomNext()" style="background:#ffffff; color:#0f766e; border:none; padding:0.6rem 1rem; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer; align-self:flex-start;">
+              Nazariyani boshlash →
+            </button>
+          </div>
+
+          <!-- Glossariy -->
+          <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <h3 style="font-size:0.9rem; font-weight:900; text-transform:uppercase; color:#0f172a; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>📖</span> Muhim IT-Tibbiyot Atamalari
+              </h3>
+
+              <div style="display:flex; flex-direction:column; gap:0.6rem;">
+                <div style="border-left:3px solid #2563eb; padding-left:0.6rem;">
+                  <strong style="font-size:0.85rem; color:#0f172a; display:block;">Elektron tibbiy karta (EMR):</strong>
+                  <span style="font-size:0.75rem; color:#64748b;">Bemorning kasallik tarixi va tahlillarining raqamli pasporti.</span>
+                </div>
+                <div style="border-left:3px solid #0d9488; padding-left:0.6rem;">
+                  <strong style="font-size:0.85rem; color:#0f172a; display:block;">Kasalxona axborot tizimi:</strong>
+                  <span style="font-size:0.75rem; color:#64748b;">Qabul, bo'limlar va laboratoriyani birlashtiruvchi dastur.</span>
+                </div>
+                <div style="border-left:3px solid #7e22ce; padding-left:0.6rem;">
+                  <strong style="font-size:0.85rem; color:#0f172a; display:block;">Raqamli blok (Numpad):</strong>
+                  <span style="font-size:0.75rem; color:#64748b;">Bosim, puls va haroratni bir qo'lda tez kiritish maydoni.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <h3 style="font-size:0.9rem; font-weight:900; text-transform:uppercase; color:#0f172a; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>🏆</span> Darsdagi Faollik Ko'rsatkichi
+              </h3>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                <span style="font-size:0.75rem; font-weight:800; color:#64748b; text-transform:uppercase;">O'zlashtirish:</span>
+                <span id="progress-percent" style="font-size:1rem; font-weight:900; color:#2563eb;">25%</span>
+              </div>
+
+              <div style="height:10px; background:#e2e8f0; border-radius:9999px; overflow:hidden; margin-bottom:0.75rem;">
+                <div id="progress-bar-fill" style="width:25%; height:100%; background:#2563eb; transition:width 0.3s ease;"></div>
+              </div>
+
+              <p id="progress-status-desc" style="font-size:0.8rem; color:#475569; line-height:1.4;">
+                Siz hozir kirish bo'limini o'rganmoqdasiz.
+              </p>
+            </div>
+
+            <div style="padding-top:0.75rem; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; font-size:0.75rem; font-weight:800; color:#64748b;">
+              <span>Mavzu: 1-Dars</span>
+              <span style="color:#2563eb;">Hamshiralik ishi</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong style="color:#0f172a;">Shahrisabz Tibbiyot Texnikumi</strong> — Tibbiyotda axborot texnologiyalari kafedrasi
+          <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">
+            1-Dars: Hamshiralik ishi va kompyuter savodxonligi (100% Offline versiya)
+          </div>
+        </div>
+        <div style="font-size:0.8rem; font-weight:700; color:#2563eb;">
+          © 2026 Shahrisabz Tibbiyot Texnikumi
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= OFFLINE JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Current Active Tab
+    let activeTab = 'intro';
+
+    // Formatted Date in Uzbek
+    function updateUzbekDate() {
+      const now = new Date();
+      const day = now.getDate();
+      const monthsUz = [
+        'yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun',
+        'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'
+      ];
+      const weekdaysUz = [
+        'Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'
+      ];
+      const monthName = monthsUz[now.getMonth()];
+      const year = now.getFullYear();
+      const weekday = weekdaysUz[now.getDay()];
+      const fullDateStr = `${year}-yil ${day}-${monthName}, ${weekday}`;
+      
+      const dateEl = document.getElementById('current-date-text');
+      if (dateEl) dateEl.innerText = fullDateStr;
+    }
+
+    // Switch Tab
+    function switchTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      const targetPane = document.getElementById('pane-' + tabId);
+      const targetBtn = document.getElementById('nav-btn-' + tabId);
+      
+      if (targetPane) targetPane.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+
+      updateBottomNextButton();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Update bottom methodology action button
+    function updateBottomNextButton() {
+      const btn = document.getElementById('btn-bottom-next');
+      if (!btn) return;
+      if (activeTab === 'intro') btn.innerText = "Nazariyani boshlash →";
+      else if (activeTab === 'theory') btn.innerText = "Amaliyotga o'tish →";
+      else if (activeTab === 'practice') btn.innerText = "Testni topshirish →";
+      else btn.innerText = "Kirish qismiga o'tish →";
+    }
+
+    function handleBottomNext() {
+      if (activeTab === 'intro') switchTab('theory');
+      else if (activeTab === 'theory') switchTab('practice');
+      else if (activeTab === 'practice') switchTab('quiz');
+      else switchTab('intro');
+    }
+
+    // Interactive Intro Comparison Mode
+    function setCompareMode(mode) {
+      const digitalBtn = document.getElementById('btn-comp-digital');
+      const paperBtn = document.getElementById('btn-comp-paper');
+      const digitalBox = document.getElementById('compare-digital-box');
+      const paperBox = document.getElementById('compare-paper-box');
+
+      if (mode === 'digital') {
+        digitalBtn.className = 'compare-btn active-digital';
+        paperBtn.className = 'compare-btn';
+        digitalBox.style.display = 'block';
+        paperBox.style.display = 'none';
+      } else {
+        digitalBtn.className = 'compare-btn';
+        paperBtn.className = 'compare-btn active-paper';
+        digitalBox.style.display = 'none';
+        paperBox.style.display = 'block';
+      }
+    }
+
+    // Mouse Interactive Diagram Logic
+    function selectMousePart(part) {
+      const svgBody = document.getElementById('svg-mouse-body');
+      const svgLeft = document.getElementById('svg-mouse-left');
+      const svgRight = document.getElementById('svg-mouse-right');
+      const svgWheel = document.getElementById('svg-mouse-wheel');
+
+      const btnLeft = document.getElementById('btn-mouse-left');
+      const btnRight = document.getElementById('btn-mouse-right');
+      const btnWheel = document.getElementById('btn-mouse-wheel');
+
+      const titleEl = document.getElementById('mouse-detail-title');
+      const descEl = document.getElementById('mouse-detail-desc');
+
+      // Reset SVGs
+      svgBody.setAttribute('fill', '#f8fafc');
+      svgBody.setAttribute('stroke', '#94a3b8');
+      svgLeft.setAttribute('fill', '#cbd5e1');
+      svgRight.setAttribute('fill', '#cbd5e1');
+      svgWheel.setAttribute('fill', '#64748b');
+
+      btnLeft.className = 'btn-secondary';
+      btnRight.className = 'btn-secondary';
+      btnWheel.className = 'btn-secondary';
+
+      if (part === 'left') {
+        svgLeft.setAttribute('fill', '#2563eb');
+        btnLeft.className = 'btn-primary';
+        titleEl.innerText = "Sichqonchaning Chap Tugmasi (Asosiy ishchi tugma)";
+        descEl.innerHTML = "<strong>1 marta bosish (Tanlash):</strong> Bemorlar ro'yxatidan kerakli bemorni tanlash, qon guruhi katakchasini belgilash yoki buyruq tugmasini bosish.<br><br><strong>2 marta tez bosish (Ochish):</strong> Bemorning to'liq elektron kasallik tarixi faylini yoki tahlil natijalari varaqasini ochish.";
+      } else if (part === 'right') {
+        svgRight.setAttribute('fill', '#2563eb');
+        btnRight.className = 'btn-primary';
+        titleEl.innerText = "Sichqonchaning O'ng Tugmasi (Kontekst menyu)";
+        descEl.innerHTML = "Bemor fayli yoki jadval ustiga olib borib o'ng tugma bosilganda qo'shimcha buyruqlar menyusi ochiladi: <strong>\"Tahrirlash\", \"Chop etish\", \"Nusxa olish\", \"Arxivga yuborish\"</strong>.";
+      } else if (part === 'wheel') {
+        svgWheel.setAttribute('fill', '#e11d48');
+        btnWheel.className = 'btn-primary';
+        titleEl.innerText = "O'rta G'ildirakcha (Scroll / Aylantirish)";
+        descEl.innerHTML = "G'ildirakchani oldinga yoki orqaga aylantirish orqali bemorning ko'p sahifali laboratoriya natijalari, reanimatsiya jurnali yoki kardiogramma tasvirini yuqoriga-pastga tezkor varaqlash mumkin.";
+      } else if (part === 'body') {
+        svgBody.setAttribute('fill', '#eff6ff');
+        svgBody.setAttribute('stroke', '#2563eb');
+        titleEl.innerText = "Sichqonchani To'g'ri Ushlash (Ergonomika)";
+        descEl.innerHTML = "Sichqonchani butun kaft bilan yumshoq ushlang. Ko'rsatkich barmog'i chap tugmada, o'rta barmoq o'ng tugmada erkin turishi lozim. Bilak egilmasligi navbatchilikda qo'l toliqishining oldini oladi.";
+      }
+    }
+
+    // Keyboard Zone Selector Logic
+    function selectKbZone(zone) {
+      const titleEl = document.getElementById('kb-zone-title');
+      const descEl = document.getElementById('kb-zone-desc');
+
+      ['numpad', 'alpha', 'special', 'function', 'arrows'].forEach(z => {
+        const btn = document.getElementById('btn-kb-' + z);
+        if (btn) btn.className = (z === zone) ? 'btn-primary' : 'btn-secondary';
+      });
+
+      if (zone === 'numpad') {
+        titleEl.innerText = "1. Raqamli blok (Numpad) — Hamshiraning eng asosiy quroli";
+        titleEl.style.color = "#0f766e";
+        descEl.innerHTML = "Klaviaturaning o'ng tomonidagi kalkulyatorga o'xshash blok. Bemorning qon bosimi (120/80), pulsi (74), harorati (36.6) va dori dozasini bir qo'l bilan 3 barobar tez kiritish imkonini beradi. Yoqish uchun <strong>[Num Lock]</strong> tugmasi bosiladi.";
+      } else if (zone === 'alpha') {
+        titleEl.innerText = "2. Alifbo-matnli asosiy blok";
+        titleEl.style.color = "#1e40af";
+        descEl.innerHTML = "Bemorning ism-familiyasi, manzili, shikoyatlari, shifokor tashxislari va dorilar nomlarini to'liq matn ko'rinishida yozish uchun xizmat qiladi. Tilni almashtirish: <strong>Alt + Shift</strong> yoki <strong>Win + Probel</strong>.";
+      } else if (zone === 'special') {
+        titleEl.innerText = "3. Boshqaruv (Maxsus) tugmalari: Tab, Enter, Ctrl+S, Win+L";
+        titleEl.style.color = "#7e22ce";
+        descEl.innerHTML = "<strong>Tab ⇥:</strong> Keyingi katakka (qon bosimidan haroratga) sichqonchasiz sakrash.<br><strong>Enter ↵:</strong> Tasdiqlash va yangi qator ochish.<br><strong>Ctrl + S:</strong> Ma'lumotlarni bazaga zudlik bilan saqlash.<br><strong>Win + L:</strong> Palataga chiqishda ekranni tezkor qulflash.";
+      } else if (zone === 'function') {
+        titleEl.innerText = "4. Funksional tugmalar (F1 - F12)";
+        titleEl.style.color = "#b45309";
+        descEl.innerHTML = "<strong>F5:</strong> Ekranni yangilash (laboratoriyadan yangi kelgan tahlillarni darhol ko'rish).<br><strong>F1:</strong> Dastur bo'yicha yordam va ma'lumotnoma oynasini ochish.";
+      } else if (zone === 'arrows') {
+        titleEl.innerText = "5. Navigatsiya va Harakatlanish (Strelka) tugmalari";
+        titleEl.style.color = "#4338ca";
+        descEl.innerHTML = "Bemorlar ro'yxati va jadval katakchalari bo'ylab yuqoriga (▲), pastga (▼), o'ngga (▶) va chapga (◀) yurish uchun xizmat qiladi. <strong>Page Up</strong> va <strong>Page Down</strong> uzun tibbiy jadvallarni bir sahifadan tez varaqlaydi.";
+      }
+    }
+
+    // Keyboard LED Indicators Logic
+    let isNumLock = true;
+    let isCapsLock = false;
+    let isScrollLock = false;
+    let currentSampleText = "Bemor: Aliyev Vali, Qon bosimi: 120/80, Harorat: 36.6 C";
+
+    function updateLEDs() {
+      // NUM
+      const lampNum = document.getElementById('lamp-num');
+      const tagNum = document.getElementById('tag-num');
+      const btnNum = document.getElementById('btn-toggle-num');
+      const cardNum = document.getElementById('card-status-num');
+      const unitNum = document.getElementById('led-unit-num');
+
+      if (isNumLock) {
+        lampNum.classList.add('active');
+        unitNum.classList.add('active');
+        tagNum.innerText = "YONIQ";
+        btnNum.classList.add('active');
+        cardNum.innerText = "● Hozir Yoniq";
+        cardNum.style.color = "#059669";
+      } else {
+        lampNum.classList.remove('active');
+        unitNum.classList.remove('active');
+        tagNum.innerText = "O'CHIQ";
+        btnNum.classList.remove('active');
+        cardNum.innerText = "○ Hozir O'chiq";
+        cardNum.style.color = "#dc2626";
+      }
+
+      // CAPS
+      const lampCaps = document.getElementById('lamp-caps');
+      const tagCaps = document.getElementById('tag-caps');
+      const btnCaps = document.getElementById('btn-toggle-caps');
+      const cardCaps = document.getElementById('card-status-caps');
+      const unitCaps = document.getElementById('led-unit-caps');
+      const display = document.getElementById('screen-display');
+
+      if (isCapsLock) {
+        lampCaps.classList.add('active');
+        unitCaps.classList.add('active');
+        tagCaps.innerText = "YONIQ";
+        btnCaps.classList.add('active');
+        cardCaps.innerText = "● Hozir Yoniq";
+        cardCaps.style.color = "#059669";
+        display.classList.add('caps-on');
+      } else {
+        lampCaps.classList.remove('active');
+        unitCaps.classList.remove('active');
+        tagCaps.innerText = "O'CHIQ";
+        btnCaps.classList.remove('active');
+        cardCaps.innerText = "○ Hozir O'chiq";
+        cardCaps.style.color = "#64748b";
+        display.classList.remove('caps-on');
+      }
+
+      // SCROLL
+      const lampScroll = document.getElementById('lamp-scroll');
+      const tagScroll = document.getElementById('tag-scroll');
+      const btnScroll = document.getElementById('btn-toggle-scroll');
+      const cardScroll = document.getElementById('card-status-scroll');
+      const unitScroll = document.getElementById('led-unit-scroll');
+
+      if (isScrollLock) {
+        lampScroll.classList.add('active');
+        unitScroll.classList.add('active');
+        tagScroll.innerText = "YONIQ";
+        btnScroll.classList.add('active');
+        cardScroll.innerText = "● Hozir Yoniq";
+        cardScroll.style.color = "#059669";
+      } else {
+        lampScroll.classList.remove('active');
+        unitScroll.classList.remove('active');
+        tagScroll.innerText = "O'CHIQ";
+        btnScroll.classList.remove('active');
+        cardScroll.innerText = "○ Hozir O'chiq";
+        cardScroll.style.color = "#64748b";
+      }
+
+      document.getElementById('playground-status-text').innerText = 
+        `NUM: ${isNumLock ? 'ON' : 'OFF'} | CAPS: ${isCapsLock ? 'ON' : 'OFF'} | SCROLL: ${isScrollLock ? 'ON' : 'OFF'}`;
+    }
+
+    function toggleNumLock() {
+      isNumLock = !isNumLock;
+      updateLEDs();
+    }
+
+    function toggleCapsLock() {
+      isCapsLock = !isCapsLock;
+      updateLEDs();
+    }
+
+    function toggleScrollLock() {
+      isScrollLock = !isScrollLock;
+      updateLEDs();
+    }
+
+    function insertSampleText(txt) {
+      currentSampleText += " " + txt;
+      document.getElementById('screen-display').innerText = currentSampleText;
+    }
+
+    function insertSampleNumber(numStr) {
+      if (isNumLock) {
+        currentSampleText += " " + numStr;
+        document.getElementById('screen-display').innerText = currentSampleText;
+      } else {
+        alert("⚠️ NUM LOCK o'chiq bo'lgani uchun raqam kiritilmadi! Avval [Num Lock] tugmasini bosing.");
+      }
+    }
+
+    function clearSampleText() {
+      currentSampleText = "";
+      document.getElementById('screen-display').innerText = "[Matn kiritilmagan]";
+    }
+
+    // Nurse Desk Simulator Logic
+    function handlePatientSubmit(e) {
+      e.preventDefault();
+      const pName = document.getElementById('inp-patient').value;
+      const bp = document.getElementById('inp-bp').value;
+      const pulse = document.getElementById('inp-pulse').value;
+      const temp = document.getElementById('inp-temp').value;
+      const medGiven = document.getElementById('inp-med-given').checked;
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+
+      const logList = document.getElementById('sim-log-list');
+      const newEntry = document.createElement('div');
+      newEntry.style.background = '#1e293b';
+      newEntry.style.padding = '0.5rem 0.75rem';
+      newEntry.style.borderRadius = '6px';
+      newEntry.style.border = '1px solid #334155';
+      newEntry.style.color = '#34d399';
+      newEntry.innerText = `[${timeStr}] ${pName}: Qon bosimi: ${bp} mm.sim.ust, Puls: ${pulse} ur/daq, Harorat: ${temp}°C. Muolaja: ${medGiven ? 'Bajarildi (Kiritildi)' : 'Kutilmoqda'}`;
+
+      logList.insertBefore(newEntry, logList.firstChild);
+
+      const msg = document.getElementById('patient-save-msg');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 3500);
+    }
+
+    // ================= QUIZ LOGIC (7 QUESTIONS) =================
+    const QUIZ_DATA = [
+      {
+        id: 1,
+        correct: 0, // A
+        exp: "To'g'ri! Qon bosimi, puls, tana harorati va laboratoriya tahlil ko'rsatkichlari aniq raqamli o'lchovlar bilan ifodalangani sababli 'Raqamli axborot' turiga kiradi."
+      },
+      {
+        id: 2,
+        correct: 1, // B
+        exp: "To'g'ri! Dori dozasi yoki bemor tahlil ko'rsatkichlarining xatosiz, to'g'ri qayd etilishi axborotning eng asosiy talabi bo'lgan 'Aniqlik' (to'g'rilik) xususiyatidir."
+      },
+      {
+        id: 3,
+        correct: 0, // A
+        exp: "To'g'ri! Tizim ro'yxatidan kerakli bemorni yoki buyruq katakchasini tanlash uchun sichqonchaning chap tugmasi bir marta bosiladi."
+      },
+      {
+        id: 4,
+        correct: 1, // B
+        exp: "To'g'ri! Tibbiyotda raqamli ko'rsatkichlarni bir qo'l bilan tez va xatosiz terish uchun klaviaturaning o'ng qismidagi raqamli blokdan (Numpad) foydalanish eng samarali usuldir."
+      },
+      {
+        id: 5,
+        correct: 1, // B
+        exp: "To'g'ri! Tizimdagi bemorlar tarixi va laboratoriya ma'lumotlari buzilmasligi uchun barcha oynalar saqlanadi va 'Boshlash -> Tizimni o'chirish' orqali to'g'ri o'chiriladi."
+      },
+      {
+        id: 6,
+        correct: 0, // A
+        exp: "To'g'ri! Yurak ritmi kardiogrammada grafik shaklda, rentgen va ultratovush apparati natijalari esa tasviriy axborot shaklida namoyon bo'ladi."
+      },
+      {
+        id: 7,
+        correct: 0, // A
+        exp: "To'g'ri! Bemorning sog'lig'i, tashxisi va davolash rejasiga oid ma'lumotlar qonun bilan himoyalangan 'Tibbiy sir' va maxfiy axborot hisoblanadi."
+      }
+    ];
+
+    const quizAnswers = {};
+
+    function handleQuizAnswer(qId, selectedOptIdx) {
+      if (quizAnswers[qId] !== undefined) return; // already answered
+
+      const qObj = QUIZ_DATA.find(q => q.id === qId);
+      if (!qObj) return;
+
+      const isCorrect = selectedOptIdx === qObj.correct;
+      quizAnswers[qId] = { selected: selectedOptIdx, isCorrect: isCorrect };
+
+      const card = document.getElementById('q-card-' + qId);
+      const options = card.querySelectorAll('.quiz-option');
+
+      options.forEach((opt, idx) => {
+        opt.classList.add('disabled');
+        if (idx === qObj.correct) {
+          opt.classList.add('correct');
+        } else if (idx === selectedOptIdx && !isCorrect) {
+          opt.classList.add('incorrect');
+        } else {
+          opt.classList.add('dimmed');
+        }
+      });
+
+      if (isCorrect) {
+        card.classList.add('answered-correct');
+      } else {
+        card.classList.add('answered-incorrect');
+      }
+
+      const expBox = document.getElementById('exp-' + qId);
+      expBox.style.display = 'block';
+      if (isCorrect) {
+        expBox.className = 'explanation-box correct-exp';
+        expBox.innerHTML = `<strong>✅ Izoh va xulosa:</strong> ${qObj.exp}`;
+      } else {
+        expBox.className = 'explanation-box incorrect-exp';
+        expBox.innerHTML = `<strong>❌ Xato! To'g'ri javob tushuntirishi:</strong> ${qObj.exp}`;
+      }
+
+      // Update counters
+      updateQuizSummary();
+      updateProgress();
+    }
+
+    function updateQuizSummary() {
+      const totalAnswered = Object.keys(quizAnswers).length;
+      const correctCount = Object.values(quizAnswers).filter(a => a.isCorrect).length;
+
+      document.getElementById('score-badge').innerText = `Natija: ${correctCount} / 7`;
+      document.getElementById('nav-quiz-badge').innerText = `${totalAnswered}/7`;
+
+      if (totalAnswered === QUIZ_DATA.length) {
+        const certBox = document.getElementById('cert-box');
+        const scoreText = document.getElementById('cert-score-text');
+        const gradeText = document.getElementById('cert-grade-text');
+
+        certBox.style.display = 'block';
+        const percent = Math.round((correctCount / QUIZ_DATA.length) * 100);
+        let gradeStr = "5 (A'lo)";
+        let gradeColor = "#4ade80";
+
+        if (percent >= 86) {
+          gradeStr = "5 (A'lo)";
+          gradeColor = "#4ade80";
+        } else if (percent >= 71) {
+          gradeStr = "4 (Yaxshi)";
+          gradeColor = "#60a5fa";
+        } else if (percent >= 55) {
+          gradeStr = "3 (Qoniqarli)";
+          gradeColor = "#fde047";
+        } else {
+          gradeStr = "2 (Qoniqarsiz)";
+          gradeColor = "#f87171";
+        }
+
+        scoreText.innerText = `To'plangan Ball: ${correctCount} / ${QUIZ_DATA.length} (${percent}%)`;
+        gradeText.innerText = `Baho: ${gradeStr}`;
+        gradeText.style.color = gradeColor;
+
+        certBox.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function resetQuiz() {
+      for (let i = 1; i <= QUIZ_DATA.length; i++) {
+        delete quizAnswers[i];
+        const card = document.getElementById('q-card-' + i);
+        if (card) {
+          card.classList.remove('answered-correct', 'answered-incorrect');
+          card.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.classList.remove('correct', 'incorrect', 'dimmed', 'disabled');
+          });
+          const exp = document.getElementById('exp-' + i);
+          if (exp) exp.style.display = 'none';
+        }
+      }
+
+      document.getElementById('cert-box').style.display = 'none';
+      document.getElementById('score-badge').innerText = `Natija: 0 / 7`;
+      document.getElementById('nav-quiz-badge').innerText = `0/7`;
+      updateProgress();
+    }
+
+    // Dynamic Overall Lesson Progress
+    function updateProgress() {
+      const answeredCount = Object.keys(quizAnswers).length;
+      let progress = 25;
+      let desc = "Siz hozir kirish bo'limini o'rganmoqdasiz.";
+
+      if (activeTab === 'intro') {
+        progress = 25;
+        desc = "Siz hozir kirish va IT ning 4 ta ustunini o'rganmoqdasiz.";
+      } else if (activeTab === 'theory') {
+        progress = 50;
+        desc = "Siz nazariy tushunchalar va axborotning 7 ta shaklini o'rganmoqdasiz.";
+      } else if (activeTab === 'practice') {
+        progress = 75;
+        desc = "Siz klaviatura, sichqoncha va virtual hamshira ish stolida amaliyot o'tayapsiz.";
+      } else if (activeTab === 'quiz') {
+        progress = Math.min(100, Math.round(75 + (answeredCount / QUIZ_DATA.length) * 25));
+        desc = answeredCount === QUIZ_DATA.length 
+          ? "Tabriklaymiz! Siz 1-darsni to'liq muvaffaqiyatli yakunladingiz." 
+          : `Siz bilimni sinash testini topshirmoqdasiz (${answeredCount}/7 savol).`;
+      }
+
+      const bar = document.getElementById('progress-bar-fill');
+      const text = document.getElementById('progress-percent');
+      const descEl = document.getElementById('progress-status-desc');
+
+      if (bar) bar.style.width = progress + '%';
+      if (text) text.innerText = progress + '%';
+      if (descEl) descEl.innerText = desc;
+    }
+
+    // Initialization on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateUzbekDate();
+      updateLEDs();
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

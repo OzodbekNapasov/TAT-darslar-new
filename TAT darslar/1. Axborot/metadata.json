@@ -1,0 +1,6 @@
+{
+  "name": "Tibbiyotda Axborot Texnologiyalari - 1-Dars",
+  "description": "Hamshiralik ishi talabalari uchun 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot' mavzusidagi interaktiv o'quv platformasi va test tizimi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

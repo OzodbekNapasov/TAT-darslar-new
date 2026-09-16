@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tibbiyotda Axborot Texnologiyalari — Darslar Mundarijasi</title>
+  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — Tibbiyotda axborot texnologiyalari fani elektron darsliklar bosh mundarijasi.">
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif;
+      
+      --bg-page: #07090e;
+      --bg-card-folder: #141518;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
+      
+      --search-bg: #111318;
+      --search-border: #1f232d;
+      --search-text: #ffffff;
+      --search-placeholder: #64748b;
+    }
+
+    [data-theme="light"] {
+      --bg-page: #f1f3f7;
+      --bg-card-folder: #18191d;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      
+      --search-bg: #ffffff;
+      --search-border: #e2e8f0;
+      --search-text: #0f172a;
+      --search-placeholder: #94a3b8;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2.25rem 1.25rem 4rem 1.25rem;
+      transition: background-color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ====================================================================== */
+    /* Minimalist Top Header                                                  */
+    /* ====================================================================== */
+    .clean-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    [data-theme="light"] .clean-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+    }
+
+    .brand-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+      flex-shrink: 0;
+    }
+
+    .header-title-block h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .header-title-block p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 0.15rem;
+    }
+
+    .theme-switch-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--search-bg);
+      border: 1px solid var(--search-border);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-switch-btn:hover {
+      color: var(--text-main);
+      transform: rotate(15deg);
+    }
+
+    /* ====================================================================== */
+    /* Search Bar                                                             */
+    /* ====================================================================== */
+    .search-wrapper {
+      margin-bottom: 2.75rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-input-pill {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-pill input {
+      width: 100%;
+      background: var(--search-bg);
+      border: 1.5px solid var(--search-border);
+      border-radius: 9999px;
+      padding: 0.8rem 2.8rem 0.8rem 1.4rem;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--search-text);
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .search-input-pill input::placeholder {
+      color: var(--search-placeholder);
+    }
+
+    .search-input-pill input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    .search-icon-right {
+      position: absolute;
+      right: 1.15rem;
+      color: var(--search-placeholder);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ====================================================================== */
+    /* Taskello Cards Grid with Glowing Aura Animation                        */
+    /* ====================================================================== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem 2rem;
+    }
+
+    @media (min-width: 680px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Ambient Breathing Glow Animation Keyframes (Stationary in place) */
+    @keyframes breathing-glow {
+      0%, 100% {
+        opacity: 0.35;
+        filter: blur(20px);
+      }
+      50% {
+        opacity: 0.7;
+        filter: blur(28px);
+      }
+    }
+
+    @keyframes atmosphere-pulse {
+      0%, 100% {
+        filter: brightness(1) contrast(1);
+      }
+      50% {
+        filter: brightness(1.12) contrast(1.05);
+      }
+    }
+
+    /* Card Wrapper (for glow aura) */
+    .taskello-card-wrapper {
+      position: relative;
+      border-radius: 36px;
+    }
+
+    /* The glowing halo underneath the card */
+    .taskello-card-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 36px;
+      background: var(--glow-aura);
+      filter: blur(22px);
+      opacity: 0.4;
+      z-index: 0;
+      animation: breathing-glow 3.6s infinite ease-in-out;
+      transition: opacity 0.3s ease, filter 0.3s ease;
+      pointer-events: none;
+    }
+
+    .taskello-card-wrapper:hover::before {
+      opacity: 0.95;
+      filter: blur(32px);
+    }
+
+    /* Taskello Card Itself (Stationary, No Jumping) */
+    .taskello-card {
+      position: relative;
+      z-index: 1;
+      height: 340px;
+      border-radius: 34px;
+      border: 3.5px solid #000000;
+      outline: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      background: #000000;
+      text-decoration: none;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .taskello-card-wrapper:hover .taskello-card {
+      border-color: var(--glow-color);
+      box-shadow: 0 0 38px -2px var(--glow-aura), 0 16px 36px -4px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Top Abstract Radiant Atmosphere */
+    .card-atmosphere {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: var(--atmosphere-bg);
+      animation: atmosphere-pulse 4s infinite ease-in-out;
+      transition: filter 0.3s ease;
+    }
+
+    .taskello-card-wrapper:hover .card-atmosphere {
+      filter: brightness(1.2) contrast(1.08);
+    }
+
+    /* Top Right Label (Matching "Taskello App Card Design") */
+    .card-top-tag {
+      position: absolute;
+      top: 1.35rem;
+      right: 1.4rem;
+      z-index: 2;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.95);
+      text-align: right;
+      line-height: 1.25;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      transition: text-shadow 0.25s ease;
+    }
+
+    .taskello-card-wrapper:hover .card-top-tag {
+      text-shadow: 0 0 14px var(--glow-color);
+    }
+
+    /* Folder Tab Cutout SVG */
+    .folder-sheet-svg-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .folder-sheet-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Folder Content (Carefully Padded Inside the Dark Sheet) */
+    .card-folder-content {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 200px;
+      padding: 1.85rem 1.6rem 1.6rem 1.6rem;
+      box-sizing: border-box;
+    }
+
+    .folder-upper-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    /* Title (e.g. "Axborot haqida tushuncha") */
+    .folder-main-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Subtitle (e.g. "Axborot shakllari va kompyuter asoslari") */
+    .folder-subtitle {
+      font-size: 0.825rem;
+      color: #9ca3af;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    /* Bottom Row (Big Number + Notes count) */
+    .folder-bottom-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+    }
+
+    .folder-stat-left {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .folder-big-number {
+      font-size: 1.95rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      transition: text-shadow 0.25s ease;
+    }
+
+    .taskello-card-wrapper:hover .folder-big-number {
+      text-shadow: 0 0 16px var(--glow-color);
+    }
+
+    .folder-unit-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .folder-stat-right {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    /* ====================================================================== */
+    /* Card Color Schemes (Atmosphere Gradients & Glowing Lights)             */
+    /* ====================================================================== */
+    
+    /* Card 1: Vivid Electric Blue / Cyan Glow */
+    .theme-blue {
+      --glow-color: #38bdf8;
+      --glow-aura: rgba(56, 189, 248, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #38bdf8 0%, #2563eb 45%, #0f172a 85%);
+    }
+
+    /* Card 2: Radiant Purple / Violet Glow */
+    .theme-purple {
+      --glow-color: #c084fc;
+      --glow-aura: rgba(192, 132, 252, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #e879f9 0%, #7c3aed 45%, #2e1065 85%);
+    }
+
+    /* Card 3: Emerald / Neon Mint Glow */
+    .theme-teal {
+      --glow-color: #34d399;
+      --glow-aura: rgba(52, 211, 153, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #34d399 0%, #0d9488 45%, #042f2e 85%);
+    }
+
+    /* Card 4: Electric Sapphire Glow */
+    .theme-sapphire {
+      --glow-color: #06b6d4;
+      --glow-aura: rgba(6, 182, 212, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #22d3ee 0%, #0284c7 45%, #082f49 85%);
+    }
+
+    /* Card 5: Taskello Exact Fiery Flame Glow */
+    .theme-flame {
+      --glow-color: #fb923c;
+      --glow-aura: rgba(249, 115, 22, 0.55);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #fb923c 0%, #ea580c 45%, #450a0a 85%);
+    }
+
+    /* Card 6: Cyber Indigo / Neon Violet Glow */
+    .theme-indigo {
+      --glow-color: #a5b4fc;
+      --glow-aura: rgba(165, 180, 252, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #818cf8 0%, #4f46e5 45%, #1e1b4b 85%);
+    }
+
+    /* Upcoming Card State */
+    .upcoming-wrapper .taskello-card {
+      cursor: default;
+      opacity: 0.9;
+    }
+
+    /* Empty state */
+    .empty-search-msg {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .clean-footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    /* ====================================================================== */
+    /* Lesson 3 Profile Selection Modal                                       */
+    /* ====================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 8, 16, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-dialog {
+      background: var(--bg-card-folder, #141518);
+      border: 1.5px solid rgba(45, 212, 191, 0.35);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 40px rgba(20, 184, 166, 0.2);
+      border-radius: 28px;
+      max-width: 540px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .modal-dialog {
+      background: #ffffff;
+      border: 1.5px solid rgba(20, 184, 166, 0.4);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 30px rgba(20, 184, 166, 0.15);
+      color: #0f172a;
+    }
+
+    .modal-backdrop.active .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] .modal-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .modal-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      background: rgba(20, 184, 166, 0.15);
+      color: #2dd4bf;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0.4rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .modal-profiles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 1.15rem 1.25rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: inherit;
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    [data-theme="light"] .profile-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Student Card */
+    .profile-student:hover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 8px 24px -6px rgba(16, 185, 129, 0.3);
+    }
+
+    .profile-student .profile-icon-wrap {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    /* Admin Card */
+    .profile-admin:hover {
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.08);
+      box-shadow: 0 8px 24px -6px rgba(139, 92, 246, 0.3);
+    }
+
+    .profile-admin .profile-icon-wrap {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    }
+
+    /* Offline Card */
+    .profile-offline:hover {
+      border-color: #06b6d4;
+      background: rgba(6, 182, 212, 0.08);
+      box-shadow: 0 8px 24px -6px rgba(6, 182, 212, 0.3);
+    }
+
+    .profile-offline .profile-icon-wrap {
+      background: linear-gradient(135deg, #06b6d4, #0284c7);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+
+    .profile-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-role-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .profile-badge-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .student-pill {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .admin-pill {
+      background: rgba(139, 92, 246, 0.15);
+      color: #8b5cf6;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .offline-pill {
+      background: rgba(6, 182, 212, 0.15);
+      color: #06b6d4;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .profile-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .profile-arrow {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .profile-card:hover .profile-arrow {
+      transform: translateX(4px);
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- ==================== CLEAN MINIMAL HEADER ==================== -->
+    <header class="clean-header">
+      <div class="header-brand">
+        <div class="brand-icon-circle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+            <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/>
+            <circle cx="20" cy="10" r="2"/>
+          </svg>
+        </div>
+        <div class="header-title-block">
+          <h1>Shahrisabz Tibbiyot Texnikumi</h1>
+          <p>Tibbiyotda axborot texnologiyalari • Darslar mundarijasi</p>
+        </div>
+      </div>
+
+      <div class="header-tools">
+        <button type="button" class="theme-switch-btn" onclick="toggleTheme()" title="Mavzuni almashtirish">
+          <svg id="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display:none;">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg id="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== SEARCH BAR ==================== -->
+    <div class="search-wrapper">
+      <div class="search-input-pill">
+        <input 
+          type="text" 
+          id="course-search" 
+          placeholder="Mavzu yoki kalit so‘zni qidiring..." 
+          autocomplete="off"
+        />
+        <span class="search-icon-right">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- Empty search message -->
+    <div class="empty-search-msg" id="empty-search">
+      Mavzu topilmadi. Boshqa so‘z bilan qidirib ko‘ring.
+    </div>
+
+    <!-- ==================== GLOWING TASKELLO CARDS ==================== -->
+    <main class="cards-grid" id="cards-container">
+
+      <!-- ==================== CARD 1 (1-DARS) ==================== -->
+      <div class="taskello-card-wrapper theme-blue">
+        <a href="./1. Axborot/offline/1-dars.html" class="taskello-card" data-search="1-dars axborot haqida tushuncha axborot texnologiyalari kompyuter qismlari klaviatura sichqoncha ish stoli test">
+          <!-- Atmosphere with Glowing Bokeh -->
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#60a5fa" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#38bdf8" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#2563eb" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <!-- Top-Right Tag -->
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>1-Dars
+          </div>
+
+          <!-- Folder SVG (Smooth Cutout with Low Drop) -->
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Tab top at y=116, drops smoothly to y=138, text starts safely at y=145+ -->
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <!-- Folder Content (Completely Inside the Dark Area) -->
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Axborot haqida tushuncha</div>
+              <div class="folder-subtitle">Axborot shakllari va kompyuter asoslari</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">01</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">20 Test</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 2 (2-DARS) ==================== -->
+      <div class="taskello-card-wrapper theme-purple">
+        <a href="./2. Sanoq sistemalari/offline/2-dars.html" class="taskello-card" data-search="2-dars sanoq sistemalari axborot turlari texnika xavfsizligi ikkilik onlik sanoq test">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#e879f9" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#a855f7" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#7c3aed" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>2-Dars
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Sanoq sistemalari & Xavfsizlik</div>
+              <div class="folder-subtitle">2 lik va 10 lik sanoq, texnika xavfsizligi</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">02</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">20 Test</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 3 (3-DARS) ==================== -->
+      <div class="taskello-card-wrapper theme-teal">
+        <a href="javascript:void(0)" onclick="openLesson3Modal(event)" class="taskello-card" data-search="3-dars tibbiyotda ishchi o'rinlarini avtomatlashtirish aio emr elektron tibbiy karta o'lchov birliklari bit bayt kb mb gb tb parol qoidalari tibbiy sir windows papka fayl amaliyot test admin talaba profili">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#5eead4" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#14b8a6" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#0f766e" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>3-Dars
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Ishchi o‘rinlari & O‘lchov birliklari</div>
+              <div class="folder-subtitle">AIO, o‘lchov birliklari va EMR karta</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">03</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">20 Test</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 4 (4-DARS) ==================== -->
+      <div class="taskello-card-wrapper theme-sapphire">
+        <a href="./4-dars/offline/4-dars.html" class="taskello-card" data-search="4-dars klaviatura va sichqoncha asoslari klaviatura zonalari 10 barmoq tez yozish teztype hotkeys tezkor tugmalar sichqoncha texnikasi dpi sensor kursor viktorina trenajyor">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#38bdf8" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#0284c7" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#0369a1" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>4-Dars
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Klaviatura va sichqoncha asoslari</div>
+              <div class="folder-subtitle">Klaviatura zonalari, tez yozish va sichqoncha</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">04</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">Viktorina &amp; Mashq</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 5 (5-DARS: KOMPYUTER VA UNING QURILMALARI) ==================== -->
+      <div class="taskello-card-wrapper theme-flame">
+        <a href="./5. Kompyuter va uning qurilmalari/dars.html" class="taskello-card" data-search="5-dars kompyuter va uning qurilmalari protsessor cpu ram operativ xotira ona plata videokarta gpu quvvat bloki kuler korpus monitor klaviatura sichqoncha printer skaner hdd ssd xotira test">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#fb923c" fill-opacity="0.5" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#ea580c" fill-opacity="0.4" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#c2410c" fill-opacity="0.45" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>5-Dars
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Kompyuter va uning qurilmalari</div>
+              <div class="folder-subtitle">Asosiy, periferik va xotira (HDD &amp; SSD)</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">05</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">17 Qurilma &amp; Test</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 6 (6-DARS - UPCOMING) ==================== -->
+      <div class="taskello-card-wrapper theme-indigo upcoming-wrapper">
+        <div class="taskello-card" data-search="6-dars tibbiy statistika laboratoriya tahlillari dasturlari jadvallar grafiklar tahlil tez kunda">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#a5b4fc" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#6366f1" fill-opacity="0.35" filter="blur(18px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>Tez kunda
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Tibbiy statistika & Tahlil</div>
+              <div class="folder-subtitle">Laboratoriya tahlil dasturlari</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">06</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">Rejada</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="clean-footer">
+      Shahrisabz Tibbiyot Texnikumi • 100% Offline Elektron Qo‘llanma
+    </footer>
+
+  </div>
+
+  <!-- ==================== LESSON 3 PROFILE SELECTOR MODAL ==================== -->
+  <div id="lesson3-modal" class="modal-backdrop" onclick="closeLesson3Modal(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-badge">3-DARS PLATFORMASI</div>
+          <h2 class="modal-title">Kirish profilini tanlang</h2>
+          <p class="modal-desc">Axborot texnologiyalari bo‘yicha o‘quv va test tizimi</p>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="closeLesson3Modal()" title="Yopish">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-profiles-grid">
+        <!-- Talaba profili -->
+        <a href="https://ozodbeknapasov.github.io/3-dars-uchun/" target="_blank" rel="noopener noreferrer" class="profile-card profile-student">
+          <div class="profile-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <div class="profile-head">
+              <span class="profile-role-title">Talaba profili</span>
+              <span class="profile-badge-pill student-pill">Talabalar uchun</span>
+            </div>
+            <p class="profile-description">Interaktiv o‘quv platformasi, amaliy topshiriqlar va test tizimiga kirish.</p>
+          </div>
+          <div class="profile-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Admin profili -->
+        <a href="https://ozodbeknapasov.github.io/3-dars-uchun/admin" target="_blank" rel="noopener noreferrer" class="profile-card profile-admin">
+          <div class="profile-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <div class="profile-head">
+              <span class="profile-role-title">Admin profili</span>
+              <span class="profile-badge-pill admin-pill">O‘qituvchi / Nazorat</span>
+            </div>
+            <p class="profile-description">O‘qituvchi boshqaruv paneli, guruhlar statistikasi va natijalarni nazorat qilish.</p>
+          </div>
+          <div class="profile-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Offline dars materiali -->
+        <a href="./3. Avtomatlashtirish/offline/3-dars.html" class="profile-card profile-offline">
+          <div class="profile-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path>
+              <path d="M6 6h10"></path>
+              <path d="M6 10h10"></path>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <div class="profile-head">
+              <span class="profile-role-title">Offline dars qo‘llanmasi</span>
+              <span class="profile-badge-pill offline-pill">Internetsiz (Lokal)</span>
+            </div>
+            <p class="profile-description">3-Darsning to‘liq nazariy konspekti, axborot o‘lchov birliklari va amaliyoti.</p>
+          </div>
+          <div class="profile-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setTheme(mode) {
+      var root = document.documentElement;
+      var sun = document.getElementById('theme-icon-sun');
+      var moon = document.getElementById('theme-icon-moon');
+      
+      if (mode === 'light') {
+        root.setAttribute('data-theme', 'light');
+        localStorage.setItem('tat-theme', 'light');
+        if (sun) sun.style.display = 'none';
+        if (moon) moon.style.display = 'block';
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        localStorage.setItem('tat-theme', 'dark');
+        if (sun) sun.style.display = 'block';
+        if (moon) moon.style.display = 'none';
+      }
+    }
+
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    (function() {
+      var saved = localStorage.getItem('tat-theme');
+      if (saved === 'light') {
+        setTheme('light');
+      } else {
+        setTheme('dark');
+      }
+    })();
+
+    function openLesson3Modal(e) {
+      if (e) e.preventDefault();
+      var modal = document.getElementById('lesson3-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLesson3Modal(e) {
+      var modal = document.getElementById('lesson3-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLesson3Modal();
+      }
+    });
+
+    var searchInput = document.getElementById('course-search');
+    var emptyMsg = document.getElementById('empty-search');
+    var cardWrappers = document.querySelectorAll('.taskello-card-wrapper');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        var query = searchInput.value.toLowerCase().trim();
+        var visible = 0;
+
+        cardWrappers.forEach(function(wrap) {
+          var card = wrap.querySelector('.taskello-card');
+          var searchData = (card.getAttribute('data-search') || '').toLowerCase();
+          if (!query || searchData.indexOf(query) > -1) {
+            wrap.style.display = 'block';
+            visible++;
+          } else {
+            wrap.style.display = 'none';
+          }
+        });
+
+        if (emptyMsg) {
+          emptyMsg.style.display = (visible === 0) ? 'block' : 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
