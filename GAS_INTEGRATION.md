@@ -95,7 +95,15 @@ function doPost(e) {
       const chatId = data.message.chat.id.toString();
       const userText = (data.message.text || "").trim();
 
-      handleTelegramUserCommand(ss, chatId, userText);
+      try {
+        handleTelegramUserCommand(ss, chatId, userText);
+      } catch (cmdErr) {
+        // Xato yuz bersa bot jim qolmasin — sababini o'qituvchiga ko'rsatamiz
+        sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
+          "<b>TEXNIK XATOLIK</b>\n-----------------------------------\n" +
+          escapeHtml(cmdErr && cmdErr.message ? cmdErr.message : cmdErr),
+          BOT_KEYBOARD);
+      }
       return HtmlService.createHtmlOutput("OK");
     }
 
@@ -208,6 +216,12 @@ function handleTelegramUserCommand(ss, chatId, text) {
 
     props.setProperty(pendingKey, targetGroup);
     askWhichSheet(ss, chatId, targetGroup);
+    return;
+  }
+
+  // 2b. /debug — jadval tuzilishini tekshirish
+  if (text.indexOf("/debug") !== -1) {
+    sendDebugInfo(ss, chatId);
     return;
   }
 
@@ -347,7 +361,48 @@ function readSheetRows(ss, sheetName) {
   const lastRow = sheet.getLastRow();
   if (lastRow <= 1) return null;
 
-  return sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
+  // Jadvalda 11 ta ustun bo'lmasligi mumkin — mavjud ustunlardan oshib ketmaymiz,
+  // aks holda getRange "out of bounds" xatosini beradi va bot jim qolib ketadi.
+  const colCount = Math.min(TOTAL_COLUMNS, sheet.getMaxColumns());
+
+  return sheet.getRange(2, 1, lastRow - 1, colCount).getValues();
+}
+
+// ----------------------------------------------------------------------
+// DIAGNOSTIKA: /debug buyrug'i jadval tuzilishini ko'rsatadi
+// ----------------------------------------------------------------------
+function sendDebugInfo(ss, chatId) {
+  let msg = "<b>JADVAL DIAGNOSTIKASI</b>\n-----------------------------------\n";
+
+  ss.getSheets().forEach(function (sheet, idx) {
+    const name = sheet.getName();
+    const lastRow = sheet.getLastRow();
+    const lastCol = sheet.getLastColumn();
+    const maxCol = sheet.getMaxColumns();
+
+    msg += (idx + 1) + ". <b>" + escapeHtml(name) + "</b>\n" +
+           "   Qatorlar: " + lastRow + " | Ustunlar: " + lastCol + " (maks: " + maxCol + ")\n";
+
+    if (lastRow > 1) {
+      try {
+        const cols = Math.min(TOTAL_COLUMNS, maxCol);
+        const first = sheet.getRange(2, 1, 1, cols).getValues()[0];
+        msg += "   1-qator: ";
+        for (let c = 0; c < Math.min(5, first.length); c++) {
+          msg += "[" + c + "]=" + escapeHtml(first[c]) + " ";
+        }
+        msg += "\n";
+      } catch (e) {
+        msg += "   O'qishda xato: " + escapeHtml(e.message) + "\n";
+      }
+    }
+    msg += "\n";
+  });
+
+  msg += "-----------------------------------\n";
+  msg += "Guruh ustuni [3] bo'lishi kerak.";
+
+  sendLongMessage(chatId, msg);
 }
 
 // Guruh ustunini bo'sh joy va katta-kichik harfga bog'liq bo'lmagan holda solishtiradi
