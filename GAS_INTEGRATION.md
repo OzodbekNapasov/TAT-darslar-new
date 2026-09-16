@@ -12,12 +12,14 @@ Ushbu tizim Shahrisabz Tibbiyot Texnikumi "Tibbiyotda axborot texnologiyalari" (
      - Hisobot yuklab olish: `PDF hisobot yuklab olish`, `Excel (.xlsx) yuklab olish`
      - Umumiy reyting: `Barcha natijalar (Umumiy reyting)`
 2. **Guruhlar Bo'yicha To'liq Alifbo Tartibi (A dan Z gacha):**
-   - Istalgan guruh tugmasi bosilganda (masalan, `26-01 guruhi`), bot Google Sheets bazasidan ushbu guruh talabalarini oladi va ularning **F.I.SH (familiyasi, ismi, sharifi) bo'yicha alifbo tartibida (A dan Z gacha)** to'liq ro'yxat, to'plagan bali, foizi va bahosini ko'rsatadi.
+   - Istalgan guruh tugmasi bosilganda (masalan, `26-01 guruhi`), bot Google Sheets bazasidan ushbu guruh talabalarini oladi va ularning **F.I.SH bo'yicha alifbo tartibida (A dan Z gacha)** to'liq ro'yxati, to'plagan bali, foizi va bahosini ko'rsatadi.
 3. **Bitta Bosishda PDF va Excel Yuklab Olish:**
-   - `PDF hisobot yuklab olish` tugmasi bosilganda Google Sheets jadvalining tayyor A4 formatdagi gorizontal/vertikal PDF faylini yuklab olish havolasini beradi.
+   - `PDF hisobot yuklab olish` tugmasi bosilganda Google Sheets jadvalining tayyor A4 formatdagi gorizontal PDF hisobotini yuklab olish havolasini beradi.
    - `Excel (.xlsx) yuklab olish` bosilganda kompyuterga to'liq elektron jadval yuklanadi.
-4. **Jonli Bildirishnoma:**
-   - Talaba saytda testni tugatgan soniyada o'qituvchining Telegramiga natija (ismi, guruhi, to'plagan bali va bahosi) zudlik bilan yuboriladi.
+4. **Xatoliklar va Qayta Yuborishdan 100% Himoya:**
+   - `HtmlService` orqali to'g'ridan-to'g'ri 200 OK beriladi.
+   - `undefined` yoki bo'sh xabarlar botga umuman tushmaydi.
+   - Faqat haqiqiy talaba test topshirgandagina o'qituvchiga natija boradi.
 
 ---
 
@@ -60,95 +62,98 @@ const BOT_KEYBOARD = {
 function doPost(e) {
   try {
     if (!e || !e.postData || !e.postData.contents) {
-      return ContentService.createTextOutput(JSON.stringify({ status: "empty" }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return HtmlService.createHtmlOutput("OK");
     }
 
-    const data = JSON.parse(e.postData.contents);
+    let data;
+    try {
+      data = JSON.parse(e.postData.contents);
+    } catch (parseErr) {
+      return HtmlService.createHtmlOutput("OK");
+    }
+
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
     // ==================================================================
-    // 1-HOLAT: TELEGRAM BOTDAN KELGAN BUYRUQ / TUGMA BOSILISHI
+    // 1-HOLAT: TELEGRAM BOTDAN BUYRUQ / TUGMA BOSILISHI
     // ==================================================================
     if (data.message && data.message.chat) {
       const chatId = data.message.chat.id.toString();
       const userText = (data.message.text || "").trim();
 
       handleTelegramUserCommand(ss, chatId, userText);
-
-      return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return HtmlService.createHtmlOutput("OK");
     }
 
     // ==================================================================
-    // 2-HOLAT: SAYTDAN TOPSHIRILGAN TEST NATIJASI
+    // 2-HOLAT: SAYTDAN TEST NATIJASI TOPSHIRILISHI
+    // Qat'iy tekshiruv: faqat talaba ismi mavjud bo'lsagina ishlaydi!
     // ==================================================================
-    let sheetSuccess = false;
-    let sheetName = "5-Dars";
+    if (data.studentName && data.studentName.toString().trim() !== "" && data.studentName !== "Noma'lum") {
+      let sheetSuccess = false;
+      let sheetName = "5-Dars";
 
-    try {
-      sheetName = getSafeSheetName(data.lesson);
-      const sheet = getOrCreateSheet(ss, sheetName);
+      try {
+        sheetName = getSafeSheetName(data.lesson);
+        const sheet = getOrCreateSheet(ss, sheetName);
 
-      const rowNumber = sheet.getLastRow();
-      sheet.appendRow([
-        rowNumber,
-        data.date || new Date().toLocaleString("uz-UZ"),
-        data.studentName || "Noma'lum",
-        data.group || "-",
-        data.lesson || "5-Dars",
-        data.correctCount !== undefined ? data.correctCount : 0,
-        data.totalQuestions !== undefined ? data.totalQuestions : 20,
-        (data.percent !== undefined ? data.percent : 0) + "%",
-        (data.grade || 2) + " (" + (data.gradeLabel || "") + ")",
-        data.timeSpent || "-"
-      ]);
+        const rowNumber = sheet.getLastRow();
+        sheet.appendRow([
+          rowNumber,
+          data.date || new Date().toLocaleString("uz-UZ"),
+          data.studentName.toString().trim(),
+          data.group || "-",
+          data.lesson || "5-Dars",
+          data.correctCount !== undefined ? data.correctCount : 0,
+          data.totalQuestions !== undefined ? data.totalQuestions : 20,
+          (data.percent !== undefined ? data.percent : 0) + "%",
+          (data.grade || 2) + " (" + (data.gradeLabel || "") + ")",
+          data.timeSpent || "-"
+        ]);
 
-      const lastRow = sheet.getLastRow();
-      const rowRange = sheet.getRange(lastRow, 1, 1, 10);
-      rowRange.setVerticalAlignment("middle");
-      sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
-      sheet.getRange(lastRow, 6, 1, 5).setHorizontalAlignment("center");
+        const lastRow = sheet.getLastRow();
+        const rowRange = sheet.getRange(lastRow, 1, 1, 10);
+        rowRange.setVerticalAlignment("middle");
+        sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
+        sheet.getRange(lastRow, 6, 1, 5).setHorizontalAlignment("center");
 
-      sheetSuccess = true;
-    } catch (sheetErr) {
-      console.error("Sheets xatosi:", sheetErr);
+        sheetSuccess = true;
+      } catch (sheetErr) {
+        console.error("Sheets xatosi:", sheetErr);
+      }
+
+      // Faqat haqiqiy talaba topshirgandagina o'qituvchiga bildirishnoma yuboriladi
+      try {
+        const alertText = 
+          "<b>YANGI TEST TOPSHIRILDI</b>\n" +
+          "-----------------------------------\n" +
+          "Talaba: <b>" + escapeHtml(data.studentName) + "</b>\n" +
+          "Guruhi: <b>" + escapeHtml(data.group) + "</b>\n" +
+          "Mavzu: <b>" + escapeHtml(sheetName) + "</b>\n" +
+          "Natija: <b>" + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%)</b>\n" +
+          "Bahosi: <b>" + data.grade + " (" + escapeHtml(data.gradeLabel) + ")</b>\n" +
+          "Sarflangan vaqt: " + escapeHtml(data.timeSpent) + "\n" +
+          "Vaqti: " + escapeHtml(data.date) + "\n" +
+          "-----------------------------------\n" +
+          "Guruh natijalarini ko'rish uchun quyidagi guruh tugmasini bosing.";
+
+        sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, TEACHER_CHAT_ID, alertText, BOT_KEYBOARD);
+      } catch (tgErr) {
+        console.error("Telegram xabari xatosi:", tgErr);
+      }
+
+      return HtmlService.createHtmlOutput("OK");
     }
 
-    // O'qituvchiga lahzali bildirishnoma yuborish
-    try {
-      const alertText = 
-        "<b>YANGI TEST TOPSHIRILDI</b>\n" +
-        "-----------------------------------\n" +
-        "Talaba: <b>" + escapeHtml(data.studentName) + "</b>\n" +
-        "Guruhi: <b>" + escapeHtml(data.group) + "</b>\n" +
-        "Mavzu: <b>" + escapeHtml(sheetName) + "</b>\n" +
-        "Natija: <b>" + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%)</b>\n" +
-        "Bahosi: <b>" + data.grade + " (" + escapeHtml(data.gradeLabel) + ")</b>\n" +
-        "Sarflangan vaqt: " + escapeHtml(data.timeSpent) + "\n" +
-        "Vaqti: " + escapeHtml(data.date) + "\n" +
-        "-----------------------------------\n" +
-        "Guruh natijalarini ko'rish uchun quyidagi guruh tugmasini bosing.";
-
-      sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, TEACHER_CHAT_ID, alertText, BOT_KEYBOARD);
-    } catch (tgErr) {
-      console.error("Telegram xabari xatosi:", tgErr);
-    }
-
-    return ContentService.createTextOutput(JSON.stringify({ status: "success", sheet: sheetSuccess }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return HtmlService.createHtmlOutput("OK");
 
   } catch (globalErr) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: globalErr.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return HtmlService.createHtmlOutput("OK");
   }
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({ 
-    status: "ok", 
-    message: "TAT Darslar Test Integratsiya API faol ishlamoqda" 
-  })).setMimeType(ContentService.MimeType.JSON);
+  return HtmlService.createHtmlOutput("TAT Darslar Test Integratsiya API faol ishlamoqda");
 }
 
 // ----------------------------------------------------------------------
@@ -442,7 +447,7 @@ Kodni Apps Script tahrirchisiga qo'yganingizdan so'ng:
    - **Manage deployments (Joylashtirishlarni boshqarish)** bandini tanlang.
    - Chap tomondagi faol veb-ilovani tanlang va yuqoridagi **Qalamcha (Edit / Tahrirlash)** belgisini bosing.
    - **Version (Versiya)** qatoridan **"New version" (Yangi versiya)** ni tanlang.
-   - **Who has access (Kirish huquqi)** qatorida **"Anyone" (Hamma / Lyuboy)** tanlanganligini tekshiring! (Bu Telegram bot va talabalar natijalarini qabul qilish uchun shart).
+   - **Who has access (Kirish huquqi)** qatorida **"Anyone" (Hamma / Lyuboy)** tanlanganligini tekshiring!
    - Pastdagi **Deploy (Joylashtirish)** tugmasini bosing.
 
-3. Tayyor! Endi Telegram botingizda doimiy klaviatura paydo bo'ladi. Istalgan guruh tugmasini (`26-01 guruhi`, `26-02 guruhi`...) bossangiz, o'sha guruh natijalari **alifbo tartibida** chiqadi!
+3. Tayyor! Endi Google va Telegram o'rtasida hech qanday qayta takrorlanish (302 redirect) bo'lmaydi va xabarlar faqat aniq natijalar bilan keladi.
