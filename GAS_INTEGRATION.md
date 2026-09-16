@@ -54,6 +54,10 @@ const TEACHER_CHAT_ID = "8135594558";
 // Jadvaldagi ustunlar soni (11-ustun — Kompyuter raqami)
 const TOTAL_COLUMNS = 11;
 
+// Apps Script veb-ilovasining joriy manzili (Deploy -> Web app URL)
+// Bu manzil Telegram botga "xabarlarni shu yerga yubor" deb ko'rsatish uchun kerak.
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwlnNlpNGLWH3hs_pUXXias8x-uSYMj3kC5Ildf4bFuyySJO9ihVaGFMUU2A_FUqeys/exec";
+
 // Doimiy pastki boshqaruv tugmalari (ReplyKeyboardMarkup)
 const BOT_KEYBOARD = {
   keyboard: [
@@ -473,6 +477,51 @@ function escapeHtml(text) {
   if (!text) return "";
   return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
+
+// ======================================================================
+// TELEGRAM WEBHOOK BOSHQARUVI
+// ENG MUHIM: bot tugmalari ishlashi uchun shu funksiya BIR MARTA
+// Apps Script tahrirchisida qo'lda ishga tushirilishi shart!
+// (Yuqoridagi funksiyalar ro'yxatidan setupTelegramWebhook ni tanlab, Run bosing)
+// ======================================================================
+function setupTelegramWebhook() {
+  const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN +
+              "/setWebhook?url=" + encodeURIComponent(WEB_APP_URL) +
+              "&drop_pending_updates=true";
+
+  const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+  const result = response.getContentText();
+
+  console.log("setWebhook natijasi: " + result);
+
+  // Natijani o'qituvchining Telegramiga ham yuborish
+  sendTelegramWithKeyboard(
+    TELEGRAM_BOT_TOKEN,
+    TEACHER_CHAT_ID,
+    "<b>BOT ULANDI</b>\n-----------------------------------\n" +
+    "Webhook muvaffaqiyatli o'rnatildi. Endi pastdagi tugmalar ishlaydi.\n\n" +
+    "Texnik javob: " + escapeHtml(result),
+    BOT_KEYBOARD
+  );
+
+  return result;
+}
+
+// Webhook holatini tekshirish (Run bosib, Execution log dan ko'ring)
+function checkTelegramWebhook() {
+  const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/getWebhookInfo";
+  const result = UrlFetchApp.fetch(url, { muteHttpExceptions: true }).getContentText();
+  console.log("getWebhookInfo: " + result);
+  return result;
+}
+
+// Webhook ni o'chirish (kerak bo'lganda)
+function deleteTelegramWebhook() {
+  const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/deleteWebhook";
+  const result = UrlFetchApp.fetch(url, { muteHttpExceptions: true }).getContentText();
+  console.log("deleteWebhook: " + result);
+  return result;
+}
 ```
 
 ---
@@ -497,7 +546,36 @@ Kompyuter raqami ataylab oxirgi ustunga qo'yildi — shu sababli jadvalda allaqa
 
 ---
 
-## 5. O'rnatishdan So'ng Saqlash va Qayta Joylashtirish (ENG MUHIM QADAM)
+## 5. Bot Tugmalarini Ishga Tushirish (Webhook) — MAJBURIY QADAM
+
+Agar botga `/start` yozganingizda yoki tugmalarni bosganingizda **hech qanday javob kelmasa**, sabab bitta:
+Telegram botga "kelgan xabarlarni qayerga yuborish" kerakligi ko'rsatilmagan (webhook o'rnatilmagan).
+Bunda barcha bosilgan tugmalar Telegram serverida navbatda turib qoladi va Apps Script'ga umuman yetib bormaydi.
+
+Buni hal qilish uchun:
+
+1. Apps Script tahrirchisida yangi kodni saqlang (`Ctrl + S`).
+2. Avval veb-ilovani joylashtiring (6-bo'limga qarang) va **Web app URL** manzilini nusxalang.
+3. Kod boshidagi `WEB_APP_URL` qatoriga o'sha manzilni qo'ying (agar u allaqachon to'g'ri bo'lsa, tegmang).
+4. Tahrirchining yuqori qismidagi funksiyalar ro'yxatidan **`setupTelegramWebhook`** ni tanlang.
+5. **Run (Ishga tushirish)** tugmasini bosing.
+6. Birinchi marta Google ruxsat so'raydi: **Review permissions -> hisobingizni tanlang -> Advanced -> Go to (loyiha nomi) -> Allow**.
+7. Pastdagi **Execution log** da `{"ok":true,"result":true,...}` javobini ko'rasiz va Telegramingizga "BOT ULANDI" xabari keladi.
+
+Shundan so'ng botga `/start` yozing — pastki tugmalar paneli chiqadi va guruh natijalari ishlaydi.
+
+**Tekshirish uchun:** funksiyalar ro'yxatidan `checkTelegramWebhook` ni tanlab Run bosing.
+Execution log dagi javobda `"url"` maydoni bo'sh bo'lmasligi kerak:
+
+- `"url":""` — webhook o'rnatilmagan, bot javob bermaydi (yuqoridagi qadamlarni bajaring).
+- `"url":"https://script.google.com/macros/s/.../exec"` — hammasi joyida.
+
+**Diqqat:** Veb-ilovani qayta joylashtirganingizda (Deploy) manzil o'zgarsa, `WEB_APP_URL` ni yangilab,
+`setupTelegramWebhook` ni qaytadan bir marta ishga tushirish kerak.
+
+---
+
+## 6. O'rnatishdan So'ng Saqlash va Qayta Joylashtirish (ENG MUHIM QADAM)
 
 Kodni Apps Script tahrirchisiga qo'yganingizdan so'ng:
 
@@ -509,4 +587,19 @@ Kodni Apps Script tahrirchisiga qo'yganingizdan so'ng:
    - **Who has access (Kirish huquqi)** qatorida **"Anyone" (Hamma / Lyuboy)** tanlanganligini tekshiring!
    - Pastdagi **Deploy (Joylashtirish)** tugmasini bosing.
 
-3. Tayyor! Endi Google va Telegram o'rtasida hech qanday qayta takrorlanish (302 redirect) bo'lmaydi va xabarlar faqat aniq natijalar bilan keladi.
+3. Joylashtirish oynasidagi **Web app URL** manzilini nusxalab, kod boshidagi `WEB_APP_URL` qatoriga qo'ying va `Ctrl + S` bilan saqlang.
+4. So'ngra 5-bo'limdagi **`setupTelegramWebhook`** funksiyasini bir marta Run qiling — busiz bot tugmalari ishlamaydi.
+
+Tayyor! Endi Google va Telegram o'rtasida hech qanday qayta takrorlanish (302 redirect) bo'lmaydi va xabarlar faqat aniq natijalar bilan keladi.
+
+---
+
+## 7. Tez-tez Uchraydigan Muammolar
+
+| Belgi | Sababi | Yechimi |
+|---|---|---|
+| Botga `/start` yozilsa javob yo'q, tugmalar ishlamaydi | Webhook o'rnatilmagan (`"url":""`) | 5-bo'lim: `setupTelegramWebhook` ni Run qiling |
+| Test natijasi Telegramga kelmaydi, lekin bot tugmalari ishlaydi | Saytdagi `BACKEND_API_URL` eski joylashtirish manzilini ko'rsatmoqda | `test-5.html` dagi manzilni yangi **Web app URL** ga almashtiring |
+| Bot javob beradi, lekin guruh ro'yxati bo'sh | Ushbu guruhdan hali hech kim test topshirmagan | Bitta sinov testi topshirib ko'ring |
+| Deploy'dan keyin bot yana jim bo'lib qoldi | Yangi joylashtirishda manzil o'zgargan | `WEB_APP_URL` ni yangilab, `setupTelegramWebhook` ni qayta Run qiling |
+| `Who has access` — `Anyone` emas | Telegram Apps Script'ga POST yubora olmaydi | Deploy sozlamasida `Anyone` ni tanlang |
