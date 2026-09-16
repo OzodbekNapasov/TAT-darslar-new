@@ -275,29 +275,47 @@ function askWhichSheet(ss, chatId, groupCode) {
 // GURUH NATIJALARI — SODDA RO'YXAT (FAMILIYA ISM + BAHO, ALIFBO TARTIBIDA)
 // ----------------------------------------------------------------------
 function sendGroupResultsSimple(ss, chatId, groupCode, sheetName) {
-  const rows = readSheetRows(ss, sheetName);
+  let rows = readSheetRows(ss, sheetName);
+  let students = rows ? filterByGroup(rows, groupCode) : [];
+  let usedSheet = sheetName;
 
-  if (rows === null) {
-    sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
-      "<b>" + escapeHtml(sheetName) + "</b> darsida hozircha natijalar yo'q.", BOT_KEYBOARD);
-    return;
+  // Agar tanlangan listda topilmasa, jadvaldagi boshqa listlar ham tekshiriladi.
+  // (Natijalar qaysi listda ekanini o'qituvchi qo'lda izlab yurmasligi uchun.)
+  if (students.length === 0) {
+    const allSheets = ss.getSheets();
+    for (let k = 0; k < allSheets.length; k++) {
+      const name = allSheets[k].getName();
+      if (name === sheetName) continue;
+
+      const otherRows = readSheetRows(ss, name);
+      if (!otherRows) continue;
+
+      const found = filterByGroup(otherRows, groupCode);
+      if (found.length > 0) {
+        students = found;
+        usedSheet = name;
+        break;
+      }
+    }
   }
 
-  const students = rows.filter(function (row) {
-    return (row[3] || "").toString().trim().indexOf(groupCode) !== -1;
-  });
-
   if (students.length === 0) {
+    const sheetList = ss.getSheets().map(function (sh) { return sh.getName(); }).join(", ");
     sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
       "<b>" + escapeHtml(groupCode) + " guruhi — " + escapeHtml(sheetName) + "</b>\n" +
       "-----------------------------------\n" +
-      "Bu guruhdan hozircha hech kim test topshirmagan.", BOT_KEYBOARD);
+      "Bu guruhdan hozircha hech kim test topshirmagan.\n\n" +
+      "Tekshirilgan listlar: " + escapeHtml(sheetList),
+      BOT_KEYBOARD);
     return;
   }
 
-  sendSimpleList(chatId,
-    escapeHtml(groupCode) + " GURUHI — " + escapeHtml(sheetName),
-    sortByName(students));
+  let title = escapeHtml(groupCode) + " GURUHI — " + escapeHtml(usedSheet);
+  if (usedSheet !== sheetName) {
+    title += " (natijalar shu listdan topildi)";
+  }
+
+  sendSimpleList(chatId, title, sortByName(students));
 }
 
 // ----------------------------------------------------------------------
@@ -306,13 +324,17 @@ function sendGroupResultsSimple(ss, chatId, groupCode, sheetName) {
 function sendSheetResultsSimple(ss, chatId, sheetName) {
   const rows = readSheetRows(ss, sheetName);
 
-  if (rows === null || rows.length === 0) {
+  const filled = rows ? rows.filter(function (row) {
+    return (row[2] || "").toString().trim() !== "";
+  }) : [];
+
+  if (filled.length === 0) {
     sendTelegramWithKeyboard(TELEGRAM_BOT_TOKEN, chatId,
       "<b>" + escapeHtml(sheetName) + "</b> darsida hozircha natijalar yo'q.", BOT_KEYBOARD);
     return;
   }
 
-  sendSimpleList(chatId, escapeHtml(sheetName) + " — BARCHA GURUHLAR", sortByName(rows));
+  sendSimpleList(chatId, escapeHtml(sheetName) + " — BARCHA GURUHLAR", sortByName(filled));
 }
 
 // ----------------------------------------------------------------------
@@ -326,6 +348,17 @@ function readSheetRows(ss, sheetName) {
   if (lastRow <= 1) return null;
 
   return sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
+}
+
+// Guruh ustunini bo'sh joy va katta-kichik harfga bog'liq bo'lmagan holda solishtiradi
+function filterByGroup(rows, groupCode) {
+  const target = groupCode.toString().replace(/\s+/g, "").toLowerCase();
+
+  return rows.filter(function (row) {
+    const raw = (row[3] === null || row[3] === undefined) ? "" : row[3];
+    const cell = raw.toString().replace(/\s+/g, "").toLowerCase();
+    return cell !== "" && cell.indexOf(target) !== -1;
+  });
 }
 
 function sortByName(rows) {
