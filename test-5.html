@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>5-Dars Testi: Kompyuter va uning qurilmalari — Online Test Markazi</title>
-  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 30 talik bankdan tanlanadigan 20 ta savolli onlayn test sinovi.">
+  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 29 talik bankdan tanlanadigan 20 ta savolli onlayn test sinovi.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>">
   <style>
     :root {
@@ -245,6 +245,19 @@
     .form-group {
       text-align: left;
       margin-bottom: 1.15rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 520px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
     }
 
     .form-label {
@@ -918,7 +931,7 @@
 
         <h1 class="start-title">Kompyuter va uning qurilmalari</h1>
         <p class="start-desc">
-          Ichki va tashqi qurilmalar, xotira turlari (HDD va SSD) bo‘yicha 30 talik savollar bankidan tasodifiy tanlangan 20 ta test savoli. Natijangiz avtomatik ravishda baholanadi va o‘qituvchi nazoratiga yuboriladi.
+          Ichki va tashqi qurilmalar, xotira turlari (HDD va SSD) bo‘yicha 29 talik savollar bankidan tasodifiy tanlangan 20 ta test savoli. Natijangiz avtomatik ravishda baholanadi va o‘qituvchi nazoratiga yuboriladi.
         </p>
 
         <div class="test-features-grid">
@@ -937,16 +950,30 @@
         </div>
 
         <form id="student-form" onsubmit="startExam(event)">
-          <div class="form-group">
-            <label class="form-label" for="inp-fullname">Familiyangiz va Ismingiz (F.I.SH):</label>
-            <input 
-              type="text" 
-              id="inp-fullname" 
-              class="form-input" 
-              placeholder="Masalan: Valiyev Ali Sobirovich" 
-              required 
-              autocomplete="name"
-            />
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inp-lastname">Familiyangiz:</label>
+              <input
+                type="text"
+                id="inp-lastname"
+                class="form-input"
+                placeholder="Masalan: Valiyev"
+                required
+                autocomplete="family-name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-firstname">Ismingiz:</label>
+              <input
+                type="text"
+                id="inp-firstname"
+                class="form-input"
+                placeholder="Masalan: Ali"
+                required
+                autocomplete="given-name"
+              />
+            </div>
           </div>
 
           <div class="form-group">
@@ -961,6 +988,21 @@
               <option value="26-06">26-06 guruhi</option>
               <option value="26-07">26-07 guruhi</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inp-pc">Kompyuter raqami:</label>
+            <input
+              type="number"
+              id="inp-pc"
+              class="form-input"
+              placeholder="Masalan: 7"
+              min="1"
+              max="99"
+              step="1"
+              required
+              inputmode="numeric"
+            />
           </div>
 
           <button type="submit" class="start-btn">
@@ -1023,6 +1065,7 @@
             <div class="student-tag-box">
               <span class="student-title-cut" id="display-student-name">Talaba</span>
               <span class="group-badge-pill" id="display-student-group">26-01</span>
+              <span class="group-badge-pill" id="display-student-pc">1-kompyuter</span>
             </div>
 
             <div class="timer-card-block">
@@ -1073,7 +1116,7 @@
 
         <h1 class="result-title" id="resTitleText">Test Sinovi Yakunlandi!</h1>
         <p class="result-student-info">
-          Talaba: <strong id="resStudentName">-</strong> • Guruh: <strong id="resGroupName">-</strong>
+          Talaba: <strong id="resStudentName">-</strong> • Guruh: <strong id="resGroupName">-</strong> • Kompyuter: <strong id="resPcNumber">-</strong>
         </p>
 
         <div class="result-stats-row">
@@ -1364,34 +1407,27 @@
       },
       {
         id: 26,
-        question: "Noutbukda sichqoncha o‘rnini bosuvchi sezgir panel qanday ataladi?",
-        options: ["Touchpad (sensorli panel)", "Monitor", "Skaner", "Kuler"],
-        correct: 0,
-        explanation: "Touchpad — noutbuk klaviaturasi ostidagi sezgir panel. Barmoq bilan surib, kursor boshqariladi."
-      },
-      {
-        id: 27,
         question: "Fayl yoki papkani ochish uchun sichqonchaning qaysi tugmasi ikki marta bosiladi?",
         options: ["Chap tugma", "O‘ng tugma", "G‘ildirak", "Hech qaysi"],
         correct: 0,
         explanation: "Fayl yoki papkani ochish uchun chap tugma ikki marta tez bosiladi."
       },
       {
-        id: 28,
+        id: 27,
         question: "Sichqonchaning o‘ng tugmasi bosilganda ekranda nima paydo bo‘ladi?",
         options: ["Kompyuter o‘chadi", "Qo‘shimcha buyruqlar ro‘yxati (menyu)", "Printer ishga tushadi", "Hech narsa"],
         correct: 1,
         explanation: "O‘ng tugma bosilganda tanlangan ob’ekt uchun qo‘shimcha buyruqlar menyusi ochiladi."
       },
       {
-        id: 29,
+        id: 28,
         question: "Printer, skaner, kolonka va veb-kamera kabi qurilmalar birgalikda qanday nomlanadi?",
         options: ["Qo‘shimcha qurilmalar", "Ichki xotira", "Dasturlar", "Protsessorlar"],
         correct: 0,
         explanation: "Bular kompyuter imkoniyatini kengaytiruvchi qo‘shimcha qurilmalar hisoblanadi."
       },
       {
-        id: 30,
+        id: 29,
         question: "Quyidagilardan qaysi biri CHIQARISH qurilmasi hisoblanadi?",
         options: ["Mikrofon", "Skaner", "Printer", "Klaviatura"],
         correct: 2,
@@ -1399,7 +1435,7 @@
       }
     ];
 
-    // Har bir sinovda 30 ta savoldan tasodifiy 20 tasi aralashtirib tanlanadi
+    // Har bir sinovda 29 ta savoldan tasodifiy 20 tasi aralashtirib tanlanadi
     const EXAM_QUESTION_COUNT = 20;
     let QUESTIONS_DATA = [];
 
@@ -1437,8 +1473,11 @@
     // ======================================================================
     let currentQuestionIdx = 0;
     const userAnswers = {};
+    let studentLastName = "";
+    let studentFirstName = "";
     let studentFullName = "";
     let studentGroup = "";
+    let studentPcNumber = "";
     let timerInterval = null;
     let timerSeconds = 0;
 
@@ -1484,23 +1523,36 @@
 
     function startExam(e) {
       e.preventDefault();
-      studentFullName = document.getElementById("inp-fullname").value.trim();
+      studentLastName = document.getElementById("inp-lastname").value.trim();
+      studentFirstName = document.getElementById("inp-firstname").value.trim();
       studentGroup = document.getElementById("inp-group").value.trim();
+      studentPcNumber = document.getElementById("inp-pc").value.trim();
 
-      if (!studentFullName) {
-        alert("Iltimos, ism va familiyangizni kiriting!");
+      if (!studentLastName) {
+        alert("Iltimos, familiyangizni kiriting!");
+        return;
+      }
+      if (!studentFirstName) {
+        alert("Iltimos, ismingizni kiriting!");
         return;
       }
       if (!studentGroup) {
         alert("Iltimos, guruhingizni ro‘yxatdan tanlang!");
         return;
       }
+      if (!studentPcNumber || Number(studentPcNumber) < 1) {
+        alert("Iltimos, kompyuteringiz raqamini kiriting!");
+        return;
+      }
 
-      // Har bir urinishda 30 talik bankdan tasodifiy 20 ta savol tanlanadi
+      studentFullName = studentLastName + " " + studentFirstName;
+
+      // Har bir urinishda 29 talik bankdan tasodifiy 20 ta savol tanlanadi
       QUESTIONS_DATA = buildExamQuestions();
 
       document.getElementById("display-student-name").textContent = studentFullName;
       document.getElementById("display-student-group").textContent = studentGroup;
+      document.getElementById("display-student-pc").textContent = studentPcNumber + "-kompyuter";
 
       // Timer
       timerSeconds = 0;
@@ -1678,6 +1730,7 @@
 
       document.getElementById("resStudentName").textContent = studentFullName;
       document.getElementById("resGroupName").textContent = studentGroup;
+      document.getElementById("resPcNumber").textContent = studentPcNumber + "-kompyuter";
       document.getElementById("resCorrectCount").textContent = `${correctCount} / ${total}`;
       document.getElementById("resPercent").textContent = `${percent}%`;
       document.getElementById("resGrade").textContent = `${grade} (${gradeLabel})`;
@@ -1690,7 +1743,10 @@
       sendResultsToBackend({
         lesson: "5-Dars: Kompyuter va uning qurilmalari",
         studentName: studentFullName,
+        lastName: studentLastName,
+        firstName: studentFirstName,
         group: studentGroup,
+        pcNumber: studentPcNumber,
         correctCount: correctCount,
         totalQuestions: total,
         percent: percent,
