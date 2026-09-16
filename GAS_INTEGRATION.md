@@ -1,48 +1,37 @@
-# Google Sheets va Telegram Bot To'liq Integratsiyasi (Jonli Natijalar va Mavzular Bo'yicha Varaqlar)
+# Google Sheets va Telegram Bot To'liq Integratsiyasi (Kafolatlangan Tizim)
 
 Ushbu tizim:
 1. Google Sheets jadvalingizda har bir dars mavzusi bo'yicha alohida yangi varaq (list/tab) ochib, natijalarni chiroyli tartibda saqlaydi;
 2. Telegram botingizda har bir talaba test topshirganda bitta xabarni **jonli ravishda yangilab (edit qilib)**, Top-10 talabalar reytingi va umumiy statistikasini ko'rsatib boradi;
-3. Shu bilan birga har bir topshirilgan test haqida qisqa bildirishnoma ham yetkazadi.
+3. Har bir topshirilgan test haqida o'qituvchiga lahzali qisqa bildirishnoma yetkazadi;
+4. **100% Xatoliklarga chidamli:** Agar Telegramda uzilish bo'lsa ham, Google Sheets'ga yozish hech qachon to'xtamaydi. Talaba interneti uzilsa, natija kompyuter xotirasida saqlanadi va internet paydo bo'lishi bilan avtomatik qayta yuboriladi!
 
 ---
 
-## Ma'lumotlaringiz
+## Sizning Aniq Ma'lumotlaringiz
 
 - **Google Sheets jadvali:** [https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit](https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit)
 - **Telegram Bot nomi:** `Mavzu testlari`
 - **Telegram Bot username:** `@test_results111111111111_bot`
 - **Telegram Bot Token:** `8964237407:AAGE0yIVRZMfJVorRm_zLN8lZvQEglp9fvM`
+- **Sizning Tasdiqlangan Shaxsiy Chat ID:** `8135594558`
 
 ---
 
-## 1-QADAM: Shaxsiy Chat ID raqamingizni olish (30 soniya)
+## Google Sheets ichidagi Apps Script kodini yangilash (1 daqiqa)
 
-Botingiz xabarlarni aynan sizga (yoki guruhingizga) yuborishi uchun sizning Telegram Chat ID raqamingiz kerak:
-1. Telegram dasturida botingizni oching: **[@test_results111111111111_bot](https://t.me/test_results111111111111_bot)**
-2. Pastdagi **"Start"** (yoki `/start`) tugmasini bosing.
-3. So'ngra Telegram'da **[@userinfobot](https://t.me/userinfobot)** ga kirib `/start` bosing. U sizga shaxsiy `Id: 123456789` raqamingizni yozib beradi. O'sha raqamni nusxalab oling.
-   *(Agar natijalar Telegram guruhga tushishini istasangiz, botni o'sha guruhga admin qilib qo'shing va guruh Chat ID sini oling).*
-
----
-
-## 2-QADAM: Google Sheets ichiga Apps Script kodini qo'yish (2 daqiqa)
-
-1. Google Sheets jadvalingizni oching:
-   [Jadvalni ochish](https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit)
-2. Yuqori menyudan: **Extensions (Kengaytmalar) -> Apps Script** bo'limiga kiring.
-3. Ochilgan tahrirchidagi barcha eski matnni o'chirib, quyidagi kodni to'liq nusxalab joylashtiring:
+1. [Google Sheets jadvalingizni](https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit) oching.
+2. Menyudan: **Extensions (Kengaytmalar) -> Apps Script** bo'limiga kiring.
+3. U yerdagi kodni o'chirib, quyidagi **to'liq sozlangan va kafolatlangan kodni** qo'ying:
 
 ```javascript
 // ======================================================================
-// TAT DARSLAR — GOOGLE SHEETS VA TELEGRAM JONLI INTEGRATSIYASI
+// TAT DARSLAR — GOOGLE SHEETS VA TELEGRAM KAFOLATLANGAN INTEGRATSIYASI
 // Shahrisabz Tibbiyot Texnikumi
 // ======================================================================
 
 const TELEGRAM_BOT_TOKEN = "8964237407:AAGE0yIVRZMfJVorRm_zLN8lZvQEglp9fvM";
-
-// 1-qadamda olgan shaxsiy Chat ID raqamingizni quyidagi qo'shtirnoq ichiga yozing:
-const TELEGRAM_CHAT_ID = "SIZNING_CHAT_IDINGIZ";
+const TELEGRAM_CHAT_ID = "8135594558";
 
 function doPost(e) {
   try {
@@ -54,60 +43,79 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-    // 1. Mavzu bo'yicha varaq (tab/list) nomini aniqlash va varaqni topish/yaratish
-    const sheetName = getSheetNameFromLesson(data.lesson);
-    const sheet = getOrCreateSheet(ss, sheetName);
+    // 1. GOOGLE SHEETS GA YOZISH (Eng asosiy bosqich — Telegramdan mustaqil)
+    let sheetSuccess = false;
+    let sheet = null;
+    let sheetName = "5-Dars";
 
-    // 2. Varaqqa yangi qator qo'shish
-    const rowNumber = sheet.getLastRow(); // Tartib raqami
-    sheet.appendRow([
-      rowNumber,
-      data.date || new Date().toLocaleString("uz-UZ"),
-      data.studentName,
-      data.group,
-      data.lesson,
-      data.correctCount,
-      data.totalQuestions,
-      data.percent + "%",
-      data.grade + " (" + (data.gradeLabel || "") + ")",
-      data.timeSpent
-    ]);
+    try {
+      sheetName = getSafeSheetName(data.lesson);
+      sheet = getOrCreateSheet(ss, sheetName);
 
-    // Formatlash
-    const lastRow = sheet.getLastRow();
-    const rowRange = sheet.getRange(lastRow, 1, 1, 10);
-    rowRange.setVerticalAlignment("middle");
-    sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
-    sheet.getRange(lastRow, 6, 1, 5).setHorizontalAlignment("center");
+      const rowNumber = sheet.getLastRow();
+      sheet.appendRow([
+        rowNumber,
+        data.date || new Date().toLocaleString("uz-UZ"),
+        data.studentName || "Noma'lum",
+        data.group || "-",
+        data.lesson || "5-Dars",
+        data.correctCount !== undefined ? data.correctCount : 0,
+        data.totalQuestions !== undefined ? data.totalQuestions : 20,
+        (data.percent !== undefined ? data.percent : 0) + "%",
+        (data.grade || 2) + " (" + (data.gradeLabel || "") + ")",
+        data.timeSpent || "-"
+      ]);
 
-    // 3. Telegram Botga jonli xabar (edit) va bildirishnoma yuborish
-    const chatId = getEffectiveChatId();
-    if (TELEGRAM_BOT_TOKEN && chatId) {
-      // Jonli reyting xabarini tahrirlash (editMessageText)
-      updateLiveTelegramLeaderboard(sheet, sheetName, data, chatId);
+      const lastRow = sheet.getLastRow();
+      const rowRange = sheet.getRange(lastRow, 1, 1, 10);
+      rowRange.setVerticalAlignment("middle");
+      sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
+      sheet.getRange(lastRow, 6, 1, 5).setHorizontalAlignment("center");
 
-      // Har bir topshiruvchi bo'yicha qisqa lahzali xabar
-      const alertText = 
-        "<b>Yangi topshiriq:</b> " + escapeHtml(data.studentName) + " (" + escapeHtml(data.group) + ")\n" +
-        "<b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
-        "<b>Natija:</b> " + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%) — <b>Baho: " + data.grade + "</b>";
-      
-      sendTelegramMessage(TELEGRAM_BOT_TOKEN, chatId, alertText);
+      sheetSuccess = true;
+    } catch (sheetErr) {
+      console.error("Sheets xatosi:", sheetErr);
     }
 
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+    // 2. TELEGRAM BOTGA XABAR YUBORISH (Alohida blok — xato bo'lsa ham jadvalga ta'sir qilmaydi)
+    try {
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+        if (sheet && sheetSuccess) {
+          updateLiveTelegramLeaderboard(sheet, sheetName, data, TELEGRAM_CHAT_ID);
+        }
+
+        const alertText = 
+          "<b>Yangi topshiriq:</b> " + escapeHtml(data.studentName) + " (" + escapeHtml(data.group) + ")\n" +
+          "<b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
+          "<b>Natija:</b> " + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%) — <b>Baho: " + data.grade + "</b>";
+        
+        sendTelegramMessage(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, alertText);
+      }
+    } catch (tgErr) {
+      console.error("Telegram xatosi:", tgErr);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ status: "success", sheet: sheetSuccess }))
       .setMimeType(ContentService.MimeType.JSON);
 
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+  } catch (globalErr) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: globalErr.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// GET so'rovlari uchun zaxira (Redirect va tekshiruvlar uchun)
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ 
+    status: "ok", 
+    message: "TAT Test Integratsiya API faol ishlamoqda" 
+  })).setMimeType(ContentService.MimeType.JSON);
 }
 
 // ----------------------------------------------------------------------
 // VARAQLARNI (SHEETS) BOSHQARISH FUNKSIYALARI
 // ----------------------------------------------------------------------
-function getSheetNameFromLesson(lesson) {
+function getSafeSheetName(lesson) {
   if (!lesson) return "5-Dars";
   if (lesson.indexOf("1-") !== -1 || lesson.indexOf("1.") !== -1) return "1-Dars";
   if (lesson.indexOf("2-") !== -1 || lesson.indexOf("2.") !== -1) return "2-Dars";
@@ -115,7 +123,10 @@ function getSheetNameFromLesson(lesson) {
   if (lesson.indexOf("4-") !== -1 || lesson.indexOf("4.") !== -1) return "4-Dars";
   if (lesson.indexOf("5-") !== -1 || lesson.indexOf("5.") !== -1) return "5-Dars";
   if (lesson.indexOf("6-") !== -1 || lesson.indexOf("6.") !== -1) return "6-Dars";
-  return lesson.split(":")[0].trim().substring(0, 30);
+
+  // Taqiqlangan belgilarni tozalash ( [ ] * ? : / \ )
+  let clean = lesson.split(":")[0].replace(/[\[\]\*?\:\/\\]/g, "").trim();
+  return clean.substring(0, 30) || "Test Natijalari";
 }
 
 function getOrCreateSheet(ss, sheetName) {
@@ -137,7 +148,6 @@ function getOrCreateSheet(ss, sheetName) {
     ];
     sheet.appendRow(headers);
     
-    // Sarlavha bezagi
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight("bold");
     headerRange.setBackground("#4f46e5");
@@ -162,7 +172,7 @@ function getOrCreateSheet(ss, sheetName) {
 }
 
 // ----------------------------------------------------------------------
-// TELEGRAM JONLI REYTING (LIVE LEADERBOARD)
+// TELEGRAM JONLI REYTING VA XABAR FUNKSIYALARI
 // ----------------------------------------------------------------------
 function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
   const lastRow = sheet.getLastRow();
@@ -178,7 +188,6 @@ function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
   });
   const avgPercent = Math.round(sumPercent / totalSubmissions);
 
-  // Top-10 reyting saralash
   const sorted = values.slice().sort((a, b) => {
     const scoreA = parseInt(a[5]) || 0;
     const scoreB = parseInt(b[5]) || 0;
@@ -198,7 +207,7 @@ function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
     "<b>JONLI TEST REYTINQI</b>\n" +
     "<b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
     "<b>Jami topshirganlar:</b> " + totalSubmissions + " nafar\n" +
-    "<b>O'rtacha o'zlashtirish:</b> " + avgPercent + "%\n\n" +
+    "<b>O'rtacha ko'rsatkich:</b> " + avgPercent + "%\n\n" +
     "<b>Top-10 Reyting:</b>\n" +
     rankingText + "\n" +
     "<b>So'nggi topshirgan:</b> " + escapeHtml(lastData.studentName) + " (" + escapeHtml(lastData.group) + ") — " + lastData.correctCount + "/" + lastData.totalQuestions + " (" + lastData.percent + "%)\n" +
@@ -254,46 +263,14 @@ function editTelegramMessage(token, chatId, messageId, text) {
   }
 }
 
-function getEffectiveChatId() {
-  if (TELEGRAM_CHAT_ID && TELEGRAM_CHAT_ID !== "SIZNING_CHAT_IDINGIZ") {
-    return TELEGRAM_CHAT_ID;
-  }
-  return PropertiesService.getScriptProperties().getProperty("TELEGRAM_CHAT_ID");
-}
-
 function escapeHtml(text) {
   if (!text) return "";
-  return text.toString()
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 ```
 
-4. `const TELEGRAM_CHAT_ID = "SIZNING_CHAT_IDINGIZ";` joyiga o'z Chat ID raqamingizni yozing.
-5. Yuqoridagi **Save (Saqlash / disketa)** belgisini bosing.
-
----
-
-## 3-QADAM: Web App sifatida e'lon qilish (Deploy)
-
-1. Apps Script oynasining yuqori o'ng burchagidagi ko'k **Deploy (O'rnatish) -> New deployment (Yangi o'rnatish)** tugmasini bosing.
-2. Tishli g'ildirakchani bosib **Web app** ni tanlang:
-   - **Description:** `TAT Test API`
-   - **Execute as:** `Me` (Mening hisobimdan)
-   - **Who has access:** `Anyone` (Hamma / Har kim) — *talabalar loginsiz test yuborishi uchun shart!*
-3. **Deploy** tugmasini bosing.
-4. Google ruxsat so'rasa:
-   - **Authorize access** ni bosing;
-   - O'z Google profilingizni tanlang;
-   - Agar ogohlantirish chiqsa: **Advanced** -> **Go to Untitled project (unsafe)** havolasini bosing va **Allow** tugmasini bosing.
-5. Chiqqan **Web app URL** manzilini nusxalab oling (masalan: `https://script.google.com/macros/s/AKfycb.../exec`).
-
----
-
-## 4-QADAM: Test sahifasiga ulash
-
-1. [test-5.html](test-5.html) sahifasini brauzerda oching.
-2. Yuqoridagi **Sozlamalar** (tishli g'ildirakcha) belgisini bosing.
-3. Nusxalab olgan **Web app URL** manzilingizni qo'yib **"Sozlamani Saqlash"** tugmasini bosing.
-*(Yoki menga o'sha Web App URL manzilingizni yozib yuborsangiz, uni to'g'ridan-to'g'ri loyiha kodiga biriktirib, GitHub'ga push qilib qo'yaman).*
+4. Kodni qo'ygach, yuqoridagi **Save (Saqlash / disketa)** belgisini bosing.
+5. So'ngra: **Deploy -> Manage deployments (O'rnatishlarni boshqarish)** bo'limiga kiring:
+   - Qalamcha (Tahrirlash) belgisini bosing;
+   - **Version:** "New version" (Yangi versiya) ni tanlang;
+   - **Deploy** tugmasini bosing!

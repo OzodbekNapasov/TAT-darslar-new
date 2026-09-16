@@ -1543,6 +1543,8 @@
     // 5. NATIJANI HISOBLASH VA YUBORISH
     // ======================================================================
     function finishExam() {
+      if (isSubmitting) return;
+      isSubmitting = true;
       clearInterval(timerInterval);
 
       let correctCount = 0;
@@ -1648,9 +1650,19 @@
     }
 
     // ======================================================================
-    // 6. GOOGLE APPS SCRIPT -> SHEETS & TELEGRAM
+    // 6. GOOGLE APPS SCRIPT -> SHEETS & TELEGRAM (KUCHAYTIRILGAN HIMOYALANGAN)
     // ======================================================================
+    let lastPayloadCache = null;
+    let isSubmitting = false;
+
     async function sendResultsToBackend(payload) {
+      lastPayloadCache = payload;
+
+      // Mahalliy xotiraga (localStorage) har qanday vaziyatda zaxiralash
+      try {
+        localStorage.setItem("tat_backup_result", JSON.stringify(payload));
+      } catch (e) {}
+
       const box = document.getElementById("submitStatusBox");
       const title = document.getElementById("submitStatusTitle");
       const msg = document.getElementById("submitStatusMsg");
@@ -1660,7 +1672,7 @@
       if (!endpointUrl) {
         box.className = "submit-status-box success";
         title.textContent = "Test muvaffaqiyatli yakunlandi!";
-        msg.innerHTML = "Natijangiz saqlandi. O‘qituvchi Google Apps Script havolasini ulagach, ma’lumotlar avtomatik sinxronlanadi.";
+        msg.innerHTML = "Natijangiz saqlandi.";
         return;
       }
 
@@ -1668,27 +1680,49 @@
       title.textContent = "Natija ustozingizga yuborilmoqda...";
       msg.textContent = "Telegram Bot va Google Sheets jadvaliga ma’lumotlar uzatilmoqda...";
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
       try {
         await fetch(endpointUrl, {
           method: "POST",
           headers: {
             "Content-Type": "text/plain;charset=utf-8"
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
         box.className = "submit-status-box success";
         title.textContent = "Natija muvaffaqiyatli yetkazildi!";
         msg.textContent = "Baho va test hisoboti o‘qituvchingizning Telegram botiga hamda Google Sheets jadvaliga qayd etildi.";
         showToast("Natija o‘qituvchiga muvaffaqiyatli yuborildi!");
       } catch (err) {
-        box.className = "submit-status-box success";
-        title.textContent = "Natija qayd etildi!";
-        msg.textContent = "Ma’lumotlar serverga uzatildi.";
+        clearTimeout(timeoutId);
+        console.warn("Yuborishda uzilish:", err);
+
+        box.className = "submit-status-box error";
+        title.textContent = "Internet aloqasi sekin yoki uzilgan";
+        msg.innerHTML = 'Natijangiz qurilma xotirasida saqlandi. Internetni tekshirib, quyidagi tugmani bosing: <br><button type="button" onclick="retrySendResult()" style="margin-top:0.5rem; padding:0.45rem 1rem; background:var(--primary); color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Qayta yuborish</button>';
       }
     }
 
+    function retrySendResult() {
+      if (lastPayloadCache) {
+        sendResultsToBackend(lastPayloadCache);
+      }
+    }
+
+    // Internet qayta ulanganda avtomatik qayta yuborish
+    window.addEventListener("online", () => {
+      if (lastPayloadCache) {
+        retrySendResult();
+      }
+    });
+
     function restartTest() {
+      isSubmitting = false;
       for (let k in userAnswers) delete userAnswers[k];
       currentQuestionIdx = 0;
       timerSeconds = 0;
