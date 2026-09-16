@@ -16,7 +16,11 @@ Ushbu tizim Shahrisabz Tibbiyot Texnikumi "Tibbiyotda axborot texnologiyalari" (
 3. **Bitta Bosishda PDF va Excel Yuklab Olish:**
    - `PDF hisobot yuklab olish` tugmasi bosilganda Google Sheets jadvalining tayyor A4 formatdagi gorizontal PDF hisobotini yuklab olish havolasini beradi.
    - `Excel (.xlsx) yuklab olish` bosilganda kompyuterga to'liq elektron jadval yuklanadi.
-4. **Xatoliklar va Qayta Yuborishdan 100% Himoya:**
+4. **Kompyuter Raqami Hisobi (Yangi):**
+   - Sayt formasida talaba familiyasi, ismi, guruhi va **kompyuter raqami** alohida maydonlarda majburiy to'ldiriladi.
+   - Kompyuter raqami Google Sheets jadvalining **11-ustuniga** ("Kompyuter raqami") yoziladi va Telegram xabarida ham ko'rsatiladi.
+   - `ensurePcColumn` funksiyasi ilgari yaratilgan 10 ustunli jadvalga ushbu ustunni avtomatik qo'shadi, eski natijalar joyidan siljimaydi.
+5. **Xatoliklar va Qayta Yuborishdan 100% Himoya:**
    - `HtmlService` orqali to'g'ridan-to'g'ri 200 OK beriladi.
    - `undefined` yoki bo'sh xabarlar botga umuman tushmaydi.
    - Faqat haqiqiy talaba test topshirgandagina o'qituvchiga natija boradi.
@@ -46,6 +50,9 @@ Ushbu tizim Shahrisabz Tibbiyot Texnikumi "Tibbiyotda axborot texnologiyalari" (
 
 const TELEGRAM_BOT_TOKEN = "8964237407:AAGE0yIVRZMfJVorRm_zLN8lZvQEglp9fvM";
 const TEACHER_CHAT_ID = "8135594558";
+
+// Jadvaldagi ustunlar soni (11-ustun — Kompyuter raqami)
+const TOTAL_COLUMNS = 11;
 
 // Doimiy pastki boshqaruv tugmalari (ReplyKeyboardMarkup)
 const BOT_KEYBOARD = {
@@ -96,6 +103,7 @@ function doPost(e) {
       try {
         sheetName = getSafeSheetName(data.lesson);
         const sheet = getOrCreateSheet(ss, sheetName);
+        ensurePcColumn(sheet);
 
         const rowNumber = sheet.getLastRow();
         sheet.appendRow([
@@ -108,14 +116,15 @@ function doPost(e) {
           data.totalQuestions !== undefined ? data.totalQuestions : 20,
           (data.percent !== undefined ? data.percent : 0) + "%",
           (data.grade || 2) + " (" + (data.gradeLabel || "") + ")",
-          data.timeSpent || "-"
+          data.timeSpent || "-",
+          data.pcNumber ? data.pcNumber.toString().trim() : "-"
         ]);
 
         const lastRow = sheet.getLastRow();
-        const rowRange = sheet.getRange(lastRow, 1, 1, 10);
+        const rowRange = sheet.getRange(lastRow, 1, 1, TOTAL_COLUMNS);
         rowRange.setVerticalAlignment("middle");
         sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
-        sheet.getRange(lastRow, 6, 1, 5).setHorizontalAlignment("center");
+        sheet.getRange(lastRow, 6, 1, 6).setHorizontalAlignment("center");
 
         sheetSuccess = true;
       } catch (sheetErr) {
@@ -129,6 +138,7 @@ function doPost(e) {
           "-----------------------------------\n" +
           "Talaba: <b>" + escapeHtml(data.studentName) + "</b>\n" +
           "Guruhi: <b>" + escapeHtml(data.group) + "</b>\n" +
+          "Kompyuter raqami: <b>" + escapeHtml(data.pcNumber || "-") + "</b>\n" +
           "Mavzu: <b>" + escapeHtml(sheetName) + "</b>\n" +
           "Natija: <b>" + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%)</b>\n" +
           "Bahosi: <b>" + data.grade + " (" + escapeHtml(data.gradeLabel) + ")</b>\n" +
@@ -208,7 +218,7 @@ function sendGroupResultsAlphabetical(ss, chatId, groupCode) {
     return;
   }
 
-  const values = sheet.getRange(2, 1, lastRow - 1, 10).getValues();
+  const values = sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
 
   // Guruh bo'yicha filtrlash
   const groupStudents = values.filter(row => {
@@ -259,12 +269,14 @@ function sendGroupResultsAlphabetical(ss, chatId, groupCode) {
     const result = row[5] + "/" + row[6] + " (" + row[7] + ")";
     const grade = row[8] || "-";
     const timeSpent = row[9] || "-";
+    const pcNumber = row[10] || "-";
     const date = row[1] || "-";
 
     message += 
       "<b>" + tR + ". " + escapeHtml(name) + "</b>\n" +
       "   Natija: <b>" + result + "</b> | Baho: <b>" + escapeHtml(grade) + "</b>\n" +
-      "   Vaqt: " + escapeHtml(timeSpent) + " | Sana: " + escapeHtml(date) + "\n\n";
+      "   Kompyuter: <b>" + escapeHtml(pcNumber) + "</b> | Vaqt: " + escapeHtml(timeSpent) + "\n" +
+      "   Sana: " + escapeHtml(date) + "\n\n";
   });
 
   message += "-----------------------------------\n";
@@ -321,7 +333,7 @@ function sendAllResultsSummary(ss, chatId) {
     return;
   }
 
-  const values = sheet.getRange(2, 1, lastRow - 1, 10).getValues();
+  const values = sheet.getRange(2, 1, lastRow - 1, TOTAL_COLUMNS).getValues();
   const total = values.length;
 
   let sum = 0;
@@ -381,7 +393,8 @@ function getOrCreateSheet(ss, sheetName) {
     
     const headers = [
       "T/r", "Sana va vaqt", "Talaba F.I.SH", "Guruhi", "Mavzu",
-      "To'g'ri javob", "Jami savol", "Foiz", "Baho", "Sarflangan vaqt"
+      "To'g'ri javob", "Jami savol", "Foiz", "Baho", "Sarflangan vaqt",
+      "Kompyuter raqami"
     ];
     sheet.appendRow(headers);
     
@@ -404,8 +417,34 @@ function getOrCreateSheet(ss, sheetName) {
     sheet.setColumnWidth(8, 85);
     sheet.setColumnWidth(9, 110);
     sheet.setColumnWidth(10, 140);
+    sheet.setColumnWidth(11, 130);
   }
   return sheet;
+}
+
+// ----------------------------------------------------------------------
+// ESKI JADVALGA "KOMPYUTER RAQAMI" USTUNINI AVTOMATIK QO'SHISH
+// (Ilgari yaratilgan 10 ustunli jadvallar uchun bir martalik moslashtirish)
+// ----------------------------------------------------------------------
+function ensurePcColumn(sheet) {
+  try {
+    if (sheet.getMaxColumns() < TOTAL_COLUMNS) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), TOTAL_COLUMNS - sheet.getMaxColumns());
+    }
+
+    const headerCell = sheet.getRange(1, TOTAL_COLUMNS);
+    if (headerCell.getValue().toString().trim() === "") {
+      headerCell.setValue("Kompyuter raqami");
+      headerCell.setFontWeight("bold");
+      headerCell.setBackground("#4f46e5");
+      headerCell.setFontColor("#ffffff");
+      headerCell.setHorizontalAlignment("center");
+      headerCell.setVerticalAlignment("middle");
+      sheet.setColumnWidth(TOTAL_COLUMNS, 130);
+    }
+  } catch (err) {
+    console.error("ensurePcColumn xatosi:", err);
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -438,7 +477,27 @@ function escapeHtml(text) {
 
 ---
 
-## 4. O'rnatishdan So'ng Saqlash va Qayta Joylashtirish (ENG MUHIM QADAM)
+## 4. Jadval Ustunlari Tartibi
+
+| Ustun | Nomi |
+|---|---|
+| 1 | T/r |
+| 2 | Sana va vaqt |
+| 3 | Talaba F.I.SH (Familiya Ism) |
+| 4 | Guruhi |
+| 5 | Mavzu |
+| 6 | To'g'ri javob |
+| 7 | Jami savol |
+| 8 | Foiz |
+| 9 | Baho |
+| 10 | Sarflangan vaqt |
+| 11 | **Kompyuter raqami** (yangi) |
+
+Kompyuter raqami ataylab oxirgi ustunga qo'yildi — shu sababli jadvalda allaqachon mavjud eski natijalar o'z ustunlarida o'zgarishsiz qoladi.
+
+---
+
+## 5. O'rnatishdan So'ng Saqlash va Qayta Joylashtirish (ENG MUHIM QADAM)
 
 Kodni Apps Script tahrirchisiga qo'yganingizdan so'ng:
 
