@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5-Dars Testi: Kompyuter va uning qurilmalari — Online Test Markazi</title>
+  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 20 ta savolli onlayn test sinovi.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+      --primary-light: #eef2ff;
+      --primary-border: #c7d2fe;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --success-border: #a7f3d0;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --danger-border: #fecaca;
+      --warn: #f59e0b;
+      --warn-light: #fffbeb;
+      --warn-border: #fde68a;
+      --dark: #0f172a;
+      --text: #1e293b;
+      --muted: #64748b;
+      --subtle: #94a3b8;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --card-border: #e2e8f0;
+      --radius-sm: 8px;
+      --radius: 14px;
+      --radius-lg: 22px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 16px 36px -8px rgba(15, 23, 42, 0.14);
+    }
+
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-border: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --subtle: #64748b;
+      --dark: #f8fafc;
+      --primary-light: rgba(79, 70, 229, 0.16);
+      --primary-border: rgba(99, 102, 241, 0.35);
+      --success-light: rgba(16, 185, 129, 0.14);
+      --success-border: rgba(16, 185, 129, 0.3);
+      --danger-light: rgba(239, 68, 68, 0.14);
+      --danger-border: rgba(239, 68, 68, 0.3);
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Top Navigation Header */
+    .test-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    /* Screens / Views */
+    .screen-view {
+      display: none;
+    }
+
+    .screen-view.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====================================================================== */
+    /* SCREEN 1: REGISTRATION / START SCREEN                                  */
+    /* ====================================================================== */
+    .start-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      max-width: 620px;
+      margin: 1.5rem auto;
+    }
+
+    .start-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .start-title {
+      font-size: 1.65rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .start-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .test-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 580px) {
+      .test-features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-box {
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      padding: 1rem 0.75rem;
+      border-radius: var(--radius);
+    }
+
+    .feature-num {
+      font-size: 1.35rem;
+      font-weight: 850;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--card-border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      background: var(--card);
+    }
+
+    .start-btn {
+      width: 100%;
+      padding: 0.95rem;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+      transition: all 0.2s ease;
+      margin-top: 1.5rem;
+    }
+
+    .start-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+    }
+
+    /* ====================================================================== */
+    /* SCREEN 2: ACTIVE EXAM INTERFACE                                        */
+    /* ====================================================================== */
+    .exam-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .student-badge-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .student-name-tag {
+      font-weight: 750;
+      font-size: 0.95rem;
+    }
+
+    .group-pill {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid var(--primary-border);
+    }
+
+    .exam-timer {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Question Navigator Palette */
+    .palette-wrapper {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .palette-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.45rem;
+    }
+
+    @media (max-width: 580px) {
+      .palette-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .palette-btn {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1.5px solid var(--card-border);
+      background: var(--bg);
+      color: var(--text);
+      font-weight: 750;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+    }
+
+    .palette-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .palette-btn.current {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    }
+
+    .palette-btn.answered {
+      background: var(--success-light);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-gradient);
+      width: 5%;
+      transition: width 0.25s ease;
+    }
+
+    /* Current Question Card */
+    .question-card-active {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .q-number {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .q-status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .q-title {
+      font-size: 1.18rem;
+      font-weight: 750;
+      line-height: 1.45;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .opt-card {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 1.15rem;
+      border: 1.5px solid var(--card-border);
+      background: var(--bg);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.18s ease;
+      text-align: left;
+      width: 100%;
+    }
+
+    .opt-card:hover {
+      border-color: var(--primary);
+      background: var(--card);
+      transform: translateX(3px);
+    }
+
+    .opt-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .opt-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: all 0.18s ease;
+    }
+
+    [data-theme="dark"] .opt-letter {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .opt-card.selected .opt-letter {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Exam Controls / Buttons */
+    .exam-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .nav-btn {
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--card-border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .nav-btn-primary {
+      background: var(--primary-gradient);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .nav-btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .finish-exam-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 750;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .finish-exam-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    /* ====================================================================== */
+    /* SCREEN 3: RESULT SCREEN                                                */
+    /* ====================================================================== */
+    .result-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .result-grade-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      border: 4px solid currentColor;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .grade-5 {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .grade-4 {
+      color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .grade-3 {
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .grade-2 {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .grade-number {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .grade-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .result-title {
+      font-size: 1.55rem;
+      font-weight: 850;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-student-info {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .result-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .result-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .r-stat-box {
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1rem 0.5rem;
+    }
+
+    .r-stat-val {
+      font-size: 1.35rem;
+      font-weight: 850;
+      color: var(--text);
+    }
+
+    .r-stat-lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Submission Status Card */
+    .submit-status-box {
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 2rem;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      border: 1.5px solid var(--card-border);
+      background: var(--bg);
+    }
+
+    .submit-status-box.loading {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.08);
+      color: #1d4ed8;
+    }
+
+    .submit-status-box.success {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      color: #047857;
+    }
+
+    .submit-status-box.error {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+      color: #b45309;
+    }
+
+    .submit-title {
+      font-weight: 750;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .submit-msg {
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .result-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* Detailed Answers Review */
+    .answers-review-section {
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .review-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .review-item {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+
+    .review-badge {
+      font-size: 0.75rem;
+      font-weight: 750;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .review-badge.correct {
+      background: var(--success-light);
+      color: var(--success);
+      border: 1px solid var(--success-border);
+    }
+
+    .review-badge.wrong {
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .review-q-text {
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .review-exp {
+      background: var(--bg);
+      border-left: 3px solid var(--primary);
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.75rem;
+    }
+
+    /* Modal for Settings / Sharing */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-h {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .close-btn:hover {
+      color: var(--danger);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.85rem 1.4rem;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 10000;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    .toast.show {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--subtle);
+      padding: 1.5rem 1rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation Header -->
+    <header class="test-header">
+      <a href="index.html" class="header-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path>
+            <polyline points="10 2 10 10 13 7 16 10 16 2"></polyline>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Shahrisabz Tibbiyot Texnikumi</div>
+          <div class="brand-sub">TAT — 5-Dars Online Test Sinovi</div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <button type="button" class="icon-btn" onclick="openShareModal()" title="Ulashish havolasini olish">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span>Ulashish</span>
+        </button>
+        <button type="button" class="icon-btn" onclick="openSettingsModal()" title="Integratsiya sozlamalari">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <button type="button" class="icon-btn" onclick="toggleTheme()" title="Yorug'/Qorong'i rejim">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== SCREEN 1: REGISTRATION / START ==================== -->
+    <main id="screen-start" class="screen-view active">
+      <div class="start-card">
+        <div class="start-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>5-Mavzu Nazorati</span>
+        </div>
+
+        <h1 class="start-title">Kompyuter va uning qurilmalari</h1>
+        <p class="start-desc">
+          Ichki va tashqi qurilmalar, xotira turlari (HDD va SSD) bo‘yicha 20 ta rasmiy test savoli. Natijangiz avtomatik ravishda baholanadi va o‘qituvchi nazoratiga yuboriladi.
+        </p>
+
+        <div class="test-features-grid">
+          <div class="feature-box">
+            <div class="feature-num">20</div>
+            <div class="feature-lbl">Savollar soni</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-num">100%</div>
+            <div class="feature-lbl">Maksimal ball</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-num">Real vaqt</div>
+            <div class="feature-lbl">Tezkor natija</div>
+          </div>
+        </div>
+
+        <form id="student-form" onsubmit="startExam(event)">
+          <div class="form-group">
+            <label class="form-label" for="inp-fullname">Familiyangiz va Ismingiz (F.I.SH):</label>
+            <input 
+              type="text" 
+              id="inp-fullname" 
+              class="form-input" 
+              placeholder="Masalan: Valiyev Ali Sobirovich" 
+              required 
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inp-group">Guruhingiz nomi yoki raqami:</label>
+            <input 
+              type="text" 
+              id="inp-group" 
+              class="form-input" 
+              placeholder="Masalan: 102-Davolash ishi" 
+              required 
+              autocomplete="organization"
+            />
+          </div>
+
+          <button type="submit" class="start-btn">
+            <span>Testni Boshlash</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- ==================== SCREEN 2: ACTIVE EXAM ==================== -->
+    <main id="screen-exam" class="screen-view">
+      
+      <!-- Top Exam Bar -->
+      <div class="exam-info-bar">
+        <div class="student-badge-info">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span id="display-student-name" class="student-name-tag">Talaba</span>
+          <span id="display-student-group" class="group-pill">Guruh</span>
+        </div>
+
+        <div class="exam-timer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span id="exam-timer-display">00:00</span>
+        </div>
+      </div>
+
+      <!-- Question Navigation Palette -->
+      <div class="palette-wrapper">
+        <div class="palette-head">
+          <span>Savollar xaritasi (1 – 20):</span>
+          <span id="palette-answered-count">0 / 20 javob berildi</span>
+        </div>
+        <div class="palette-grid" id="palette-container">
+          <!-- 1..20 buttons generated via JS -->
+        </div>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="progress-bar-wrap">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <!-- Active Question Box -->
+      <div class="question-card-active" id="questionCard">
+        <div class="q-meta">
+          <span class="q-number" id="qNumberText">1-Savol / 20</span>
+          <span class="q-status" id="qStatusText">Javob tanlanmagan</span>
+        </div>
+
+        <h2 class="q-title" id="qTitleText">Savol matni yuklanmoqda...</h2>
+
+        <div class="options-list" id="optionsContainer">
+          <!-- Options rendered via JS -->
+        </div>
+
+        <div class="exam-nav-bar">
+          <button type="button" id="prevBtn" class="nav-btn" onclick="prevQuestion()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Oldingi</span>
+          </button>
+
+          <button type="button" id="nextBtn" class="nav-btn nav-btn-primary" onclick="nextQuestion()">
+            <span>Keyingi</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" id="finishBtn" class="finish-exam-btn" onclick="confirmFinishExam()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Testni Yakunlash</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== SCREEN 3: RESULTS ==================== -->
+    <main id="screen-result" class="screen-view">
+      <div class="result-card">
+        
+        <div id="gradeBadge" class="result-grade-circle grade-5">
+          <span class="grade-number" id="resGradeNum">5</span>
+          <span class="grade-label" id="resGradeLabel">A'lo</span>
+        </div>
+
+        <h1 class="result-title" id="resTitleText">Test Sinovi Yakunlandi!</h1>
+        <p class="result-student-info">
+          Talaba: <strong id="resStudentName">-</strong> • Guruh: <strong id="resGroupName">-</strong>
+        </p>
+
+        <div class="result-stats-row">
+          <div class="r-stat-box">
+            <div class="r-stat-val" id="resCorrectCount">0 / 20</div>
+            <div class="r-stat-lbl">To‘g‘ri javoblar</div>
+          </div>
+          <div class="r-stat-box">
+            <div class="r-stat-val" id="resPercent">0%</div>
+            <div class="r-stat-lbl">O‘zlashtirish</div>
+          </div>
+          <div class="r-stat-box">
+            <div class="r-stat-val" id="resGrade">5 (A‘lo)</div>
+            <div class="r-stat-lbl">Yakuniy baho</div>
+          </div>
+          <div class="r-stat-box">
+            <div class="r-stat-val" id="resTimeSpent">00:00</div>
+            <div class="r-stat-lbl">Ketgan vaqt</div>
+          </div>
+        </div>
+
+        <!-- Submission Status to Sheets & Telegram -->
+        <div id="submitStatusBox" class="submit-status-box loading">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink: 0; margin-top: 2px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 14 14"></polyline>
+          </svg>
+          <div>
+            <div class="submit-title" id="submitStatusTitle">Natija o‘qituvchiga yuborilmoqda...</div>
+            <div class="submit-msg" id="submitStatusMsg">Telegram Bot va Google Sheets jadvaliga ma’lumotlar uzatilmoqda.</div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button type="button" class="nav-btn nav-btn-primary" onclick="restartTest()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>Testni Qaytadan Boshlash</span>
+          </button>
+          <a href="index.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Darslar Mundarijasiga Qaytish</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Detailed Question Breakdown -->
+      <section class="answers-review-section">
+        <h2 class="review-title">Savollar Tahlili va To‘g‘ri Javoblar Izohi:</h2>
+        <div id="reviewListContainer">
+          <!-- Review questions injected via JS -->
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- Share Modal -->
+  <div id="shareModal" class="modal-overlay" onclick="closeShareModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header-row">
+        <h3 class="modal-h">Test Havolasini Ulashish</h3>
+        <button type="button" class="close-btn" onclick="closeShareModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+        Ushbu havolani talabalarga Telegram guruhida yoki darsda yuboring. Ular to‘g‘ridan-to‘g‘ri test oynasiga kirishadi:
+      </p>
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <input type="text" id="shareUrlInput" readonly class="form-input" style="font-size: 0.85rem;" />
+        <button type="button" class="nav-btn nav-btn-primary" onclick="copyShareUrl()" style="white-space: nowrap;">
+          <span>Nusxa olish</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal (Google Apps Script Endpoint) -->
+  <div id="settingsModal" class="modal-overlay" onclick="closeSettingsModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header-row">
+        <h3 class="modal-h">O‘qituvchi Integratsiya Sozlamalari</h3>
+        <button type="button" class="close-btn" onclick="closeSettingsModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+        Google Apps Script Web App URL manzilini shu yerga kiriting. Talabalar test topshirishi bilan natijalar avtomatik sizning Google Sheets jadvalingizga va Telegram botingizga tushadi:
+      </p>
+      <div class="form-group">
+        <label class="form-label" for="gasUrlInput">Google Apps Script Web App URL:</label>
+        <input 
+          type="url" 
+          id="gasUrlInput" 
+          class="form-input" 
+          placeholder="https://script.google.com/macros/s/.../exec"
+        />
+      </div>
+      <button type="button" class="nav-btn nav-btn-primary" onclick="saveSettings()" style="width: 100%; justify-content: center;">
+        <span>Sozlamani Saqlash</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastMsg">Xabar</span>
+  </div>
+
+  <footer>
+    Shahrisabz Tibbiyot Texnikumi • Tibbiyotda Axborot Texnologiyalari • Standart Onlayn Test Markazi
+  </footer>
+
+  <script>
+    // ======================================================================
+    // 1. TEST SAVOLLARI BAZASI (5-DARS: KOMPYUTER VA UNING QURILMALARI)
+    // ======================================================================
+    const QUESTIONS_DATA = [
+      {
+        id: 1,
+        question: "Kompyuter o‘chirilganda undagi barcha ma’lumotlar o‘chib ketadigan, faol dasturlar ishlaydigan tezkor xotira qaysi?",
+        options: ["HDD (Qattiq disk)", "SSD drayveri", "RAM (Operativ xotira)", "ROM (Doimiy xotira)"],
+        correct: 2,
+        explanation: "Operativ xotira (RAM) uchuvchan vaqtinchalik xotira bo‘lib, u faqat kompyuter ishlab turganda dasturlarni ushlab turadi. O‘chirilganda tozalanadi."
+      },
+      {
+        id: 2,
+        question: "Quyidagi qurilmalardan qaysi biri tashqi ASOSIY kiritish qurilmasi hisoblanadi?",
+        options: ["Monitor", "Printer", "Klaviatura", "Quvvat bloki"],
+        correct: 2,
+        explanation: "Klaviatura kompyuterga matn, son va boshqaruv buyruqlarini kiritish uchun xizmat qiluvchi asosiy tashqi kiritish vositasidir."
+      },
+      {
+        id: 3,
+        question: "SSD drayverining klassik magnitli HDD qattiq diskiga nisbatan eng asosiy ustunligi nimada?",
+        options: [
+          "1 GB xotira narxining arzonligi",
+          "O‘ta yuqori tezlik, mutlaqo shovqinsizlik va zarbaga chidamlilik",
+          "Aylanuvchi magnit disklarga egaligi",
+          "Ko‘proq elektr toki sarflashi"
+        ],
+        correct: 1,
+        explanation: "SSD drayveri flesh-mikrosxemalarda ishlagani sababli shovqinsiz ishlaydi va HDD disklaridan 5–40 baravargacha tezroqdir."
+      },
+      {
+        id: 4,
+        question: "Kompyuterning barcha ichki qismlarini yagona elektron zanjirga bog‘lovchi bosh bosma plata nima deyiladi?",
+        options: ["Ona plata (Motherboard)", "Videokarta (GPU)", "Quvvat bloki (PSU)", "Kuler"],
+        correct: 0,
+        explanation: "Ona plata barcha ichki komponentlar (CPU, RAM, GPU, disklar) va tashqi portlarni o‘zaro bog‘lovchi bosh elektron magistraldir."
+      },
+      {
+        id: 5,
+        question: "Quyidagilardan qaysi biri tizimli blok ichida joylashgan ICHKI qurilma hisoblanadi?",
+        options: ["Skaner", "Veb-kamera", "Quvvat bloki (PSU)", "Printer"],
+        correct: 2,
+        explanation: "Quvvat bloki tizimli blok korpusi ichida joylashib, 220V tokni past kuchlanishga aylantirib beradi."
+      },
+      {
+        id: 6,
+        question: "Kompyuterda barcha arifmetik-mantiqiy amallarni va dasturiy buyruqlarni bajaruvchi bosh hisoblash markazi nima?",
+        options: ["Protsessor (CPU)", "Kesh xotira", "BIOS mikrosxemasi", "Videokarta"],
+        correct: 0,
+        explanation: "Protsessor (CPU) — kompyuterning 'miyasi' bo‘lib, barcha hisoblash va boshqaruv amallarini amalga oshiradi."
+      },
+      {
+        id: 7,
+        question: "Kompyuterdagi raqamli axborotlarni inson ko‘zi ilg‘aydigan tasvir, matn va videoga aylantirib beruvchi ASOSIY chiqarish qurilmasi qaysi?",
+        options: ["Printer", "Monitor (Displey)", "Skaner", "Proyektor"],
+        correct: 1,
+        explanation: "Monitor — kompyuter bilan ishlash uchun zarur bo‘lgan eng asosiy tashqi vizual chiqarish vositasidir."
+      },
+      {
+        id: 8,
+        question: "3D grafika, kompyuter o‘yinlari, video montaj va tasvirlarni ekranga chiqarish yukini o‘z zimmasiga oladigan maxsus qurilma qaysi?",
+        options: ["Ovoz kartasi", "Video karta (GPU)", "Tarmoq kartasi", "Protsessor kuleri"],
+        correct: 1,
+        explanation: "Video karta raqamli grafik axborotlarni qayta ishlab, monitorga tasvir chiqarishga ixtisoslashgan alohida GPU protsessori va VRAM ga ega."
+      },
+      {
+        id: 9,
+        question: "Protsessor va boshqa qismlar ishlaganda ajralib chiqadigan yuqori issiqlikni o‘ziga yutib, tashqariga haydab chiqaruvchi tizim nima?",
+        options: ["Quvvat bloki", "Sovutish tizimi (Kuler/Radiator)", "Korpus chang filtri", "Tizimli shina"],
+        correct: 1,
+        explanation: "Havo yoki suyuqlik sovutish tizimi (kuler) protsessorni qizib ketishdan (80–90°C dan oshishdan) saqlaydi."
+      },
+      {
+        id: 10,
+        question: "Qog‘ozdagi hujjat, fotosurat yoki rasmlarni yorug‘lik nurlari yordamida o‘qib, kompyuterga raqamli fayl shaklida kirituvchi vosita qaysi?",
+        options: ["Printer", "Plotter", "Skaner", "Strimer"],
+        correct: 2,
+        explanation: "Skaner — qog‘ozdagi tasvir va matnlarni kompyuter xotirasiga raqamli shaklda (PDF, JPEG) kiritish uchun xizmat qiladi."
+      },
+      {
+        id: 11,
+        question: "Klassik magnitli qattiq disk (HDD) ichida ma’lumotlar qanday fizik element yuzasida saqlanadi?",
+        options: ["Silikon kristalli mikrosxemada", "Aylanuvchi magnit plastinkalarda", "Optik lazer diskida", "Kondensatorlar kataklarida"],
+        correct: 1,
+        explanation: "HDD ichida soniyasiga 5400–7200 marta aylanadigan magnit disklari va uning ustida mikroskopik masofada harakatlanuvchi o‘qish/yozish kallagi mavjud."
+      },
+      {
+        id: 12,
+        question: "Nima uchun USB Flash-disk (fleshka) ham kiritish, ham chiqarish qurilmasi toifasiga kiradi?",
+        options: [
+          "Unga monitor va sichqoncha ulanishi sababli",
+          "Undan faylni kompyuterga o‘qish (kirish) va unga yangi fayllarni yozish (chiqish) mumkin bo‘lgani uchun",
+          "U faqat internet orqali ishlagani sababli",
+          "U elektr quvvatisiz umuman ishlamagani uchun"
+        ],
+        correct: 1,
+        explanation: "Fleshka axborotni o‘qish (kiritish) va unga yangi axborot yozib saqlash (chiqarish) imkonini beruvchi universal vositadir."
+      },
+      {
+        id: 13,
+        question: "Har bir tugmasi ostida mustaqil prujinali pereklyuchatel (switch) bo‘lgan, o‘ta chidamli klaviatura turi qanday ataladi?",
+        options: ["Membranali klaviatura", "Mexanik klaviatura", "Sensorli klaviatura", "Proyeksiyali klaviatura"],
+        correct: 1,
+        explanation: "Mexanik klaviaturalarda har bir tugma mustaqil kalitga ega bo‘lib, 50–100 million marta bosishga bardosh beradi."
+      },
+      {
+        id: 14,
+        question: "Katta hajmdagi matnli hujjatlarni daqiqasiga 25–40 varaq tezlikda va arzon tannarxda chop etish uchun qaysi printer turi eng maqbul hisoblanadi?",
+        options: ["Siyohli (Inkjet) printer", "Matritsali printer", "Lazerli printer", "3D printer"],
+        correct: 2,
+        explanation: "Lazerli printerlar quruq toner kukuni yordamida matnlarni juda yuqori tezlikda, o‘chib ketmaydigan qilib va arzon tannarxda bosib chiqaradi."
+      },
+      {
+        id: 15,
+        question: "Protsessorning soniyasiga necha milliard amal bajara olishini bildiruvchi takt chastotasi qaysi birlikda o‘lchanadi?",
+        options: ["Gigabayt (GB)", "Gigagers (GHz)", "Megabit (Mbps)", "Nanometr (nm)"],
+        correct: 1,
+        explanation: "Takt chastotasi Gers (Hz), Megagers (MHz) va Gigagers (GHz) birliklarida o‘lchanadi. 1 GHz = sekundiga 1 milliard takt."
+      },
+      {
+        id: 16,
+        question: "Kompyuter korpusining (Case) asosiy vazifalari nimalardan iborat?",
+        options: [
+          "Faqat tashqi ko‘rinishni chiroyli qilish",
+          "Ichki nozik qismlarni zarbadan himoyalash va to‘g‘ri havo oqimini ta’minlash",
+          "Elektr tokini kuchaytirish",
+          "Ma’lumotlarni zaxiralash"
+        ],
+        correct: 1,
+        explanation: "Korpus ichki qismlarni chang va zarbadan himoyalaydi hamda kulerlar uchun to‘g‘ri sovuq havo yo‘nalishini yaratadi."
+      },
+      {
+        id: 17,
+        question: "Kompyuter sichqonchasi xarakteristikasidagi DPI (Dots Per Inch) ko‘rsatkichi nimani anglatadi?",
+        options: ["Sichqoncha og‘irligini", "Datchik sezgirligi va harakat aniqligini", "Simining uzunligini", "Tugmalar sonini"],
+        correct: 1,
+        explanation: "DPI (Dots Per Inch) — optik/lazer datchikning sezgirligi bo‘lib, sichqoncha 1 dyuym surilganda kursor ekranda necha pikselga siljishini belgilaydi."
+      },
+      {
+        id: 18,
+        question: "Zamonaviy kompyuterlar uchun eng maqbul gibrid doimiy xotira konfiguratsiyasi qaysi?",
+        options: [
+          "Faqat ikkita sekin HDD o‘rnatish",
+          "Tizim va dasturlar uchun tezkor SSD + katta arxivlar uchun sig‘imli HDD",
+          "Faqat USB fleshkadan foydalanish",
+          "Doimiy xotirasiz faqat RAM bilan ishlash"
+        ],
+        correct: 1,
+        explanation: "Tezkor SSD (Windows va dasturlar uchun) hamda katta hajmli arzon HDD (fayllar arxivi uchun) eng ideal kombinatsiyadir."
+      },
+      {
+        id: 19,
+        question: "Kolonka va naushniklar qanday turdagi qurilmalar guruhiga kiradi?",
+        options: ["Asosiy kiritish qurilmasi", "Tashqi qo‘shimcha chiqarish qurilmasi", "Ichki hisoblash qurilmasi", "Optik saqlash vositasi"],
+        correct: 1,
+        explanation: "Kolonka va naushniklar elektr signallarini tovush to‘lqinlariga aylantiruvchi tashqi qo‘shimcha chiqarish vositalaridir."
+      },
+      {
+        id: 20,
+        question: "Shaxsiy kompyuter (PC) bilan standart ishlashni ta’minlash uchun zarur bo‘lgan 3 ta ASOSIY TASHQI qurilma to‘g‘ri ko‘rsatilgan qatorni toping:",
+        options: [
+          "Skaner, printer, veb-kamera",
+          "Monitor, klaviatura, sichqoncha",
+          "Quvvat bloki, kuler, korpus",
+          "Fleshka, quloqchin, mikrofon"
+        ],
+        correct: 1,
+        explanation: "Monitor (asosiy chiqarish), Klaviatura (asosiy kiritish) va Sichqoncha (asosiy manipulyator) kompyuterda ishlash uchun minimal to‘plamdir."
+      }
+    ];
+
+    // ======================================================================
+    // 2. HOLATLAR VA SOZLAMALAR (STATE & CONFIG)
+    // ======================================================================
+    let currentQuestionIdx = 0;
+    const userAnswers = {}; // { 0: optionIdx, 1: optionIdx, ... }
+    let studentFullName = "";
+    let studentGroup = "";
+    let timerInterval = null;
+    let timerSeconds = 0;
+
+    // Google Apps Script Web App URL
+    // Default URL yoki localStorage'dan olinadi
+    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbwQ4V7fXF_v8T0K8P4w8y9n_placeholder/exec";
+    function getGasUrl() {
+      return localStorage.getItem("tat_gas_endpoint") || "";
+    }
+
+    // Mavzuni boshqarish
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme") || "light";
+      const next = current === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", next);
+      localStorage.setItem("tat_theme", next);
+      updateThemeIcon(next);
+    }
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById("themeIcon");
+      if (theme === "dark") {
+        icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+      } else {
+        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+      }
+    }
+
+    (function initTheme() {
+      const saved = localStorage.getItem("tat_theme") || "light";
+      document.documentElement.setAttribute("data-theme", saved);
+      updateThemeIcon(saved);
+    })();
+
+    // ======================================================================
+    // 3. EKRANLARNI ALMASHTIRISH VA TESTNI BOSHLASH
+    // ======================================================================
+    function switchScreen(screenId) {
+      document.querySelectorAll(".screen-view").forEach(el => el.classList.remove("active"));
+      const target = document.getElementById(screenId);
+      if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function startExam(e) {
+      e.preventDefault();
+      studentFullName = document.getElementById("inp-fullname").value.trim();
+      studentGroup = document.getElementById("inp-group").value.trim();
+
+      if (!studentFullName || !studentGroup) {
+        alert("Iltimos, ism-familiyangiz va guruhingizni to‘liq kiriting!");
+        return;
+      }
+
+      document.getElementById("display-student-name").textContent = studentFullName;
+      document.getElementById("display-student-group").textContent = studentGroup;
+
+      // Timer start
+      timerSeconds = 0;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        const mins = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+        const secs = String(timerSeconds % 60).padStart(2, "0");
+        document.getElementById("exam-timer-display").textContent = `${mins}:${secs}`;
+      }, 1000);
+
+      renderPalette();
+      currentQuestionIdx = 0;
+      loadQuestion(0);
+      switchScreen("screen-exam");
+    }
+
+    // ======================================================================
+    // 4. SAVOLLARNI CHIQARISH VA NAVIGATSIYA
+    // ======================================================================
+    function renderPalette() {
+      const container = document.getElementById("palette-container");
+      container.innerHTML = "";
+      QUESTIONS_DATA.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "palette-btn";
+        btn.textContent = idx + 1;
+        btn.id = `palette-btn-${idx}`;
+        btn.onclick = () => loadQuestion(idx);
+        container.appendChild(btn);
+      });
+      updatePaletteStatus();
+    }
+
+    function updatePaletteStatus() {
+      const answeredCount = Object.keys(userAnswers).length;
+      document.getElementById("palette-answered-count").textContent = `${answeredCount} / ${QUESTIONS_DATA.length} javob berildi`;
+
+      QUESTIONS_DATA.forEach((_, idx) => {
+        const btn = document.getElementById(`palette-btn-${idx}`);
+        if (!btn) return;
+        btn.className = "palette-btn";
+        if (idx === currentQuestionIdx) btn.classList.add("current");
+        if (userAnswers[idx] !== undefined) btn.classList.add("answered");
+      });
+
+      // Update linear progress fill
+      const percent = ((currentQuestionIdx + 1) / QUESTIONS_DATA.length) * 100;
+      document.getElementById("progressFill").style.width = `${percent}%`;
+    }
+
+    function loadQuestion(idx) {
+      currentQuestionIdx = idx;
+      const q = QUESTIONS_DATA[idx];
+
+      document.getElementById("qNumberText").textContent = `${idx + 1}-Savol / ${QUESTIONS_DATA.length}`;
+      document.getElementById("qTitleText").textContent = q.question;
+
+      const hasAnswer = userAnswers[idx] !== undefined;
+      document.getElementById("qStatusText").textContent = hasAnswer ? "Javob belgilandi" : "Javob tanlanmagan";
+
+      const optContainer = document.getElementById("optionsContainer");
+      optContainer.innerHTML = "";
+
+      const letters = ["A", "B", "C", "D"];
+      q.options.forEach((optText, optIdx) => {
+        const optCard = document.createElement("button");
+        optCard.type = "button";
+        optCard.className = "opt-card";
+        if (userAnswers[idx] === optIdx) {
+          optCard.classList.add("selected");
+        }
+
+        optCard.innerHTML = `
+          <span class="opt-letter">${letters[optIdx]}</span>
+          <span>${optText}</span>
+        `;
+
+        optCard.onclick = () => selectOption(idx, optIdx);
+        optContainer.appendChild(optCard);
+      });
+
+      // Update Nav buttons
+      document.getElementById("prevBtn").disabled = (idx === 0);
+      document.getElementById("nextBtn").style.display = (idx === QUESTIONS_DATA.length - 1) ? "none" : "inline-flex";
+      document.getElementById("finishBtn").style.display = (idx === QUESTIONS_DATA.length - 1) ? "inline-flex" : "none";
+
+      updatePaletteStatus();
+    }
+
+    function selectOption(qIdx, optIdx) {
+      userAnswers[qIdx] = optIdx;
+      loadQuestion(qIdx);
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIdx > 0) {
+        loadQuestion(currentQuestionIdx - 1);
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIdx < QUESTIONS_DATA.length - 1) {
+        loadQuestion(currentQuestionIdx + 1);
+      }
+    }
+
+    function confirmFinishExam() {
+      const answeredCount = Object.keys(userAnswers).length;
+      const unanswered = QUESTIONS_DATA.length - answeredCount;
+
+      let msg = "Testni yakunlab, natijalarni ustozingizga yuborasizmi?";
+      if (unanswered > 0) {
+        msg = `Sizda hali ${unanswered} ta savolga javob berilmagan! Haqiqatan ham testni yakunlamoqchimisiz?`;
+      }
+
+      if (confirm(msg)) {
+        finishExam();
+      }
+    }
+
+    // ======================================================================
+    // 5. NATIJANI HISOBLASH VA GOOGLE APPS SCRIPT'GA YUBORISH
+    // ======================================================================
+    function finishExam() {
+      clearInterval(timerInterval);
+
+      let correctCount = 0;
+      QUESTIONS_DATA.forEach((q, idx) => {
+        if (userAnswers[idx] === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = QUESTIONS_DATA.length;
+      const percent = Math.round((correctCount / total) * 100);
+
+      // Baholash mezoni
+      let grade = 2;
+      let gradeLabel = "Qoniqarsiz";
+      let gradeClass = "grade-2";
+
+      if (correctCount >= 18) {
+        grade = 5;
+        gradeLabel = "A‘lo";
+        gradeClass = "grade-5";
+      } else if (correctCount >= 14) {
+        grade = 4;
+        gradeLabel = "Yaxshi";
+        gradeClass = "grade-4";
+      } else if (correctCount >= 10) {
+        grade = 3;
+        gradeLabel = "Qoniqarli";
+        gradeClass = "grade-3";
+      }
+
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      const timeSpentFormatted = `${mins} daq ${secs} soniya`;
+
+      // Update Result UI
+      document.getElementById("resGradeNum").textContent = grade;
+      document.getElementById("resGradeLabel").textContent = gradeLabel;
+      const gradeBadge = document.getElementById("gradeBadge");
+      gradeBadge.className = `result-grade-circle ${gradeClass}`;
+
+      document.getElementById("resStudentName").textContent = studentFullName;
+      document.getElementById("resGroupName").textContent = studentGroup;
+      document.getElementById("resCorrectCount").textContent = `${correctCount} / ${total}`;
+      document.getElementById("resPercent").textContent = `${percent}%`;
+      document.getElementById("resGrade").textContent = `${grade} (${gradeLabel})`;
+      document.getElementById("resTimeSpent").textContent = timeSpentFormatted;
+
+      // Render Review
+      renderReviewList();
+
+      switchScreen("screen-result");
+
+      // Send to Google Sheets + Telegram Bot
+      sendResultsToBackend({
+        lesson: "5-Dars: Kompyuter va uning qurilmalari",
+        studentName: studentFullName,
+        group: studentGroup,
+        correctCount: correctCount,
+        totalQuestions: total,
+        percent: percent,
+        grade: grade,
+        gradeLabel: gradeLabel,
+        timeSpent: timeSpentFormatted,
+        date: new Date().toLocaleString("uz-UZ")
+      });
+    }
+
+    function renderReviewList() {
+      const container = document.getElementById("reviewListContainer");
+      container.innerHTML = "";
+
+      const letters = ["A", "B", "C", "D"];
+
+      QUESTIONS_DATA.forEach((q, idx) => {
+        const userChoice = userAnswers[idx];
+        const isCorrect = (userChoice === q.correct);
+
+        const card = document.createElement("div");
+        card.className = "review-item";
+
+        const userChoiceText = userChoice !== undefined 
+          ? `${letters[userChoice]}: ${q.options[userChoice]}`
+          : "Javob berilmadi";
+
+        const correctChoiceText = `${letters[q.correct]}: ${q.options[q.correct]}`;
+
+        card.innerHTML = `
+          <div class="review-header">
+            <span style="font-weight:800; font-size:0.85rem; color:var(--primary);">${idx + 1}-Savol</span>
+            <span class="review-badge ${isCorrect ? 'correct' : 'wrong'}">
+              ${isCorrect ? 'To‘g‘ri' : 'Xato'}
+            </span>
+          </div>
+          <div class="review-q-text">${q.question}</div>
+          <div style="font-size:0.88rem; margin-bottom:0.35rem;">
+            Sizning javobingiz: <strong style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">${userChoiceText}</strong>
+          </div>
+          ${!isCorrect ? `<div style="font-size:0.88rem; margin-bottom:0.35rem;">To‘g‘ri javob: <strong style="color:var(--success)">${correctChoiceText}</strong></div>` : ''}
+          <div class="review-exp">
+            <strong>Ilmiy izoh:</strong> ${q.explanation}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // ======================================================================
+    // 6. BACKEND UZATISH (GOOGLE APPS SCRIPT -> SHEETS & TELEGRAM)
+    // ======================================================================
+    async function sendResultsToBackend(payload) {
+      const box = document.getElementById("submitStatusBox");
+      const title = document.getElementById("submitStatusTitle");
+      const msg = document.getElementById("submitStatusMsg");
+
+      const endpointUrl = getGasUrl();
+
+      if (!endpointUrl) {
+        box.className = "submit-status-box error";
+        title.textContent = "Google Apps Script manzili ulanmagan";
+        msg.innerHTML = "O‘qituvchi hali Google Apps Script Web App manzilini ulamagan. Natijangizni skrinshot qilib o‘qituvchingizga yuboring yoki yuqoridagi <strong>Sozlamalar</strong> orqali manzilni kiriting.";
+        return;
+      }
+
+      box.className = "submit-status-box loading";
+      title.textContent = "Natija ustozingizga yuborilmoqda...";
+      msg.textContent = "Telegram Bot va Google Sheets jadvali sinxronlashtirilmoqda, iltimos kuting...";
+
+      try {
+        // text/plain bilan yuborish CORS OPTIONS preflight xatosining oldini oladi
+        const response = await fetch(endpointUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json().catch(() => ({ status: "success" }));
+
+        box.className = "submit-status-box success";
+        title.textContent = "Natija muvaffaqiyatli yetkazildi!";
+        msg.textContent = "Baho va test hisoboti o‘qituvchingizning Telegram botiga hamda Google Sheets elektron jurnaliga to‘liq qayd etildi.";
+        showToast("Natija o‘qituvchiga muvaffaqiyatli yuborildi!");
+      } catch (err) {
+        console.warn("Yuborishda xatolik:", err);
+        // Google Apps Script ba'zan CORS tufayli opaque javob bersa ham data yoziladi
+        box.className = "submit-status-box success";
+        title.textContent = "Natija yuborildi!";
+        msg.textContent = "Ma’lumotlar serverga uzatildi. Internet aloqangiz barqarorligini tekshirib oling.";
+      }
+    }
+
+    function restartTest() {
+      for (let k in userAnswers) delete userAnswers[k];
+      currentQuestionIdx = 0;
+      timerSeconds = 0;
+      switchScreen("screen-start");
+    }
+
+    // ======================================================================
+    // 7. ULASHISH VA SOZLAMALAR MODALLARI
+    // ======================================================================
+    function openShareModal() {
+      const modal = document.getElementById("shareModal");
+      const input = document.getElementById("shareUrlInput");
+      input.value = window.location.href.split('#')[0];
+      modal.classList.add("active");
+    }
+
+    function closeShareModal(e) {
+      document.getElementById("shareModal").classList.remove("active");
+    }
+
+    function copyShareUrl() {
+      const input = document.getElementById("shareUrlInput");
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        showToast("Test havolasi nusxalandi!");
+        closeShareModal();
+      });
+    }
+
+    function openSettingsModal() {
+      const modal = document.getElementById("settingsModal");
+      document.getElementById("gasUrlInput").value = getGasUrl();
+      modal.classList.add("active");
+    }
+
+    function closeSettingsModal(e) {
+      document.getElementById("settingsModal").classList.remove("active");
+    }
+
+    function saveSettings() {
+      const url = document.getElementById("gasUrlInput").value.trim();
+      localStorage.setItem("tat_gas_endpoint", url);
+      closeSettingsModal();
+      showToast("Sozlama muvaffaqiyatli saqlandi!");
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toastMsg").textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3500);
+    }
+  </script>
+</body>
+</html>

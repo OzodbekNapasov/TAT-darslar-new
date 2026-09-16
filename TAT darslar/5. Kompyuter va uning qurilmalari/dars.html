@@ -3014,6 +3014,35 @@
             Ushbu darsda o‘rganilgan barcha 17 ta qurilma, ichki va tashqi tasnif, xotira turlari bo‘yicha bilimlaringizni sinovdan o‘tkazing:
           </p>
 
+          <!-- Onlayn Test Ulashish Paneli -->
+          <div class="quiz-share-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; background: var(--card); border: 1.5px solid var(--primary-border); padding: 0.85rem 1.15rem; border-radius: var(--radius); margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: var(--primary-light); color: var(--primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </span>
+              <div>
+                <strong style="font-size: 0.92rem; color: var(--text);">Onlayn Test Markazi</strong>
+                <p style="font-size: 0.78rem; color: var(--muted); margin: 0;">Talabalarga test havolasini ulashish va natijalarni Telegram hamda Google Sheets'da qabul qilish</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" onclick="copyOnlineTestLink()" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 8px; border: 1.5px solid var(--primary-border); background: var(--primary-light); color: var(--primary); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="copyTestLinkText">Havolani nusxalash</span>
+              </button>
+              <a href="test-5.html" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 8px; background: var(--primary-gradient); color: #ffffff; text-decoration: none; font-size: 0.82rem; font-weight: 700; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3); transition: all 0.2s ease;">
+                <span>Alohida oynada ochish</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+
           <div id="quizQuestionsContainer">
             <!-- 1-Savol -->
             <div class="quiz-question-card" data-q="1">
@@ -3678,6 +3707,21 @@
 
       const banner = document.getElementById('quizScoreBanner');
       banner.classList.remove('show');
+    }
+
+    function copyOnlineTestLink() {
+      const currentUrl = window.location.href;
+      const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+      const testUrl = baseUrl + 'test-5.html';
+
+      navigator.clipboard.writeText(testUrl).then(() => {
+        const textSpan = document.getElementById('copyTestLinkText');
+        if (textSpan) {
+          const original = textSpan.textContent;
+          textSpan.textContent = "Nusxalandi!";
+          setTimeout(() => textSpan.textContent = original, 2500);
+        }
+      });
     }
   </script>
 </body>
