@@ -1,18 +1,23 @@
-# Google Sheets va Telegram Bot To'liq Integratsiyasi (Kafolatlangan Tizim)
+# Google Sheets va Telegram Bot To'liq Integratsiyasi (Jonli Natijalar, PDF & Excel Export)
 
 Ushbu tizim:
-1. Google Sheets jadvalingizda har bir dars mavzusi bo'yicha alohida yangi varaq (list/tab) ochib, natijalarni chiroyli tartibda saqlaydi;
-2. Telegram botingizda har bir talaba test topshirganda bitta xabarni **jonli ravishda yangilab (edit qilib)**, Top-10 talabalar reytingi va umumiy statistikasini ko'rsatib boradi;
-3. Har bir topshirilgan test haqida o'qituvchiga lahzali qisqa bildirishnoma yetkazadi;
-4. **100% Xatoliklarga chidamli:** Agar Telegramda uzilish bo'lsa ham, Google Sheets'ga yozish hech qachon to'xtamaydi. Talaba interneti uzilsa, natija kompyuter xotirasida saqlanadi va internet paydo bo'lishi bilan avtomatik qayta yuboriladi!
+1. **Google Sheets jadvali:** Har bir dars mavzusi bo'yicha alohida yangi varaq (list/tab) ochib, natijalarni chiroyli tartibda saqlaydi;
+2. **Telegram Botda Jonli Reyting (Doimiy Edit bo'lib turadi):** Bitta umumiy reyting xabari har bir yangi natijada joyida yangilanadi. Unda:
+   - Jami topshirganlar soni va o'rtacha o'zlashtirish foizi;
+   - Top-10 talabalar ro'yxati: **Guruhi (26-01, 26-02...), F.I.SH va Bahosi (5, 4, 3)** katta va aniq ko'rinadi;
+   - Eng so'nggi topshirgan talaba haqidagi ma'lumotlar;
+3. **Eksport Tugmalari (Tugmalar orqali yuklab olish):** Xabar ostida avtomatik ravishda:
+   - **[PDF formatda yuklab olish]** — bitta bosishda Google Sheets jadvalining tayyor chiroyli A4 PDF formatini yuklab beradi;
+   - **[Excel (.xlsx) yuklab olish]** — kompyuterga Excel fayli ko'rinishida yuklaydi;
+   - **[Google Sheets jadvalini ochish]** — to'g'ridan-to'g'ri elektron jadvalga o'tish;
+4. **Lahzali Xabar:** Har bir topshirilgan test haqida o'qituvchiga qisqa bildirishnoma ham yetib turadi.
 
 ---
 
-## Sizning Aniq Ma'lumotlaringiz
+## Tasdiqlangan Aniq Sozlamalaringiz
 
 - **Google Sheets jadvali:** [https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit](https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit)
-- **Telegram Bot nomi:** `Mavzu testlari`
-- **Telegram Bot username:** `@test_results111111111111_bot`
+- **Telegram Bot nomi:** `Mavzu testlari` (@test_results111111111111_bot)
 - **Telegram Bot Token:** `8964237407:AAGE0yIVRZMfJVorRm_zLN8lZvQEglp9fvM`
 - **Sizning Tasdiqlangan Shaxsiy Chat ID:** `8135594558`
 
@@ -22,11 +27,11 @@ Ushbu tizim:
 
 1. [Google Sheets jadvalingizni](https://docs.google.com/spreadsheets/d/1_2j9f1Gf4xrTK8W6QUT0c66KL_7bl2fP0aNOoCeIIQU/edit) oching.
 2. Menyudan: **Extensions (Kengaytmalar) -> Apps Script** bo'limiga kiring.
-3. U yerdagi kodni o'chirib, quyidagi **to'liq sozlangan va kafolatlangan kodni** qo'ying:
+3. U yerdagi kodni to'liq o'chirib, quyidagi **yangilangan to'liq kodni** nusxalab joylashtiring:
 
 ```javascript
 // ======================================================================
-// TAT DARSLAR — GOOGLE SHEETS VA TELEGRAM KAFOLATLANGAN INTEGRATSIYASI
+// TAT DARSLAR — GOOGLE SHEETS VA TELEGRAM JONLI INTEGRATSIYASI
 // Shahrisabz Tibbiyot Texnikumi
 // ======================================================================
 
@@ -43,7 +48,7 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-    // 1. GOOGLE SHEETS GA YOZISH (Eng asosiy bosqich — Telegramdan mustaqil)
+    // 1. GOOGLE SHEETS GA YOZISH (Telegramdan to'liq mustaqil)
     let sheetSuccess = false;
     let sheet = null;
     let sheetName = "5-Dars";
@@ -77,19 +82,20 @@ function doPost(e) {
       console.error("Sheets xatosi:", sheetErr);
     }
 
-    // 2. TELEGRAM BOTGA XABAR YUBORISH (Alohida blok — xato bo'lsa ham jadvalga ta'sir qilmaydi)
+    // 2. TELEGRAM BOTGA JONLI XABAR (EDIT) VA TUGMALAR
     try {
       if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
         if (sheet && sheetSuccess) {
-          updateLiveTelegramLeaderboard(sheet, sheetName, data, TELEGRAM_CHAT_ID);
+          updateLiveTelegramLeaderboard(ss, sheet, sheetName, data, TELEGRAM_CHAT_ID);
         }
 
+        // Qisqa lahzali xabar
         const alertText = 
-          "<b>Yangi topshiriq:</b> " + escapeHtml(data.studentName) + " (" + escapeHtml(data.group) + ")\n" +
-          "<b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
-          "<b>Natija:</b> " + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%) — <b>Baho: " + data.grade + "</b>";
+          "<b>Yangi topshiriq:</b> " + escapeHtml(data.studentName) + "\n" +
+          "<b>Guruh:</b> " + escapeHtml(data.group) + " | <b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
+          "<b>Natija:</b> " + data.correctCount + " / " + data.totalQuestions + " (" + data.percent + "%) — <b>Baho: " + data.grade + " (" + escapeHtml(data.gradeLabel) + ")</b>";
         
-        sendTelegramMessage(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, alertText);
+        sendTelegramSimpleMessage(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, alertText);
       }
     } catch (tgErr) {
       console.error("Telegram xatosi:", tgErr);
@@ -104,7 +110,6 @@ function doPost(e) {
   }
 }
 
-// GET so'rovlari uchun zaxira (Redirect va tekshiruvlar uchun)
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({ 
     status: "ok", 
@@ -113,7 +118,7 @@ function doGet(e) {
 }
 
 // ----------------------------------------------------------------------
-// VARAQLARNI (SHEETS) BOSHQARISH FUNKSIYALARI
+// VARAQLARNI (SHEETS) BOSHQARISH
 // ----------------------------------------------------------------------
 function getSafeSheetName(lesson) {
   if (!lesson) return "5-Dars";
@@ -124,7 +129,6 @@ function getSafeSheetName(lesson) {
   if (lesson.indexOf("5-") !== -1 || lesson.indexOf("5.") !== -1) return "5-Dars";
   if (lesson.indexOf("6-") !== -1 || lesson.indexOf("6.") !== -1) return "6-Dars";
 
-  // Taqiqlangan belgilarni tozalash ( [ ] * ? : / \ )
   let clean = lesson.split(":")[0].replace(/[\[\]\*?\:\/\\]/g, "").trim();
   return clean.substring(0, 30) || "Test Natijalari";
 }
@@ -135,16 +139,8 @@ function getOrCreateSheet(ss, sheetName) {
     sheet = ss.insertSheet(sheetName);
     
     const headers = [
-      "T/r",
-      "Sana va vaqt",
-      "Talaba F.I.SH",
-      "Guruhi",
-      "Mavzu",
-      "To'g'ri javob",
-      "Jami savol",
-      "Foiz",
-      "Baho",
-      "Sarflangan vaqt"
+      "T/r", "Sana va vaqt", "Talaba F.I.SH", "Guruhi", "Mavzu",
+      "To'g'ri javob", "Jami savol", "Foiz", "Baho", "Sarflangan vaqt"
     ];
     sheet.appendRow(headers);
     
@@ -172,9 +168,9 @@ function getOrCreateSheet(ss, sheetName) {
 }
 
 // ----------------------------------------------------------------------
-// TELEGRAM JONLI REYTING VA XABAR FUNKSIYALARI
+// TELEGRAM JONLI REYTING (LIVE LEADERBOARD VA EKSPORT TUGMALARI)
 // ----------------------------------------------------------------------
-function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
+function updateLiveTelegramLeaderboard(ss, sheet, sheetName, lastData, chatId) {
   const lastRow = sheet.getLastRow();
   if (lastRow <= 1) return;
 
@@ -188,6 +184,7 @@ function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
   });
   const avgPercent = Math.round(sumPercent / totalSubmissions);
 
+  // Top-10 reyting saralash
   const sorted = values.slice().sort((a, b) => {
     const scoreA = parseInt(a[5]) || 0;
     const scoreB = parseInt(b[5]) || 0;
@@ -198,21 +195,51 @@ function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
   let rankingText = "";
   top10.forEach((r, idx) => {
     const num = (idx + 1) + ".";
-    rankingText += num + " <b>" + escapeHtml(r[2]) + "</b> (" + escapeHtml(r[3]) + ") — " + r[5] + "/" + r[6] + " (" + r[7] + ") [Baho: " + r[8].toString().split(' ')[0] + "]\n";
+    rankingText += 
+      num + " <b>" + escapeHtml(r[2]) + "</b>\n" +
+      "   Guruh: <b>" + escapeHtml(r[3]) + "</b> | Natija: " + r[5] + "/" + r[6] + " (" + r[7] + ")\n" +
+      "   Baho: <b>" + escapeHtml(r[8]) + "</b> | Vaqt: " + escapeHtml(r[9]) + "\n\n";
   });
 
   const nowStr = new Date().toLocaleTimeString("uz-UZ");
 
   const liveMessageText = 
-    "<b>JONLI TEST REYTINQI</b>\n" +
+    "<b>===================================</b>\n" +
+    "<b>JONLI TEST NATIJALARI VA REYTINGI</b>\n" +
+    "<b>===================================</b>\n" +
     "<b>Mavzu:</b> " + escapeHtml(sheetName) + "\n" +
     "<b>Jami topshirganlar:</b> " + totalSubmissions + " nafar\n" +
-    "<b>O'rtacha ko'rsatkich:</b> " + avgPercent + "%\n\n" +
-    "<b>Top-10 Reyting:</b>\n" +
-    rankingText + "\n" +
-    "<b>So'nggi topshirgan:</b> " + escapeHtml(lastData.studentName) + " (" + escapeHtml(lastData.group) + ") — " + lastData.correctCount + "/" + lastData.totalQuestions + " (" + lastData.percent + "%)\n" +
+    "<b>O'rtacha o'zlashtirish:</b> " + avgPercent + "%\n\n" +
+    "<b>TOP-10 TALABALAR REYTINGI:</b>\n\n" +
+    rankingText +
+    "<b>-----------------------------------</b>\n" +
+    "<b>SO'NGGI TOPSHIRGAN TALABA:</b>\n" +
+    "• F.I.SH: <b>" + escapeHtml(lastData.studentName) + "</b>\n" +
+    "• Guruhi: <b>" + escapeHtml(lastData.group) + "</b>\n" +
+    "• Natijasi: <b>" + lastData.correctCount + " / " + lastData.totalQuestions + " (" + lastData.percent + "%)</b>\n" +
+    "• Bahosi: <b>" + lastData.grade + " (" + escapeHtml(lastData.gradeLabel) + ")</b>\n" +
+    "• Vaqti: " + escapeHtml(lastData.date) + "\n" +
+    "<b>-----------------------------------</b>\n" +
     "<i>Jonli yangilandi: " + nowStr + "</i>\n" +
     "<i>Shahrisabz Tibbiyot Texnikumi</i>";
+
+  // Eksport tugmalari (PDF, Excel, Google Sheets)
+  const ssId = ss.getId();
+  const pdfUrl = "https://docs.google.com/spreadsheets/d/" + ssId + "/export?format=pdf&portrait=false&size=a4&gridlines=true";
+  const xlsxUrl = "https://docs.google.com/spreadsheets/d/" + ssId + "/export?format=xlsx";
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/" + ssId + "/edit";
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: "PDF formatda yuklab olish", url: pdfUrl },
+        { text: "Excel (.xlsx) yuklab olish", url: xlsxUrl }
+      ],
+      [
+        { text: "Google Sheets jadvalini ochish", url: sheetUrl }
+      ]
+    ]
+  };
 
   const props = PropertiesService.getScriptProperties();
   const propKey = "LIVE_MSG_ID_" + sheetName.replace(/[^a-zA-Z0-9]/g, "_");
@@ -220,24 +247,24 @@ function updateLiveTelegramLeaderboard(sheet, sheetName, lastData, chatId) {
 
   let edited = false;
   if (existingMsgId) {
-    edited = editTelegramMessage(TELEGRAM_BOT_TOKEN, chatId, existingMsgId, liveMessageText);
+    edited = editTelegramMessageWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, existingMsgId, liveMessageText, keyboard);
   }
 
   if (!edited) {
-    const newMsgId = sendTelegramMessage(TELEGRAM_BOT_TOKEN, chatId, liveMessageText);
+    const newMsgId = sendTelegramMessageWithKeyboard(TELEGRAM_BOT_TOKEN, chatId, liveMessageText, keyboard);
     if (newMsgId) {
       props.setProperty(propKey, String(newMsgId));
     }
   }
 }
 
-function sendTelegramMessage(token, chatId, text) {
+function sendTelegramMessageWithKeyboard(token, chatId, text, keyboard) {
   try {
     const url = "https://api.telegram.org/bot" + token + "/sendMessage";
     const res = UrlFetchApp.fetch(url, {
       method: "post",
       contentType: "application/json",
-      payload: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "HTML" }),
+      payload: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "HTML", reply_markup: keyboard }),
       muteHttpExceptions: true
     });
     const json = JSON.parse(res.getContentText());
@@ -247,13 +274,13 @@ function sendTelegramMessage(token, chatId, text) {
   }
 }
 
-function editTelegramMessage(token, chatId, messageId, text) {
+function editTelegramMessageWithKeyboard(token, chatId, messageId, text, keyboard) {
   try {
     const url = "https://api.telegram.org/bot" + token + "/editMessageText";
     const res = UrlFetchApp.fetch(url, {
       method: "post",
       contentType: "application/json",
-      payload: JSON.stringify({ chat_id: chatId, message_id: messageId, text: text, parse_mode: "HTML" }),
+      payload: JSON.stringify({ chat_id: chatId, message_id: messageId, text: text, parse_mode: "HTML", reply_markup: keyboard }),
       muteHttpExceptions: true
     });
     const json = JSON.parse(res.getContentText());
@@ -263,14 +290,26 @@ function editTelegramMessage(token, chatId, messageId, text) {
   }
 }
 
+function sendTelegramSimpleMessage(token, chatId, text) {
+  try {
+    const url = "https://api.telegram.org/bot" + token + "/sendMessage";
+    UrlFetchApp.fetch(url, {
+      method: "post",
+      contentType: "application/json",
+      payload: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "HTML" }),
+      muteHttpExceptions: true
+    });
+  } catch (e) {}
+}
+
 function escapeHtml(text) {
   if (!text) return "";
   return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 ```
 
-4. Kodni qo'ygach, yuqoridagi **Save (Saqlash / disketa)** belgisini bosing.
-5. So'ngra: **Deploy -> Manage deployments (O'rnatishlarni boshqarish)** bo'limiga kiring:
-   - Qalamcha (Tahrirlash) belgisini bosing;
+4. Yuqoridagi **Save (Saqlash)** tugmasini bosing.
+5. So'ngra: **Deploy -> Manage deployments** bo'limiga kirib:
+   - Qalamcha (**Edit**) ni bosing;
    - **Version:** "New version" (Yangi versiya) ni tanlang;
    - **Deploy** tugmasini bosing!
