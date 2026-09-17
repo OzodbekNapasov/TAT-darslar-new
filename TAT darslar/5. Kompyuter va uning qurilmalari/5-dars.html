@@ -3036,7 +3036,7 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <span id="copyTestLinkText">Havolani nusxalash</span>
               </button>
-              <a href="test-5.html" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 8px; background: var(--primary-gradient); color: #ffffff; text-decoration: none; font-size: 0.82rem; font-weight: 700; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3); transition: all 0.2s ease;">
+              <a href="test-5.html?v=2" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 8px; background: var(--primary-gradient); color: #ffffff; text-decoration: none; font-size: 0.82rem; font-weight: 700; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3); transition: all 0.2s ease;">
                 <span>Alohida oynada ochish</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
@@ -3710,9 +3710,12 @@
     }
 
     function copyOnlineTestLink() {
-      const currentUrl = window.location.href;
-      const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
-      const testUrl = baseUrl + 'test-5.html';
+      let testUrl = 'https://ozodbeknapasov.github.io/TAT-darslar-new/test-5.html?v=2';
+      if (window.location.protocol === 'file:' || (window.location.hostname !== 'ozodbeknapasov.github.io')) {
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+        testUrl = baseUrl + 'test-5.html?v=2';
+      }
 
       navigator.clipboard.writeText(testUrl).then(() => {
         const textSpan = document.getElementById('copyTestLinkText');
