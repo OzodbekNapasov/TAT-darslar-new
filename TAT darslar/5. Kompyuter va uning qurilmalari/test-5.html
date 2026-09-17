@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>5-Dars Testi: Kompyuter va uning qurilmalari — Online Test Markazi</title>
-  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 20 ta savolli onlayn test sinovi.">
+  <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 29 talik bankdan tanlanadigan 20 ta savolli onlayn test sinovi.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>">
   <style>
     :root {
@@ -248,6 +248,19 @@
     .form-group {
       text-align: left;
       margin-bottom: 1.15rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 520px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
     }
 
     .form-label {
@@ -921,7 +934,7 @@
 
         <h1 class="start-title">Kompyuter va uning qurilmalari</h1>
         <p class="start-desc">
-          Ichki va tashqi qurilmalar, xotira turlari (HDD va SSD) bo‘yicha 20 ta rasmiy test savoli. Natijangiz avtomatik ravishda baholanadi va o‘qituvchi nazoratiga yuboriladi.
+          Ichki va tashqi qurilmalar, xotira turlari (HDD va SSD) bo‘yicha 29 talik savollar bankidan tasodifiy tanlangan 20 ta test savoli. Natijangiz avtomatik ravishda baholanadi va o‘qituvchi nazoratiga yuboriladi.
         </p>
 
         <div class="test-features-grid">
@@ -940,16 +953,30 @@
         </div>
 
         <form id="student-form" onsubmit="startExam(event)">
-          <div class="form-group">
-            <label class="form-label" for="inp-fullname">Familiyangiz va Ismingiz (F.I.SH):</label>
-            <input 
-              type="text" 
-              id="inp-fullname" 
-              class="form-input" 
-              placeholder="Masalan: Valiyev Ali Sobirovich" 
-              required 
-              autocomplete="name"
-            />
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inp-lastname">Familiyangiz:</label>
+              <input
+                type="text"
+                id="inp-lastname"
+                class="form-input"
+                placeholder="Masalan: Valiyev"
+                required
+                autocomplete="family-name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-firstname">Ismingiz:</label>
+              <input
+                type="text"
+                id="inp-firstname"
+                class="form-input"
+                placeholder="Masalan: Ali"
+                required
+                autocomplete="given-name"
+              />
+            </div>
           </div>
 
           <div class="form-group">
@@ -964,6 +991,21 @@
               <option value="26-06">26-06 guruhi</option>
               <option value="26-07">26-07 guruhi</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inp-pc">Kompyuter raqami:</label>
+            <input
+              type="number"
+              id="inp-pc"
+              class="form-input"
+              placeholder="Masalan: 7"
+              min="1"
+              max="99"
+              step="1"
+              required
+              inputmode="numeric"
+            />
           </div>
 
           <button type="submit" class="start-btn">
@@ -1026,6 +1068,7 @@
             <div class="student-tag-box">
               <span class="student-title-cut" id="display-student-name">Talaba</span>
               <span class="group-badge-pill" id="display-student-group">26-01</span>
+              <span class="group-badge-pill" id="display-student-pc">1-kompyuter</span>
             </div>
 
             <div class="timer-card-block">
@@ -1076,7 +1119,7 @@
 
         <h1 class="result-title" id="resTitleText">Test Sinovi Yakunlandi!</h1>
         <p class="result-student-info">
-          Talaba: <strong id="resStudentName">-</strong> • Guruh: <strong id="resGroupName">-</strong>
+          Talaba: <strong id="resStudentName">-</strong> • Guruh: <strong id="resGroupName">-</strong> • Kompyuter: <strong id="resPcNumber">-</strong>
         </p>
 
         <div class="result-stats-row">
@@ -1179,181 +1222,265 @@
     // ======================================================================
     // 1. TEST SAVOLLARI BAZASI (5-DARS: KOMPYUTER VA UNING QURILMALARI)
     // ======================================================================
-    const QUESTIONS_DATA = [
+    const QUESTIONS_BANK = [
       {
         id: 1,
-        question: "Kompyuter o‘chirilganda undagi barcha ma’lumotlar o‘chib ketadigan, faol dasturlar ishlaydigan tezkor xotira qaysi?",
-        options: ["HDD (Qattiq disk)", "SSD drayveri", "RAM (Operativ xotira)", "ROM (Doimiy xotira)"],
-        correct: 2,
-        explanation: "Operativ xotira (RAM) uchuvchan vaqtinchalik xotira bo‘lib, u faqat kompyuter ishlab turganda dasturlarni ushlab turadi. O‘chirilganda tozalanadi."
+        question: "Kompyuter o‘chirilganda ma’lumotlari o‘chib ketadigan vaqtinchalik tezkor xotira qaysi?",
+        options: ["RAM (Operativ xotira)", "HDD (Qattiq disk)", "Fleshka", "Monitor"],
+        correct: 0,
+        explanation: "RAM — vaqtinchalik xotira. Kompyuter o‘chganda undagi barcha ma’lumotlar o‘chib ketadi."
       },
       {
         id: 2,
-        question: "Quyidagi qurilmalardan qaysi biri tashqi ASOSIY kiritish qurilmasi hisoblanadi?",
-        options: ["Monitor", "Printer", "Klaviatura", "Quvvat bloki"],
-        correct: 2,
-        explanation: "Klaviatura kompyuterga matn, son va boshqaruv buyruqlarini kiritish uchun xizmat qiluvchi asosiy tashqi kiritish vositasidir."
+        question: "Kompyuterga matn va sonlarni kiritish uchun qaysi qurilmadan foydalanamiz?",
+        options: ["Monitor", "Klaviatura", "Printer", "Kolonka"],
+        correct: 1,
+        explanation: "Klaviatura — harf, son va buyruqlarni kiritish uchun xizmat qiladigan asosiy kiritish qurilmasi."
       },
       {
         id: 3,
-        question: "SSD drayverining klassik magnitli HDD qattiq diskiga nisbatan eng asosiy ustunligi nimada?",
-        options: [
-          "1 GB xotira narxining arzonligi",
-          "O‘ta yuqori tezlik, mutlaqo shovqinsizlik va zarbaga chidamlilik",
-          "Aylanuvchi magnit disklarga egaligi",
-          "Ko‘proq elektr toki sarflashi"
-        ],
-        correct: 1,
-        explanation: "SSD drayveri flesh-mikrosxemalarda ishlagani sababli shovqinsiz ishlaydi va HDD disklaridan 5–40 baravargacha tezroqdir."
+        question: "Kompyuterdagi tasvir va matnlarni ekranda ko‘rsatib beruvchi qurilma qaysi?",
+        options: ["Skaner", "Mikrofon", "Monitor", "Sichqoncha"],
+        correct: 2,
+        explanation: "Monitor — kompyuterdagi axborotni ekranda ko‘rsatib beruvchi asosiy chiqarish qurilmasi."
       },
       {
         id: 4,
-        question: "Kompyuterning barcha ichki qismlarini yagona elektron zanjirga bog‘lovchi bosh bosma plata nima deyiladi?",
-        options: ["Ona plata (Motherboard)", "Videokarta (GPU)", "Quvvat bloki (PSU)", "Kuler"],
+        question: "Kompyuterning 'miyasi' deb qaysi qurilmaga aytiladi?",
+        options: ["Protsessor (CPU)", "Kolonka", "Veb-kamera", "Quvvat bloki"],
         correct: 0,
-        explanation: "Ona plata barcha ichki komponentlar (CPU, RAM, GPU, disklar) va tashqi portlarni o‘zaro bog‘lovchi bosh elektron magistraldir."
+        explanation: "Protsessor barcha hisob-kitob va buyruqlarni bajaradi, shuning uchun uni kompyuterning miyasi deyishadi."
       },
       {
         id: 5,
-        question: "Quyidagilardan qaysi biri tizimli blok ichida joylashgan ICHKI qurilma hisoblanadi?",
-        options: ["Skaner", "Veb-kamera", "Quvvat bloki (PSU)", "Printer"],
+        question: "Kompyuterning barcha ichki qismlari ulanadigan asosiy katta plata nima deb ataladi?",
+        options: ["Videokarta", "Kuler", "Ona plata", "Qattiq disk"],
         correct: 2,
-        explanation: "Quvvat bloki tizimli blok korpusi ichida joylashib, 220V tokni past kuchlanishga aylantirib beradi."
+        explanation: "Ona plata — protsessor, xotira va boshqa qismlar ulanadigan bosh plata."
       },
       {
         id: 6,
-        question: "Kompyuterda barcha arifmetik-mantiqiy amallarni va dasturiy buyruqlarni bajaruvchi bosh hisoblash markazi nima?",
-        options: ["Protsessor (CPU)", "Kesh xotira", "BIOS mikrosxemasi", "Videokarta"],
-        correct: 0,
-        explanation: "Protsessor (CPU) — kompyuterning 'miyasi' bo‘lib, barcha hisoblash va boshqaruv amallarini amalga oshiradi."
+        question: "Kompyuterdagi hujjatni qog‘ozga chop etish uchun qaysi qurilma kerak?",
+        options: ["Skaner", "Printer", "Mikrofon", "Monitor"],
+        correct: 1,
+        explanation: "Printer — kompyuterdagi matn va rasmlarni qog‘ozga bosib chiqaradi."
       },
       {
         id: 7,
-        question: "Kompyuterdagi raqamli axborotlarni inson ko‘zi ilg‘aydigan tasvir, matn va videoga aylantirib beruvchi ASOSIY chiqarish qurilmasi qaysi?",
-        options: ["Printer", "Monitor (Displey)", "Skaner", "Proyektor"],
-        correct: 1,
-        explanation: "Monitor — kompyuter bilan ishlash uchun zarur bo‘lgan eng asosiy tashqi vizual chiqarish vositasidir."
+        question: "Qog‘ozdagi rasm yoki hujjatni kompyuterga tushirish uchun qaysi qurilma ishlatiladi?",
+        options: ["Printer", "Kolonka", "Skaner", "Kuler"],
+        correct: 2,
+        explanation: "Skaner qog‘ozdagi hujjat va rasmlarni kompyuterga raqamli fayl ko‘rinishida kiritadi."
       },
       {
         id: 8,
-        question: "3D grafika, kompyuter o‘yinlari, video montaj va tasvirlarni ekranga chiqarish yukini o‘z zimmasiga oladigan maxsus qurilma qaysi?",
-        options: ["Ovoz kartasi", "Video karta (GPU)", "Tarmoq kartasi", "Protsessor kuleri"],
-        correct: 1,
-        explanation: "Video karta raqamli grafik axborotlarni qayta ishlab, monitorga tasvir chiqarishga ixtisoslashgan alohida GPU protsessori va VRAM ga ega."
+        question: "Ekrandagi kursorni harakatlantirish va ob’ektlarni tanlash uchun nima ishlatiladi?",
+        options: ["Sichqoncha", "Printer", "Quvvat bloki", "Naushnik"],
+        correct: 0,
+        explanation: "Sichqoncha — kursorni boshqarish va buyruqlarni tanlash uchun xizmat qiluvchi kiritish qurilmasi."
       },
       {
         id: 9,
-        question: "Protsessor va boshqa qismlar ishlaganda ajralib chiqadigan yuqori issiqlikni o‘ziga yutib, tashqariga haydab chiqaruvchi tizim nima?",
-        options: ["Quvvat bloki", "Sovutish tizimi (Kuler/Radiator)", "Korpus chang filtri", "Tizimli shina"],
+        question: "Monitorga tasvir chiqarish va o‘yin grafikasi uchun javob beradigan qurilma qaysi?",
+        options: ["Tarmoq kartasi", "Videokarta", "Klaviatura", "Fleshka"],
         correct: 1,
-        explanation: "Havo yoki suyuqlik sovutish tizimi (kuler) protsessorni qizib ketishdan (80–90°C dan oshishdan) saqlaydi."
+        explanation: "Videokarta tasvirni tayyorlab, monitorga uzatadi. O‘yin va video uchun u juda muhim."
       },
       {
         id: 10,
-        question: "Qog‘ozdagi hujjat, fotosurat yoki rasmlarni yorug‘lik nurlari yordamida o‘qib, kompyuterga raqamli fayl shaklida kirituvchi vosita qaysi?",
-        options: ["Printer", "Plotter", "Skaner", "Strimer"],
+        question: "Kompyuter qismlarini elektr quvvati bilan ta’minlab turuvchi qurilma qaysi?",
+        options: ["Kuler", "Monitor", "Quvvat bloki", "Skaner"],
         correct: 2,
-        explanation: "Skaner — qog‘ozdagi tasvir va matnlarni kompyuter xotirasiga raqamli shaklda (PDF, JPEG) kiritish uchun xizmat qiladi."
+        explanation: "Quvvat bloki (PSU) rozetkadagi tokni kompyuter qismlariga mos kuchlanishga aylantirib beradi."
       },
       {
         id: 11,
-        question: "Klassik magnitli qattiq disk (HDD) ichida ma’lumotlar qanday fizik element yuzasida saqlanadi?",
-        options: ["Silikon kristalli mikrosxemada", "Aylanuvchi magnit plastinkalarda", "Optik lazer diskida", "Kondensatorlar kataklarida"],
-        correct: 1,
-        explanation: "HDD ichida soniyasiga 5400–7200 marta aylanadigan magnit disklari va uning ustida mikroskopik masofada harakatlanuvchi o‘qish/yozish kallagi mavjud."
+        question: "Protsessorni qizib ketishdan saqlab, uni sovutib turuvchi qurilma nima deyiladi?",
+        options: ["Kuler (sovutgich)", "Videokarta", "Ona plata", "Mikrofon"],
+        correct: 0,
+        explanation: "Kuler — ventilyator va radiatordan iborat sovutish tizimi. U protsessorni qizib ketishdan saqlaydi."
       },
       {
         id: 12,
-        question: "Nima uchun USB Flash-disk (fleshka) ham kiritish, ham chiqarish qurilmasi toifasiga kiradi?",
-        options: [
-          "Unga monitor va sichqoncha ulanishi sababli",
-          "Undan faylni kompyuterga o‘qish (kirish) va unga yangi fayllarni yozish (chiqish) mumkin bo‘lgani uchun",
-          "U faqat internet orqali ishlagani sababli",
-          "U elektr quvvatisiz umuman ishlamagani uchun"
-        ],
+        question: "Kompyuter o‘chirilsa ham fayllar saqlanib qoladigan doimiy xotira qaysi?",
+        options: ["RAM", "Qattiq disk (HDD/SSD)", "Kuler", "Monitor"],
         correct: 1,
-        explanation: "Fleshka axborotni o‘qish (kiritish) va unga yangi axborot yozib saqlash (chiqarish) imkonini beruvchi universal vositadir."
+        explanation: "Qattiq disk — doimiy xotira. Kompyuter o‘chirilsa ham undagi fayllar saqlanib qoladi."
       },
       {
         id: 13,
-        question: "Har bir tugmasi ostida mustaqil prujinali pereklyuchatel (switch) bo‘lgan, o‘ta chidamli klaviatura turi qanday ataladi?",
-        options: ["Membranali klaviatura", "Mexanik klaviatura", "Sensorli klaviatura", "Proyeksiyali klaviatura"],
+        question: "HDD va SSD dan qaysi biri tezroq ishlaydi?",
+        options: ["HDD", "SSD", "Ikkalasi bir xil", "Hech qaysisi"],
         correct: 1,
-        explanation: "Mexanik klaviaturalarda har bir tugma mustaqil kalitga ega bo‘lib, 50–100 million marta bosishga bardosh beradi."
+        explanation: "SSD ichida aylanadigan disk yo‘q, u mikrosxemalarda ishlaydi. Shuning uchun HDD dan ancha tez."
       },
       {
         id: 14,
-        question: "Katta hajmdagi matnli hujjatlarni daqiqasiga 25–40 varaq tezlikda va arzon tannarxda chop etish uchun qaysi printer turi eng maqbul hisoblanadi?",
-        options: ["Siyohli (Inkjet) printer", "Matritsali printer", "Lazerli printer", "3D printer"],
+        question: "Ma’lumotlarni bir kompyuterdan boshqasiga ko‘chirish uchun eng qulay kichik qurilma qaysi?",
+        options: ["Monitor", "Kuler", "USB fleshka", "Ona plata"],
         correct: 2,
-        explanation: "Lazerli printerlar quruq toner kukuni yordamida matnlarni juda yuqori tezlikda, o‘chib ketmaydigan qilib va arzon tannarxda bosib chiqaradi."
+        explanation: "USB fleshka — kichik, ko‘chma xotira vositasi. Unga fayl yozish va undan o‘qish mumkin."
       },
       {
         id: 15,
-        question: "Protsessorning soniyasiga necha milliard amal bajara olishini bildiruvchi takt chastotasi qaysi birlikda o‘lchanadi?",
-        options: ["Gigabayt (GB)", "Gigagers (GHz)", "Megabit (Mbps)", "Nanometr (nm)"],
-        correct: 1,
-        explanation: "Takt chastotasi Gers (Hz), Megagers (MHz) va Gigagers (GHz) birliklarida o‘lchanadi. 1 GHz = sekundiga 1 milliard takt."
+        question: "Kompyuterdagi musiqa va tovushni eshitish uchun qaysi qurilma kerak?",
+        options: ["Kolonka yoki naushnik", "Skaner", "Klaviatura", "Videokarta"],
+        correct: 0,
+        explanation: "Kolonka va naushnik — tovushni chiqarib beruvchi qo‘shimcha chiqarish qurilmalari."
       },
       {
         id: 16,
-        question: "Kompyuter korpusining (Case) asosiy vazifalari nimalardan iborat?",
-        options: [
-          "Faqat tashqi ko‘rinishni chiroyli qilish",
-          "Ichki nozik qismlarni zarbadan himoyalash va to‘g‘ri havo oqimini ta’minlash",
-          "Elektr tokini kuchaytirish",
-          "Ma’lumotlarni zaxiralash"
-        ],
+        question: "Ovozni kompyuterga yozib olish uchun qaysi qurilmadan foydalaniladi?",
+        options: ["Kolonka", "Mikrofon", "Printer", "Monitor"],
         correct: 1,
-        explanation: "Korpus ichki qismlarni chang va zarbadan himoyalaydi hamda kulerlar uchun to‘g‘ri sovuq havo yo‘nalishini yaratadi."
+        explanation: "Mikrofon ovozni kompyuterga kirituvchi qurilma, kolonka esa aksincha — ovozni chiqaradi."
       },
       {
         id: 17,
-        question: "Kompyuter sichqonchasi xarakteristikasidagi DPI (Dots Per Inch) ko‘rsatkichi nimani anglatadi?",
-        options: ["Sichqoncha og‘irligini", "Datchik sezgirligi va harakat aniqligini", "Simining uzunligini", "Tugmalar sonini"],
-        correct: 1,
-        explanation: "DPI (Dots Per Inch) — optik/lazer datchikning sezgirligi bo‘lib, sichqoncha 1 dyuym surilganda kursor ekranda necha pikselga siljishini belgilaydi."
+        question: "Video qo‘ng‘iroq qilish uchun kompyuterga qaysi qurilma ulanadi?",
+        options: ["Veb-kamera", "Printer", "Fleshka", "Quvvat bloki"],
+        correct: 0,
+        explanation: "Veb-kamera jonli tasvirni kompyuterga kiritadi va video aloqa uchun ishlatiladi."
       },
       {
         id: 18,
-        question: "Zamonaviy kompyuterlar uchun eng maqbul gibrid doimiy xotira konfiguratsiyasi qaysi?",
-        options: [
-          "Faqat ikkita sekin HDD o‘rnatish",
-          "Tizim va dasturlar uchun tezkor SSD + katta arxivlar uchun sig‘imli HDD",
-          "Faqat USB fleshkadan foydalanish",
-          "Doimiy xotirasiz faqat RAM bilan ishlash"
-        ],
-        correct: 1,
-        explanation: "Tezkor SSD (Windows va dasturlar uchun) hamda katta hajmli arzon HDD (fayllar arxivi uchun) eng ideal kombinatsiyadir."
+        question: "Protsessor, ona plata va disklar joylashgan metall quti nima deb ataladi?",
+        options: ["Monitor", "Klaviatura", "Tizim bloki (korpus)", "Printer"],
+        correct: 2,
+        explanation: "Tizim bloki — kompyuterning barcha ichki qurilmalari joylashgan korpus."
       },
       {
         id: 19,
-        question: "Kolonka va naushniklar qanday turdagi qurilmalar guruhiga kiradi?",
-        options: ["Asosiy kiritish qurilmasi", "Tashqi qo‘shimcha chiqarish qurilmasi", "Ichki hisoblash qurilmasi", "Optik saqlash vositasi"],
+        question: "Quyidagilardan qaysi biri ICHKI qurilma hisoblanadi?",
+        options: ["Printer", "Protsessor", "Monitor", "Skaner"],
         correct: 1,
-        explanation: "Kolonka va naushniklar elektr signallarini tovush to‘lqinlariga aylantiruvchi tashqi qo‘shimcha chiqarish vositalaridir."
+        explanation: "Protsessor tizim bloki ichida joylashgan ichki qurilma. Printer, monitor va skaner esa tashqi."
       },
       {
         id: 20,
-        question: "Shaxsiy kompyuter (PC) bilan standart ishlashni ta’minlash uchun zarur bo‘lgan 3 ta ASOSIY TASHQI qurilma to‘g‘ri ko‘rsatilgan qatorni toping:",
+        question: "Quyidagilardan qaysi biri TASHQI qurilma hisoblanadi?",
+        options: ["Ona plata", "Quvvat bloki", "Operativ xotira", "Klaviatura"],
+        correct: 3,
+        explanation: "Klaviatura tashqaridan ulanadigan tashqi qurilma. Qolganlari tizim bloki ichida turadi."
+      },
+      {
+        id: 21,
+        question: "Tasvirni katta ekranga yoki devorga kattalashtirib ko‘rsatuvchi qurilma qaysi?",
+        options: ["Proyektor", "Skaner", "Mikrofon", "Fleshka"],
+        correct: 0,
+        explanation: "Proyektor kompyuterdagi tasvirni katta ekranga chiqaradi, shuning uchun u chiqarish qurilmasi."
+      },
+      {
+        id: 22,
+        question: "Xotira hajmi qaysi birlikda o‘lchanadi?",
+        options: ["Metr", "Gigabayt (GB)", "Kilogramm", "Gradus"],
+        correct: 1,
+        explanation: "Xotira hajmi bayt, kilobayt, megabayt va gigabaytlarda o‘lchanadi."
+      },
+      {
+        id: 23,
+        question: "Kompyuterda ishlash uchun zarur bo‘lgan 3 ta asosiy tashqi qurilma qaysi qatorda?",
         options: [
-          "Skaner, printer, veb-kamera",
+          "Skaner, printer, proyektor",
           "Monitor, klaviatura, sichqoncha",
-          "Quvvat bloki, kuler, korpus",
-          "Fleshka, quloqchin, mikrofon"
+          "Kuler, korpus, quvvat bloki",
+          "Fleshka, mikrofon, naushnik"
         ],
         correct: 1,
-        explanation: "Monitor (asosiy chiqarish), Klaviatura (asosiy kiritish) va Sichqoncha (asosiy manipulyator) kompyuterda ishlash uchun minimal to‘plamdir."
+        explanation: "Monitor, klaviatura va sichqoncha — kompyuterda ishlash uchun eng zarur minimal to‘plam."
+      },
+      {
+        id: 24,
+        question: "Operativ xotira (RAM) hajmi katta bo‘lsa, kompyuter qanday ishlaydi?",
+        options: [
+          "Bir vaqtda ko‘p dastur bilan tez ishlaydi",
+          "Sekinlashadi",
+          "Umuman yonmaydi",
+          "Ekrani kichrayadi"
+        ],
+        correct: 0,
+        explanation: "RAM qancha katta bo‘lsa, bir vaqtning o‘zida shuncha ko‘p dastur qotib qolmasdan ishlaydi."
+      },
+      {
+        id: 25,
+        question: "Protsessorning tezligi qaysi birlikda ko‘rsatiladi?",
+        options: ["Gigabayt (GB)", "Gigagers (GHz)", "Vatt (Vt)", "Dyuym"],
+        correct: 1,
+        explanation: "Protsessor tezligi Gigagers (GHz) da o‘lchanadi. Bu raqam qancha katta bo‘lsa, u shuncha tez ishlaydi."
+      },
+      {
+        id: 26,
+        question: "Fayl yoki papkani ochish uchun sichqonchaning qaysi tugmasi ikki marta bosiladi?",
+        options: ["Chap tugma", "O‘ng tugma", "G‘ildirak", "Hech qaysi"],
+        correct: 0,
+        explanation: "Fayl yoki papkani ochish uchun chap tugma ikki marta tez bosiladi."
+      },
+      {
+        id: 27,
+        question: "Sichqonchaning o‘ng tugmasi bosilganda ekranda nima paydo bo‘ladi?",
+        options: ["Kompyuter o‘chadi", "Qo‘shimcha buyruqlar ro‘yxati (menyu)", "Printer ishga tushadi", "Hech narsa"],
+        correct: 1,
+        explanation: "O‘ng tugma bosilganda tanlangan ob’ekt uchun qo‘shimcha buyruqlar menyusi ochiladi."
+      },
+      {
+        id: 28,
+        question: "Printer, skaner, kolonka va veb-kamera kabi qurilmalar birgalikda qanday nomlanadi?",
+        options: ["Qo‘shimcha qurilmalar", "Ichki xotira", "Dasturlar", "Protsessorlar"],
+        correct: 0,
+        explanation: "Bular kompyuter imkoniyatini kengaytiruvchi qo‘shimcha qurilmalar hisoblanadi."
+      },
+      {
+        id: 29,
+        question: "Quyidagilardan qaysi biri CHIQARISH qurilmasi hisoblanadi?",
+        options: ["Mikrofon", "Skaner", "Printer", "Klaviatura"],
+        correct: 2,
+        explanation: "Printer natijani qog‘ozga chiqaradi. Mikrofon, skaner va klaviatura esa kiritish qurilmalari."
       }
     ];
 
+    // Har bir sinovda 29 ta savoldan tasodifiy 20 tasi aralashtirib tanlanadi
+    const EXAM_QUESTION_COUNT = 20;
+    let QUESTIONS_DATA = [];
+
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+      }
+      return a;
+    }
+
+    // Savollarni ham, javob variantlarini ham aralashtirib beradi
+    function buildExamQuestions() {
+      return shuffleArray(QUESTIONS_BANK)
+        .slice(0, EXAM_QUESTION_COUNT)
+        .map(function (q) {
+          const paired = q.options.map(function (text, i) {
+            return { text: text, isCorrect: i === q.correct };
+          });
+          const mixed = shuffleArray(paired);
+          return {
+            id: q.id,
+            question: q.question,
+            options: mixed.map(function (o) { return o.text; }),
+            correct: mixed.findIndex(function (o) { return o.isCorrect; }),
+            explanation: q.explanation
+          };
+        });
+    }
     // ======================================================================
     // 2. HOLATLAR VA AVTOMATIK INTEGRATSIYA
     // ======================================================================
     let currentQuestionIdx = 0;
     const userAnswers = {};
+    let studentLastName = "";
+    let studentFirstName = "";
     let studentFullName = "";
     let studentGroup = "";
+    let studentPcNumber = "";
     let timerInterval = null;
     let timerSeconds = 0;
 
@@ -1399,20 +1526,36 @@
 
     function startExam(e) {
       e.preventDefault();
-      studentFullName = document.getElementById("inp-fullname").value.trim();
+      studentLastName = document.getElementById("inp-lastname").value.trim();
+      studentFirstName = document.getElementById("inp-firstname").value.trim();
       studentGroup = document.getElementById("inp-group").value.trim();
+      studentPcNumber = document.getElementById("inp-pc").value.trim();
 
-      if (!studentFullName) {
-        alert("Iltimos, ism va familiyangizni kiriting!");
+      if (!studentLastName) {
+        alert("Iltimos, familiyangizni kiriting!");
+        return;
+      }
+      if (!studentFirstName) {
+        alert("Iltimos, ismingizni kiriting!");
         return;
       }
       if (!studentGroup) {
         alert("Iltimos, guruhingizni ro‘yxatdan tanlang!");
         return;
       }
+      if (!studentPcNumber || Number(studentPcNumber) < 1) {
+        alert("Iltimos, kompyuteringiz raqamini kiriting!");
+        return;
+      }
+
+      studentFullName = studentLastName + " " + studentFirstName;
+
+      // Har bir urinishda 29 talik bankdan tasodifiy 20 ta savol tanlanadi
+      QUESTIONS_DATA = buildExamQuestions();
 
       document.getElementById("display-student-name").textContent = studentFullName;
       document.getElementById("display-student-group").textContent = studentGroup;
+      document.getElementById("display-student-pc").textContent = studentPcNumber + "-kompyuter";
 
       // Timer
       timerSeconds = 0;
@@ -1590,6 +1733,7 @@
 
       document.getElementById("resStudentName").textContent = studentFullName;
       document.getElementById("resGroupName").textContent = studentGroup;
+      document.getElementById("resPcNumber").textContent = studentPcNumber + "-kompyuter";
       document.getElementById("resCorrectCount").textContent = `${correctCount} / ${total}`;
       document.getElementById("resPercent").textContent = `${percent}%`;
       document.getElementById("resGrade").textContent = `${grade} (${gradeLabel})`;
@@ -1602,7 +1746,10 @@
       sendResultsToBackend({
         lesson: "5-Dars: Kompyuter va uning qurilmalari",
         studentName: studentFullName,
+        lastName: studentLastName,
+        firstName: studentFirstName,
         group: studentGroup,
+        pcNumber: studentPcNumber,
         correctCount: correctCount,
         totalQuestions: total,
         percent: percent,
