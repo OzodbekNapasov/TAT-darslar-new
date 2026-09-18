@@ -168,6 +168,13 @@
       margin-top: 0.25rem;
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
     .theme-toggle-btn {
       display: inline-flex;
       align-items: center;
@@ -180,6 +187,7 @@
       font-size: 0.88rem;
       font-weight: 650;
       cursor: pointer;
+      text-decoration: none;
       transition: all 0.2s ease;
     }
 
@@ -1380,10 +1388,23 @@
           </div>
         </div>
 
-        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mavzuni almashtirish">
-          <span id="themeIcon" style="display: inline-flex; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
-          <span id="themeLabel">Qorong‘i rejim</span>
-        </button>
+        <div class="header-actions">
+          <a href="TAT%20darslar/index.html" class="theme-toggle-btn" title="Bosh Mundarijaga qaytish" aria-label="Bosh Mundarijaga qaytish">
+            <span style="display: inline-flex; align-items: center;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+                <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+                <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+              </svg>
+            </span>
+            <span>Mundarija</span>
+          </a>
+          <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mavzuni almashtirish">
+            <span id="themeIcon" style="display: inline-flex; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+            <span id="themeLabel">Qorong‘i rejim</span>
+          </button>
+        </div>
       </div>
 
       <div class="hero-intro">
@@ -3578,10 +3599,23 @@
 
     <!-- FOOTER -->
     <footer>
-      <p><strong>Informatika va Axborot Texnologiyalari</strong> — 5-Dars Elektron Qo‘llanmasi</p>
-      <p style="margin-top: 0.35rem; font-size: 0.8rem; color: var(--subtle);">
-        Barcha huquqlar himoyalangan. Ta’lim maqsadlarida foydalanish uchun tavsiya etiladi.
-      </p>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <p><strong>Informatika va Axborot Texnologiyalari</strong> — 5-Dars Elektron Qo‘llanmasi</p>
+          <p style="margin-top: 0.35rem; font-size: 0.8rem; color: var(--subtle);">
+            Barcha huquqlar himoyalangan. Ta’lim maqsadlarida foydalanish uchun tavsiya etiladi.
+          </p>
+        </div>
+        <a href="TAT%20darslar/index.html" class="theme-toggle-btn" title="Bosh Mundarijaga qaytish" aria-label="Bosh Mundarijaga qaytish">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+            <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+          </svg>
+          <span>Asosiy mundarija</span>
+        </a>
+      </div>
     </footer>
 
   </div>
