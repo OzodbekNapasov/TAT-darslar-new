@@ -56,11 +56,23 @@ const lessons = [
 ];
 
 function buildHeadInjection(titleHtml) {
-  return `<style id="tat-topic-cover-style">
-.tat-topic-cover {
+  return `<!-- TAT_COVER_HEAD_START -->
+<script>(function(){try{localStorage.setItem('tat-theme','dark');localStorage.setItem('tat_theme','dark');var r=document.documentElement;r.dataset.theme='dark';r.dataset.themeMode='dark';r.classList.add('dark')}catch(e){}})()</script>
+<style id="tat-topic-cover-style">
+:root,[data-theme],html,body{color-scheme:dark !important;}
+button[aria-label*="rejim"],button[title*="rejim"],button[aria-label*="rejimga"],.theme-toggle-btn{display:none !important;}
+body {
   position: relative !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
+  padding-top: 100vh !important;
+  padding-top: 100dvh !important;
+}
+.tat-topic-cover {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
   width: 100% !important;
   background-image: url('./cover_bg.jpg') !important;
   background-size: cover !important;
@@ -72,8 +84,7 @@ function buildHeadInjection(titleHtml) {
   cursor: pointer !important;
   border-bottom: 1px solid rgba(59, 130, 246, 0.3) !important;
   overflow: hidden !important;
-  z-index: 40 !important;
-  flex-shrink: 0 !important;
+  z-index: 45 !important;
 }
 .tat-topic-cover::before {
   content: '' !important;
@@ -134,11 +145,9 @@ function buildHeadInjection(titleHtml) {
           '<h1 class="tat-topic-cover-title">' + TITLE_HTML + '</h1>' +
           '<p class="tat-topic-cover-date" id="tat-topic-cover-date">' + getDateStr() + '</p>' +
         '</div>';
-      document.body.insertBefore(div, document.body.firstChild);
+      // Append at the END of document.body so we NEVER disturb React 19's firstChild hydration cursor!
+      document.body.appendChild(div);
     } else {
-      if (document.body.firstElementChild !== existing) {
-        document.body.insertBefore(existing, document.body.firstElementChild);
-      }
       var dateEl = document.getElementById('tat-topic-cover-date');
       if (dateEl && dateEl.textContent === 'Bugun') {
         dateEl.textContent = getDateStr();
@@ -150,31 +159,14 @@ function buildHeadInjection(titleHtml) {
   } else {
     ensureCover();
   }
-  var obs = new MutationObserver(function() {
-    ensureCover();
-  });
-  function startObserver() {
-    if (!document.body) {
-      setTimeout(startObserver, 20);
-      return;
-    }
-    ensureCover();
-    obs.observe(document.body, { childList: true });
-  }
-  startObserver();
-  setInterval(ensureCover, 200);
+  setInterval(ensureCover, 250);
 })();
-</script>`;
+</script>
+<!-- TAT_COVER_HEAD_END -->`;
 }
 
-function buildBodyCoverHtml(titleHtml) {
-  return `<!-- TAT FULLSCREEN TOPIC COVER -->
-<div class="tat-topic-cover" id="tat-topic-cover" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
-  <div class="tat-topic-cover-inner">
-    <h1 class="tat-topic-cover-title">${titleHtml}</h1>
-    <p class="tat-topic-cover-date" id="tat-topic-cover-date">Bugun</p>
-  </div>
-</div><!-- /TAT FULLSCREEN TOPIC COVER -->`;
+function buildBodyEndCoverHtml(titleHtml) {
+  return `<!-- TAT_COVER_BODY_START --><div class="tat-topic-cover" id="tat-topic-cover" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})"><div class="tat-topic-cover-inner"><h1 class="tat-topic-cover-title">${titleHtml}</h1><p class="tat-topic-cover-date" id="tat-topic-cover-date">Bugun</p></div></div><!-- TAT_COVER_BODY_END -->`;
 }
 
 for (const lesson of lessons) {
@@ -185,19 +177,17 @@ for (const lesson of lessons) {
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
 
-    // Remove previous cover injections cleanly
-    html = html.replace(/<style id="tat-topic-cover-style">[\s\S]*?<\/style>/g, '');
-    html = html.replace(/<script id="tat-topic-cover-script">[\s\S]*?<\/script>/g, '');
-    html = html.replace(/<!-- TAT FULLSCREEN TOPIC COVER -->[\s\S]*?<!-- \/TAT FULLSCREEN TOPIC COVER -->/g, '');
-    html = html.replace(/<!-- TAT FULLSCREEN TOPIC COVER -->[\s\S]*?<\/script>/g, '');
+    // Safely strip only our own bounded markers if re-run
+    html = html.replace(/<!-- TAT_COVER_HEAD_START -->[\s\S]*?<!-- TAT_COVER_HEAD_END -->/g, '');
+    html = html.replace(/<!-- TAT_COVER_BODY_START -->[\s\S]*?<!-- TAT_COVER_BODY_END -->/g, '');
 
-    // Inject resilient CSS + MutationObserver script in <head> (immune to React body hydration!)
-    html = html.replace('</head>', `${buildHeadInjection(lesson.titleHtml)}\n</head>`);
+    // Inject head block before </head>
+    html = html.replace('</head>', `${buildHeadInjection(lesson.titleHtml)}</head>`);
 
-    // Inject initial Cover HTML right after <body...>
-    html = html.replace(/(<body[^>]*>)/i, `$1\n${buildBodyCoverHtml(lesson.titleHtml)}\n`);
+    // Inject cover at the VERY END of </body> (before </body>) so React SSR firstChild is 100% untouched!
+    html = html.replace('</body>', `${buildBodyEndCoverHtml(lesson.titleHtml)}</body>`);
 
     fs.writeFileSync(file, html, 'utf8');
-    console.log('Injected persistent React-hydration-proof 100vh cover into:', file);
+    console.log('Injected non-destructive absolute-top 100vh cover into:', file, 'Size:', html.length);
   }
 }
