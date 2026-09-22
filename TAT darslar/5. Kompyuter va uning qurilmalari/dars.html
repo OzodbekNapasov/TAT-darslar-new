@@ -1345,7 +1345,9 @@
     @media print {
       .tabs-nav-container,
       .theme-toggle-btn,
-      .quiz-container {
+      .quiz-container,
+      .print-btn,
+      button {
         display: none !important;
       }
       .tab-pane {
@@ -1356,6 +1358,48 @@
         box-shadow: none;
         border: 1px solid #ccc;
       }
+
+      /* qog'ozda qora fon siyoh sarflaydi va o'qilmaydi */
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+
+      * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        animation: none !important;
+      }
+
+      /* rasm varaqdan chiqib ketmasin */
+      img {
+        max-width: 100% !important;
+        height: auto !important;
+        page-break-inside: avoid;
+      }
+
+      table {
+        page-break-inside: avoid;
+        font-size: 10pt;
+      }
+    }
+
+    /* Chop etish tugmasi */
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color, #cbd5e1);
+      background: transparent;
+      color: inherit;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
@@ -1400,6 +1444,16 @@
             </span>
             <span>Mundarija</span>
           </a>
+          <button type="button" class="theme-toggle-btn" onclick="window.print()" title="Konspektni chop etish yoki PDF qilib saqlash">
+            <span style="display: inline-flex; align-items: center;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+            </span>
+            <span>Konspekt</span>
+          </button>
           <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mavzuni almashtirish">
             <span id="themeIcon" style="display: inline-flex; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
             <span id="themeLabel">Qorong‘i rejim</span>
@@ -1822,7 +1876,7 @@
           <article class="device-list-item" id="dev-kb">
             <div class="device-media-box">
               <img
-                src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80"
+                src="images/keyboard.jpg"
                 alt="Mexanik kompyuter klaviaturasi fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -1878,7 +1932,7 @@
           <article class="device-list-item" id="dev-mouse">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/2/22/3-Tasten-Maus_Microsoft.jpg"
+                src="images/mouse.jpg"
                 alt="Optik kompyuter sichqonchasi fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2003,7 +2057,7 @@
           <article class="device-list-item" id="dev-scanner">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Epson_V850_scanner_open_20230920.jpg"
+                src="images/scanner.jpg"
                 alt="Epson planshetli fotoxrom skaneri fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2059,7 +2113,7 @@
           <article class="device-list-item" id="dev-audio">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg"
+                src="images/audio.jpg"
                 alt="AKG audio naushniklar fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2115,7 +2169,7 @@
           <article class="device-list-item" id="dev-cam">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Logicool_StreamCam_%28cropped%29.jpg"
+                src="images/webcam.jpg"
                 alt="Logitech StreamCam tashqi USB veb-kamerasi fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2171,7 +2225,7 @@
           <article class="device-list-item" id="dev-usb">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/1/17/SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg"
+                src="images/usb.jpg"
                 alt="SanDisk Cruzer USB Flash drayveri fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2249,7 +2303,7 @@
           <article class="device-list-item" id="dev-cpu">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Intel_i9-14900KF_CPU.jpg"
+                src="images/cpu.jpg"
                 alt="Intel Core i9 Protsessor chipining haqiqiy fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2306,7 +2360,7 @@
           <article class="device-list-item" id="dev-ram">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/d/db/Swissbit_2GB_PC2-5300U-555.jpg"
+                src="images/ram.jpg"
                 alt="Operativ xotira (RAM) modulining haqiqiy platasi fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2362,7 +2416,7 @@
           <article class="device-list-item" id="dev-mb">
             <div class="device-media-box">
               <img
-                src="images/mothboard.png"
+                src="images/mothboard.jpg"
                 alt="Zamonaviy ona platasining haqiqiy fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2418,7 +2472,7 @@
           <article class="device-list-item" id="dev-gpu">
             <div class="device-media-box">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/b/b9/MSI_GeForce_RTX_3070_VENTUS_3X_OC.jpg"
+                src="images/gpu.jpg"
                 alt="MSI GeForce RTX 3070 diskret video kartasi fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2474,7 +2528,7 @@
           <article class="device-list-item" id="dev-psu">
             <div class="device-media-box">
               <img
-                src="images/psu.png"
+                src="images/psu.jpg"
                 alt="Thermaltake Smart RGB 700W Quvvat ta’minoti bloki fotosurati"
                 class="device-media-img"
                 loading="lazy"
@@ -2673,7 +2727,7 @@
           <article class="storage-deep-card">
             <div class="storage-deep-media">
               <img
-                src="images/hdd.png"
+                src="images/hdd.jpg"
                 alt="Western Digital WD Black 1TB qattiq disk (HDD) fotosurati"
                 class="storage-deep-img"
                 loading="lazy"

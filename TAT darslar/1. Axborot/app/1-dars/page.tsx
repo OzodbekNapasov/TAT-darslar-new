@@ -1566,6 +1566,18 @@ export default function MedicalInformaticsApp() {
                   {"Klaviaturaning quyidagi 5 ta asosiy hududini sxemada ko'ring yoki tugmalarni bosing. Tanlangan hudud klaviatura rasmida alohida rang bilan ajralib ko'rsatiladi:"}
                 </p>
 
+                {/* Telefonda sxema kichrayib o'qilmay qolmasligi uchun yonga
+                    suriladi - talaba buni bilishi uchun ishora beramiz */}
+                <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-fg-subtle sm:hidden">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  Sxemani ko‘rish uchun yonga suring
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </p>
+
                 {/* Interactive Visual SVG Keyboard Diagram */}
                 <div className="on-dark bg-slate-900 p-4 sm:p-6 rounded-2xl border-2 border-slate-700 shadow-md mb-6 overflow-x-auto">
                   <div className="min-w-[760px] max-w-[920px] mx-auto">

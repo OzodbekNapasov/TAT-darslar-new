@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { Keyboard, Zap, Layers, Mouse, ExternalLink, ArrowRight, Play, Sparkles } from 'lucide-react';
+import { Keyboard, Zap, Layers, Mouse, CheckCircle2, ExternalLink, ArrowRight, Play, Sparkles } from 'lucide-react';
 
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -10,18 +10,53 @@ import { TabKeyboard } from '@/components/lesson4/tab-keyboard';
 import { TabTyping } from '@/components/lesson4/tab-typing';
 import { TabHotkeys } from '@/components/lesson4/tab-hotkeys';
 import { TabMouse } from '@/components/lesson4/tab-mouse';
+import { QuizSection, type AnswerMap } from '@/components/lesson4/quiz-section';
+import {
+  TOTAL_QUESTIONS,
+  buildOrders,
+  reshuffleBank,
+  type BankKey,
+  type OrderMap,
+} from '@/lib/quiz-4-dars';
 
-type TabId = 'keyboard' | 'typing' | 'hotkeys' | 'mouse';
+type TabId = 'keyboard' | 'typing' | 'hotkeys' | 'mouse' | 'quiz';
 
 const TABS: { id: TabId; label: string; Icon: LucideIcon }[] = [
   { id: 'keyboard', label: '1. Klaviatura tuzilishi', Icon: Keyboard },
   { id: 'typing', label: '2. Tez yozish', Icon: Zap },
   { id: 'hotkeys', label: '3. Tezkor klaviaturalar', Icon: Layers },
   { id: 'mouse', label: '4. Sichqoncha', Icon: Mouse },
+  { id: 'quiz', label: '5. Bilimni sinash', Icon: CheckCircle2 },
 ];
 
 export default function Lesson4Page() {
   const [activeTab, setActiveTab] = useState<TabId>('keyboard');
+
+  // Test holati: ikki bank alohida baholanadi
+  const [quizBank, setQuizBank] = useState<BankKey>('theory');
+  const [answers, setAnswers] = useState<AnswerMap>({ theory: {}, practice: {} });
+
+  // Javob variantlari har safar boshqa tartibda chiqadi. Birinchi (prerender
+  // qilingan) chizishda tabiiy tartib turadi, aralashtirish mountdan keyin
+  // beriladi - shunda serverdagi HTML bilan brauzernikida farq bo'lmaydi.
+  const [orders, setOrders] = useState<OrderMap>(() => buildOrders(false));
+  useEffect(() => setOrders(buildOrders(true)), []);
+
+  // Javob yakuniy: savolga birinchi bosish uni qulflaydi
+  const handleAnswer = (bank: BankKey, questionId: number, optionIndex: number) =>
+    setAnswers((prev) =>
+      prev[bank][questionId] !== undefined
+        ? prev
+        : { ...prev, [bank]: { ...prev[bank], [questionId]: optionIndex } },
+    );
+
+  const handleResetQuiz = (bank: BankKey) => {
+    setAnswers((prev) => ({ ...prev, [bank]: {} }));
+    setOrders((prev) => reshuffleBank(prev, bank));
+  };
+
+  const answeredCount =
+    Object.keys(answers.theory).length + Object.keys(answers.practice).length;
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas font-sans text-fg antialiased selection:bg-blue-tint-strong">
@@ -85,7 +120,7 @@ export default function Lesson4Page() {
         <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-8">
           <nav
             aria-label="4-Dars bo'limlari"
-            className="grid w-full grid-cols-2 gap-1.5 rounded-2xl border border-line bg-subtle p-1.5 sm:grid-cols-4"
+            className="grid w-full grid-cols-2 gap-1.5 rounded-2xl border border-line bg-subtle p-1.5 sm:grid-cols-5"
           >
             {TABS.map(({ id, label, Icon }) => {
               const active = activeTab === id;
@@ -105,6 +140,17 @@ export default function Lesson4Page() {
                 >
                   <Icon className={`h-4 w-4 shrink-0 sm:h-5 sm:w-5 ${active ? 'text-white' : 'text-fg-subtle'}`} />
                   <span className="truncate">{label}</span>
+                  {id === 'quiz' && answeredCount > 0 ? (
+                    <span
+                      className={`shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold ${
+                        active
+                          ? 'bg-white/20 text-white'
+                          : 'border border-blue-edge bg-blue-tint-strong text-blue-ink'
+                      }`}
+                    >
+                      {answeredCount}/{TOTAL_QUESTIONS}
+                    </span>
+                  ) : null}
                 </button>
               );
             })}
@@ -118,6 +164,16 @@ export default function Lesson4Page() {
         {activeTab === 'typing' && <TabTyping />}
         {activeTab === 'hotkeys' && <TabHotkeys />}
         {activeTab === 'mouse' && <TabMouse />}
+        {activeTab === 'quiz' && (
+          <QuizSection
+            bank={quizBank}
+            onBankChange={setQuizBank}
+            answers={answers}
+            orders={orders}
+            onAnswer={handleAnswer}
+            onReset={handleResetQuiz}
+          />
+        )}
 
         {/* Bottom CTA Banner matching dars.html */}
         <div className="mt-12 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950 via-indigo-950 to-blue-950 p-6 sm:p-10 text-white shadow-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">

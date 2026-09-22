@@ -1,0 +1,19 @@
+Shahrisabz Tibbiyot Texnikumi
+Tibbiyotda axborot texnologiyalari - interaktiv elektron qo'llanma
+
+ISHGA TUSHIRISH
+---------------
+"start.bat" faylini 2 marta bosing. Mundarija brauzerda ochiladi,
+u yerdan kerakli darsni tanlaysiz.
+
+Internet talab qilinmaydi. Bu nusxa serverdagi versiya bilan bir xil:
+barcha interaktiv sxemalar, simulyator, test va vizual effektlar ishlaydi.
+
+Yorug' / tungi rejim o'ng yuqoridagi tugmalar orqali almashtiriladi,
+tanlov brauzerda saqlanib qoladi.
+
+KO'CHIRISH
+----------
+Bu papkani butun holda ko'chiring (USB, tarmoq diski, arxiv).
+Faqat index.html ni alohida ko'chirsangiz, dizayn yuklanmaydi -
+u "_next" papkasidagi fayllarga tayanadi.

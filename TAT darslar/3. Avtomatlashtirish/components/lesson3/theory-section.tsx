@@ -229,8 +229,32 @@ export function TheorySection() {
           tahlillar, tayinlovlar va ko‘rsatkichlar.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-line">
-          <table className="w-full min-w-[440px] border-collapse text-left">
+        {/* Telefonda: har bir qator alohida kartochka (yonga surish shart emas) */}
+        <div className="space-y-3 sm:hidden">
+          {COMPARE.map(([task, paper, digital]) => (
+            <div key={task} className="rounded-xl border border-line bg-subtle p-4">
+              <p className="text-sm font-bold text-fg">{task}</p>
+              <div className="mt-2.5 space-y-2">
+                <div className="rounded-lg border border-rose-edge bg-rose-tint p-2.5">
+                  <p className="text-[11px] font-black uppercase tracking-wider text-rose-ink">
+                    Qog‘oz karta
+                  </p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-fg-muted">{paper}</p>
+                </div>
+                <div className="rounded-lg border border-emerald-edge bg-emerald-tint p-2.5">
+                  <p className="text-[11px] font-black uppercase tracking-wider text-emerald-ink">
+                    Elektron karta
+                  </p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-fg-muted">{digital}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Kengroq ekranda: oddiy jadval */}
+        <div className="hidden rounded-xl border border-line sm:block">
+          <table className="w-full border-collapse text-left">
             <thead className="bg-subtle">
               <tr>
                 <th className="px-4 py-2.5 text-xs font-black uppercase tracking-wider text-fg-subtle">
@@ -269,8 +293,22 @@ export function TheorySection() {
           Suyuqlik litrda, dori dozasi milligrammda o‘lchangani kabi, kompyuter xotirasidagi ma’lumotlar ham o‘z o‘lchov birliklariga ega. Eng kichik birlik — <strong className="text-fg">bit</strong> (0 yoki 1). 8 ta bit bitta <strong className="text-fg">baytni</strong> hosil qiladi — bu bitta belgi yoki harfni saqlashga yetadi.
         </p>
 
-        <div className="mb-6 overflow-x-auto rounded-xl border border-line">
-          <table className="w-full min-w-[420px] border-collapse text-left">
+        {/* Telefonda: har bir birlik alohida kartochka */}
+        <div className="mb-6 space-y-2.5 sm:hidden">
+          {UNITS_TABLE.map(([u, e, m]) => (
+            <div key={u} className="rounded-xl border border-line bg-subtle p-4">
+              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                <span className="font-mono text-base font-black text-teal-ink">{u}</span>
+                <span className="font-mono text-sm font-bold text-fg">= {e}</span>
+              </div>
+              <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{m}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Kengroq ekranda: oddiy jadval */}
+        <div className="mb-6 hidden rounded-xl border border-line sm:block">
+          <table className="w-full border-collapse text-left">
             <thead className="bg-subtle">
               <tr>
                 <th className="px-4 py-2.5 text-xs font-black uppercase tracking-wider text-fg-subtle">

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { HelpCircle, CheckCircle2, XCircle, RotateCcw, ArrowRight, Award } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { HelpCircle, CheckCircle2, XCircle, RotateCcw, ArrowRight, Award, Shuffle } from 'lucide-react';
 
 export const HOTKEYS_QUIZ = [
   { q: 'Matnni nusxalash uchun qaysi qisqartma ishlatiladi?', o: ['Ctrl + C', 'Ctrl + V', 'Ctrl + X', 'Ctrl + Z'], a: 0 },
@@ -18,6 +18,41 @@ export const HOTKEYS_QUIZ = [
   { q: 'Bir nechta TARQOQ faylni birdan tanlash uchun sichqoncha bilan birga nima bosiladi?', o: ['Shift', 'Ctrl', 'Alt', 'Tab'], a: 1 }
 ];
 
+/* -------------------------------------------------------------------------- */
+/*  Aralashtirish: savollar tartibi ham, javob variantlari ham                  */
+/* -------------------------------------------------------------------------- */
+
+/** Bitta topshiriq rejasi: qaysi savol va uning variantlari qaysi tartibda. */
+type Plan = { qi: number; order: number[] }[];
+
+function shuffled(n: number): number[] {
+  const a = Array.from({ length: n }, (_, i) => i);
+  // Fisher-Yates
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/**
+ * `doShuffle: false` - tabiiy tartib. Sahifa oldindan render qilinadi, shuning
+ * uchun birinchi chizishda aynan shu tartib turishi kerak; haqiqiy
+ * aralashtirish mountdan keyin effektda beriladi.
+ */
+function buildPlan(doShuffle: boolean): Plan {
+  const questionOrder = doShuffle
+    ? shuffled(HOTKEYS_QUIZ.length)
+    : HOTKEYS_QUIZ.map((_, i) => i);
+
+  return questionOrder.map((qi) => ({
+    qi,
+    order: doShuffle
+      ? shuffled(HOTKEYS_QUIZ[qi].o.length)
+      : HOTKEYS_QUIZ[qi].o.map((_, i) => i),
+  }));
+}
+
 export function HotkeysQuiz() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -25,7 +60,11 @@ export function HotkeysQuiz() {
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const currentQ = HOTKEYS_QUIZ[currentIdx];
+  const [plan, setPlan] = useState<Plan>(() => buildPlan(false));
+  useEffect(() => setPlan(buildPlan(true)), []);
+
+  const step = plan[currentIdx];
+  const currentQ = HOTKEYS_QUIZ[step.qi];
 
   const handleSelect = (idx: number) => {
     if (answered) return;
@@ -47,6 +86,7 @@ export function HotkeysQuiz() {
   };
 
   const handleRestart = () => {
+    setPlan(buildPlan(true));
     setCurrentIdx(0);
     setScore(0);
     setAnswered(false);
@@ -76,6 +116,13 @@ export function HotkeysQuiz() {
 
       {!isCompleted ? (
         <div>
+          <p className="mb-5 flex items-start gap-2.5 rounded-xl border border-amber-edge bg-amber-tint p-3 text-xs leading-relaxed text-amber-ink">
+            <Shuffle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>
+              Savollar ham, javob variantlari ham har safar aralashib chiqadi.
+            </span>
+          </p>
+
           {/* Question */}
           <div className="text-lg sm:text-xl font-bold text-fg leading-snug">
             <span className="text-blue-ink mr-2">{currentIdx + 1}.</span>
@@ -84,16 +131,22 @@ export function HotkeysQuiz() {
 
           {/* Options Grid */}
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {currentQ.o.map((opt, i) => {
+            {step.order.map((i, pos) => {
+              const opt = currentQ.o[i];
               const isCorrect = i === currentQ.a;
               const isPicked = i === selectedOpt;
+              // harf ekrandagi o'ringa qarab beriladi, asl indeksga emas
+              const letter = String.fromCharCode(65 + pos);
 
               let btnStyle = 'border-line bg-subtle text-fg hover:border-blue-edge hover:bg-surface';
+              let badgeStyle = 'border-line bg-surface text-fg-muted';
               if (answered) {
                 if (isCorrect) {
                   btnStyle = 'border-emerald-500 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold ring-2 ring-emerald-500/20';
+                  badgeStyle = 'border-emerald-500/50 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300';
                 } else if (isPicked) {
                   btnStyle = 'border-rose-500 bg-rose-500/15 text-rose-700 dark:text-rose-300 font-bold';
+                  badgeStyle = 'border-rose-500/50 bg-rose-500/15 text-rose-700 dark:text-rose-300';
                 } else {
                   btnStyle = 'border-line bg-subtle text-fg-subtle opacity-50';
                 }
@@ -107,7 +160,14 @@ export function HotkeysQuiz() {
                   disabled={answered}
                   className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 text-left text-sm font-semibold transition-all duration-150 ${btnStyle}`}
                 >
-                  <span>{opt}</span>
+                  <span className="flex min-w-0 items-center gap-2.5">
+                    <span
+                      className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg border text-[11px] font-black ${badgeStyle}`}
+                    >
+                      {letter}
+                    </span>
+                    <span>{opt}</span>
+                  </span>
                   {answered && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0 ml-2" />}
                   {answered && isPicked && !isCorrect && <XCircle className="h-5 w-5 text-rose-500 shrink-0 ml-2" />}
                 </button>

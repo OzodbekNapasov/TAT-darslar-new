@@ -1,6 +1,6 @@
 'use client';
 
-import {Calendar, GraduationCap, LayoutGrid, Stethoscope} from 'lucide-react';
+import {Calendar, GraduationCap, LayoutGrid, Printer, Stethoscope} from 'lucide-react';
 import {ThemeToggle} from './theme-toggle';
 import {formatUzbekDate, href, SITE} from '@/lib/site';
 import {useClientValue} from '@/lib/use-client-value';
@@ -77,6 +77,18 @@ export function SiteHeader({
           >
             <LayoutGrid className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
           </a>
+
+          {/* Ochiq turgan bo'limni chop etadi / PDF qilib saqlaydi.
+              Chop etishda sarlavha, tugmalar va test yashiriladi. */}
+          <button
+            type="button"
+            onClick={() => window.print()}
+            aria-label="Konspektni chop etish"
+            title="Konspektni chop etish yoki PDF qilib saqlash"
+            className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-subtle text-fg-muted shadow-sm transition-all duration-200 hover:scale-105 hover:border-blue-edge hover:bg-blue-tint hover:text-blue-ink active:scale-95"
+          >
+            <Printer className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+          </button>
 
           <ThemeToggle />
         </div>

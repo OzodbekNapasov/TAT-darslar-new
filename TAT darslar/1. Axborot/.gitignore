@@ -1,8 +1,9 @@
-node_modules/
+﻿node_modules/
 .next/
 .next-offline/
 out/
-offline/
+# offline/ ATAYLAB e'tiborsiz QOLDIRILMAYDI: GitHub Pages saytida
+# aynan shu papkadagi sahifalar ochiladi. Ignore qilinsa dars 404 beradi.
 coverage/
 .DS_Store
 *.log

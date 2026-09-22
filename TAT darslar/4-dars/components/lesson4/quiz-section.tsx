@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {CheckCircle2, XCircle, Award, RotateCcw, HelpCircle, BookOpen, Laptop} from 'lucide-react';
+import {CheckCircle2, XCircle, Award, RotateCcw, HelpCircle, BookOpen, Laptop, Shuffle} from 'lucide-react';
 import {
   THEORY_QUESTIONS,
   PRACTICE_QUESTIONS,
@@ -84,6 +84,15 @@ export function QuizSection({
         </div>
       </div>
 
+      <p className="flex items-start gap-2.5 rounded-2xl border border-amber-edge bg-amber-tint p-3.5 text-xs leading-relaxed text-amber-ink sm:text-sm">
+        <Shuffle className="mt-0.5 h-4 w-4 shrink-0" />
+        <span>
+          Javob variantlari har safar tasodifiy tartibda chiqadi — javobni
+          harfiga emas, mazmuniga qarab tanlang. «Qayta boshlash» bosilsa,
+          tartib yana o‘zgaradi.
+        </span>
+      </p>
+
       {/* Questions list */}
       <div className="space-y-4">
         {questions.map((q, qIndex) => {
@@ -107,17 +116,22 @@ export function QuizSection({
 
                   {/* Options */}
                   <div className="mt-4 grid gap-2.5">
-                    {order.map((origIndex) => {
+                    {order.map((origIndex, pos) => {
                       const optionText = q.options[origIndex];
                       const isSelected = pickedOriginal === origIndex;
                       const isCorrect = origIndex === q.answer;
+                      // harf ekrandagi o'ringa qarab beriladi, asl indeksga emas
+                      const letter = String.fromCharCode(65 + pos);
 
                       let btnStyle = 'border-line bg-subtle text-fg hover:border-blue-edge hover:bg-surface';
+                      let badgeStyle = 'border-line bg-surface text-fg-muted';
                       if (isAnswered) {
                         if (isCorrect) {
                           btnStyle = 'border-emerald-500 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 font-bold';
+                          badgeStyle = 'border-emerald-500/50 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300';
                         } else if (isSelected) {
                           btnStyle = 'border-rose-500 bg-rose-500/10 text-rose-800 dark:text-rose-300 font-bold';
+                          badgeStyle = 'border-rose-500/50 bg-rose-500/15 text-rose-700 dark:text-rose-300';
                         } else {
                           btnStyle = 'border-line/60 bg-subtle/50 text-fg-subtle opacity-60';
                         }
@@ -130,7 +144,14 @@ export function QuizSection({
                           onClick={() => onAnswer(bank, q.id, origIndex)}
                           className={`flex items-center justify-between rounded-2xl border p-3.5 text-left text-xs sm:text-sm transition-all ${btnStyle}`}
                         >
-                          <span className="leading-snug">{optionText}</span>
+                          <span className="flex min-w-0 items-start gap-2.5">
+                            <span
+                              className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg border text-[11px] font-black ${badgeStyle}`}
+                            >
+                              {letter}
+                            </span>
+                            <span className="leading-snug">{optionText}</span>
+                          </span>
                           {isAnswered && isCorrect && (
                             <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
                           )}

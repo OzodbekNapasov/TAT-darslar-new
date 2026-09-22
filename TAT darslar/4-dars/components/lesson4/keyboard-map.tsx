@@ -176,6 +176,18 @@ export function KeyboardMap() {
         })}
       </div>
 
+      {/* Telefonda klaviatura toraysa tugma yozuvlari o'qilmay qoladi, shuning
+          uchun u yonga suriladi - talabaga ishora beramiz */}
+      <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-fg-subtle sm:hidden">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Klaviaturani ko‘rish uchun yonga suring
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </p>
+
       {/* Keyboard canvas */}
       <div
         tabIndex={0}

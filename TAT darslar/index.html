@@ -715,9 +715,578 @@
       transform: translateX(4px);
       color: inherit;
     }
+
+    /* ====================================================================== */
+    /* ROL TANLASH EKRANI (Talaba / O'qituvchi)                               */
+    /* ====================================================================== */
+    .role-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--bg-page);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1.15rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .role-gate.active {
+      display: flex;
+    }
+
+    /* Rol tanlanmaguncha orqa fon ko'rinmasin */
+    body.role-locked > .container,
+    body.role-locked > .modal-backdrop {
+      display: none !important;
+    }
+
+    .role-gate-inner {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+    }
+
+    .role-gate-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+    }
+
+    .role-gate-brand h2 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .role-gate-brand p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 0.1rem;
+    }
+
+    .role-gate-title {
+      text-align: center;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .role-gate-desc {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      margin-bottom: 1.85rem;
+      line-height: 1.5;
+    }
+
+    .role-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    .role-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      text-align: left;
+      padding: 1.15rem 1.2rem;
+      border-radius: 22px;
+      border: 1.5px solid var(--search-border);
+      background: var(--search-bg);
+      color: var(--text-main);
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      /* telefonda bosish qulay bo'lishi uchun */
+      min-height: 76px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .role-btn:active {
+      transform: scale(0.985);
+    }
+
+    .role-btn-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #ffffff;
+    }
+
+    .role-btn-student .role-btn-icon {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .role-btn-teacher .role-btn-icon {
+      background: linear-gradient(135deg, #0d9488, #059669);
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35);
+    }
+
+    .role-btn-student:hover { border-color: #3b82f6; }
+    .role-btn-teacher:hover { border-color: #14b8a6; }
+
+    .role-btn-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .role-btn-text strong {
+      display: block;
+      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+
+    .role-btn-text span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 0.18rem;
+    }
+
+    .role-btn-arrow {
+      color: var(--text-subtle);
+      flex-shrink: 0;
+    }
+
+    /* --- PIN bosqichi --- */
+    .role-pin-step {
+      display: none;
+    }
+
+    .role-pin-step.active {
+      display: block;
+    }
+
+    .role-pin-box {
+      border: 1.5px solid var(--search-border);
+      background: var(--search-bg);
+      border-radius: 22px;
+      padding: 1.35rem 1.2rem;
+    }
+
+    .role-pin-box label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+
+    .role-pin-box input {
+      width: 100%;
+      background: var(--bg-page);
+      border: 1.5px solid var(--search-border);
+      border-radius: 14px;
+      padding: 0.95rem 1.1rem;
+      /* 16px dan kichik bo'lsa iPhone maydonni kattalashtirib yuboradi */
+      font-size: 1.15rem;
+      font-family: inherit;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-align: center;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .role-pin-box input:focus {
+      border-color: #14b8a6;
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.22);
+    }
+
+    .role-pin-box input.error {
+      border-color: #f43f5e;
+      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2);
+    }
+
+    .role-pin-error {
+      display: none;
+      margin-top: 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fb7185;
+      text-align: center;
+    }
+
+    .role-pin-error.show { display: block; }
+
+    .role-pin-actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .role-pin-actions button {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1.5px solid var(--search-border);
+      background: transparent;
+      color: var(--text-muted);
+      min-height: 48px;
+      transition: all 0.18s ease;
+    }
+
+    .role-pin-actions .pin-submit {
+      background: linear-gradient(135deg, #0d9488, #059669);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.3);
+    }
+
+    /* ====================================================================== */
+    /* Sarlavhadagi rol nishoni                                               */
+    /* ====================================================================== */
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid var(--search-border);
+      background: var(--search-bg);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .role-pill:hover { color: var(--text-main); }
+
+    .role-pill .role-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3b82f6;
+      flex-shrink: 0;
+    }
+
+    [data-role="teacher"] .role-pill .role-dot { background: #14b8a6; }
+
+    /* Telefonda "Rolni almashtirish" so'zi joy egallamasin */
+    .role-pill-label-long { display: none; }
+
+    @media (min-width: 560px) {
+      .role-pill-label-long { display: inline; }
+    }
+
+    /* ====================================================================== */
+    /* O'QITUVCHI ZONASI (nazorat testlari)                                   */
+    /* ====================================================================== */
+    .teacher-zone { display: none; }
+
+    [data-role="teacher"] .teacher-zone { display: block; }
+
+    .teacher-zone-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 3.25rem 0 1.1rem 0;
+    }
+
+    .teacher-zone-head h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .teacher-zone-head .zone-line {
+      height: 1px;
+      flex: 1;
+      background: var(--search-border);
+    }
+
+    .teacher-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(20, 184, 166, 0.14);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      color: #2dd4bf;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .control-links {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    @media (min-width: 720px) {
+      .control-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .control-link {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1.05rem 1.15rem;
+      border-radius: 20px;
+      border: 1px solid var(--search-border);
+      background: var(--search-bg);
+      text-decoration: none;
+      color: var(--text-main);
+      transition: border-color 0.2s ease, transform 0.15s ease;
+      min-height: 72px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .control-link:hover {
+      border-color: #14b8a6;
+    }
+
+    .control-link:active { transform: scale(0.99); }
+
+    .control-link-tag {
+      flex-shrink: 0;
+      padding: 0.3rem 0.6rem;
+      border-radius: 10px;
+      background: rgba(20, 184, 166, 0.14);
+      color: #2dd4bf;
+      font-size: 0.72rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .control-link-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .control-link-text strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      /* uzun havola nomi telefonda satrdan chiqib ketmasin */
+      overflow-wrap: anywhere;
+    }
+
+    .control-link-text span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 0.15rem;
+      overflow-wrap: anywhere;
+    }
+
+    .teacher-note {
+      margin-top: 1rem;
+      padding: 0.9rem 1.05rem;
+      border-radius: 16px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      background: rgba(251, 191, 36, 0.09);
+      color: #fcd34d;
+      font-size: 0.79rem;
+      line-height: 1.55;
+    }
+
+    .control-empty {
+      padding: 1.5rem 1.15rem;
+      border-radius: 20px;
+      border: 1px dashed var(--search-border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* ====================================================================== */
+    /* TELEFON UCHUN UMUMIY MOSLASHTIRISH                                     */
+    /* ====================================================================== */
+    @media (max-width: 560px) {
+      body {
+        padding: 1.35rem 0.9rem 3rem 0.9rem;
+      }
+
+      .clean-header {
+        margin-bottom: 1.6rem;
+        padding-bottom: 1rem;
+        gap: 0.7rem;
+      }
+
+      .header-brand {
+        gap: 0.7rem;
+        min-width: 0;
+      }
+
+      .brand-icon-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+      }
+
+      .header-title-block { min-width: 0; }
+
+      .header-title-block h1 {
+        font-size: 1rem;
+      }
+
+      .header-title-block p {
+        font-size: 0.74rem;
+        /* ikki qatordan oshmasin */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .search-wrapper { margin-bottom: 1.85rem; }
+
+      /* iPhone'da 16px dan kichik shrift maydonni avtomatik kattalashtiradi */
+      .search-input-pill input { font-size: 16px; }
+
+      .cards-grid { gap: 1.6rem; }
+
+      .taskello-card { height: 310px; }
+
+      .card-folder-content {
+        height: 186px;
+        padding: 1.6rem 1.25rem 1.35rem 1.25rem;
+      }
+
+      .folder-main-title { font-size: 1.05rem; }
+
+      .role-gate-title { font-size: 1.28rem; }
+
+      .teacher-zone-head { margin-top: 2.5rem; }
+    }
   </style>
 </head>
-<body>
+<body class="role-locked">
+
+  <!-- ==================== ROL TANLASH EKRANI ==================== -->
+  <div class="role-gate active" id="role-gate">
+    <div class="role-gate-inner">
+
+      <div class="role-gate-brand">
+        <div class="brand-icon-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+            <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/>
+            <circle cx="20" cy="10" r="2"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Shahrisabz Tibbiyot Texnikumi</h2>
+          <p>Tibbiyotda axborot texnologiyalari</p>
+        </div>
+      </div>
+
+      <!-- 1-bosqich: rol tanlash -->
+      <div id="role-choose-step">
+        <div class="role-gate-title">Kim sifatida kirasiz?</div>
+        <p class="role-gate-desc">Tanlovingiz shu qurilmada eslab qolinadi.<br>Keyin uni istalgan vaqtda almashtirsangiz bo‘ladi.</p>
+
+        <div class="role-options">
+          <button type="button" class="role-btn role-btn-student" onclick="chooseRole('student')">
+            <span class="role-btn-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </span>
+            <span class="role-btn-text">
+              <strong>Talaba</strong>
+              <span>Konspekt, amaliy mashqlar va sinov testlari</span>
+            </span>
+            <span class="role-btn-arrow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </button>
+
+          <button type="button" class="role-btn role-btn-teacher" onclick="showPinStep()">
+            <span class="role-btn-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </span>
+            <span class="role-btn-text">
+              <strong>O‘qituvchi</strong>
+              <span>Barcha materiallar + nazorat testlari havolalari</span>
+            </span>
+            <span class="role-btn-arrow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2-bosqich: PIN -->
+      <div id="role-pin-step" class="role-pin-step">
+        <div class="role-gate-title">O‘qituvchi kodi</div>
+        <p class="role-gate-desc">Davom etish uchun kirish kodini kiriting.</p>
+
+        <div class="role-pin-box">
+          <label for="role-pin-input">Kirish kodi</label>
+          <input
+            type="password"
+            id="role-pin-input"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="••••••••"
+            onkeydown="if(event.key==='Enter'){submitPin();}"
+          />
+          <div class="role-pin-error" id="role-pin-error">Kod noto‘g‘ri. Qaytadan urinib ko‘ring.</div>
+
+          <div class="role-pin-actions">
+            <button type="button" onclick="backToRoleChoose()">Orqaga</button>
+            <button type="button" class="pin-submit" onclick="submitPin()">Kirish</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <div class="container">
     
@@ -738,6 +1307,12 @@
       </div>
 
       <div class="header-tools">
+        <button type="button" class="role-pill" id="role-pill" onclick="openRoleGate()" title="Rolni almashtirish">
+          <span class="role-dot"></span>
+          <span id="role-pill-name">Talaba</span>
+          <span class="role-pill-label-long">• almashtirish</span>
+        </button>
+
         <button type="button" class="theme-switch-btn" onclick="toggleTheme()" title="Mavzuni almashtirish">
           <svg id="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display:none;">
             <circle cx="12" cy="12" r="4"/>
@@ -1010,6 +1585,22 @@
 
     </main>
 
+    <!-- ==================== O'QITUVCHI ZONASI ==================== -->
+    <section class="teacher-zone" id="teacher-zone">
+      <div class="teacher-zone-head">
+        <h2>Nazorat testlari</h2>
+        <span class="teacher-badge">Faqat o‘qituvchi</span>
+        <span class="zone-line"></span>
+      </div>
+
+      <div class="control-links" id="control-links"></div>
+
+      <div class="teacher-note">
+        Bu havolalar talabalar ro‘yxatida ko‘rinmaydi. Ro‘yxatni
+        <strong>nazorat-testlari.js</strong> faylidan tahrirlaysiz.
+      </div>
+    </section>
+
     <footer class="clean-footer">
       Shahrisabz Tibbiyot Texnikumi • 100% Offline Elektron Qo‘llanma
     </footer>
@@ -1107,7 +1698,133 @@
     </div>
   </div>
 
+  <!-- O'qituvchi ko'radigan nazorat testlari ro'yxati -->
+  <script src="./nazorat-testlari.js"></script>
+
   <script>
+    /* ====================================================================== */
+    /* ROL TIZIMI                                                             */
+    /* ====================================================================== */
+
+    /* O'QITUVCHI KIRISH KODI — o'zgartirish uchun shu qatorni tahrirlang.
+       DIQQAT: sayt statik bo'lgani uchun bu kod haqiqiy himoya emas —
+       sahifa kodini ochgan odam uni ko'ra oladi. U tasodifiy kirishni
+       to'xtatadi, xolos. Haqiqatan maxfiy narsani bu yerga qo'ymang. */
+    var TEACHER_PIN = '12072005';
+
+    var ROLE_KEY = 'tat-role';
+
+    function applyRole(role) {
+      document.documentElement.setAttribute('data-role', role);
+      var name = document.getElementById('role-pill-name');
+      if (name) name.textContent = (role === 'teacher') ? 'O‘qituvchi' : 'Talaba';
+      if (role === 'teacher') renderControlLinks();
+    }
+
+    function closeRoleGate() {
+      var gate = document.getElementById('role-gate');
+      if (gate) gate.classList.remove('active');
+      document.body.classList.remove('role-locked');
+    }
+
+    function openRoleGate() {
+      var gate = document.getElementById('role-gate');
+      if (gate) gate.classList.add('active');
+      document.body.classList.add('role-locked');
+      backToRoleChoose();
+      window.scrollTo(0, 0);
+    }
+
+    function chooseRole(role) {
+      try { localStorage.setItem(ROLE_KEY, role); } catch (e) {}
+      applyRole(role);
+      closeRoleGate();
+    }
+
+    function showPinStep() {
+      document.getElementById('role-choose-step').style.display = 'none';
+      document.getElementById('role-pin-step').classList.add('active');
+      var input = document.getElementById('role-pin-input');
+      if (input) {
+        input.value = '';
+        input.classList.remove('error');
+        // telefonda klaviatura darhol chiqsin
+        setTimeout(function () { input.focus(); }, 60);
+      }
+      document.getElementById('role-pin-error').classList.remove('show');
+    }
+
+    function backToRoleChoose() {
+      document.getElementById('role-choose-step').style.display = 'block';
+      document.getElementById('role-pin-step').classList.remove('active');
+      document.getElementById('role-pin-error').classList.remove('show');
+    }
+
+    function submitPin() {
+      var input = document.getElementById('role-pin-input');
+      var err = document.getElementById('role-pin-error');
+      if (!input) return;
+
+      if (input.value.trim() === TEACHER_PIN) {
+        chooseRole('teacher');
+        backToRoleChoose();
+      } else {
+        input.classList.add('error');
+        err.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    /** nazorat-testlari.js dagi ro'yxatni chizadi */
+    function renderControlLinks() {
+      var box = document.getElementById('control-links');
+      if (!box || box.getAttribute('data-filled') === '1') return;
+
+      var list = window.NAZORAT_TESTLARI || [];
+
+      if (!list.length) {
+        box.innerHTML =
+          '<div class="control-empty">Hozircha havola qo‘shilmagan.<br>' +
+          '<strong>nazorat-testlari.js</strong> faylini ochib, havolalaringizni yozing.</div>';
+        box.setAttribute('data-filled', '1');
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < list.length; i++) {
+        var it = list[i] || {};
+        html +=
+          '<a class="control-link" target="_blank" rel="noopener noreferrer" href="' + (it.havola || '#') + '">' +
+            '<span class="control-link-tag">' + (it.dars || '—') + '</span>' +
+            '<span class="control-link-text">' +
+              '<strong>' + (it.nom || 'Havola') + '</strong>' +
+              '<span>' + (it.izoh || '') + '</span>' +
+            '</span>' +
+            '<span class="profile-arrow">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+              '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
+            '</span>' +
+          '</a>';
+      }
+      box.innerHTML = html;
+      box.setAttribute('data-filled', '1');
+    }
+
+    /* Sahifa ochilishi: rol saqlangan bo'lsa darhol qo'llanadi, bo'lmasa
+       tanlash ekrani ko'rinib turaveradi (HTML da allaqachon "active"). */
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem(ROLE_KEY); } catch (e) {}
+
+      if (saved === 'student' || saved === 'teacher') {
+        applyRole(saved);
+        closeRoleGate();
+      } else {
+        applyRole('student');
+      }
+    })();
+
     function setTheme(mode) {
       var root = document.documentElement;
       var sun = document.getElementById('theme-icon-sun');

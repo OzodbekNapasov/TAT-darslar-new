@@ -42,8 +42,38 @@ export function BinaryLab() {
           placeholder="Masalan: ANVAR"
         />
 
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[420px] border-collapse text-left">
+        {/* Telefonda: har bir harf alohida kartochka (yonga surish shart emas) */}
+        <div className="mt-4 space-y-2 sm:hidden">
+          {chars.length === 0 ? (
+            <p className="py-3 text-sm text-fg-subtle">Yuqoriga biror harf yozing.</p>
+          ) : (
+            chars.map((ch, i) => {
+              const code = ch.codePointAt(0) ?? 0;
+              return (
+                <div
+                  key={`m-${ch}-${i}`}
+                  className="flex items-center gap-3 rounded-xl border border-line bg-subtle p-3"
+                >
+                  <span className="inline-grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-tint-strong font-mono text-sm font-black text-blue-ink">
+                    {ch === ' ' ? '␣' : ch}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
+                      10 lik: <span className="font-mono text-fg">{code}</span>
+                    </span>
+                    <span className="mt-0.5 block break-all font-mono text-sm font-bold tracking-widest text-emerald-ink">
+                      {code < 256 ? toBin(code) : `${code} (1 baytdan katta)`}
+                    </span>
+                  </span>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Kengroq ekranda: oddiy jadval */}
+        <div className="mt-4 hidden sm:block">
+          <table className="w-full border-collapse text-left">
             <thead>
               <tr className="border-b border-line">
                 <th className="pb-2 pr-3 text-xs font-black uppercase tracking-wider text-fg-subtle">

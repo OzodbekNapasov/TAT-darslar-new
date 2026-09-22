@@ -391,3 +391,113 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
+
+/* ==========================================================================
+   TELEFON UCHUN JADVALLAR
+   640px dan tor ekranda jadval yonga surilmaydi - matn qatorga bo'linib,
+   butun jadval ekranga sig'adi. Kengroq ekranda hech narsa o'zgarmaydi.
+   ========================================================================== */
+@media (max-width: 639.98px) {
+  .overflow-x-auto > table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .overflow-x-auto > table th,
+  .overflow-x-auto > table td {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Klaviatura kabi keng sxemalar toraymaydi - ular yonga suriladi,
+     lekin barmoq bilan silliq surilsin. */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+/* ==========================================================================
+   CHOP ETISH (KONSPEKT)
+   Talaba ochiq turgan bo'limni qog'ozga chiqaradi yoki PDF qilib saqlaydi.
+   Sarlavha, tugmalar va bezaklar chiqmaydi - faqat matn qoladi.
+   ========================================================================== */
+@media print {
+  /* qog'ozda qora fon siyoh sarflaydi va o'qilmaydi */
+  :root,
+  [data-theme='dark'] {
+    --canvas: #ffffff;
+    --surface: #ffffff;
+    --subtle: #ffffff;
+    --fg: #000000;
+    --fg-muted: #1f2937;
+    --fg-subtle: #374151;
+    --line: #cbd5e1;
+    --line-strong: #94a3b8;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* boshqaruv elementlari qog'ozda keraksiz */
+  header,
+  footer,
+  nav,
+  button {
+    display: none !important;
+  }
+
+  /* qorong'i panellar (monitor, terminal) oq fonda chiqsin */
+  .on-dark,
+  .on-dark * {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #94a3b8 !important;
+  }
+
+  /* soya va yorug'lik effektlari printerda dog' bo'lib chiqadi */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+  }
+
+  /* blok varaq o'rtasidan bo'linib ketmasin */
+  section,
+  table,
+  figure {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* chop etishda jadval to'liq ko'rinsin */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+
+  .overflow-x-auto > table {
+    table-layout: auto !important;
+    min-width: 0 !important;
+    font-size: 10pt !important;
+  }
+
+  /* telefon uchun mo'ljallangan kartochkalar qog'ozda takrorlanmasin */
+  .sm\:hidden {
+    display: none !important;
+  }
+
+  .hidden.sm\:block {
+    display: block !important;
+  }
+}
