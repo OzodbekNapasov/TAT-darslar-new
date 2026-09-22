@@ -36,6 +36,23 @@ module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      ok: true,
+      service: 'TAT Teacher Auth API',
+      envConfigured: {
+        TEACHER_PIN: Boolean(process.env.TEACHER_PIN),
+        TEACHER_SECRET_KEY: Boolean(process.env.TEACHER_SECRET_KEY),
+        TEACHER_MAX_ATTEMPTS: Boolean(process.env.TEACHER_MAX_ATTEMPTS),
+        TEACHER_BLOCK_MINUTES: Boolean(process.env.TEACHER_BLOCK_MINUTES),
+        LESSON3_ADMIN_URL: Boolean(process.env.LESSON3_ADMIN_URL),
+        TELEGRAM_BOT_TOKEN: Boolean(process.env.TELEGRAM_BOT_TOKEN),
+        TELEGRAM_CHAT_ID: Boolean(process.env.TELEGRAM_CHAT_ID),
+        GOOGLE_SCRIPT_URL: Boolean(process.env.GOOGLE_SCRIPT_URL),
+      },
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
