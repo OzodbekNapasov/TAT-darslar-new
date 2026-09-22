@@ -1425,223 +1425,276 @@
     }
 
     /* ====================================================================== */
-    /* KMR 2026-2027 INTERAKTIV JADVALI (O'QITUVCHI BO'LIMI)                  */
+    /* KMR 2026-2027 LAUNCHER TUGMASI VA IXCHAM MODAL OYNA                    */
     /* ====================================================================== */
-    .kmr-section {
-      margin-top: 2.75rem;
-      background: linear-gradient(180deg, rgba(15, 22, 36, 0.95) 0%, rgba(10, 15, 26, 0.98) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.28);
-      border-radius: 24px;
-      padding: 1.75rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    .kmr-header-btn {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.14);
+      color: #34d399;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
 
-    .kmr-top-bar {
+    html[data-role="teacher"] .kmr-header-btn {
+      display: inline-flex;
+    }
+
+    .kmr-header-btn:hover {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+    }
+
+    .kmr-header-count {
+      background: rgba(0, 0, 0, 0.35);
+      color: #ffffff;
+      padding: 0.12rem 0.45rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .kmr-launcher-card {
       display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(16, 24, 39, 0.96), rgba(11, 17, 30, 0.98));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 18px;
+      padding: 1rem 1.35rem;
       margin-bottom: 1.5rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
-    .kmr-title-group {
+    .kmr-launcher-card:hover {
+      border-color: #10b981;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(16, 185, 129, 0.18);
+    }
+
+    .kmr-launcher-left {
       display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+      align-items: center;
+      gap: 0.9rem;
     }
 
-    .kmr-eyebrow {
+    .kmr-launcher-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .kmr-launcher-text h3 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 0.15rem;
+    }
+
+    .kmr-launcher-text p {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    .kmr-launcher-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      font-size: 0.72rem;
+      gap: 0.5rem;
+      background: #10b981;
+      color: #ffffff;
+      border: none;
+      border-radius: 11px;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #34d399;
-      background: rgba(16, 185, 129, 0.14);
-      border: 1px solid rgba(16, 185, 129, 0.32);
-      padding: 0.28rem 0.75rem;
-      border-radius: 9999px;
-      width: fit-content;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s ease;
     }
 
-    .kmr-main-title {
-      font-size: 1.35rem;
-      font-weight: 850;
-      color: #f8fafc;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
+    .kmr-launcher-btn:hover {
+      background: #059669;
     }
 
-    .kmr-subtitle {
-      font-size: 0.84rem;
-      color: #94a3b8;
-      font-weight: 500;
+    /* KMR Modal Window */
+    .kmr-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 11000;
+      background: rgba(5, 8, 15, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem;
     }
 
-    .kmr-overall-box {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 16px;
-      padding: 0.85rem 1.15rem;
-      min-width: 230px;
+    .kmr-modal-backdrop.active {
+      display: flex;
+    }
+
+    .kmr-modal-window {
+      width: 100%;
+      max-width: 1040px;
+      max-height: 92vh;
+      background: #0b101b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
-    }
-
-    .kmr-overall-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #cbd5e1;
-    }
-
-    .kmr-overall-pct {
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: #34d399;
-    }
-
-    .kmr-bar-track {
-      width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      border-radius: 9999px;
       overflow: hidden;
     }
 
-    .kmr-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #0ea5e9, #10b981);
-      border-radius: 9999px;
-      width: 0%;
-      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    /* 5 Group Cards Grid */
-    .kmr-groups-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.85rem;
-      margin-bottom: 1.35rem;
-    }
-
-    @media (max-width: 900px) {
-      .kmr-groups-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 560px) {
-      .kmr-groups-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .kmr-section {
-        padding: 1.1rem 0.85rem;
-        border-radius: 18px;
-      }
-    }
-
-    .kmr-group-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 0.85rem 0.95rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .kmr-group-card:hover {
-      border-color: rgba(56, 189, 248, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .kmr-group-head {
+    .kmr-modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.4rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0.85rem 1.15rem;
+      background: #101726;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
     }
 
-    .kmr-group-name {
-      font-size: 0.9rem;
-      font-weight: 850;
+    .kmr-modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .kmr-modal-title-wrap h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
       color: #f8fafc;
+      letter-spacing: -0.01em;
+    }
+
+    .kmr-modal-title-wrap span {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.18rem 0.55rem;
+      border-radius: 9999px;
+    }
+
+    .kmr-modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: #94a3b8;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    .kmr-group-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #38bdf8;
-      box-shadow: 0 0 8px #38bdf8;
+    .kmr-modal-close:hover {
+      background: rgba(244, 63, 94, 0.18);
+      color: #fb7185;
+      border-color: rgba(244, 63, 94, 0.4);
     }
 
-    .kmr-group-stat {
-      font-size: 0.74rem;
-      font-weight: 800;
-      color: #34d399;
-      background: rgba(16, 185, 129, 0.12);
-      padding: 0.15rem 0.5rem;
-      border-radius: 6px;
-    }
-
-    .kmr-group-sub {
-      font-size: 0.72rem;
-      color: #94a3b8;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    /* Filter & Search Row */
-    .kmr-controls-row {
+    .kmr-toolbar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 0.85rem;
-      margin-bottom: 1.15rem;
+      gap: 0.6rem;
+      padding: 0.65rem 1.15rem;
+      background: #0d1320;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      flex-shrink: 0;
     }
 
-    .kmr-search-box {
+    .kmr-groups-inline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .kmr-grp-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #e2e8f0;
+    }
+
+    .kmr-grp-chip b {
+      color: #38bdf8;
+    }
+
+    .kmr-grp-chip i {
+      font-style: normal;
+      color: #34d399;
+      font-weight: 700;
+    }
+
+    .kmr-controls-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .kmr-search-mini {
       position: relative;
-      flex: 1;
-      min-width: 230px;
+      width: 200px;
     }
 
-    .kmr-search-box input {
+    .kmr-search-mini input {
       width: 100%;
-      background: rgba(7, 11, 20, 0.9);
+      background: #070b13;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 0.65rem 0.95rem 0.65rem 2.35rem;
+      border-radius: 8px;
+      padding: 0.36rem 0.65rem 0.36rem 1.85rem;
       color: #f8fafc;
-      font-size: 0.84rem;
+      font-size: 0.75rem;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s ease;
     }
 
-    .kmr-search-box input:focus {
+    .kmr-search-mini input:focus {
       border-color: #38bdf8;
     }
 
-    .kmr-search-box svg {
+    .kmr-search-mini svg {
       position: absolute;
-      left: 0.8rem;
+      left: 0.55rem;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
@@ -1650,21 +1703,20 @@
 
     .kmr-filter-pills {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: 0.3rem;
     }
 
     .kmr-filter-btn {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.09);
       color: #94a3b8;
-      font-size: 0.76rem;
+      font-size: 0.71rem;
       font-weight: 700;
-      padding: 0.48rem 0.85rem;
-      border-radius: 10px;
+      padding: 0.32rem 0.6rem;
+      border-radius: 7px;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.18s ease;
+      transition: all 0.15s ease;
     }
 
     .kmr-filter-btn:hover {
@@ -1676,26 +1728,23 @@
       background: #2563eb;
       border-color: #3b82f6;
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
     }
 
-    /* Table Container */
+    /* Compact Scrollable Matrix Table */
     .kmr-table-wrap {
+      flex: 1;
       width: 100%;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      background: #090d16;
-      max-height: 680px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #090d16;
     }
 
     .kmr-table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      min-width: 780px;
+      min-width: 640px;
       text-align: left;
     }
 
@@ -1703,193 +1752,190 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: #101726;
-      border-bottom: 2px solid rgba(59, 130, 246, 0.35);
-      padding: 0.9rem 0.75rem;
-      font-size: 0.76rem;
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #e2e8f0;
+      background: #111827;
+      border-bottom: 1.5px solid rgba(59, 130, 246, 0.35);
+      padding: 0.55rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #cbd5e1;
       white-space: nowrap;
     }
 
     .kmr-table thead th.col-group {
       text-align: center;
-      width: 86px;
-      min-width: 86px;
+      width: 66px;
+      min-width: 66px;
       background: #131c2e;
       border-left: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.45rem 0.3rem;
     }
 
     .kmr-th-group-badge {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.15rem;
+      gap: 0.05rem;
+      line-height: 1.1;
     }
 
     .kmr-th-group-code {
-      font-size: 0.84rem;
+      font-size: 0.76rem;
       font-weight: 900;
       color: #38bdf8;
-      letter-spacing: 0.02em;
     }
 
     .kmr-th-group-sub {
-      font-size: 0.64rem;
+      font-size: 0.6rem;
       font-weight: 700;
       color: #94a3b8;
     }
 
     .kmr-table tbody tr {
-      transition: background 0.15s ease;
+      transition: background 0.12s ease;
     }
 
     .kmr-table tbody tr:hover td {
-      background: rgba(56, 189, 248, 0.04);
+      background: rgba(56, 189, 248, 0.045);
     }
 
-    .kmr-table tbody tr.row-all-done td {
-      background: rgba(16, 185, 129, 0.05);
+    .kmr-table tbody tr.row-completed td {
+      background: rgba(16, 185, 129, 0.055);
     }
 
     .kmr-table tbody td {
-      padding: 0.85rem 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.42rem 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       vertical-align: middle;
     }
 
     .kmr-col-num {
-      width: 52px;
+      width: 42px;
       text-align: center;
+      padding: 0.4rem 0.35rem !important;
     }
 
     .kmr-num-pill {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      font-size: 0.8rem;
-      font-weight: 850;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
     }
 
-    .row-all-done .kmr-num-pill {
+    .kmr-num-pill:hover {
+      border-color: #38bdf8;
+      color: #f8fafc;
+    }
+
+    .row-completed .kmr-num-pill {
       background: rgba(16, 185, 129, 0.2);
       border-color: rgba(16, 185, 129, 0.5);
       color: #34d399;
     }
 
-    .kmr-topic-title {
-      font-size: 0.9rem;
-      font-weight: 750;
-      color: #f1f5f9;
-      line-height: 1.4;
-      margin-bottom: 0.35rem;
-    }
-
-    .kmr-topic-meta {
+    .kmr-topic-row-inner {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 0.4rem;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
 
-    .kmr-tag {
-      font-size: 0.68rem;
-      font-weight: 800;
-      padding: 0.15rem 0.5rem;
-      border-radius: 6px;
-      letter-spacing: 0.03em;
+    .kmr-topic-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.3;
     }
 
-    .kmr-tag.nazariy {
-      background: rgba(59, 130, 246, 0.16);
+    .kmr-topic-badges {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .kmr-mini-tag {
+      font-size: 0.63rem;
+      font-weight: 700;
+      padding: 0.1rem 0.38rem;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .kmr-mini-tag.nazariy {
+      background: rgba(59, 130, 246, 0.14);
       color: #60a5fa;
-      border: 1px solid rgba(59, 130, 246, 0.3);
     }
 
-    .kmr-tag.amaliy {
-      background: rgba(20, 184, 166, 0.16);
+    .kmr-mini-tag.amaliy {
+      background: rgba(20, 184, 166, 0.14);
       color: #2dd4bf;
-      border: 1px solid rgba(20, 184, 166, 0.3);
     }
 
-    .kmr-tag.hours {
-      background: rgba(255, 255, 255, 0.06);
-      color: #94a3b8;
-    }
-
-    .kmr-tag.mt {
-      background: rgba(168, 85, 247, 0.15);
-      color: #c084fc;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-    }
-
-    .kmr-tag.on-badge {
-      background: rgba(245, 158, 11, 0.2);
+    .kmr-mini-tag.on-yn {
+      background: rgba(245, 158, 11, 0.18);
       color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.4);
     }
 
-    .kmr-tag.yn-badge {
-      background: rgba(244, 63, 94, 0.2);
-      color: #fb7185;
-      border: 1px solid rgba(244, 63, 94, 0.4);
-    }
-
-    .kmr-cell-check {
+    .kmr-check-cell {
       text-align: center;
       border-left: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.3rem !important;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .kmr-check-wrap {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
+    .kmr-check-cell:hover .kmr-check-btn:not(.checked) {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
     }
 
     .kmr-check-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
       background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid rgba(255, 255, 255, 0.16);
-      color: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
       padding: 0;
+      pointer-events: none;
+      transition: all 0.14s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .kmr-check-btn:hover {
-      border-color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
-      transform: scale(1.06);
+    .kmr-check-btn svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.14s ease;
     }
 
     .kmr-check-btn.checked {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: #10b981;
       border-color: #34d399;
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
-      transform: scale(1.02);
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
     }
 
-    .kmr-check-date {
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: #34d399;
-      min-height: 0.75rem;
-      line-height: 1;
+    .kmr-check-btn.checked svg {
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
@@ -2054,6 +2100,11 @@
       </div>
 
       <div class="header-tools">
+        <button type="button" class="kmr-header-btn" onclick="openKmrModal()" title="KMR 2026–2027 jadvalini ochish">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>KMR Jadvali</span>
+          <span class="kmr-header-count" id="kmr-header-badge">0/160</span>
+        </button>
         <button type="button" class="role-pill" id="role-pill" onclick="openRoleGate()" title="Rolni almashtirish">
           <span class="role-dot"></span>
           <span id="role-pill-name">Talaba</span>
@@ -2062,67 +2113,23 @@
       </div>
     </header>
 
-    <!-- ==================== O'QITUVCHI ZONASI (ENG YUQORIDA KO'RINADI) ==================== -->
-    <section class="teacher-zone" id="teacher-zone" style="margin-top: 0.5rem; margin-bottom: 2.5rem;">
-      <!-- ==================== KMR 2026-2027 INTERAKTIV JADVALI ==================== -->
-      <div class="kmr-section" id="kmr-tracker" style="margin-top: 0; margin-bottom: 1.75rem;">
-        <div class="kmr-top-bar">
-          <div class="kmr-title-group">
-            <span class="kmr-eyebrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"/></svg>
-              Taqvim-Mavzular Rejasi (KMR • 2026–2027)
-            </span>
-            <h3 class="kmr-main-title">Tibbiyotda axborot texnologiyalari — Darslar monitoringi</h3>
-            <p class="kmr-subtitle">1-kurs, 1-semestr • Jami 32 ta mavzu (64 soat: 16 nazariy, 48 amaliy, 26 mustaqil ta’lim) • Guruhlar: 26-02 dan 26-06 gacha</p>
+    <!-- ==================== O'QITUVCHI ZONASI (ASOSIY SAHIFADA TUGMA BILAN) ==================== -->
+    <section class="teacher-zone" id="teacher-zone" style="margin-top: 0.5rem; margin-bottom: 2rem;">
+      <!-- KMR Oyna Ochuvchi Tugma-Karta -->
+      <div class="kmr-launcher-card" onclick="openKmrModal()">
+        <div class="kmr-launcher-left">
+          <div class="kmr-launcher-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           </div>
-
-          <div class="kmr-overall-box">
-            <div class="kmr-overall-top">
-              <span id="kmr-overall-count">Bajarildi: 0 / 160 dars</span>
-              <span class="kmr-overall-pct" id="kmr-overall-pct">0%</span>
-            </div>
-            <div class="kmr-bar-track">
-              <div class="kmr-bar-fill" id="kmr-overall-bar"></div>
-            </div>
+          <div class="kmr-launcher-text">
+            <h3>Taqvim-Mavzular Rejasi (KMR • 2026–2027)</h3>
+            <p>32 ta mavzu • Guruhlar: 26-02, 26-03, 26-04, 26-05, 26-06 • <strong id="kmr-launcher-stat" style="color:#34d399;">Bajarildi: 0 / 160 (0%)</strong></p>
           </div>
         </div>
-
-        <!-- 5 Group Progress Cards (26-02 .. 26-06) -->
-        <div class="kmr-groups-grid" id="kmr-groups-summary"></div>
-
-        <!-- Search & Filter Controls -->
-        <div class="kmr-controls-row">
-          <div class="kmr-search-box">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="kmr-search-input" placeholder="Mavzu raqami yoki nomini qidiring..." oninput="filterKmrTable()" />
-          </div>
-
-          <div class="kmr-filter-pills">
-            <button type="button" class="kmr-filter-btn active" data-filter="all" onclick="setKmrFilter('all', this)">Barchasi (32)</button>
-            <button type="button" class="kmr-filter-btn" data-filter="Nazariy" onclick="setKmrFilter('Nazariy', this)">Nazariy (8)</button>
-            <button type="button" class="kmr-filter-btn" data-filter="Amaliy" onclick="setKmrFilter('Amaliy', this)">Amaliy (24)</button>
-            <button type="button" class="kmr-filter-btn" data-filter="done" onclick="setKmrFilter('done', this)">To‘liq o‘tilgan</button>
-            <button type="button" class="kmr-filter-btn" data-filter="pending" onclick="setKmrFilter('pending', this)">O‘tilmagan</button>
-          </div>
-        </div>
-
-        <!-- 32 Topics Matrix Table -->
-        <div class="kmr-table-wrap">
-          <table class="kmr-table">
-            <thead>
-              <tr>
-                <th class="kmr-col-num">№</th>
-                <th>Mavzu nomi va dars turi</th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-02</span><span class="kmr-th-group-sub" id="th-sub-26-02">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-03</span><span class="kmr-th-group-sub" id="th-sub-26-03">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-04</span><span class="kmr-th-group-sub" id="th-sub-26-04">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-05</span><span class="kmr-th-group-sub" id="th-sub-26-05">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-06</span><span class="kmr-th-group-sub" id="th-sub-26-06">0/32</span></div></th>
-              </tr>
-            </thead>
-            <tbody id="kmr-tbody"></tbody>
-          </table>
-        </div>
+        <button type="button" class="kmr-launcher-btn">
+          <span>KMR Jadvalini ochish</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
       </div>
 
       <div class="teacher-zone-head">
@@ -2138,6 +2145,57 @@
         <strong>nazorat-testlari.js</strong> faylidan tahrirlaysiz.
       </div>
     </section>
+
+    <!-- ==================== KMR 2026-2027 IXCHAM MODAL OYNASI ==================== -->
+    <div id="kmr-modal" class="kmr-modal-backdrop" onclick="closeKmrModal(event)">
+      <div class="kmr-modal-window" onclick="event.stopPropagation()">
+        <div class="kmr-modal-header">
+          <div class="kmr-modal-title-wrap">
+            <h3>KMR 2026–2027 • Darslar jadvali</h3>
+            <span id="kmr-overall-count">0 / 160 (0%)</span>
+          </div>
+          <button type="button" class="kmr-modal-close" onclick="closeKmrModal()" title="Yopish">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="kmr-toolbar">
+          <div class="kmr-groups-inline" id="kmr-groups-summary"></div>
+
+          <div class="kmr-controls-right">
+            <div class="kmr-search-mini">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="kmr-search-input" placeholder="Mavzuni qidirish..." oninput="filterKmrTable()" />
+            </div>
+
+            <div class="kmr-filter-pills">
+              <button type="button" class="kmr-filter-btn active" data-filter="all" onclick="setKmrFilter('all', this)">Barchasi</button>
+              <button type="button" class="kmr-filter-btn" data-filter="Nazariy" onclick="setKmrFilter('Nazariy', this)">Nazariy</button>
+              <button type="button" class="kmr-filter-btn" data-filter="Amaliy" onclick="setKmrFilter('Amaliy', this)">Amaliy</button>
+              <button type="button" class="kmr-filter-btn" data-filter="done" onclick="setKmrFilter('done', this)">O‘tilgan</button>
+              <button type="button" class="kmr-filter-btn" data-filter="pending" onclick="setKmrFilter('pending', this)">O‘tilmagan</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="kmr-table-wrap">
+          <table class="kmr-table">
+            <thead>
+              <tr>
+                <th class="kmr-col-num">№</th>
+                <th>Mavzu nomi</th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-02</span><span class="kmr-th-group-sub" id="th-sub-26-02">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-03</span><span class="kmr-th-group-sub" id="th-sub-26-03">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-04</span><span class="kmr-th-group-sub" id="th-sub-26-04">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-05</span><span class="kmr-th-group-sub" id="th-sub-26-05">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-06</span><span class="kmr-th-group-sub" id="th-sub-26-06">0/32</span></div></th>
+              </tr>
+            </thead>
+            <tbody id="kmr-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
     <!-- ==================== SEARCH BAR ==================== -->
     <div class="search-wrapper">
@@ -2751,9 +2809,27 @@
       }
     }
 
+    function openKmrModal() {
+      var modal = document.getElementById('kmr-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeKmrModal(e) {
+      if (e && e.target && e.target.id !== 'kmr-modal') return;
+      var modal = document.getElementById('kmr-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeLesson3Modal();
+        closeKmrModal();
       }
     });
 
@@ -2791,13 +2867,13 @@
     var currentKmrFilter = 'all';
 
     var KMR_TOPICS = [
-      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './1. Axborot/offline/1-dars.html' },
-      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './2. Sanoq sistemalari/offline/2-dars.html' },
-      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './3. Avtomatlashtirish/offline/3-dars.html' },
-      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './4-dars/offline/4-dars.html' },
-      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './5. Kompyuter va uning qurilmalari/5-dars.html' },
-      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN', link: './6. Windows operatsion tizimi/dars.html' },
-      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './6. Windows operatsion tizimi/dars.html' },
+      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
       { id: 8, title: 'Tibbiyotda matnli axborotlarni qayta ishlash texnologiyasi.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
       { id: 9, title: 'Microsoft Word matn muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
       { id: 10, title: 'Matn muharriri yordamida jadvallar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
@@ -2840,39 +2916,101 @@
       } catch (e) {}
     }
 
-    function getTodayShortDate() {
-      var d = new Date();
-      var day = String(d.getDate()).padStart(2, '0');
-      var month = String(d.getMonth() + 1).padStart(2, '0');
-      return day + '.' + month;
+    function updateKmrCounters() {
+      var state = loadKmrState();
+      var totalChecks = 0;
+      var maxChecks = KMR_TOPICS.length * KMR_GROUPS.length; // 160
+      var groupCounts = {};
+      KMR_GROUPS.forEach(function(g) { groupCounts[g] = 0; });
+
+      for (var i = 0; i < KMR_TOPICS.length; i++) {
+        var tid = KMR_TOPICS[i].id;
+        for (var j = 0; j < KMR_GROUPS.length; j++) {
+          var g = KMR_GROUPS[j];
+          if (state[tid + '_' + g]) {
+            groupCounts[g]++;
+            totalChecks++;
+          }
+        }
+      }
+
+      var overallPct = Math.round((totalChecks / maxChecks) * 100);
+      var countEl = document.getElementById('kmr-overall-count');
+      if (countEl) countEl.textContent = totalChecks + ' / ' + maxChecks + ' (' + overallPct + '%)';
+
+      var headerBadge = document.getElementById('kmr-header-badge');
+      if (headerBadge) headerBadge.textContent = totalChecks + '/' + maxChecks;
+
+      var launcherStat = document.getElementById('kmr-launcher-stat');
+      if (launcherStat) launcherStat.textContent = 'Bajarildi: ' + totalChecks + ' / ' + maxChecks + ' (' + overallPct + '%)';
+
+      var chipsHtml = '';
+      for (var m = 0; m < KMR_GROUPS.length; m++) {
+        var gc = KMR_GROUPS[m];
+        var cnt = groupCounts[gc] || 0;
+        var thSub = document.getElementById('th-sub-' + gc);
+        if (thSub) thSub.textContent = cnt + '/32';
+
+        chipsHtml += '<span class="kmr-grp-chip"><b>' + gc + ':</b> <i>' + cnt + '/32</i></span>';
+      }
+      var groupsGrid = document.getElementById('kmr-groups-summary');
+      if (groupsGrid) groupsGrid.innerHTML = chipsHtml;
     }
 
-    function toggleKmrCheck(topicId, groupCode) {
+    function toggleKmrCheck(topicId, groupCode, cellEl) {
       var state = loadKmrState();
       var key = topicId + '_' + groupCode;
+      var isNowChecked = false;
       if (state[key]) {
         delete state[key];
+        isNowChecked = false;
       } else {
-        state[key] = getTodayShortDate();
+        state[key] = 1;
+        isNowChecked = true;
       }
       saveKmrState(state);
-      renderKmrAll();
+
+      // Update DOM in-place (0ms, no table re-render)
+      if (cellEl) {
+        var btn = cellEl.querySelector('.kmr-check-btn');
+        if (btn) {
+          if (isNowChecked) btn.classList.add('checked');
+          else btn.classList.remove('checked');
+        }
+        var row = cellEl.closest('tr');
+        if (row) {
+          var allDone = KMR_GROUPS.every(function(g) { return !!state[topicId + '_' + g]; });
+          if (allDone) row.classList.add('row-completed');
+          else row.classList.remove('row-completed');
+        }
+      }
+      updateKmrCounters();
     }
 
     function toggleKmrRowAll(topicId) {
       var state = loadKmrState();
       var allChecked = KMR_GROUPS.every(function(g) { return !!state[topicId + '_' + g]; });
-      var today = getTodayShortDate();
       KMR_GROUPS.forEach(function(g) {
         var key = topicId + '_' + g;
         if (allChecked) {
           delete state[key];
-        } else if (!state[key]) {
-          state[key] = today;
+        } else {
+          state[key] = 1;
         }
       });
       saveKmrState(state);
-      renderKmrAll();
+
+      var row = document.querySelector('#kmr-tbody tr[data-topic-id="' + topicId + '"]');
+      if (row) {
+        var btns = row.querySelectorAll('.kmr-check-btn');
+        btns.forEach(function(b) {
+          if (allChecked) b.classList.remove('checked');
+          else b.classList.add('checked');
+        });
+        if (allChecked) row.classList.remove('row-completed');
+        else row.classList.add('row-completed');
+      }
+      updateKmrCounters();
     }
 
     function setKmrFilter(filterType, btnEl) {
@@ -2912,70 +3050,45 @@
     function renderKmrAll() {
       var state = loadKmrState();
       var tbody = document.getElementById('kmr-tbody');
-      var groupsGrid = document.getElementById('kmr-groups-summary');
-      if (!tbody || !groupsGrid) return;
-
-      var totalChecks = 0;
-      var maxChecks = KMR_TOPICS.length * KMR_GROUPS.length; // 160
-      var groupCounts = {};
-      KMR_GROUPS.forEach(function(g) { groupCounts[g] = 0; });
+      if (!tbody) return;
 
       var rowsHtml = '';
       for (var i = 0; i < KMR_TOPICS.length; i++) {
         var t = KMR_TOPICS[i];
         var rowDoneCount = 0;
         for (var j = 0; j < KMR_GROUPS.length; j++) {
-          var gCode = KMR_GROUPS[j];
-          if (state[t.id + '_' + gCode]) {
-            rowDoneCount++;
-            groupCounts[gCode]++;
-            totalChecks++;
-          }
+          if (state[t.id + '_' + KMR_GROUPS[j]]) rowDoneCount++;
         }
         var isRowCompleted = (rowDoneCount === KMR_GROUPS.length);
-        var typeBadgeClass = (t.type === 'Nazariy') ? 'kmr-badge-theory' : 'kmr-badge-practice';
-        var ctrlBadge = '';
-        if (t.control === 'ON') {
-          ctrlBadge = '<span class="kmr-meta-badge kmr-badge-on">Oraliq nazorat (ON)</span>';
-        } else if (t.control === 'YN') {
-          ctrlBadge = '<span class="kmr-meta-badge kmr-badge-yn">Yakuniy nazorat (YN)</span>';
-        }
-
-        var mtBadge = t.mt > 0 ? '<span class="kmr-meta-badge kmr-badge-mt">Mustaqil ta’lim: ' + t.mt + ' s</span>' : '';
-        var linkBadge = t.link
-          ? '<a href="' + t.link + '" class="kmr-meta-badge" style="color:#818cf8;border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.12);text-decoration:none;">Darsni ochish →</a>'
+        var typeTagCls = (t.type === 'Nazariy') ? 'nazariy' : 'amaliy';
+        var ctrlTag = (t.control === 'ON' || t.control === 'YN')
+          ? '<span class="kmr-mini-tag on-yn">' + t.control + '</span>'
           : '';
-
         var searchStr = t.id + ' ' + t.title + ' ' + t.type + ' ' + t.control;
 
         rowsHtml +=
           '<tr data-topic-id="' + t.id + '" data-type="' + t.type + '" data-search="' + searchStr.replace(/"/g, '&quot;') + '" class="' + (isRowCompleted ? 'row-completed' : '') + '">' +
             '<td class="kmr-col-num">' +
-              '<span class="kmr-num-pill" title="Barcha guruhlarni belgilash / bekor qilish" style="cursor:pointer;" onclick="toggleKmrRowAll(' + t.id + ')">' + t.id + '</span>' +
+              '<span class="kmr-num-pill" title="Barcha guruhlarni belgilash" onclick="toggleKmrRowAll(' + t.id + ')">' + t.id + '</span>' +
             '</td>' +
-            '<td class="kmr-topic-cell">' +
-              '<span class="kmr-topic-title">' + t.title + '</span>' +
-              '<div class="kmr-topic-meta">' +
-                '<span class="kmr-meta-badge ' + typeBadgeClass + '">' + t.type + ' • ' + t.hours + ' soat</span>' +
-                mtBadge +
-                ctrlBadge +
-                linkBadge +
+            '<td>' +
+              '<div class="kmr-topic-row-inner">' +
+                '<span class="kmr-topic-title">' + t.title + '</span>' +
+                '<span class="kmr-topic-badges">' +
+                  ctrlTag +
+                  '<span class="kmr-mini-tag ' + typeTagCls + '">' + t.type + '</span>' +
+                '</span>' +
               '</div>' +
             '</td>';
 
         for (var k = 0; k < KMR_GROUPS.length; k++) {
           var grp = KMR_GROUPS[k];
-          var stamp = state[t.id + '_' + grp];
-          var checkedCls = stamp ? ' is-checked' : '';
-          var stampText = stamp ? stamp : '—';
+          var isChecked = !!state[t.id + '_' + grp];
           rowsHtml +=
-            '<td class="kmr-check-cell">' +
-              '<div class="kmr-check-wrap">' +
-                '<button type="button" class="kmr-check-btn' + checkedCls + '" onclick="toggleKmrCheck(' + t.id + ', \'' + grp + '\')" title="Guruh ' + grp + ' — ' + t.id + '-mavzu">' +
-                  '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
-                '</button>' +
-                '<span class="kmr-check-date">' + stampText + '</span>' +
-              '</div>' +
+            '<td class="kmr-check-cell" onclick="toggleKmrCheck(' + t.id + ', \'' + grp + '\', this)" title="Guruh ' + grp + ' — ' + t.id + '-mavzu">' +
+              '<button type="button" class="kmr-check-btn' + (isChecked ? ' checked' : '') + '">' +
+                '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+              '</button>' +
             '</td>';
         }
 
@@ -2983,38 +3096,7 @@
       }
 
       tbody.innerHTML = rowsHtml;
-
-      // Update 5 group cards and table column header counters
-      var cardsHtml = '';
-      for (var m = 0; m < KMR_GROUPS.length; m++) {
-        var gc = KMR_GROUPS[m];
-        var cnt = groupCounts[gc] || 0;
-        var pct = Math.round((cnt / KMR_TOPICS.length) * 100);
-        var thSub = document.getElementById('th-sub-' + gc);
-        if (thSub) thSub.textContent = cnt + ' / ' + KMR_TOPICS.length;
-
-        cardsHtml +=
-          '<div class="kmr-group-card">' +
-            '<div class="kmr-group-head">' +
-              '<span class="kmr-group-name">' + gc + ' <span class="kmr-group-tag">GURUH</span></span>' +
-              '<span class="kmr-group-count">' + cnt + ' / ' + KMR_TOPICS.length + ' (' + pct + '%)</span>' +
-            '</div>' +
-            '<div class="kmr-group-bar">' +
-              '<div class="kmr-group-bar-fill" style="width:' + pct + '%;"></div>' +
-            '</div>' +
-          '</div>';
-      }
-      groupsGrid.innerHTML = cardsHtml;
-
-      // Update overall progress bar
-      var overallPct = Math.round((totalChecks / maxChecks) * 100);
-      var countEl = document.getElementById('kmr-overall-count');
-      var pctEl = document.getElementById('kmr-overall-pct');
-      var barEl = document.getElementById('kmr-overall-bar');
-      if (countEl) countEl.textContent = 'Bajarildi: ' + totalChecks + ' / ' + maxChecks + ' dars';
-      if (pctEl) pctEl.textContent = overallPct + '%';
-      if (barEl) barEl.style.width = overallPct + '%';
-
+      updateKmrCounters();
       filterKmrTable();
     }
 
@@ -3022,7 +3104,6 @@
       renderKmrAll();
     }
 
-    // Initialize KMR tracker immediately on load
     initKmrTracker();
   </script>
 </body>
