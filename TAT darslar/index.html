@@ -2058,23 +2058,23 @@
         <div class="role-gate-title">O‘qituvchi kodi</div>
         <p class="role-gate-desc">Davom etish uchun kirish kodini kiriting.</p>
 
-        <form class="role-pin-box" onsubmit="event.preventDefault(); submitPin(); return false;">
+        <div class="role-pin-box">
           <label for="role-pin-input">Kirish kodi</label>
           <input
             type="password"
             id="role-pin-input"
-            class="role-pin-input"
+            inputmode="numeric"
             autocomplete="off"
-            placeholder="Kodni kiriting"
-            style="letter-spacing: 0.12em;"
+            placeholder="••••••••"
+            onkeydown="if(event.key==='Enter'){submitPin();}"
           />
           <div class="role-pin-error" id="role-pin-error">Kod noto‘g‘ri. Qaytadan urinib ko‘ring.</div>
 
           <div class="role-pin-actions">
             <button type="button" onclick="backToRoleChoose()">Orqaga</button>
-            <button type="submit" class="pin-submit" id="pin-submit-btn" onclick="submitPin()">Kirish</button>
+            <button type="button" class="pin-submit" onclick="submitPin()">Kirish</button>
           </div>
-        </form>
+        </div>
       </div>
 
     </div>
@@ -2559,12 +2559,10 @@
 
   <script>
     /* ====================================================================== */
-    /* HIMOYALANGAN ROL TIZIMI (VERCEL ENV + SHA-256 + BRUTE-FORCE HIMOYA)    */
+    /* ROL TIZIMI                                                             */
     /* ====================================================================== */
-    var OFFLINE_PIN_HASH = '51c28f540f62245b70f80ec9d3ffafce68cb68098d492f5dc30cdcf247f54f2d';
+    var TEACHER_PIN = '12072005';
     var ROLE_KEY = 'tat-role';
-    var TOKEN_KEY = 'tat-teacher-token';
-    var LOCK_KEY = 'tat-pin-lock';
 
     function applyRole(role) {
       document.documentElement.setAttribute('data-role', role);
@@ -2594,9 +2592,6 @@
 
     function chooseRole(role) {
       try { localStorage.setItem(ROLE_KEY, role); } catch (e) {}
-      if (role !== 'teacher') {
-        try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
-      }
       applyRole(role);
       closeRoleGate();
     }
@@ -2619,120 +2614,20 @@
       document.getElementById('role-pin-error').classList.remove('show');
     }
 
-    async function sha256Hex(message) {
-      try {
-        if (!window.crypto || !window.crypto.subtle) return '';
-        var msgBuffer = new TextEncoder().encode(message);
-        var hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
-        var hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
-      } catch (e) {
-        return '';
-      }
-    }
-
-    async function submitPin() {
+    function submitPin() {
       var input = document.getElementById('role-pin-input');
       var err = document.getElementById('role-pin-error');
-      var btn = document.getElementById('pin-submit-btn');
       if (!input) return;
 
-      var val = input.value.trim();
-      if (!val) {
-        input.classList.remove('error');
-        void input.offsetWidth;
-        input.classList.add('error');
-        if (err) {
-          err.textContent = 'Iltimos, avval kirish kodini yozing! (Kod: 12072005)';
-          err.classList.add('show');
-        }
-        input.focus();
-        return;
-      }
-
-      function onTeacherSuccess() {
-        try {
-          sessionStorage.setItem(TOKEN_KEY, 'verified');
-          localStorage.removeItem(LOCK_KEY);
-        } catch (e) {}
+      if (input.value.trim() === TEACHER_PIN) {
         chooseRole('teacher');
         backToRoleChoose();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      // 1. Synchronous instant check (no async/crypto wait) so it NEVER hangs
-      if (val === '12072005' || val === '2026' || val === '2001') {
-        onTeacherSuccess();
-        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
-          fetch('/api/teacher-auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pin: val })
-          }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-            if (data && data.ok) {
-              if (Array.isArray(data.links) && data.links.length > 0) {
-                window.NAZORAT_TESTLARI = data.links;
-                var box = document.getElementById('control-links');
-                if (box) box.removeAttribute('data-filled');
-                renderControlLinks();
-              }
-              if (data.adminUrl) {
-                var adm = document.getElementById('lesson3-admin-card');
-                if (adm) adm.href = data.adminUrl;
-              }
-            }
-          }).catch(function () {});
-        }
-        return;
-      }
-
-      // 2. Hash check
-      var computedHash = await sha256Hex('tat_salt_2026:' + val);
-      if (computedHash && computedHash === OFFLINE_PIN_HASH) {
-        onTeacherSuccess();
-        return;
-      }
-
-      // Server-Side Vercel API verification (if custom TEACHER_PIN is set on Vercel)
-      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
-        if (btn) btn.textContent = 'Tekshirilmoqda...';
-        try {
-          var resp = await fetch('/api/teacher-auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pin: val })
-          });
-          if (btn) btn.textContent = 'Kirish';
-          if (resp.status !== 404) {
-            var data = await resp.json();
-            if (resp.ok && data.ok) {
-              if (Array.isArray(data.links) && data.links.length > 0) {
-                window.NAZORAT_TESTLARI = data.links;
-                var box = document.getElementById('control-links');
-                if (box) box.removeAttribute('data-filled');
-              }
-              if (data.adminUrl) {
-                var adm = document.getElementById('lesson3-admin-card');
-                if (adm) adm.href = data.adminUrl;
-              }
-              onTeacherSuccess();
-              return;
-            }
-          }
-        } catch (netErr) {
-          if (btn) btn.textContent = 'Kirish';
-        }
-      }
-
-      input.classList.remove('error');
-      void input.offsetWidth;
-      input.classList.add('error');
-      if (err) {
-        err.textContent = 'PIN-kod noto‘g‘ri! Qaytadan urinib ko‘ring.';
+      } else {
+        input.classList.add('error');
         err.classList.add('show');
+        input.value = '';
+        input.focus();
       }
-      input.value = '';
-      input.focus();
     }
 
     /** nazorat-testlari.js dagi ro'yxatni chizadi */
