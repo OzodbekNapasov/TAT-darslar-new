@@ -1,0 +1,23 @@
+# ==============================================================================
+# VERCEL ENVIRONMENT VARIABLES (.env) — SHAHRISABZ TIBBIYOT TEXNIKUMI (TAT)
+# Vercel Dashboard -> Settings -> Environment Variables qismiga qo'shing
+# (yoki "Import .env" tugmasi orqali ushbu faylni to'g'ridan-to'g'ri yuklang)
+# ==============================================================================
+
+# 1. O'qituvchi kirish PIN-kodi (Xohlagan maxfiy kodingizga o'zgartirishingiz mumkin)
+TEACHER_PIN=12072005
+
+# 2. Server sessiya tokenini shifrlash kaliti (HMAC-SHA256 Secret Key)
+TEACHER_SECRET_KEY=tat_shahrisabz_secret_2026_x9k2m8p4q7w1z5
+
+# 3. Brute-Force (kodni taxmin qilib buzishga qarshi) xavfsizlik cheklovlari
+TEACHER_MAX_ATTEMPTS=5
+TEACHER_BLOCK_MINUTES=15
+
+# 4. 3-Dars O'qituvchi (Admin) boshqaruv paneli maxfiy manzili
+LESSON3_ADMIN_URL=https://ozodbeknapasov.github.io/3-dars-uchun/admin
+
+# 5. (Ixtiyoriy) Telegram va Google Sheets integratsiyasi
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+GOOGLE_SCRIPT_URL=

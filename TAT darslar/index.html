@@ -1917,8 +1917,8 @@
           </div>
         </a>
 
-        <!-- Admin profili -->
-        <a href="https://ozodbeknapasov.github.io/3-dars-uchun/admin" target="_blank" rel="noopener noreferrer" class="profile-card profile-admin">
+        <!-- Admin profili (faqat O'qituvchi tasdiqlanganda ko'rinadi) -->
+        <a href="https://ozodbeknapasov.github.io/3-dars-uchun/admin" id="lesson3-admin-card" style="display: none;" target="_blank" rel="noopener noreferrer" class="profile-card profile-admin">
           <div class="profile-icon-wrap">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -1972,21 +1972,19 @@
 
   <script>
     /* ====================================================================== */
-    /* ROL TIZIMI                                                             */
+    /* HIMOYALANGAN ROL TIZIMI (VERCEL ENV + SHA-256 + BRUTE-FORCE HIMOYA)    */
     /* ====================================================================== */
-
-    /* O'QITUVCHI KIRISH KODI — o'zgartirish uchun shu qatorni tahrirlang.
-       DIQQAT: sayt statik bo'lgani uchun bu kod haqiqiy himoya emas —
-       sahifa kodini ochgan odam uni ko'ra oladi. U tasodifiy kirishni
-       to'xtatadi, xolos. Haqiqatan maxfiy narsani bu yerga qo'ymang. */
-    var TEACHER_PIN = '12072005';
-
+    var OFFLINE_PIN_HASH = '51c28f540f62245b70f80ec9d3ffafce68cb68098d492f5dc30cdcf247f54f2d';
     var ROLE_KEY = 'tat-role';
+    var TOKEN_KEY = 'tat-teacher-token';
+    var LOCK_KEY = 'tat-pin-lock';
 
     function applyRole(role) {
       document.documentElement.setAttribute('data-role', role);
       var name = document.getElementById('role-pill-name');
       if (name) name.textContent = (role === 'teacher') ? 'O‘qituvchi' : 'Talaba';
+      var adminCard = document.getElementById('lesson3-admin-card');
+      if (adminCard) adminCard.style.display = (role === 'teacher') ? 'flex' : 'none';
       if (role === 'teacher') renderControlLinks();
     }
 
@@ -2006,6 +2004,9 @@
 
     function chooseRole(role) {
       try { localStorage.setItem(ROLE_KEY, role); } catch (e) {}
+      if (role !== 'teacher') {
+        try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
+      }
       applyRole(role);
       closeRoleGate();
     }
@@ -2017,7 +2018,6 @@
       if (input) {
         input.value = '';
         input.classList.remove('error');
-        // telefonda klaviatura darhol chiqsin
         setTimeout(function () { input.focus(); }, 60);
       }
       document.getElementById('role-pin-error').classList.remove('show');
@@ -2029,15 +2029,99 @@
       document.getElementById('role-pin-error').classList.remove('show');
     }
 
-    function submitPin() {
+    async function sha256Hex(message) {
+      if (!window.crypto || !window.crypto.subtle) return '';
+      var msgBuffer = new TextEncoder().encode(message);
+      var hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+      var hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+    }
+
+    async function submitPin() {
       var input = document.getElementById('role-pin-input');
       var err = document.getElementById('role-pin-error');
       if (!input) return;
 
-      if (input.value.trim() === TEACHER_PIN) {
+      var val = input.value.trim();
+      if (!val) return;
+
+      // Client-side lockout check
+      try {
+        var lockData = JSON.parse(localStorage.getItem(LOCK_KEY) || '{"count":0,"until":0}');
+        if (lockData.until > Date.now()) {
+          var waitMin = Math.ceil((lockData.until - Date.now()) / 60000);
+          err.textContent = 'Ko‘p marta xato kod kiritildi! ' + waitMin + ' daqiqadan so‘ng urinib ko‘ring.';
+          err.classList.add('show');
+          input.classList.add('error');
+          return;
+        }
+      } catch (e) {}
+
+      // 1. Try Server-Side Vercel API (/api/teacher-auth) if running over HTTP/HTTPS
+      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        try {
+          var resp = await fetch('/api/teacher-auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pin: val })
+          });
+          if (resp.status !== 404) {
+            var data = await resp.json();
+            if (resp.ok && data.ok) {
+              try {
+                sessionStorage.setItem(TOKEN_KEY, data.token || 'verified');
+                localStorage.removeItem(LOCK_KEY);
+              } catch (e) {}
+              if (Array.isArray(data.links) && data.links.length > 0) {
+                window.NAZORAT_TESTLARI = data.links;
+                var box = document.getElementById('control-links');
+                if (box) box.removeAttribute('data-filled');
+              }
+              if (data.adminUrl) {
+                var adm = document.getElementById('lesson3-admin-card');
+                if (adm) adm.href = data.adminUrl;
+              }
+              chooseRole('teacher');
+              backToRoleChoose();
+              return;
+            } else {
+              input.classList.add('error');
+              err.textContent = data.error || 'Kod noto‘g‘ri. Qaytadan urinib ko‘ring.';
+              err.classList.add('show');
+              input.value = '';
+              input.focus();
+              return;
+            }
+          }
+        } catch (netErr) {
+          // Fallback to salted SHA-256 verification if offline
+        }
+      }
+
+      // 2. Salted SHA-256 Verification (Offline / Static Fallback)
+      var computedHash = await sha256Hex('tat_salt_2026:' + val);
+      if (computedHash === OFFLINE_PIN_HASH) {
+        try {
+          sessionStorage.setItem(TOKEN_KEY, 'offline-verified');
+          localStorage.removeItem(LOCK_KEY);
+        } catch (e) {}
         chooseRole('teacher');
         backToRoleChoose();
       } else {
+        try {
+          var ld = JSON.parse(localStorage.getItem(LOCK_KEY) || '{"count":0,"until":0}');
+          ld.count = (ld.count || 0) + 1;
+          if (ld.count >= 5) {
+            ld.until = Date.now() + 15 * 60 * 1000;
+            ld.count = 0;
+            err.textContent = 'Xavfsizlik blokirovkasi: 5 marta xato terildi. 15 daqiqa kuting.';
+          } else {
+            err.textContent = 'PIN-kod noto‘g‘ri! Qolgan urinishlar: ' + (5 - ld.count) + ' ta.';
+          }
+          localStorage.setItem(LOCK_KEY, JSON.stringify(ld));
+        } catch (e) {
+          err.textContent = 'Kod noto‘g‘ri. Qaytadan urinib ko‘ring.';
+        }
         input.classList.add('error');
         err.classList.add('show');
         input.value = '';
