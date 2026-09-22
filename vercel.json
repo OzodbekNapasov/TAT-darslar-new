@@ -39,6 +39,16 @@
       "source": "/5-test",
       "destination": "/TAT%20darslar/5.%20Kompyuter%20va%20uning%20qurilmalari/test-5.html",
       "permanent": false
+    },
+    {
+      "source": "/6-dars",
+      "destination": "/TAT%20darslar/6.%20Windows%20operatsion%20tizimi/dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/6-test",
+      "destination": "/TAT%20darslar/6.%20Windows%20operatsion%20tizimi/test.html",
+      "permanent": false
     }
   ],
 

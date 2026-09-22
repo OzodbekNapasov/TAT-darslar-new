@@ -29,5 +29,17 @@ window.NAZORAT_TESTLARI = [
     nom: 'O‘qituvchi boshqaruv paneli',
     havola: 'https://ozodbeknapasov.github.io/3-dars-uchun/admin',
     izoh: 'Guruhlar statistikasi va talaba natijalarini nazorat qilish.'
+  },
+  {
+    dars: '6-dars',
+    nom: 'Windows OT — Interaktiv Darslik (Talaba & O‘qituvchi)',
+    havola: './6. Windows operatsion tizimi/dars.html',
+    izoh: 'Windows operatsion tizimi, dasturlar tasnifi, Start menyu va Windows 11 trenajyori.'
+  },
+  {
+    dars: '6-dars',
+    nom: 'Windows OT — Bilimni sinash testi (20 ta savol)',
+    havola: './6. Windows operatsion tizimi/test.html',
+    izoh: 'Talabalar va o‘qituvchi uchun lokal 20 talik test (50/70/85/100 baholash mezoni bilan).'
   }
 ];

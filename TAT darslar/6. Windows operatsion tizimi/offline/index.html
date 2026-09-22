@@ -1,0 +1,3598 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6-Dars: Windows operatsion tizimi va unda ishlash asoslari — Tibbiyotda Axborot Texnologiyalari</title>
+  <meta name="description" content="Operatsion tizim tushunchasi, dasturlar tasnifi, Windows ish stoli, fayl va papkalar bilan ishlash, amaliy trenajyor va test.">
+  <link rel="icon" type="image/svg+xml" href="./images/logos/windows11.svg">
+  <style>
+    :root {
+      --bg-page: #07090e;
+      --bg-card: #0e121a;
+      --bg-card-hover: #131926;
+      --bg-glass: rgba(14, 18, 26, 0.85);
+      --border-color: #1e2638;
+      --border-accent: rgba(0, 120, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --win-blue: #0078d4;
+      --win-cyan: #06b6d4;
+      --win-green: #10b981;
+      --win-amber: #f59e0b;
+      --win-rose: #f43f5e;
+      --win-purple: #8b5cf6;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 120, 212, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 10% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    /* ====================================================================== */
+    /* TOP NAVIGATION BAR                                                     */
+    /* ====================================================================== */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-logo-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(0, 120, 212, 0.15);
+      border: 1px solid rgba(0, 120, 212, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-box img, .nav-logo-box svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .nav-title-block h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .nav-title-block p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.5rem 0.95rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-muted);
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      border-color: #3b82f6;
+      background: var(--bg-card-hover);
+    }
+
+    .nav-btn-primary {
+      background: var(--win-blue);
+      border-color: var(--win-blue);
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(0, 120, 212, 0.35);
+    }
+
+    .nav-btn-primary:hover {
+      background: #0066b8;
+      transform: translateY(-1px);
+    }
+
+    /* ====================================================================== */
+    /* HERO BANNER                                                            */
+    /* ====================================================================== */
+    .hero {
+      padding: 3rem 0 2.25rem 0;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(0, 120, 212, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .hero-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.18;
+      margin-bottom: 0.85rem;
+      max-width: 900px;
+    }
+
+    .hero-title span {
+      color: #38bdf8;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 0.55rem 1.1rem;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .hero-chip:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ====================================================================== */
+    /* SECTIONS LAYOUT                                                        */
+    /* ====================================================================== */
+    main {
+      padding: 3rem 0 4.5rem 0;
+    }
+
+    .section-block {
+      margin-bottom: 4rem;
+    }
+
+    .section-head {
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .section-num {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 800px;
+    }
+
+    /* ====================================================================== */
+    /* 1. OPERATING SYSTEM CONCEPT CARDS                                      */
+    /* ====================================================================== */
+    .os-concept-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .os-concept-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .concept-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.65rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .concept-card.highlight {
+      border-color: var(--border-accent);
+      background: linear-gradient(135deg, rgba(0, 120, 212, 0.08) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .concept-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(0, 120, 212, 0.15);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.15rem;
+    }
+
+    .concept-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .concept-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 0.85rem;
+    }
+
+    .concept-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+    }
+
+    .concept-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.84rem;
+      color: var(--text-main);
+    }
+
+    .concept-list li svg {
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    /* Boot sequence steps */
+    .boot-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .boot-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem 1.15rem;
+      position: relative;
+    }
+
+    .boot-step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(0, 120, 212, 0.2);
+      color: #60a5fa;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .boot-step h4 {
+      font-size: 0.95rem;
+      font-weight: 750;
+      margin-bottom: 0.25rem;
+    }
+
+    .boot-step p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* ====================================================================== */
+    /* 2. SOFTWARE CATALOG & OFFICIAL LOGOS                                   */
+    /* ====================================================================== */
+    .software-group-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin: 2rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.15rem;
+    }
+
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.35rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.22s ease;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+
+    .app-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 120, 212, 0.2);
+    }
+
+    .app-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .app-logo-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .app-logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .app-type-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .app-card h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .app-card-role {
+      font-size: 0.8rem;
+      color: #38bdf8;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+    }
+
+    .app-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .app-medical-use {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.76rem;
+      color: #a7f3d0;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .app-medical-use svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: #10b981;
+      margin-top: 2px;
+    }
+
+    /* ====================================================================== */
+    /* 3. WINDOWS EXPLORER & FILE EXTENSIONS TABLE                             */
+    /* ====================================================================== */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .ext-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+
+    .ext-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.74rem;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .ext-table td {
+      padding: 0.95rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .ext-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .ext-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ext-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .ext-badge.blue { background: rgba(0, 120, 212, 0.2); color: #60a5fa; }
+    .ext-badge.green { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .ext-badge.orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+    .ext-badge.red { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .ext-badge.purple { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+
+    /* Shortcuts Grid */
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .shortcut-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .shortcut-keys {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .key-cap {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+    }
+
+    .shortcut-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: right;
+      font-weight: 600;
+    }
+
+    /* ====================================================================== */
+    /* 4. INTERACTIVE VIRTUAL WINDOWS SIMULATOR                               */
+    /* ====================================================================== */
+    .sim-wrapper {
+      background: #000000;
+      border: 2px solid var(--border-accent);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 120, 212, 0.25);
+      margin-top: 1.75rem;
+    }
+
+    .sim-header {
+      background: #11141c;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sim-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .sim-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .sim-circle.red { background: #ef4444; }
+    .sim-circle.yellow { background: #f59e0b; }
+    .sim-circle.green { background: #10b981; }
+
+    .sim-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 0.4rem;
+    }
+
+    .sim-tasks-bar {
+      background: rgba(14, 18, 26, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sim-task-instruction {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sim-progress-badge {
+      font-size: 0.74rem;
+      font-weight: 800;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Virtual Screen */
+    .sim-screen {
+      position: relative;
+      min-height: 420px;
+      background-image: url('./images/win11_bg.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .sim-desktop-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      width: 100px;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      text-align: center;
+      padding: 0.4rem 0.3rem;
+      border-radius: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .desktop-icon:hover, .desktop-icon.selected {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+    }
+
+    .desktop-icon svg, .desktop-icon img {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    }
+
+    .desktop-icon span {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .desktop-icon input {
+      font-size: 0.75rem;
+      width: 90px;
+      padding: 0.15rem;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      border-radius: 4px;
+      color: #ffffff;
+      text-align: center;
+      outline: none;
+    }
+
+    /* Virtual Taskbar */
+    .sim-taskbar {
+      margin-top: auto;
+      background: rgba(14, 18, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .taskbar-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 auto;
+    }
+
+    .tb-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: transparent;
+      border: none;
+    }
+
+    .tb-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .tb-icon-btn img, .tb-icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .taskbar-tray {
+      font-size: 0.74rem;
+      color: #ffffff;
+      text-align: right;
+      font-weight: 600;
+      line-height: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .sim-feedback {
+      margin-top: 1rem;
+      padding: 0.85rem 1.15rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .sim-feedback.success {
+      display: flex;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    /* Context Menu */
+    .context-menu {
+      position: absolute;
+      background: #182030;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 0.4rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.2rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      z-index: 50;
+      min-width: 170px;
+    }
+
+    .ctx-item {
+      padding: 0.5rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .ctx-item:hover {
+      background: #0078d4;
+      color: #ffffff;
+    }
+
+    /* ====================================================================== */
+    /* 5. QUIZ SECTION (TEST BANK)                                            */
+    /* ====================================================================== */
+    .quiz-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    .quiz-auth-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.25rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    @media (min-width: 640px) {
+      .quiz-auth-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .auth-field label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .auth-field input, .auth-field select {
+      width: 100%;
+      background: var(--bg-page);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .auth-field input:focus, .auth-field select:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .question-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .q-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .q-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(0, 120, 212, 0.2);
+      color: #60a5fa;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .q-text {
+      font-size: 1rem;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      background: var(--bg-page);
+      border: 1.5px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .opt-label:hover {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .opt-label input[type="radio"] {
+      accent-color: #0078d4;
+      width: 17px;
+      height: 17px;
+    }
+
+    .opt-label.correct {
+      border-color: #10b981 !important;
+      background: rgba(16, 185, 129, 0.15) !important;
+      color: #a7f3d0 !important;
+    }
+
+    .opt-label.incorrect {
+      border-color: #ef4444 !important;
+      background: rgba(239, 68, 68, 0.15) !important;
+      color: #fca5a5 !important;
+    }
+
+    .btn-submit-quiz {
+      width: 100%;
+      background: linear-gradient(135deg, #0078d4 0%, #2563eb 100%);
+      color: #ffffff;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(0, 120, 212, 0.35);
+    }
+
+    .btn-submit-quiz:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 120, 212, 0.45);
+    }
+
+    /* Result Modal */
+    .result-box {
+      margin-top: 1.5rem;
+      padding: 1.75rem;
+      border-radius: 20px;
+      background: #111827;
+      border: 1px solid var(--border-color);
+      display: none;
+      text-align: center;
+    }
+
+    .result-score {
+      font-size: 2.25rem;
+      font-weight: 900;
+      margin: 0.5rem 0;
+    }
+
+    /* ====================================================================== */
+    /* FOOTER                                                                 */
+    /* ====================================================================== */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: rgba(7, 9, 14, 0.95);
+      padding: 2rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-inner {
+        flex-direction: row;
+        text-align: left;
+      }
+    }
+    /* ====================================================================== */
+    /* LOGOS NATURAL RENDERING                                                */
+    /* ====================================================================== */
+    .app-logo-box img, .nav-logo-box img, .tb-icon-btn img {
+      filter: none !important;
+      opacity: 1 !important;
+    }
+
+    /* ====================================================================== */
+    /* FULL-SCREEN SPLASH COVER (100VH SCROLLABLE TOP SECTION)                */
+    /* ====================================================================== */
+    .splash-overlay {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      background-image: url('./images/win11_bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+      overflow: hidden;
+    }
+
+    .splash-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(7, 9, 14, 0.62);
+    }
+
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 2.5rem;
+      max-width: 880px;
+    }
+
+    .splash-lesson-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #60a5fa;
+      background: rgba(0, 120, 212, 0.22);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .splash-title {
+      font-size: clamp(2rem, 5.2vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 1.1rem;
+    }
+
+    .splash-date {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2.5rem;
+    }
+
+    .splash-hint {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      animation: bounceDown 2.2s infinite ease-in-out;
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ====================================================================== */
+    /* NEW SECTIONS: HISTORY, BUTTONS, START MENU, RULES, DOWNLOAD, CRACK    */
+    /* ====================================================================== */
+    .history-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1.5rem;
+      border-left: 2px solid var(--border-accent);
+      padding-left: 1.75rem;
+      position: relative;
+    }
+
+    .history-item {
+      position: relative;
+      padding-bottom: 1.75rem;
+    }
+
+    .history-item::before {
+      content: '';
+      position: absolute;
+      left: -2.15rem;
+      top: 0.4rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--win-blue);
+      border: 2px solid var(--bg-page);
+      box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.3);
+    }
+
+    .history-year {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #60a5fa;
+      margin-bottom: 0.25rem;
+    }
+
+    .history-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .history-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Window Buttons */
+    .winbtn-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .winbtn-card {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .winbtn-symbol {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      font-family: var(--font-mono);
+    }
+
+    .winbtn-symbol.minimize { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .winbtn-symbol.maximize { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .winbtn-symbol.close    { background: rgba(244, 63, 94, 0.15);  color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    .winbtn-name { font-size: 1rem; font-weight: 800; }
+    .winbtn-key  { font-size: 0.78rem; color: #60a5fa; font-weight: 700; font-family: var(--font-mono); }
+    .winbtn-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* Start Menu */
+    .start-menu-diagram {
+      background: #0d1117;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .start-zone {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .start-zone:last-child { border-bottom: none; }
+
+    .start-zone-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(0, 120, 212, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #60a5fa;
+    }
+
+    .start-zone-text h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .start-zone-text p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; }
+
+    /* Rules & Download & Crack */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .rule-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+
+    .rule-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rule-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .download-sources {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .source-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .source-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(0, 120, 212, 0.2);
+      color: #60a5fa;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .source-card h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .source-card p  { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+    .crack-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .crack-comparison { grid-template-columns: 1fr; }
+    }
+
+    .crack-card {
+      border-radius: 18px;
+      padding: 1.5rem;
+      border: 1px solid;
+    }
+
+    .crack-card.original {
+      background: rgba(16, 185, 129, 0.07);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .crack-card.cracked {
+      background: rgba(244, 63, 94, 0.07);
+      border-color: rgba(244, 63, 94, 0.3);
+    }
+
+    .crack-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .crack-card.original h4 { color: #34d399; }
+    .crack-card.cracked  h4 { color: #fb7185; }
+
+    .crack-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .crack-list li {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .crack-list li::before {
+      content: '•';
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .crack-card.original .crack-list li::before { color: #34d399; }
+    .crack-card.cracked  .crack-list li::before { color: #fb7185; }
+
+    /* ====================================================================== */
+    /* REAL WINDOWS 11 WINDOW CONTROLS & TITLEBAR DEMO                        */
+    /* ====================================================================== */
+    .win11-window-demo {
+      background: #1a202c;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .win11-titlebar {
+      height: 40px;
+      background: #0f141d;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 14px;
+      user-select: none;
+    }
+
+    .win11-titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .win11-titlebar-left img {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .win11-controls-group {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+    }
+
+    .win11-ctrl-btn {
+      width: 46px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      transition: background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .win11-ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .win11-ctrl-btn.close-btn:hover {
+      background: #e81123;
+      color: #ffffff;
+    }
+
+    .win11-window-body {
+      padding: 1rem 1.25rem;
+      background: #141a26;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .winbtn-icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .winbtn-svg-box {
+      width: 56px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .winbtn-svg-box.min-box {
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #f8fafc;
+    }
+
+    .winbtn-svg-box.max-box {
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #f8fafc;
+    }
+
+    .winbtn-svg-box.cls-box {
+      background: #e81123;
+      border: 1px solid #ff4d5a;
+      color: #ffffff;
+    }
+
+    /* ====================================================================== */
+    /* REAL WINDOWS 11 START MENU VISUALREPLICA                               */
+    /* ====================================================================== */
+    .real-start-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      margin-top: 1.5rem;
+      align-items: start;
+    }
+
+    @media (min-width: 960px) {
+      .real-start-layout {
+        grid-template-columns: 520px 1fr;
+      }
+    }
+
+    .win11-start-menu {
+      background: rgba(20, 26, 38, 0.92);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(0, 120, 212, 0.2);
+      overflow: hidden;
+      user-select: none;
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .start-inner-pad {
+      padding: 1.35rem 1.5rem 1rem 1.5rem;
+    }
+
+    .start-search-box {
+      background: #0f141f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 2px solid #0078d4;
+      border-radius: 9999px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .start-section-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding: 0 0.25rem;
+    }
+
+    .start-section-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .start-num-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0078d4;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .start-all-btn {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .start-pinned-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      .start-pinned-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .start-app-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.25rem;
+      border-radius: 8px;
+      transition: background 0.15s ease;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .start-app-tile:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .start-app-tile img, .start-app-tile svg {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    .start-app-tile span {
+      font-size: 0.68rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.15;
+      max-width: 68px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .start-rec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .start-rec-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .start-rec-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .start-rec-item img {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .start-rec-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .start-rec-info strong {
+      font-size: 0.74rem;
+      color: #f1f5f9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .start-rec-info span {
+      font-size: 0.66rem;
+      color: #94a3b8;
+    }
+
+    .start-footer-bar {
+      background: rgba(10, 14, 22, 0.92);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .start-user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .start-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #0078d4;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+
+    .start-power-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .start-power-btn {
+      background: rgba(244, 63, 94, 0.16);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fb7185;
+      padding: 0.38rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ====================================================================== */
+    /* MOBILE OPTIMIZATION & RESPONSIVE ENHANCEMENTS (100% PHONE FRIENDLY)    */
+    /* ====================================================================== */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+    }
+
+    p, h1, h2, h3, h4, li, span, td, th, code, strong {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sim-mobile-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: #0c1018;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sim-mobile-btn {
+      background: rgba(0, 120, 212, 0.18);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #60a5fa;
+      font-size: 0.78rem;
+      font-weight: 750;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .sim-mobile-btn:hover {
+      background: #0078d4;
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      /* Fix iOS/Android background-attachment:fixed zoom bug */
+      body, .splash-overlay {
+        background-attachment: scroll !important;
+      }
+
+      .splash-overlay {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 1rem;
+      }
+
+      .splash-content {
+        padding: 1.5rem 0.85rem;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .splash-lesson-tag {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.75rem;
+        margin-bottom: 1.1rem;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.35;
+      }
+
+      .splash-title {
+        font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+        line-height: 1.22;
+        margin-bottom: 0.9rem;
+      }
+
+      .splash-date {
+        font-size: 0.96rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .splash-hint {
+        font-size: 0.78rem;
+        padding: 0.55rem 0.95rem;
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.35;
+      }
+
+      .container {
+        padding: 0 0.9rem;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* Sticky Top Nav on Phone */
+      .top-nav {
+        padding: 0.55rem 0;
+      }
+
+      .nav-inner {
+        gap: 0.45rem;
+      }
+
+      .nav-brand {
+        gap: 0.5rem;
+        min-width: 0;
+        flex: 1;
+      }
+
+      .nav-logo-box {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+
+      .nav-logo-box img, .nav-logo-box svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .nav-title-block {
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .nav-title-block h1 {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nav-title-block p {
+        display: none;
+      }
+
+      .nav-actions {
+        gap: 0.35rem;
+        flex-shrink: 0;
+      }
+
+      .nav-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.73rem;
+        border-radius: 8px;
+        gap: 0.28rem;
+        white-space: nowrap;
+      }
+
+      /* Hero Banner on Phone */
+      .hero {
+        padding: 1.5rem 0 1.35rem 0;
+      }
+
+      .hero-title {
+        font-size: 1.45rem;
+        line-height: 1.25;
+      }
+
+      .hero-desc {
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin-bottom: 1.15rem;
+      }
+
+      .hero-quick-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+      }
+
+      .hero-chip {
+        font-size: 0.76rem;
+        padding: 0.5rem 0.65rem;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+      }
+
+      main {
+        padding: 1.5rem 0 2.75rem 0;
+      }
+
+      .section-block {
+        margin-bottom: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 1.28rem;
+        line-height: 1.3;
+      }
+
+      .section-desc {
+        font-size: 0.88rem;
+        line-height: 1.5;
+      }
+
+      /* Force all multi-column grids to single full-width column on phones */
+      .os-concept-grid,
+      .boot-timeline,
+      .logos-grid,
+      .rules-grid,
+      .download-sources,
+      .crack-comparison,
+      .real-start-layout,
+      .shortcuts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.95rem !important;
+      }
+
+      .winbtn-showcase {
+        flex-direction: column !important;
+        gap: 0.95rem !important;
+      }
+
+      .winbtn-card {
+        min-width: 0 !important;
+        width: 100% !important;
+      }
+
+      .concept-card, .app-card, .winbtn-card, .rule-card, .crack-card, .source-card, .boot-step {
+        padding: 1.15rem 1rem !important;
+        border-radius: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      /* History Timeline on Phone */
+      .history-timeline {
+        padding-left: 1.25rem;
+        margin-left: 0.25rem;
+      }
+
+      .history-item::before {
+        left: -1.65rem;
+      }
+
+      /* 5-Qism: Windows 11 Start Menu Replica on Phone — NO CUT-OFF TEXT */
+      .win11-start-menu {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 16px;
+      }
+
+      .start-inner-pad {
+        padding: 1rem 0.85rem 0.85rem 0.85rem;
+      }
+
+      .start-search-box {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.78rem;
+        border-radius: 12px;
+      }
+
+      .start-section-row {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .start-pinned-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.45rem !important;
+      }
+
+      .start-app-tile {
+        padding: 0.5rem 0.25rem;
+      }
+
+      .start-app-tile span {
+        max-width: 100% !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        font-size: 0.73rem !important;
+        line-height: 1.2 !important;
+        word-break: break-word;
+      }
+
+      .start-rec-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem;
+      }
+
+      .start-rec-info strong {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        font-size: 0.78rem;
+        line-height: 1.25;
+        word-break: break-all;
+      }
+
+      .start-footer-bar {
+        padding: 0.7rem 0.85rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .start-zone {
+        padding: 0.95rem 0.9rem;
+        gap: 0.8rem;
+      }
+
+      /* 6-Qism: Window Titlebar Demo on Phone */
+      .win11-titlebar {
+        padding-left: 10px;
+        height: 38px;
+      }
+
+      .win11-titlebar-left {
+        font-size: 0.72rem;
+        gap: 6px;
+        min-width: 0;
+        flex: 1;
+      }
+
+      .win11-ctrl-btn {
+        width: 34px;
+        flex-shrink: 0;
+      }
+
+      .win11-window-body {
+        padding: 0.85rem 0.9rem;
+        font-size: 0.8rem;
+      }
+
+      /* 7-Qism: Convert File Extensions Table into Full-Width Mobile Cards (Zero Cut-off!) */
+      .table-container {
+        overflow-x: visible;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+
+      .ext-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        display: block;
+      }
+
+      .ext-table thead {
+        display: none;
+      }
+
+      .ext-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+      }
+
+      .ext-table tbody tr {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 1rem;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .ext-table tbody td {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.2rem 0;
+        border: none;
+        font-size: 0.84rem;
+        text-align: right;
+        width: 100%;
+      }
+
+      .ext-table tbody td::before {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-align: left;
+        flex-shrink: 0;
+      }
+
+      .ext-table tbody td:nth-child(1)::before { content: "Kengaytma:"; }
+      .ext-table tbody td:nth-child(2)::before { content: "Fayl turi:"; }
+      .ext-table tbody td:nth-child(3)::before { content: "Ochuvchi dastur:"; }
+      .ext-table tbody td:nth-child(4)::before { content: "Tibbiyotda:"; }
+
+      /* 7-Qism: Keyboard Shortcuts on Phone */
+      .shortcut-card {
+        padding: 0.85rem 0.95rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .shortcut-desc {
+        font-size: 0.8rem;
+      }
+
+      /* 8-Qism: Interactive Windows 11 Simulator on Phone */
+      .sim-wrapper {
+        border-radius: 16px;
+      }
+
+      .sim-header {
+        padding: 0.65rem 0.85rem;
+      }
+
+      .sim-title {
+        font-size: 0.75rem;
+      }
+
+      .sim-tasks-bar {
+        padding: 0.75rem 0.85rem;
+        gap: 0.5rem;
+      }
+
+      .sim-task-instruction {
+        font-size: 0.82rem;
+        line-height: 1.35;
+      }
+
+      .sim-mobile-toolbar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+        padding: 0.65rem 0.75rem;
+      }
+
+      .sim-mobile-btn {
+        width: 100%;
+        font-size: 0.74rem;
+        padding: 0.5rem 0.4rem;
+        text-align: center;
+      }
+
+      .sim-screen {
+        min-height: 300px;
+        padding: 0.85rem;
+      }
+
+      .sim-desktop-icons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 0.6rem;
+        align-items: flex-start;
+      }
+
+      .desktop-icon {
+        width: 76px;
+        padding: 0.35rem 0.2rem;
+      }
+
+      .desktop-icon svg, .desktop-icon img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .desktop-icon span {
+        font-size: 0.7rem;
+      }
+
+      .sim-taskbar {
+        padding: 0.35rem 0.55rem;
+        border-radius: 12px;
+        gap: 0.25rem;
+      }
+
+      .taskbar-center {
+        gap: 0.2rem;
+      }
+
+      .tb-icon-btn {
+        width: 30px;
+        height: 30px;
+      }
+
+      .tb-icon-btn img, .tb-icon-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .taskbar-tray {
+        font-size: 0.66rem;
+      }
+
+      /* Footer on Phone */
+      footer {
+        padding: 1.5rem 0;
+      }
+
+      .footer-inner,
+      .footer-inner > div {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 0.5rem !important;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- SPLASH COVER (100VH SCROLLABLE TOP SECTION) -->
+  <div class="splash-overlay" id="splash" onclick="scrollToLesson()">
+    <div class="splash-content">
+      <div class="splash-lesson-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        6-Dars — Tibbiyotda Axborot Texnologiyalari
+      </div>
+      <h1 class="splash-title">Windows operatsion tizimi<br>va unda ishlash asoslari</h1>
+      <p class="splash-date" id="splash-date-text">Bugun</p>
+      <div class="splash-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        Mavzuni o‘qish uchun pastga skroll qiling yoki bosing
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP NAVIGATION -->
+  <header class="top-nav" id="lesson-start">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand" title="Bosh Mundarijaga qaytish">
+          <div class="nav-logo-box">
+            <img src="./images/logos/windows11.svg" alt="Windows 11" class="logo-windows">
+          </div>
+          <div class="nav-title-block">
+            <h1>6-Dars: Windows Operatsion Tizimi</h1>
+            <p>Shahrisabz Tibbiyot Texnikumi • Hamshiralik ishi</p>
+          </div>
+        </a>
+
+        <div class="nav-actions">
+          <a href="../index.html" class="nav-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>Mundarija</span>
+          </a>
+          <a href="./test.html" class="nav-btn nav-btn-primary">
+            <span>Test (20 ta)</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-badge-row">
+        <span class="hero-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          6-Dars Nazariyasi va Amaliyoti
+        </span>
+        <span class="hero-date" id="hero-live-date">Bugun</span>
+      </div>
+
+      <h1 class="hero-title">Windows operatsion tizimi va <span>unda ishlash asoslari</span></h1>
+      <p class="hero-desc">
+        Operatsion tizim nima va u qanday yuklanadi? Dasturiy ta’minot tasnifi (tizimli, amaliy va utilitalar), fayllar, papkalar, fayl kengaytmalari hamda hamshiraga zarur bo‘lgan amaliy ko‘nikmalar.
+      </p>
+
+      <div class="hero-quick-links">
+        <a href="#sec-concept" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          1. OT Tushunchasi
+        </a>
+        <a href="#sec-history" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          2. Windows Tarixi
+        </a>
+        <a href="#sec-software" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          3. Dasturlar va Logolar
+        </a>
+        <a href="#sec-download" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          4. Yuklash &amp; Crack
+        </a>
+        <a href="#sec-startmenu" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          5. Pusk Menyusi
+        </a>
+        <a href="#sec-winbuttons" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          6. Oyna Tugmalari
+        </a>
+        <a href="#sec-explorer" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          7. Fayllar &amp; Papkalar
+        </a>
+        <a href="#sec-simulator" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          8. Trenajyor
+        </a>
+        <a href="./test.html" class="hero-chip" style="background:rgba(0,120,212,0.18); border-color:#0078d4; color:#60a5fa;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          9. Bilimni Sinash (Test)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="container">
+
+      <!-- ==================== 1-QISM: OT TUSHUNCHASI ==================== -->
+      <section id="sec-concept" class="section-block">
+        <div class="section-head">
+          <span class="section-num">1-Qism</span>
+          <h2 class="section-title">Operatsion tizim nima?</h2>
+          <p class="section-desc">Kompyuter yoqilishi bilanoq birinchi ishga tushadigan boshqaruvchi dastur haqida tushuncha.</p>
+        </div>
+
+        <div class="os-concept-grid">
+          <div class="concept-card highlight">
+            <div class="concept-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3>Qisqa va lo‘nda ta’rif</h3>
+            <p>
+              <strong>Operatsion tizim (OT / Operating System)</strong> — qurilma (kompyuter, telefon, planshet) ishga tushishi bilanoq eng birinchi yuklanuvchi, kompyuterning barcha qismlarini boshqaruvchi va inson bilan kompyuter apparat vositalari o‘rtasida muloqotni (interfeysni) ta’minlovchi bosh dasturdir.
+            </p>
+            <ul class="concept-list">
+              <li>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Protsessor, xotira va disklarni nazorat qiladi</span>
+              </li>
+              <li>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Barcha amaliy dasturlar (Word, DMED) ishlashiga poydevor yaratadi</span>
+              </li>
+              <li>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Fayl va papkalarni tartibli saqlashni ta’minlaydi</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h3>Operatsion tizimsiz kompyuter nima?</h3>
+            <p>
+              Operatsion tizimsiz kompyuter shunchaki <strong>"jonsiz temir"</strong> bo‘lib qoladi. Siz unga hech qanday buyruq bera olmaysiz, birorta ham dastur ishlamaydi, ekranda esa faqat qora oyna turadi.
+            </p>
+            <p>
+              Xuddi tibbiyotda inson tanasini bosh miya va asab tizimi boshqarganidek, kompyuterning barcha texnik qismlarini ham <strong>Operatsion Tizim</strong> boshqaradi.
+            </p>
+            <div class="app-medical-use">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span><strong>Klinik ahamiyati:</strong> Bemor monitori, UZD apparati yoki laboratoriya analizatori ham o‘zining ichki ixtisoslashgan operatsion tizimiga ega!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boot sequence -->
+        <h3 style="font-size: 1.12rem; font-weight: 800; margin-top: 1.75rem; margin-bottom: 0.5rem;">Qurilmaning ishga tushish zanjiri (Yuklanish bosqichlari):</h3>
+        <div class="boot-timeline">
+          <div class="boot-step">
+            <div class="boot-step-num">1</div>
+            <h4>Quvvat tugmasi (Power ON)</h4>
+            <p>Kompyuter tugmasi bosilganda elektr toki ona plata va barcha qurilmalarga yetkaziladi.</p>
+          </div>
+          <div class="boot-step">
+            <div class="boot-step-num">2</div>
+            <h4>BIOS / UEFI tekshiruvi</h4>
+            <p>Tizim xotira (RAM), disk va klaviaturani tekshirib, xatosiz ishlashini tasdiqlaydi (POST jarayoni).</p>
+          </div>
+          <div class="boot-step">
+            <div class="boot-step-num">3</div>
+            <h4>OT yuklanishi (Booting)</h4>
+            <p>Qattiq diskdan (SSD / HDD) Windows operatsion tizimi operativ xotiraga (RAM) yuklanadi.</p>
+          </div>
+          <div class="boot-step">
+            <div class="boot-step-num">4</div>
+            <h4>Foydalanuvchi Ish Stoli</h4>
+            <p>Dasturlar, drayverlar faollashadi va monitorga Windows ish stoli (Desktop) chiqadi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 2-QISM: WINDOWS TARIXI VA VERSIYALARI ==================== -->
+      <section id="sec-history" class="section-block">
+        <div class="section-head">
+          <span class="section-num">2-Qism</span>
+          <h2 class="section-title">Windows tizimining tarixi va versiyalari</h2>
+          <p class="section-desc">Microsoft Windows 1985-yildan bugungi zamonaviy Windows 11 ga qadar qanday rivojlandi?</p>
+        </div>
+
+        <div class="history-timeline">
+          <div class="history-item">
+            <div class="history-year">1985</div>
+            <div class="history-name">Windows 1.0</div>
+            <p class="history-desc">Microsoft kompaniyasi tomonidan chiqarilgan birinchi grafik interfeys. Faqat sichqoncha orqali boshqarilgan.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">1995</div>
+            <div class="history-name">Windows 95</div>
+            <p class="history-desc">Zamonaviy Windows asosi: "Boshlash" (Pusk / Start) tugmasi, Vazifalar paneli (Taskbar) va Ish stoli shu versiyada paydo bo‘lgan.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">2001</div>
+            <div class="history-name">Windows XP</div>
+            <p class="history-desc">Dunyo bo‘ylab eng uzoq umr ko‘rgan afsonaviy versiya. Oddiy interfeysi va barqarorligi sabab tibbiyot muassasalarida ko‘p yillar xizmat qilgan.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">2009</div>
+            <div class="history-name">Windows 7</div>
+            <p class="history-desc">Tezkorligi va qulayligi bilan eng ishonchli deb tan olingan tizim. Ko‘plab laboratoriya analizatorlari hanuz Windows 7 da ishlaydi.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">2012–2013</div>
+            <div class="history-name">Windows 8 / 8.1</div>
+            <p class="history-desc">Sensorli planshetlar uchun mo‘ljallangan plitkali interfeys. An’anaviy Pusk tugmasi yo‘qligi sababli kompyuterlarda kam ommalashgan.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">2015</div>
+            <div class="history-name">Windows 10</div>
+            <p class="history-desc">Pusk menyusini qaytargan va yuqori xavfsizlikni ta’minlagan tizim. Hozirda shifoxona va poliklinikalardagi kompyuterlarning asosiy qismida o‘rnatilgan.</p>
+          </div>
+          <div class="history-item">
+            <div class="history-year">2021 — Hozirgi davr</div>
+            <div class="history-name">Windows 11</div>
+            <p class="history-desc">Markazlashgan Taskbar va yangi Pusk menyusi, yumaloq burchakli oynalar, yuqori darajadagi xavfsizlik (TPM 2.0) bilan jihozlangan eng so‘nggi versiya.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3-QISM: DASTURLAR TURLARI VA LOGOLARI ==================== -->
+      <section id="sec-software" class="section-block">
+        <div class="section-head">
+          <span class="section-num">3-Qism</span>
+          <h2 class="section-title">Dasturlar, ularning turlari va tasnif qoidalari</h2>
+          <p class="section-desc">Kompyuterdagi barcha dasturlarning tasniflanish qoidalari hamda rasmiy rangli logolari.</p>
+        </div>
+
+        <!-- Tasnif qoidalari -->
+        <div class="rules-grid" style="margin-top: 0; margin-bottom: 2rem;">
+          <div class="rule-card">
+            <h4>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.3"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              1-Qoida: Tizimli dasturlar
+            </h4>
+            <p><strong>Mezon:</strong> Kompyuter yoqilishi bilan birinchi yuklanadigan va temir qurilmalarni (protsessor, RAM, disk) boshqaruvchi dasturlar. Ularsiz kompyuter ishlamaydi (Windows, macOS, Linux, Android, iOS).</p>
+          </div>
+          <div class="rule-card">
+            <h4>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.3"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+              2-Qoida: Amaliy dasturlar
+            </h4>
+            <p><strong>Mezon:</strong> Foydalanuvchi aniq bir ishni (matn terish, jadval tuzish, internetga kirish, bemor qabul qilish) bajarishi uchun xizmat qiluvchi dasturlar. Ular Operatsion Tizim ichida ishlaydi.</p>
+          </div>
+          <div class="rule-card">
+            <h4>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              3-Qoida: Yordamchi vositalar
+            </h4>
+            <p><strong>Mezon:</strong> Antiviruslar (Kaspersky), arxivatorlar (7-Zip, WinRAR) va PDF o‘quvchilar ham <strong>amaliy dasturlar</strong> tarkibiga kirib, ma’lumotlarni himoyalash va ixchamlashtirishga xizmat qiladi.</p>
+          </div>
+        </div>
+
+        <!-- GURUH A: Tizimli dasturlar -->
+        <div class="software-group-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>A) Tizimli Dasturiy Ta’minot (Operatsion Tizimlar)</span>
+        </div>
+
+        <div class="logos-grid">
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/windows11.svg" alt="Windows 11">
+              </div>
+              <span class="app-type-tag">Kompyuter OT</span>
+            </div>
+            <h4>Microsoft Windows 11 / 10</h4>
+            <div class="app-card-role">Dunyo va tibbiyotdagi eng asosiy OT</div>
+            <p class="app-card-desc">Grafik interfeysga ega, sichqoncha va klaviatura orqali qulay boshqariladigan eng ommabop kompyuter operatsion tizimi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Poliklinika va shifoxonalardagi barcha kompyuterlarda qo‘llaniladi.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/apple.svg" alt="macOS">
+              </div>
+              <span class="app-type-tag">Kompyuter OT</span>
+            </div>
+            <h4>Apple macOS</h4>
+            <div class="app-card-role">Apple Mac kompyuterlari tizimi</div>
+            <p class="app-card-desc">Faqat Apple kompaniyasining MacBook va iMac qurilmalarida ishlaydigan yuqori barqarorlikka ega operatsion tizim.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Yuqori aniqlikdagi tibbiy diagnostika va ilmiy tadqiqotlarda ishlatiladi.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/linux.svg" alt="Linux">
+              </div>
+              <span class="app-type-tag">Ochiq kodli OT</span>
+            </div>
+            <h4>Linux</h4>
+            <div class="app-card-role">Erkin va xavfsiz tizim</div>
+            <p class="app-card-desc">Tux pingvini ramzi ostidagi bepul, o‘ta ishonchli va viruslarga chidamli operatsion tizimlar oilasi (Ubuntu, Debian).</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Tibbiyot serverlari, MRT va KT apparatlarining ichki tizimlarida ishlaydi.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/android.svg" alt="Android">
+              </div>
+              <span class="app-type-tag">Mobil OT</span>
+            </div>
+            <h4>Google Android</h4>
+            <div class="app-card-role">Smartfon va planshetlar tizimi</div>
+            <p class="app-card-desc">Google tomonidan ishlab chiqilgan dunyodagi eng keng tarqalgan mobil operatsion tizim.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Hamshiralarning ko‘chma planshetlari va mobil tibbiy ilovalari uchun.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/ios.svg" alt="Apple iOS">
+              </div>
+              <span class="app-type-tag">Mobil OT</span>
+            </div>
+            <h4>Apple iOS</h4>
+            <div class="app-card-role">iPhone va iPad operatsion tizimi</div>
+            <p class="app-card-desc">Apple smartfonlari uchun maxsus yaratilgan, ma’lumotlar himoyasi kuchli bo‘lgan mobil tizim.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Telemeditsina va shifokorlarning masofaviy konsultatsiyalarida.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GURUH B: Amaliy dasturlar (Utilitalar bilan birlashtirilgan) -->
+        <div class="software-group-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          <span>B) Amaliy Dasturlar va Xizmat Ko‘rsatuvchi Vositalar</span>
+        </div>
+
+        <div class="logos-grid">
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/word.svg" alt="Microsoft Word">
+              </div>
+              <span class="app-type-tag">Matn muharriri</span>
+            </div>
+            <h4>Microsoft Word</h4>
+            <div class="app-card-role">Kengaytmasi: .docx</div>
+            <p class="app-card-desc">Matnli hujjatlar, buyruqlar, protokollar, kasallik tarixi va blankalar yaratish uchun mo‘ljallangan asosiy amaliy dastur.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Hamshiralik qaydlari va shifokor epikrizlarini rasmiylashtirish.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/excel.svg" alt="Microsoft Excel">
+              </div>
+              <span class="app-type-tag">Elektron jadval</span>
+            </div>
+            <h4>Microsoft Excel</h4>
+            <div class="app-card-role">Kengaytmasi: .xlsx</div>
+            <p class="app-card-desc">Jadvallar, hisob-kitob formulalari, diagrammalar va bemorlar soni tahlili uchun eng kuchli amaliy dastur.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Dori-darmon hisobi, laboratoriya natijalari va bo‘lim statistikasi.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/powerpoint.svg" alt="Microsoft PowerPoint">
+              </div>
+              <span class="app-type-tag">Taqdimot</span>
+            </div>
+            <h4>Microsoft PowerPoint</h4>
+            <div class="app-card-role">Kengaytmasi: .pptx</div>
+            <p class="app-card-desc">Ko‘rgazmali slaydlar, diagrammalar va rasmlar yordamida tibbiy hisobotlarni namoyish etish dasturi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Tibbiy konferensiyalar, seminarlar va sanitariya targ‘iboti darslari.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/dmed.svg" alt="DMED Platformasi">
+              </div>
+              <span class="app-type-tag" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">Tibbiy Platforma</span>
+            </div>
+            <h4>DMED Axborot Tizimi</h4>
+            <div class="app-card-role">Elektron poliklinika va shifoxona</div>
+            <p class="app-card-desc">O‘zbekiston Respublikasi Sog‘liqni Saqlash Vazirligining yagona elektron tibbiy kartasi va qabul platformasi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Bemorlarni qabulga yozish, elektron retsept berish va tahlillarni kiritish.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/chrome.svg" alt="Google Chrome">
+              </div>
+              <span class="app-type-tag">Internet brauzer</span>
+            </div>
+            <h4>Google Chrome</h4>
+            <div class="app-card-role">Veb-sahifalar ko‘ruvchisi</div>
+            <p class="app-card-desc">Tezkor va xavfsiz internet brauzeri bo‘lib, onlayn tibbiy platformalar (DMED, SSV) bilan ishlash uchun xizmat qiladi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Vazirlik tizimlari va xalqaro tibbiy ma’lumotlar bazasiga kirish.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/edge.svg" alt="Microsoft Edge">
+              </div>
+              <span class="app-type-tag">Tizim brauzeri</span>
+            </div>
+            <h4>Microsoft Edge</h4>
+            <div class="app-card-role">Windows ichki brauzeri</div>
+            <p class="app-card-desc">Windows operatsion tizimiga oldindan o‘rnatilgan, PDF formatdagi tahlillarni ham o‘qiy oluvchi zamonaviy brauzer.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Rasmiy tibbiy PDF hujjatlarni to‘g‘ridan-to‘g‘ri ochish va chop etish.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/telegram.svg" alt="Telegram Desktop">
+              </div>
+              <span class="app-type-tag">Messenjer</span>
+            </div>
+            <h4>Telegram Desktop</h4>
+            <div class="app-card-role">Tezkor aloqa vositasi</div>
+            <p class="app-card-desc">Katta hajmdagi fayllar va hisobotlarni tezkor uzatish imkonini beruvchi muloqot dasturi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Shifokorlar va navbatchi hamshiralar o‘rtasida tezkor axborot almashinuvi.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/kaspersky.svg" alt="Kaspersky Antivirus">
+              </div>
+              <span class="app-type-tag">Antivirus (Himoya)</span>
+            </div>
+            <h4>Kaspersky &amp; Windows Defender</h4>
+            <div class="app-card-role">Axborot xavfsizligi dasturi</div>
+            <p class="app-card-desc">Kompyuterni viruslar, troyanlar, josus dasturlar va fleshkalar orqali yuquvchi xavflardan himoya qiluvchi amaliy vosita.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Bemorlarning maxfiy kasallik tarixi bazasini buzilishdan himoyalash.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/7zip.svg" alt="7-Zip">
+              </div>
+              <span class="app-type-tag">Arxivator</span>
+            </div>
+            <h4>7-Zip / WinRAR</h4>
+            <div class="app-card-role">Kengaytmalari: .zip, .7z, .rar</div>
+            <p class="app-card-desc">Katta hajmli fayl va papkalarni siqib, hajmini kichraytirib yagona arxiv faylga joylovchi amaliy dastur.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Rentgen va KT tahlillarining katta hajmdagi rasmlarini ixcham yuborish.</span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-top">
+              <div class="app-logo-box">
+                <img src="./images/logos/adobe.svg" alt="Adobe Acrobat">
+              </div>
+              <span class="app-type-tag">PDF Hujjat</span>
+            </div>
+            <h4>Adobe Acrobat Reader</h4>
+            <div class="app-card-role">Kengaytmasi: .pdf</div>
+            <p class="app-card-desc">Rasmiy xulosalar, buyruqlar va standart operatsion qoidalarni (SOP) o‘zgarmas holatda o‘qish va chop etish dasturi.</p>
+            <div class="app-medical-use">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Laboratoriya tahlillarining tasdiqlangan rasmiy xulosalari.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4-QISM: DASTURLARNI YUKLAB OLISH, ORIGINAL VA CRACK ==================== -->
+      <section id="sec-download" class="section-block">
+        <div class="section-head">
+          <span class="section-num">4-Qism</span>
+          <h2 class="section-title">Amaliy dasturlarni qayerdan yuklab olamiz? Original va Crack dasturlar</h2>
+          <p class="section-desc">Kompyuterga dastur o‘rnatishning xavfsiz manbalari hamda litsenziyalangan va buzilgan dasturlar farqi.</p>
+        </div>
+
+        <h3 style="font-size: 1.08rem; font-weight: 800; margin-bottom: 0.25rem; color: #38bdf8;">Dasturlarni yuklab olishning 4 ta ishonchli manbasi:</h3>
+        <div class="download-sources">
+          <div class="source-card">
+            <div class="source-num">1</div>
+            <div>
+              <h4>Ishlab chiqaruvchining rasmiy sayti</h4>
+              <p>Har bir dasturning o‘z rasmiy veb-sayti bor: <code>microsoft.com</code> (Word/Excel), <code>google.com/chrome</code>, <code>telegram.org</code>. Eng xavfsiz manba.</p>
+            </div>
+          </div>
+          <div class="source-card">
+            <div class="source-num">2</div>
+            <div>
+              <h4>Microsoft Store (Windows do‘koni)</h4>
+              <p>Windows 10/11 ichidagi rasmiy do‘kon. Barcha dasturlar Microsoft tomonidan virusga tekshirilgan. Pusk menyusidan kiriladi.</p>
+            </div>
+          </div>
+          <div class="source-card">
+            <div class="source-num">3</div>
+            <div>
+              <h4>Google Play va App Store</h4>
+              <p>Android planshet va smartfonlar uchun <strong>Google Play</strong>, iPhone/iPad uchun <strong>App Store</strong> rasmiy ilova do‘konlari.</p>
+            </div>
+          </div>
+          <div class="source-card">
+            <div class="source-num">4</div>
+            <div>
+              <h4>Muassasa IT bo‘limi</h4>
+              <p>Shifoxona va poliklinika kompyuterlariga dasturlar faqat muassasaning mas’ul IT mutaxassislari tomonidan litsenziya bilan o‘rnatiladi.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Original vs Crack -->
+        <h3 style="font-size: 1.08rem; font-weight: 800; margin-top: 2rem; margin-bottom: 0.25rem;">Original (Litsenziyalangan) va Crack (Buzilgan) dasturlar farqi:</h3>
+        <div class="crack-comparison">
+          <div class="crack-card original">
+            <h4>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Original (Litsenziyalangan) Dastur
+            </h4>
+            <ul class="crack-list">
+              <li>Rasmiy ishlab chiqaruvchidan qonuniy olingan yoki rasman bepul tarqatilgan asl dastur</li>
+              <li>Doimiy xavfsizlik yangilanishlari (Updates) kelib turadi</li>
+              <li>Ichida hech qanday yashirin virus yoki josus kod bo‘lmaydi</li>
+              <li>Bemorlarning shaxsiy ma’lumotlari va tibbiy baza 100% himoyalangan bo‘ladi</li>
+              <li>Xatosiz va barqaror ishlaydi, hujjatlar to‘satdan o‘chib ketmaydi</li>
+            </ul>
+          </div>
+          <div class="crack-card cracked">
+            <h4>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              Crack (Qonunsiz buzilgan / Pirat) Dastur
+            </h4>
+            <ul class="crack-list">
+              <li>To‘lov himoyasi xakerlar tomonidan buzib ochilgan noqonuniy nusxa</li>
+              <li>90% holatda ichiga <strong>troyan, virus va josus dasturlar (stealer)</strong> yashirilgan bo‘ladi</li>
+              <li>Antivirusni o‘chirishni talab qiladi va shu paytda tizimni zararlaydi</li>
+              <li>Shifoxona tarmog‘idagi barcha bemor bazalarini shifrlab, bloklab qo‘yishi mumkin (Ransomware)</li>
+              <li>Mualliflik huquqini buzish hisoblanadi va qonunan taqiqlangan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 5-QISM: PUSK TUGMASI (HAQIQIY START MENU KO'RINISHI) ==================== -->
+      <section id="sec-startmenu" class="section-block">
+        <div class="section-head">
+          <span class="section-num">5-Qism</span>
+          <h2 class="section-title">Pusk tugmasi (Boshlash / Start menyusi)</h2>
+          <p class="section-desc">Vazifalar panelidagi Windows belgisi bosilganda ochiladigan asosiy boshqaruv menyusining haqiqiy tuzilishi.</p>
+        </div>
+
+        <div class="real-start-layout">
+          <!-- LEFT: REAL WINDOWS 11 START MENU REPLICA -->
+          <div class="win11-start-menu">
+            <div class="start-inner-pad">
+              <!-- 1. Search Bar -->
+              <div class="start-search-box">
+                <span class="start-num-badge">1</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Dasturlar, sozlamalar va hujjatlarni qidirish...</span>
+              </div>
+
+              <!-- 2. Pinned Apps -->
+              <div class="start-section-row">
+                <div class="start-section-label">
+                  <span class="start-num-badge">2</span>
+                  <span>Mahkamlangan (Pinned)</span>
+                </div>
+                <span class="start-all-btn">
+                  Barcha ilovalar
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+
+              <div class="start-pinned-grid">
+                <div class="start-app-tile">
+                  <img src="./images/logos/word.svg" alt="Word">
+                  <span>Word</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/excel.svg" alt="Excel">
+                  <span>Excel</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/powerpoint.svg" alt="PowerPoint">
+                  <span>PowerPoint</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/dmed.svg" alt="DMED">
+                  <span>DMED</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/chrome.svg" alt="Chrome">
+                  <span>Chrome</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/edge.svg" alt="Edge">
+                  <span>Edge</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/telegram.svg" alt="Telegram">
+                  <span>Telegram</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/kaspersky.svg" alt="Kaspersky">
+                  <span>Kaspersky</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/adobe.svg" alt="Acrobat">
+                  <span>Acrobat PDF</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/7zip.svg" alt="7-Zip">
+                  <span>7-Zip</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/vlc.svg" alt="VLC">
+                  <span>VLC Player</span>
+                </div>
+                <div class="start-app-tile">
+                  <img src="./images/logos/notepad.svg" alt="Notepad">
+                  <span>Bloknot</span>
+                </div>
+              </div>
+
+              <!-- 3. Recommended Files -->
+              <div class="start-section-row">
+                <div class="start-section-label">
+                  <span class="start-num-badge">3</span>
+                  <span>Tavsiya etilgan (Oxirgi ochilgan fayllar)</span>
+                </div>
+              </div>
+
+              <div class="start-rec-grid">
+                <div class="start-rec-item">
+                  <img src="./images/logos/word.svg" alt="Doc">
+                  <div class="start-rec-info">
+                    <strong>Aliyev_Kasallik_Tarixi.docx</strong>
+                    <span>10 daqiqa oldin ochilgan</span>
+                  </div>
+                </div>
+                <div class="start-rec-item">
+                  <img src="./images/logos/excel.svg" alt="Xls">
+                  <div class="start-rec-info">
+                    <strong>Dorilar_Hisoboti_2026.xlsx</strong>
+                    <span>Bugun, 09:15</span>
+                  </div>
+                </div>
+                <div class="start-rec-item">
+                  <img src="./images/logos/adobe.svg" alt="Pdf">
+                  <div class="start-rec-info">
+                    <strong>SSV_Standart_Buyruq.pdf</strong>
+                    <span>Kecha ochilgan</span>
+                  </div>
+                </div>
+                <div class="start-rec-item">
+                  <img src="./images/logos/powerpoint.svg" alt="Ppt">
+                  <div class="start-rec-info">
+                    <strong>Gigiyena_Seminar.pptx</strong>
+                    <span>2 kun oldin</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Bottom User & Power Bar -->
+            <div class="start-footer-bar">
+              <div class="start-user-profile">
+                <span class="start-num-badge">4</span>
+                <div class="start-avatar">H</div>
+                <span>Navbatchi Hamshira</span>
+              </div>
+              <div class="start-power-group">
+                <span class="start-power-btn" title="O'chirish / Qayta yuklash / Uxlash">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                  Quvvat (Power)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: EXPLANATION OF EACH NUMBERED ZONE -->
+          <div class="start-menu-diagram" style="margin-top: 0;">
+            <div class="start-zone">
+              <div class="start-zone-icon" style="font-weight:900; font-size:0.95rem;">1</div>
+              <div class="start-zone-text">
+                <h4>Qidiruv satri (Search)</h4>
+                <p>Kompyuter ichidagi har qanday dastur, bemor fayli yoki tizim sozlamalarini nomini yozib 1 soniyada topish maydoni.</p>
+              </div>
+            </div>
+            <div class="start-zone">
+              <div class="start-zone-icon" style="font-weight:900; font-size:0.95rem;">2</div>
+              <div class="start-zone-text">
+                <h4>Mahkamlangan va Barcha dasturlar (Pinned &amp; All Apps)</h4>
+                <p>Kundalik eng ko‘p ishlatiladigan dasturlar (Word, Excel, DMED) tezkor ochish uchun shu yerga qadab qo‘yiladi. "Barcha ilovalar" tugmasi orqali kompyuterdagi hamma dasturlar alifbo tartibida chiqadi.</p>
+              </div>
+            </div>
+            <div class="start-zone">
+              <div class="start-zone-icon" style="font-weight:900; font-size:0.95rem;">3</div>
+              <div class="start-zone-text">
+                <h4>Tavsiya etilganlar (Recommended)</h4>
+                <p>Siz yaqinda ishlagan tibbiy hujjatlar, jadvallar va oxirgi o‘rnatilgan dasturlar ro‘yxati. Faylni qidirib o‘tirmasdan shu yerdan darhol davom ettirish mumkin.</p>
+              </div>
+            </div>
+            <div class="start-zone">
+              <div class="start-zone-icon" style="font-weight:900; font-size:0.95rem; background:rgba(244,63,94,0.18); color:#fb7185;">4</div>
+              <div class="start-zone-text">
+                <h4>Foydalanuvchi profili va Quvvat (Power) tugmasi</h4>
+                <p>Kompyuterni to‘g‘ri o‘chirish (<strong>Shut down / Завершение работы</strong>), qayta ishga tushirish (<strong>Restart / Перезагрузка</strong>) va uyqu rejimiga o‘tkazish (<strong>Sleep / Спящий режим</strong>) aynan shu tugma orqali bajariladi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-card" style="margin-top:1.5rem;">
+          <h3 style="color:#38bdf8; margin-bottom:0.75rem; font-size:0.98rem;">Pusk tugmasiga bog‘liq eng muhim klaviatura kombinatsiyalari:</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:0.75rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.84rem;">
+              <span class="key-cap">Win</span>
+              <span>— Pusk menyusini ochish/yopish</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.84rem;">
+              <span class="key-cap">Win</span> <span>+</span> <span class="key-cap">D</span>
+              <span>— Ish stolini ko‘rsatish (oynalarni yig‘ish)</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.84rem;">
+              <span class="key-cap">Win</span> <span>+</span> <span class="key-cap">E</span>
+              <span>— Provodnik (Bu kompyuter)ni ochish</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.84rem;">
+              <span class="key-cap">Win</span> <span>+</span> <span class="key-cap">L</span>
+              <span>— Kompyuterni qulflash (Xavfsizlik)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 6-QISM: OYNA BOSHQARUV TUGMALARI ==================== -->
+      <section id="sec-winbuttons" class="section-block">
+        <div class="section-head">
+          <span class="section-num">6-Qism</span>
+          <h2 class="section-title">Oyna boshqaruv tugmalarining vazifalari</h2>
+          <p class="section-desc">Har qanday dastur oynasining yuqori o‘ng burchagida joylashgan uchta asosiy boshqaruv tugmasi.</p>
+        </div>
+
+        <!-- LIVE REAL WINDOWS 11 TITLEBAR DEMO -->
+        <div class="win11-window-demo">
+          <div class="win11-titlebar">
+            <div class="win11-titlebar-left">
+              <img src="./images/logos/word.svg" alt="Word">
+              <span>Bemor_Kasallik_Tarixi.docx — Microsoft Word</span>
+            </div>
+            <div class="win11-controls-group">
+              <!-- Minimize -->
+              <div class="win11-ctrl-btn" title="Kichraytirish (Minimize)">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.4"/></svg>
+              </div>
+              <!-- Maximize -->
+              <div class="win11-ctrl-btn" title="To'liq ekran (Maximize)">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="1.5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/></svg>
+              </div>
+              <!-- Close -->
+              <div class="win11-ctrl-btn close-btn" title="Yopish (Close)">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="win11-window-body">
+            <span>👆 Yuqoridagi dastur oynasining o‘ng burchagidagi 3 ta tugma ustiga sichqonchani olib borib ko‘ring — haqiqiy Windows 11 oynasi kabi ishlaydi!</span>
+          </div>
+        </div>
+
+        <!-- 3 CARDS WITH AUTHENTIC WINDOWS 11 FLUENT ICONS -->
+        <div class="winbtn-showcase">
+          <!-- 1. Minimize -->
+          <div class="winbtn-card">
+            <div class="winbtn-icon-wrap">
+              <div class="winbtn-svg-box min-box">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+                  <line x1="2" y1="8" x2="14" y2="8" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="winbtn-name">1. Kichraytirish (Minimize / Свернуть)</div>
+            <div class="winbtn-key">Win + ↓ yoki [ — ] tugmasini bosish</div>
+            <p class="winbtn-desc">Oynani ekrandan vaqtincha yashirib, pastdagi <strong>Vazifalar paneliga (Taskbar)</strong> tushirib qo‘yadi. Dastur yopilmaydi va ishingiz o‘chib ketmaydi. Taskbar’dagi belgini bossangiz yana qaytib ochiladi.</p>
+          </div>
+
+          <!-- 2. Maximize / Restore -->
+          <div class="winbtn-card">
+            <div class="winbtn-icon-wrap">
+              <div class="winbtn-svg-box max-box" title="Maximize (Kattalashtirish)">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                  <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="#ffffff" stroke-width="1.8"/>
+                </svg>
+              </div>
+              <div class="winbtn-svg-box max-box" title="Restore Down (Kichraytirish)">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                  <path d="M5.5 2.5H12.5C13.05 2.5 13.5 2.95 13.5 3.5V10.5" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+                  <rect x="2.5" y="5.5" width="8.5" height="8.5" rx="1.2" stroke="#ffffff" stroke-width="1.8"/>
+                </svg>
+              </div>
+            </div>
+            <div class="winbtn-name">2. To‘ldirish va Tiklash (Maximize / Restore)</div>
+            <div class="winbtn-key">Win + ↑ yoki sarlavhani 2 marta bosish</div>
+            <p class="winbtn-desc">Bitta to‘rtburchak (<strong>Maximize</strong>) oynani butun ekranga yoyadi. Oyna to‘liq ekranda turganda belgi ikkita ustma-ust kvadratga (<strong>Restore Down</strong>) aylanadi — uni bossangiz oyna yarim ekran holatiga qaytadi.</p>
+          </div>
+
+          <!-- 3. Close -->
+          <div class="winbtn-card">
+            <div class="winbtn-icon-wrap">
+              <div class="winbtn-svg-box cls-box">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                  <line x1="3" y1="3" x2="13" y2="13" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="13" y1="3" x2="3" y2="13" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="winbtn-name">3. Yopish (Close / Закрыть)</div>
+            <div class="winbtn-key">Alt + F4 yoki [ ✕ ] tugmasini bosish</div>
+            <p class="winbtn-desc">Dastur yoki oynani <strong>butunlay yopadi</strong>. Agar Word yoki Excel’da yozgan hujjatingiz saqlanmagan bo‘lsa, Windows yopishdan oldin "Saqlansinmi?" deb so‘raydi. Hujjatni saqlashni unutmang!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 7-QISM: WINDOWS FAYLLAR VA PAPKALAR ==================== -->
+      <section id="sec-explorer" class="section-block">
+        <div class="section-head">
+          <span class="section-num">7-Qism</span>
+          <h2 class="section-title">Fayllar, papkalar va fayl kengaytmalari</h2>
+          <p class="section-desc">Fayl nomining tuzilishi, formatlar va klaviaturadagi tezkor boshqaruv tugmalari.</p>
+        </div>
+
+        <div class="concept-card highlight" style="margin-bottom: 2rem;">
+          <h3 style="color:#38bdf8; margin-bottom: 0.75rem;">Fayl va Papka nima?</h3>
+          <p>
+            <strong>Fayl</strong> — kompyuter xotirasida o‘z nomi va kengaytmasiga ega bo‘lgan, muayyan ma’lumotni saqlovchi birlikdir. Fayl nomi 2 qismdan iborat bo‘ladi: <code>Asosiy_nom . kengaytma</code> (Masalan: <code>Aliyev_Tahlil.docx</code>).
+          </p>
+          <p>
+            <strong>Papka (Katalog / Folder)</strong> — fayllarni mavzular bo‘yicha tartibli saqlovchi "elektron jild". Papkaning nuqtadan keyin kengaytmasi bo‘lmaydi. Papka ichida boshqa ichki papkalar va fayllar joylashishi mumkin.
+          </p>
+          <div class="app-medical-use" style="background:rgba(244,63,94,0.1); border-color:rgba(244,63,94,0.3); color:#fecdd3;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <span><strong>Qat’iy qoida:</strong> Fayl va papka nomlarida quyidagi 9 ta belgidan foydalanish Windows tomonidan taqiqlanadi: <code>\ / : * ? " &lt; &gt; |</code></span>
+          </div>
+        </div>
+
+        <!-- File Extensions Table -->
+        <h3 style="font-size: 1.12rem; font-weight: 800; margin-bottom: 0.5rem;">Tibbiyotda eng ko‘p uchraydigan fayl kengaytmalari:</h3>
+        <div class="table-container">
+          <table class="ext-table">
+            <thead>
+              <tr>
+                <th>Kengaytma</th>
+                <th>Fayl turi</th>
+                <th>Ochuvchi dastur</th>
+                <th>Tibbiyotdagi namunasi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="ext-badge blue">.docx / .doc</span></td>
+                <td>Matnli hujjat</td>
+                <td>Microsoft Word</td>
+                <td>Bemor kasallik tarixi, hamshira hisoboti</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge green">.xlsx / .xls</span></td>
+                <td>Elektron jadval</td>
+                <td>Microsoft Excel</td>
+                <td>Dori-darmonlar kirim-chiqim vedomosti</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge orange">.pptx</span></td>
+                <td>Taqdimot slaydlari</td>
+                <td>Microsoft PowerPoint</td>
+                <td>Hamshiralar uchun sanitariya-gigiyena darsi</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge red">.pdf</span></td>
+                <td>O‘zgarmas rasmiy hujjat</td>
+                <td>Adobe Reader, Edge</td>
+                <td>Vazirlik buyrug‘i, tasdiqlangan laboratoriya xulosasi</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge purple">.jpg / .png</span></td>
+                <td>Tasviriy grafik fayl</td>
+                <td>Windows Rasmlar</td>
+                <td>Rentgen, ultratovush (UZD) tekshiruvi surati</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge blue">.mp4</span></td>
+                <td>Video tasvir</td>
+                <td>VLC Player</td>
+                <td>Laparoskopik operatsiya video yozuvi</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge orange">.zip / .rar</span></td>
+                <td>Arxivlangan fayl</td>
+                <td>7-Zip, WinRAR</td>
+                <td>Oylik bemorlar ro‘yxatining umumiy arxivi</td>
+              </tr>
+              <tr>
+                <td><span class="ext-badge red">.exe</span></td>
+                <td>Ishga tushuvchi dastur</td>
+                <td>Windows OT</td>
+                <td>DMED dasturining o‘rnatuvchi fayli</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Shortcuts Table -->
+        <h3 style="font-size: 1.12rem; font-weight: 800; margin-top: 2.25rem; margin-bottom: 0.5rem;">Fayl va papkalar bilan ishlashda tezkor tugmalar (Hotkeys):</h3>
+        <div class="shortcuts-grid">
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">Ctrl</span>
+              <span>+</span>
+              <span class="key-cap">C</span>
+            </div>
+            <span class="shortcut-desc">Nusxa olish (Copy)</span>
+          </div>
+
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">Ctrl</span>
+              <span>+</span>
+              <span class="key-cap">V</span>
+            </div>
+            <span class="shortcut-desc">Qo‘yish (Paste)</span>
+          </div>
+
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">Ctrl</span>
+              <span>+</span>
+              <span class="key-cap">X</span>
+            </div>
+            <span class="shortcut-desc">Qirqib olish (Cut)</span>
+          </div>
+
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">Ctrl</span>
+              <span>+</span>
+              <span class="key-cap">Z</span>
+            </div>
+            <span class="shortcut-desc">Bekor qilish (Undo)</span>
+          </div>
+
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">F2</span>
+            </div>
+            <span class="shortcut-desc">Nomini o‘zgartirish</span>
+          </div>
+
+          <div class="shortcut-card">
+            <div class="shortcut-keys">
+              <span class="key-cap">Shift</span>
+              <span>+</span>
+              <span class="key-cap">Delete</span>
+            </div>
+            <span class="shortcut-desc">Savatga tashlamay o‘chirish</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 8-QISM: AMALIY TRENAJYOR ==================== -->
+      <section id="sec-simulator" class="section-block">
+        <div class="section-head">
+          <span class="section-num">8-Qism</span>
+          <h2 class="section-title">Interaktiv Windows 11 Trenajyori</h2>
+          <p class="section-desc">Kompyuterda sichqonchaning o‘ng tugmasi orqali yoki telefonda maxsus tezkor tugmalar yordamida papka ochish, nomlash va o‘chirishni mashq qiling.</p>
+        </div>
+
+        <div class="sim-wrapper">
+          <div class="sim-header">
+            <div class="sim-header-left">
+              <span class="sim-circle red"></span>
+              <span class="sim-circle yellow"></span>
+              <span class="sim-circle green"></span>
+              <span class="sim-title">Virtual Windows 11 Ish Stoli</span>
+            </div>
+            <button type="button" class="nav-btn" style="padding:0.3rem 0.75rem; font-size:0.75rem;" onclick="resetSim()">
+              Qaytadan boshlash
+            </button>
+          </div>
+
+          <div class="sim-tasks-bar">
+            <div class="sim-task-instruction" id="sim-task-text">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span><strong>1-Topshiriq:</strong> Ish stolida "Yangi papka" oching (o‘ng tugma yoki pastdagi tugma orqali).</span>
+            </div>
+            <span class="sim-progress-badge" id="sim-progress">Bosqich: 1 / 3</span>
+          </div>
+
+          <!-- Mobile & Touch Action Buttons -->
+          <div class="sim-mobile-toolbar">
+            <button type="button" class="sim-mobile-btn" onclick="createFolderAction()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              1. Yangi papka ochish
+            </button>
+            <button type="button" class="sim-mobile-btn" onclick="renameFolderAction(); setTimeout(function(){ var e = {key:'Enter'}; handleRenameKey(e); }, 400);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              2. "Bemorlar_2026" deb nomlash
+            </button>
+            <button type="button" class="sim-mobile-btn" onclick="deleteFolderAction()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              3. Savatga o‘chirish
+            </button>
+          </div>
+
+          <!-- Virtual Desktop Screen -->
+          <div class="sim-screen" id="sim-desktop" oncontextmenu="openContextMenu(event); return false;" onclick="closeContextMenu()">
+            
+            <div class="sim-desktop-icons">
+              <div class="desktop-icon" onclick="selectDesktopIcon(this)">
+                <svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="10" fill="#0078d4" fill-opacity="0.2"/><path d="M10 32h28v4H10zM12 12h24v16H12z" fill="#38bdf8"/></svg>
+                <span>Bu kompyuter</span>
+              </div>
+
+              <div class="desktop-icon" id="sim-bin" onclick="selectDesktopIcon(this)">
+                <svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="10" fill="#f43f5e" fill-opacity="0.2"/><path d="M16 14h16l-2 22H18L16 14zM14 10h20v3H14z" fill="#fb7185"/></svg>
+                <span>Savat</span>
+              </div>
+
+              <!-- Dynamically Created Folder -->
+              <div class="desktop-icon" id="sim-user-folder" style="display:none;" onclick="selectDesktopIcon(this)">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M8 12h12l4 4h16a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z" fill="#f59e0b"/></svg>
+                <span id="folder-name-label">Yangi papka</span>
+                <input type="text" id="folder-name-input" value="Bemorlar_2026" style="display:none;" onkeydown="handleRenameKey(event)">
+              </div>
+            </div>
+
+            <!-- Context Menu (Right Click) -->
+            <div class="context-menu" id="sim-context-menu">
+              <div class="ctx-item" onclick="createFolderAction()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Yangi papka</span>
+              </div>
+              <div class="ctx-item" onclick="renameFolderAction()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                <span>Nomini o‘zgartirish</span>
+              </div>
+              <div class="ctx-item" onclick="deleteFolderAction()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>O‘chirish (Savatga)</span>
+              </div>
+            </div>
+
+            <!-- Virtual Taskbar -->
+            <div class="sim-taskbar">
+              <div class="taskbar-center">
+                <button type="button" class="tb-icon-btn" title="Boshlash (Start)">
+                  <img src="./images/logos/windows11.svg" alt="Start">
+                </button>
+                <button type="button" class="tb-icon-btn" title="Microsoft Edge">
+                  <img src="./images/logos/edge.svg" alt="Edge">
+                </button>
+                <button type="button" class="tb-icon-btn" title="Fayllar (Explorer)">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </button>
+                <button type="button" class="tb-icon-btn" title="Microsoft Word">
+                  <img src="./images/logos/word.svg" alt="Word">
+                </button>
+              </div>
+
+              <div class="taskbar-tray">
+                <span id="tray-time">12:00</span>
+                <span style="font-size:0.68rem; color:#94a3b8;" id="tray-date">22.09.2026</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="sim-feedback success" id="sim-congrats">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Ajoyib natija!</strong> Siz Windows ish stolida papka ochish, uni "Bemorlar_2026" deb nomlash va savatga tashlash amallarini to‘liq o‘rgandingiz!</span>
+        </div>
+      </section>
+
+      <!-- ==================== 9-QISM: BILIMNI SINASH TESTI (ALOHIDA SAHIFA) ==================== -->
+      <section id="test-section" class="section-block" style="margin-bottom: 1rem;">
+        <div class="section-head">
+          <span class="section-num">9-Qism</span>
+          <h2 class="section-title">Bilimni sinash testi</h2>
+          <p class="section-desc">Mavzu bo‘yicha 20 ta test savoli. Ro‘yxatdan o‘tish va ism kiritish talab etilmaydi.</p>
+        </div>
+
+        <div class="concept-card highlight" style="text-align:center; padding:2.25rem 1.5rem;">
+          <div style="width:60px; height:60px; border-radius:16px; background:rgba(0,120,212,0.18); border:1px solid rgba(0,120,212,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h3 style="font-size:1.3rem; font-weight:850; margin-bottom:0.6rem;">20 talik Bilimni Sinash Testi</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1.25rem; max-width:580px; margin-left:auto; margin-right:auto;">
+            Baholash mezonlari: <strong>50% dan past — 2</strong> | <strong>50%–69% — 3</strong> | <strong>70%–84% — 4</strong> | <strong>85%–100% — 5 (A’lo)</strong>. Natija shu zahotiyoq kompyuteringizda ko‘rsatiladi.
+          </p>
+          <a href="./test.html" class="nav-btn nav-btn-primary" style="font-size:1rem; padding:0.85rem 2.25rem; display:inline-flex; text-decoration:none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Testni boshlash</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong>Shahrisabz Tibbiyot Texnikumi</strong> — Tibbiyotda axborot texnologiyalari fani
+        </div>
+        <div style="display:flex; align-items:center; gap:1.25rem;">
+          <span>100% Offline rejim • 6-Dars: Windows operatsion tizimi</span>
+          <a href="../index.html" style="color:#38bdf8; text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:0.35rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>Mundarija</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Live date
+    (function() {
+      var now = new Date();
+      var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+      var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+      var str = now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
+      var el = document.getElementById('hero-live-date');
+      if (el) el.textContent = str;
+
+      var trayTime = document.getElementById('tray-time');
+      var trayDate = document.getElementById('tray-date');
+      if (trayTime) trayTime.textContent = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+      if (trayDate) trayDate.textContent = ('0' + now.getDate()).slice(-2) + '.' + ('0' + (now.getMonth() + 1)).slice(-2) + '.' + now.getFullYear();
+    })();
+
+    /* ====================================================================== */
+    /* SIMULATOR LOGIC                                                        */
+    /* ====================================================================== */
+    var simStep = 1; // 1: Create, 2: Rename, 3: Delete
+    var folderCreated = false;
+
+    function openContextMenu(e) {
+      e.preventDefault();
+      var menu = document.getElementById('sim-context-menu');
+      var screen = document.getElementById('sim-desktop');
+      var rect = screen.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      menu.style.left = x + 'px';
+      menu.style.top = y + 'px';
+      menu.style.display = 'flex';
+    }
+
+    function closeContextMenu() {
+      var menu = document.getElementById('sim-context-menu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    function selectDesktopIcon(el) {
+      var all = document.querySelectorAll('.desktop-icon');
+      all.forEach(function(i) { i.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+
+    function createFolderAction() {
+      closeContextMenu();
+      if (simStep === 1) {
+        var folder = document.getElementById('sim-user-folder');
+        folder.style.display = 'flex';
+        folderCreated = true;
+        simStep = 2;
+        updateSimProgress("2-Topshiriq: Papka nomini 'Bemorlar_2026' ga o‘zgartiring (F2 yoki sichqoncha bilan)", "Bosqich: 2 / 3");
+      }
+    }
+
+    function renameFolderAction() {
+      closeContextMenu();
+      if (simStep === 2 && folderCreated) {
+        var label = document.getElementById('folder-name-label');
+        var input = document.getElementById('folder-name-input');
+        label.style.display = 'none';
+        input.style.display = 'block';
+        input.focus();
+        input.select();
+      }
+    }
+
+    function handleRenameKey(e) {
+      if (e.key === 'Enter') {
+        var label = document.getElementById('folder-name-label');
+        var input = document.getElementById('folder-name-input');
+        label.textContent = input.value.trim() || 'Bemorlar_2026';
+        label.style.display = 'block';
+        input.style.display = 'none';
+        simStep = 3;
+        updateSimProgress("3-Topshiriq: Ushbu papkani o‘chiring (Savatga tashlash)", "Bosqich: 3 / 3");
+      }
+    }
+
+    function deleteFolderAction() {
+      closeContextMenu();
+      if (simStep === 3 && folderCreated) {
+        var folder = document.getElementById('sim-user-folder');
+        folder.style.display = 'none';
+        document.getElementById('sim-congrats').style.display = 'flex';
+        updateSimProgress("Topshiriqlar a'lo darajada bajarildi!", "100% Bajarildi");
+      }
+    }
+
+    function updateSimProgress(taskText, badgeText) {
+      document.getElementById('sim-task-text').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span><strong>' + taskText + '</strong></span>';
+      document.getElementById('sim-progress').textContent = badgeText;
+    }
+
+    function resetSim() {
+      simStep = 1;
+      folderCreated = false;
+      document.getElementById('sim-user-folder').style.display = 'none';
+      document.getElementById('folder-name-label').textContent = 'Yangi papka';
+      document.getElementById('folder-name-label').style.display = 'block';
+      document.getElementById('folder-name-input').style.display = 'none';
+      document.getElementById('sim-congrats').style.display = 'none';
+      updateSimProgress("1-Topshiriq: Ish stolida sichqonchaning o‘ng tugmasini bosing va 'Yangi papka' oching.", "Bosqich: 1 / 3");
+    }
+
+    /* ====================================================================== */
+    /* FULLSCREEN SPLASH COVER SCROLL LOGIC                                   */
+    /* ====================================================================== */
+    function scrollToLesson() {
+      var target = document.getElementById('lesson-start');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Set Splash Live Date
+    (function() {
+      var now = new Date();
+      var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+      var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+      var str = now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
+      var el = document.getElementById('splash-date-text');
+      if (el) el.textContent = str;
+    })();
+  </script>
+</body>
+</html>

@@ -1,23 +1,23 @@
 @echo off
 chcp 65001 > nul
-title Tibbiyotda axborot texnologiyalari - Shahrisabz Tibbiyot Texnikumi
+title Tibbiyotda Axborot Texnologiyalari — Bosh Mundarija
+color 0B
 
-echo ======================================================================
-echo   Shahrisabz Tibbiyot Texnikumi
-echo   "Tibbiyotda axborot texnologiyalari" fani
-echo   Bosh Mundarija - Interaktiv elektron darsliklar portali
-echo ======================================================================
+echo ============================================================================
+echo        SHAHRISABZ TIBBIYOT TEXNIKUMI — TAT DARSLARI PLATFORMASI
+echo ============================================================================
 echo.
-echo Darslar mundarijasi brauzeringizda ochilmoqda...
-echo Hech qanday internet talab qilinmaydi (100%% offline).
+echo   [██████░░░░░░░░░░░░░░] 30%%  — Tizim tayyorlanmoqda...
+timeout /t 1 /nobreak > nul
+echo   [██████████████░░░░░░] 70%%  — Darslar mundarijasi yuklanmoqda...
+timeout /t 1 /nobreak > nul
+echo   [████████████████████] 100%% — Brauzerda ochilmoqda!
 echo.
 
 if exist "%~dp0TAT darslar\index.html" (
     start "" "%~dp0TAT darslar\index.html"
-) else if exist "%~dp0index.html" (
-    start "" "%~dp0index.html"
 ) else (
-    echo Xatolik: index.html fayli topilmadi!
+    echo Xatolik: "TAT darslar\index.html" topilmadi!
     pause
     exit /b 1
 )

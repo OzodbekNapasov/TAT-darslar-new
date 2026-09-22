@@ -10,50 +10,32 @@
   <meta name="description" content="Shahrisabz Tibbiyot Texnikumi — 5-dars bo'yicha 29 talik bankdan tanlanadigan 20 ta savolli onlayn test sinovi.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>">
   <style>
-    :root {
+    :root, [data-theme="dark"] {
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
-      --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
+      --primary-light: rgba(79, 70, 229, 0.16);
+      --primary-border: rgba(99, 102, 241, 0.35);
       --success: #10b981;
-      --success-light: #ecfdf5;
-      --success-border: #a7f3d0;
+      --success-light: rgba(16, 185, 129, 0.14);
+      --success-border: rgba(16, 185, 129, 0.3);
       --danger: #ef4444;
-      --danger-light: #fef2f2;
-      --danger-border: #fecaca;
+      --danger-light: rgba(239, 68, 68, 0.14);
+      --danger-border: rgba(239, 68, 68, 0.3);
       --warn: #f59e0b;
-      --warn-light: #fffbeb;
-      --warn-border: #fde68a;
-      --dark: #0f172a;
-      --text: #1e293b;
-      --muted: #64748b;
-      --subtle: #94a3b8;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --card-border: #e2e8f0;
-      --radius-sm: 8px;
-      --radius: 12px;
-      --radius-lg: 18px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 16px 36px -8px rgba(15, 23, 42, 0.14);
-    }
-
-    [data-theme="dark"] {
-      --bg: #090d16;
-      --card: #131b2e;
-      --card-border: #1e293b;
+      --warn-light: rgba(245, 158, 11, 0.15);
+      --warn-border: rgba(245, 158, 11, 0.3);
+      --dark: #f8fafc;
       --text: #e2e8f0;
       --muted: #94a3b8;
       --subtle: #64748b;
-      --dark: #f8fafc;
-      --primary-light: rgba(79, 70, 229, 0.16);
-      --primary-border: rgba(99, 102, 241, 0.35);
-      --success-light: rgba(16, 185, 129, 0.14);
-      --success-border: rgba(16, 185, 129, 0.3);
-      --danger-light: rgba(239, 68, 68, 0.14);
-      --danger-border: rgba(239, 68, 68, 0.3);
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-border: #1e293b;
+      --radius-sm: 8px;
+      --radius: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
       --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
       --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
     }
@@ -930,11 +912,6 @@
           </svg>
           <span>Ulashish</span>
         </button>
-        <button type="button" class="icon-btn" onclick="toggleTheme()" title="Yorug'/Qorong'i rejim">
-          <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
       </div>
     </header>
 
@@ -1503,29 +1480,13 @@
     // Google Apps Script Web App URL (Avtomatik ulanadigan manzil)
     let BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwlnNlpNGLWH3hs_pUXXias8x-uSYMj3kC5Ildf4bFuyySJO9ihVaGFMUU2A_FUqeys/exec";
 
-    // Mavzuni almashtirish
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute("data-theme") || "dark";
-      const next = current === "light" ? "dark" : "light";
-      html.setAttribute("data-theme", next);
-      localStorage.setItem("tat_theme", next);
-      updateThemeIcon(next);
-    }
-
-    function updateThemeIcon(theme) {
-      const icon = document.getElementById("themeIcon");
-      if (theme === "dark") {
-        icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-      } else {
-        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-      }
-    }
-
+    // Doimiy qorong'i rejim (Permanent Dark Mode)
     (function initTheme() {
-      const saved = localStorage.getItem("tat_theme") || "dark";
-      document.documentElement.setAttribute("data-theme", saved);
-      updateThemeIcon(saved);
+      document.documentElement.setAttribute("data-theme", "dark");
+      try {
+        localStorage.setItem("tat_theme", "dark");
+        localStorage.setItem("tat-theme", "dark");
+      } catch(e) {}
     })();
 
     // ======================================================================

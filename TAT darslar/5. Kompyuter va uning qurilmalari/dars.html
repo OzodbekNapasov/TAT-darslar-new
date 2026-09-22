@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz" data-theme="light">
+<html lang="uz" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,67 +7,40 @@
   <meta name="description" content="5-dars: Kompyuter va uning ichki hamda tashqi qurilmalari, xotira (HDD va SSD) bo'yicha mukammal elektron qo'llanma.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z'/></svg>">
   <style>
-    :root {
+    :root, [data-theme="dark"] {
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
-      --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
+      --primary-light: rgba(79, 70, 229, 0.16);
+      --primary-border: rgba(99, 102, 241, 0.35);
       --success: #10b981;
-      --success-light: #ecfdf5;
-      --success-border: #a7f3d0;
+      --success-light: rgba(16, 185, 129, 0.15);
+      --success-border: rgba(16, 185, 129, 0.3);
       --danger: #ef4444;
-      --danger-light: #fef2f2;
-      --danger-border: #fecaca;
+      --danger-light: rgba(239, 68, 68, 0.15);
+      --danger-border: rgba(239, 68, 68, 0.3);
       --warn: #f59e0b;
-      --warn-light: #fffbeb;
-      --warn-border: #fde68a;
+      --warn-light: rgba(245, 158, 11, 0.15);
+      --warn-border: rgba(245, 158, 11, 0.3);
       --purple: #8b5cf6;
-      --purple-light: #f5f3ff;
-      --purple-border: #ddd6fe;
+      --purple-light: rgba(139, 92, 246, 0.15);
+      --purple-border: rgba(139, 92, 246, 0.3);
       --teal: #0d9488;
-      --teal-light: #f0fdfa;
-      --teal-border: #99f6e4;
-      --dark: #0f172a;
-      --text: #1e293b;
-      --muted: #64748b;
-      --subtle: #94a3b8;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --card-hover: #ffffff;
-      --border: #e2e8f0;
-      --table-border: #cbd5e1;
-      --radius-sm: 8px;
-      --radius: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-      --shadow-lg: 0 14px 30px -6px rgba(15, 23, 42, 0.12);
-      --shadow-hover: 0 12px 30px -4px rgba(79, 70, 229, 0.14);
-    }
-
-    [data-theme="dark"] {
-      --bg: #090d16;
-      --card: #131b2e;
-      --card-hover: #17223b;
+      --teal-light: rgba(13, 148, 136, 0.15);
+      --teal-border: rgba(13, 148, 136, 0.3);
+      --dark: #f8fafc;
       --text: #e2e8f0;
       --muted: #94a3b8;
       --subtle: #64748b;
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-hover: #17223b;
       --border: #1e293b;
       --table-border: #334155;
-      --dark: #f8fafc;
-      --primary-light: rgba(79, 70, 229, 0.16);
-      --primary-border: rgba(99, 102, 241, 0.35);
-      --success-light: rgba(16, 185, 129, 0.15);
-      --success-border: rgba(16, 185, 129, 0.3);
-      --danger-light: rgba(239, 68, 68, 0.15);
-      --danger-border: rgba(239, 68, 68, 0.3);
-      --warn-light: rgba(245, 158, 11, 0.15);
-      --warn-border: rgba(245, 158, 11, 0.3);
-      --purple-light: rgba(139, 92, 246, 0.15);
-      --purple-border: rgba(139, 92, 246, 0.3);
-      --teal-light: rgba(13, 148, 136, 0.15);
-      --teal-border: rgba(13, 148, 136, 0.3);
+      --radius-sm: 8px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
       --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
       --shadow-lg: 0 14px 32px -6px rgba(0, 0, 0, 0.6);
       --shadow-hover: 0 12px 32px -4px rgba(99, 102, 241, 0.25);
@@ -1453,10 +1426,6 @@
               </svg>
             </span>
             <span>Konspekt</span>
-          </button>
-          <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mavzuni almashtirish">
-            <span id="themeIcon" style="display: inline-flex; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
-            <span id="themeLabel">Qorong‘i rejim</span>
           </button>
         </div>
       </div>
@@ -3695,35 +3664,13 @@
       }
     }
 
-    // 2. Mavzuni almashtirish (Dark/Light mode)
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('tat_theme', newTheme);
-      updateThemeUI(newTheme);
-    }
-
-    function updateThemeUI(theme) {
-      const icon = document.getElementById('themeIcon');
-      const label = document.getElementById('themeLabel');
-      const sunSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-      const moonSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-      if (theme === 'dark') {
-        icon.innerHTML = sunSvg;
-        label.textContent = 'Yorug‘ rejim';
-      } else {
-        icon.innerHTML = moonSvg;
-        label.textContent = 'Qorong‘i rejim';
-      }
-    }
-
-    // Saqlangan mavzuni tiklash
+    // 2. Doimiy qorong'i rejim (Permanent Dark Mode)
     (function initTheme() {
-      const savedTheme = localStorage.getItem('tat_theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      updateThemeUI(savedTheme);
+      document.documentElement.setAttribute('data-theme', 'dark');
+      try {
+        localStorage.setItem('tat_theme', 'dark');
+        localStorage.setItem('tat-theme', 'dark');
+      } catch(e) {}
     })();
 
     // 3. Test (Quiz) logikasi
