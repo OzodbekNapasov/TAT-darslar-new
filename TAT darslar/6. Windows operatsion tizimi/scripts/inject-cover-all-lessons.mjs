@@ -55,39 +55,41 @@ const lessons = [
   },
 ];
 
-const coverCss = `<style id="tat-topic-cover-style">
+function buildHeadInjection(titleHtml) {
+  return `<style id="tat-topic-cover-style">
 .tat-topic-cover {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  width: 100%;
-  background-image: url('./cover_bg.jpg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
-  overflow: hidden;
-  z-index: 50;
+  position: relative !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  width: 100% !important;
+  background-image: url('./cover_bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3) !important;
+  overflow: hidden !important;
+  z-index: 40 !important;
+  flex-shrink: 0 !important;
 }
 .tat-topic-cover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(7, 9, 14, 0.65);
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(7, 9, 14, 0.65) !important;
 }
 .tat-topic-cover-inner {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 2rem 1.5rem;
-  max-width: 920px;
-  width: 100%;
+  position: relative !important;
+  z-index: 2 !important;
+  text-align: center !important;
+  padding: 2rem 1.5rem !important;
+  max-width: 920px !important;
+  width: 100% !important;
 }
 .tat-topic-cover-title {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
@@ -107,26 +109,72 @@ const coverCss = `<style id="tat-topic-cover-style">
   color: rgba(255, 255, 255, 0.8) !important;
   margin: 0 !important;
 }
-</style>`;
+</style>
+<script id="tat-topic-cover-script">
+(function(){
+  var TITLE_HTML = ${JSON.stringify(titleHtml)};
+  function getDateStr() {
+    var now = new Date();
+    var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+    var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+    return now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
+  }
+  function ensureCover() {
+    if (!document.body) return;
+    var existing = document.getElementById('tat-topic-cover');
+    if (!existing) {
+      var div = document.createElement('div');
+      div.id = 'tat-topic-cover';
+      div.className = 'tat-topic-cover';
+      div.onclick = function() {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+      };
+      div.innerHTML =
+        '<div class="tat-topic-cover-inner">' +
+          '<h1 class="tat-topic-cover-title">' + TITLE_HTML + '</h1>' +
+          '<p class="tat-topic-cover-date" id="tat-topic-cover-date">' + getDateStr() + '</p>' +
+        '</div>';
+      document.body.insertBefore(div, document.body.firstChild);
+    } else {
+      if (document.body.firstElementChild !== existing) {
+        document.body.insertBefore(existing, document.body.firstElementChild);
+      }
+      var dateEl = document.getElementById('tat-topic-cover-date');
+      if (dateEl && dateEl.textContent === 'Bugun') {
+        dateEl.textContent = getDateStr();
+      }
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureCover);
+  } else {
+    ensureCover();
+  }
+  var obs = new MutationObserver(function() {
+    ensureCover();
+  });
+  function startObserver() {
+    if (!document.body) {
+      setTimeout(startObserver, 20);
+      return;
+    }
+    ensureCover();
+    obs.observe(document.body, { childList: true });
+  }
+  startObserver();
+  setInterval(ensureCover, 200);
+})();
+</script>`;
+}
 
-function buildCoverHtml(titleHtml) {
+function buildBodyCoverHtml(titleHtml) {
   return `<!-- TAT FULLSCREEN TOPIC COVER -->
 <div class="tat-topic-cover" id="tat-topic-cover" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
   <div class="tat-topic-cover-inner">
     <h1 class="tat-topic-cover-title">${titleHtml}</h1>
     <p class="tat-topic-cover-date" id="tat-topic-cover-date">Bugun</p>
   </div>
-</div>
-<script id="tat-topic-cover-script">
-(function(){
-  var now = new Date();
-  var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
-  var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
-  var str = now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
-  var el = document.getElementById('tat-topic-cover-date');
-  if (el) el.textContent = str;
-})();
-</script>`;
+</div><!-- /TAT FULLSCREEN TOPIC COVER -->`;
 }
 
 for (const lesson of lessons) {
@@ -137,20 +185,19 @@ for (const lesson of lessons) {
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
 
-    // Remove previous cover if re-running
+    // Remove previous cover injections cleanly
     html = html.replace(/<style id="tat-topic-cover-style">[\s\S]*?<\/style>/g, '');
+    html = html.replace(/<script id="tat-topic-cover-script">[\s\S]*?<\/script>/g, '');
+    html = html.replace(/<!-- TAT FULLSCREEN TOPIC COVER -->[\s\S]*?<!-- \/TAT FULLSCREEN TOPIC COVER -->/g, '');
     html = html.replace(/<!-- TAT FULLSCREEN TOPIC COVER -->[\s\S]*?<\/script>/g, '');
 
-    // Also if 5-dars already had an old #splash overlay, replace or remove it
-    html = html.replace(/<!-- SPLASH OVERLAY -->[\s\S]*?<div class="splash-overlay"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/g, '');
+    // Inject resilient CSS + MutationObserver script in <head> (immune to React body hydration!)
+    html = html.replace('</head>', `${buildHeadInjection(lesson.titleHtml)}\n</head>`);
 
-    // Inject CSS before </head>
-    html = html.replace('</head>', `${coverCss}\n</head>`);
-
-    // Inject Cover HTML right after <body...>
-    html = html.replace(/(<body[^>]*>)/i, `$1\n${buildCoverHtml(lesson.titleHtml)}\n`);
+    // Inject initial Cover HTML right after <body...>
+    html = html.replace(/(<body[^>]*>)/i, `$1\n${buildBodyCoverHtml(lesson.titleHtml)}\n`);
 
     fs.writeFileSync(file, html, 'utf8');
-    console.log('Injected 100vh Topic+Date cover into:', file);
+    console.log('Injected persistent React-hydration-proof 100vh cover into:', file);
   }
 }
