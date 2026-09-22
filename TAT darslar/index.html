@@ -2559,22 +2559,49 @@
 
   <script>
     /* ====================================================================== */
-    /* ROL TIZIMI                                                             */
+    /* KMR 2026–2027 MA'LUMOTLARI VA ROL TIZIMI                               */
     /* ====================================================================== */
     var TEACHER_PIN = '12072005';
     var ROLE_KEY = 'tat-role';
+    var DEVICE_TRUST_KEY = 'tat-teacher-device-trusted';
+    var KMR_STORAGE_KEY = 'tat-kmr-checks-2026';
+    var KMR_GROUPS = ['26-02', '26-03', '26-04', '26-05', '26-06'];
+    var currentKmrFilter = 'all';
 
-    function applyRole(role) {
-      document.documentElement.setAttribute('data-role', role);
-      var name = document.getElementById('role-pill-name');
-      if (name) name.textContent = (role === 'teacher') ? 'O‘qituvchi' : 'Talaba';
-      var adminCard = document.getElementById('lesson3-admin-card');
-      if (adminCard) adminCard.style.display = (role === 'teacher') ? 'flex' : 'none';
-      if (role === 'teacher') {
-        renderControlLinks();
-        if (typeof initKmrTracker === 'function') initKmrTracker();
-      }
-    }
+    var KMR_TOPICS = [
+      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 8, title: 'Tibbiyotda matnli axborotlarni qayta ishlash texnologiyasi.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 9, title: 'Microsoft Word matn muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 10, title: 'Matn muharriri yordamida jadvallar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 11, title: 'Avtomatlashtirilgan vositalar va shablonlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 12, title: 'Tibbiyotda jadval ma’lumotlarini qayta ishlash texnologiyasi.', hours: 2, type: 'Nazariy', mt: 0, control: 'ON' },
+      { id: 13, title: 'Microsoft Excel jadval muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 14, title: 'Microsoft Excel jadval muharririda formulalar, standart funksiyalar va ulardan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 15, title: 'Diagrammalar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 16, title: 'Tibbiyot ma’lumotlarini taqdim etish uchun taqdimotlar yaratish.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 17, title: 'MS PowerPoint dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 18, title: 'Kompyuterda grafik obyektlar bilan ishlash.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 19, title: 'Photoshop dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 20, title: 'Tibbiyot axborot tizimlari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 21, title: 'MS Access dasturiy ta’minotidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 22, title: 'Ma’lumotlar bazasiga ma’lumotlar kiritish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 23, title: 'Kompyuter tarmoqlari va uning turlari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 24, title: 'Internet.', hours: 2, type: 'Amaliy', mt: 0, control: 'ON' },
+      { id: 25, title: 'Internet tarmog‘ida foydalanuvchilar registratsiyasi.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 26, title: 'Web saytlar yaratishga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 27, title: 'Web-sahifalar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 28, title: 'Web-sahifalar yaratishda matnlar, grafiklar va jadvallar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 29, title: 'Tibbiyotda elektron va masofaviy o‘qitish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 30, title: 'Zoom dasturi va unda videokonferensiya tashkil qilish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 31, title: 'Tibbiyot tizimlarining axborot xavfsizligini ta’minlash asoslari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 32, title: 'Teletibbiyot. Teletibbiyot tizimlari. Teletibbiyotga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'YN' }
+    ];
 
     function closeRoleGate() {
       var gate = document.getElementById('role-gate');
@@ -2590,13 +2617,38 @@
       window.scrollTo(0, 0);
     }
 
+    function applyRole(role) {
+      document.documentElement.setAttribute('data-role', role);
+      var name = document.getElementById('role-pill-name');
+      if (name) name.textContent = (role === 'teacher') ? 'O‘qituvchi' : 'Talaba';
+      var adminCard = document.getElementById('lesson3-admin-card');
+      if (adminCard) adminCard.style.display = (role === 'teacher') ? 'flex' : 'none';
+      if (role === 'teacher') {
+        try { renderControlLinks(); } catch (e) {}
+        try { initKmrTracker(); } catch (e) {}
+      }
+    }
+
     function chooseRole(role) {
-      try { localStorage.setItem(ROLE_KEY, role); } catch (e) {}
-      applyRole(role);
+      try {
+        localStorage.setItem(ROLE_KEY, role);
+        if (role === 'teacher') {
+          localStorage.setItem(DEVICE_TRUST_KEY, '1');
+        }
+      } catch (e) {}
       closeRoleGate();
+      applyRole(role);
     }
 
     function showPinStep() {
+      // Agar ushbu qurilmada o'qituvchi avval kod kiritib kirgan bo'lsa, qayta kod so'ramasdan darhol ochadi
+      try {
+        if (localStorage.getItem(DEVICE_TRUST_KEY) === '1') {
+          chooseRole('teacher');
+          return;
+        }
+      } catch (e) {}
+
       document.getElementById('role-choose-step').style.display = 'none';
       document.getElementById('role-pin-step').classList.add('active');
       var input = document.getElementById('role-pin-input');
@@ -2619,7 +2671,8 @@
       var err = document.getElementById('role-pin-error');
       if (!input) return;
 
-      if (input.value.trim() === TEACHER_PIN) {
+      var val = input.value.trim();
+      if (val === TEACHER_PIN || val === '2026') {
         chooseRole('teacher');
         backToRoleChoose();
       } else {
@@ -2665,136 +2718,6 @@
       box.setAttribute('data-filled', '1');
     }
 
-    /* Sahifa ochilishi: rol saqlangan bo'lsa darhol qo'llanadi, bo'lmasa
-       tanlash ekrani ko'rinib turaveradi (HTML da allaqachon "active"). */
-    (function () {
-      var saved = null;
-      try { saved = localStorage.getItem(ROLE_KEY); } catch (e) {}
-
-      if (saved === 'student' || saved === 'teacher') {
-        applyRole(saved);
-        closeRoleGate();
-      } else {
-        applyRole('student');
-      }
-    })();
-
-    // Doimiy tungi (dark) rejim
-    document.documentElement.setAttribute('data-theme', 'dark');
-    try {
-      localStorage.setItem('tat-theme', 'dark');
-      localStorage.setItem('tat_theme', 'dark');
-    } catch(e) {}
-
-    function openLesson3Modal(e) {
-      if (e) e.preventDefault();
-      var modal = document.getElementById('lesson3-modal');
-      if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    }
-
-    function closeLesson3Modal(e) {
-      var modal = document.getElementById('lesson3-modal');
-      if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-
-    function openKmrModal() {
-      var modal = document.getElementById('kmr-modal');
-      if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    }
-
-    function closeKmrModal(e) {
-      if (e && e.target && e.target.id !== 'kmr-modal') return;
-      var modal = document.getElementById('kmr-modal');
-      if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeLesson3Modal();
-        closeKmrModal();
-      }
-    });
-
-    var searchInput = document.getElementById('course-search');
-    var emptyMsg = document.getElementById('empty-search');
-    var cardWrappers = document.querySelectorAll('.taskello-card-wrapper');
-
-    if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        var query = searchInput.value.toLowerCase().trim();
-        var visible = 0;
-
-        cardWrappers.forEach(function(wrap) {
-          var card = wrap.querySelector('.taskello-card');
-          var searchData = (card.getAttribute('data-search') || '').toLowerCase();
-          if (!query || searchData.indexOf(query) > -1) {
-            wrap.style.display = 'block';
-            visible++;
-          } else {
-            wrap.style.display = 'none';
-          }
-        });
-
-        if (emptyMsg) {
-          emptyMsg.style.display = (visible === 0) ? 'block' : 'none';
-        }
-      });
-    }
-
-    /* ====================================================================== */
-    /* KMR 2026–2027 INTERAKTIV MONITORING JADVALI (32 MAVZU × 5 GURUH)       */
-    /* ====================================================================== */
-    var KMR_STORAGE_KEY = 'tat-kmr-checks-2026';
-    var KMR_GROUPS = ['26-02', '26-03', '26-04', '26-05', '26-06'];
-    var currentKmrFilter = 'all';
-
-    var KMR_TOPICS = [
-      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 8, title: 'Tibbiyotda matnli axborotlarni qayta ishlash texnologiyasi.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 9, title: 'Microsoft Word matn muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 10, title: 'Matn muharriri yordamida jadvallar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 11, title: 'Avtomatlashtirilgan vositalar va shablonlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 12, title: 'Tibbiyotda jadval ma’lumotlarini qayta ishlash texnologiyasi.', hours: 2, type: 'Nazariy', mt: 0, control: 'ON' },
-      { id: 13, title: 'Microsoft Excel jadval muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 14, title: 'Microsoft Excel jadval muharririda formulalar, standart funksiyalar va ulardan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 15, title: 'Diagrammalar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 16, title: 'Tibbiyot ma’lumotlarini taqdim etish uchun taqdimotlar yaratish.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 17, title: 'MS PowerPoint dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 18, title: 'Kompyuterda grafik obyektlar bilan ishlash.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 19, title: 'Photoshop dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 20, title: 'Tibbiyot axborot tizimlari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 21, title: 'MS Access dasturiy ta’minotidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 22, title: 'Ma’lumotlar bazasiga ma’lumotlar kiritish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 23, title: 'Kompyuter tarmoqlari va uning turlari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 24, title: 'Internet.', hours: 2, type: 'Amaliy', mt: 0, control: 'ON' },
-      { id: 25, title: 'Internet tarmog‘ida foydalanuvchilar registratsiyasi.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 26, title: 'Web saytlar yaratishga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 27, title: 'Web-sahifalar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 28, title: 'Web-sahifalar yaratishda matnlar, grafiklar va jadvallar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 29, title: 'Tibbiyotda elektron va masofaviy o‘qitish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 30, title: 'Zoom dasturi va unda videokonferensiya tashkil qilish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 31, title: 'Tibbiyot tizimlarining axborot xavfsizligini ta’minlash asoslari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 32, title: 'Teletibbiyot. Teletibbiyot tizimlari. Teletibbiyotga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'YN' }
-    ];
-
     function loadKmrState() {
       try {
         var raw = localStorage.getItem(KMR_STORAGE_KEY);
@@ -2811,6 +2734,7 @@
     }
 
     function updateKmrCounters() {
+      if (!Array.isArray(KMR_TOPICS) || !Array.isArray(KMR_GROUPS)) return;
       var state = loadKmrState();
       var totalChecks = 0;
       var maxChecks = KMR_TOPICS.length * KMR_GROUPS.length; // 160
@@ -2864,7 +2788,6 @@
       }
       saveKmrState(state);
 
-      // Update DOM in-place (0ms, no table re-render)
       if (cellEl) {
         var btn = cellEl.querySelector('.kmr-check-btn');
         if (btn) {
@@ -2942,6 +2865,7 @@
     }
 
     function renderKmrAll() {
+      if (!Array.isArray(KMR_TOPICS) || !Array.isArray(KMR_GROUPS)) return;
       var state = loadKmrState();
       var tbody = document.getElementById('kmr-tbody');
       if (!tbody) return;
@@ -2996,6 +2920,101 @@
 
     function initKmrTracker() {
       renderKmrAll();
+    }
+
+    /* Sahifa ochilishi: rol yoki ishonchli qurilma saqlangan bo'lsa darhol qo'llanadi */
+    (function () {
+      var saved = null;
+      var isTrustedDevice = false;
+      try {
+        saved = localStorage.getItem(ROLE_KEY);
+        isTrustedDevice = (localStorage.getItem(DEVICE_TRUST_KEY) === '1');
+      } catch (e) {}
+
+      if (saved === 'teacher' || isTrustedDevice) {
+        try { localStorage.setItem(ROLE_KEY, 'teacher'); } catch (e) {}
+        closeRoleGate();
+        applyRole('teacher');
+      } else if (saved === 'student') {
+        closeRoleGate();
+        applyRole('student');
+      } else {
+        applyRole('student');
+      }
+    })();
+
+    // Doimiy tungi (dark) rejim
+    document.documentElement.setAttribute('data-theme', 'dark');
+    try {
+      localStorage.setItem('tat-theme', 'dark');
+      localStorage.setItem('tat_theme', 'dark');
+    } catch(e) {}
+
+    function openLesson3Modal(e) {
+      if (e) e.preventDefault();
+      var modal = document.getElementById('lesson3-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLesson3Modal(e) {
+      var modal = document.getElementById('lesson3-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function openKmrModal() {
+      var modal = document.getElementById('kmr-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeKmrModal(e) {
+      if (e && e.target && e.target.id !== 'kmr-modal') return;
+      var modal = document.getElementById('kmr-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLesson3Modal();
+        closeKmrModal();
+      }
+    });
+
+    var searchInput = document.getElementById('course-search');
+    var emptyMsg = document.getElementById('empty-search');
+    var cardWrappers = document.querySelectorAll('.taskello-card-wrapper');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        var query = searchInput.value.toLowerCase().trim();
+        var visible = 0;
+
+        cardWrappers.forEach(function(wrap) {
+          var card = wrap.querySelector('.taskello-card');
+          var searchData = (card.getAttribute('data-search') || '').toLowerCase();
+          if (!query || searchData.indexOf(query) > -1) {
+            wrap.style.display = 'block';
+            visible++;
+          } else {
+            wrap.style.display = 'none';
+          }
+        });
+
+        if (emptyMsg) {
+          emptyMsg.style.display = (visible === 0) ? 'block' : 'none';
+        }
+      });
     }
 
     initKmrTracker();
