@@ -1,8 +1,17 @@
-name: Deploy to GitHub Pages
+# ============================================================================
+# GitHub Pages deploy'i O'CHIRILGAN.
+#
+# Sayt endi Vercel orqali chiqariladi (qarang: vercel.json).
+# Avtomatik ishga tushish (push) olib tashlandi, faqat qo'lda ishga tushirish
+# qoldirildi. Agar GitHub Pages'ga qaytmoqchi bo'lsangiz, quyidagi
+# "workflow_dispatch:" ustiga shu ikki qatorni qaytaring:
+#
+#   push:
+#     branches: ["main"]
+# ============================================================================
+name: Deploy to GitHub Pages (o'chirilgan - Vercel ishlatiladi)
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:

@@ -1,0 +1,20 @@
+# Vercel deploy'iga tushmaydigan narsalar.
+#
+# DIQQAT: bu yerga "app", "components", "lib" kabi umumiy nomlarni YOZMANG.
+# Ular darslarning yig'ilgan offline/_next/static/chunks/app papkasiga ham
+# to'g'ri kelib qoladi va dars sahifasining JS fayllarini o'chirib yuboradi.
+
+node_modules
+.next
+.next-offline
+*.tsbuildinfo
+*.bak
+*.log
+
+# GitHub Pages uchun kerak edi, Vercelda ma'nosi yo'q
+.nojekyll
+
+# ichki hujjatlar - saytga chiqishi shart emas
+AGENTS.md
+GEMINI.md
+GAS_INTEGRATION.md

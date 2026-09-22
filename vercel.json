@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": ".",
+
+  "redirects": [
+    { "source": "/", "destination": "/TAT%20darslar/index.html", "permanent": false },
+    { "source": "/mundarija", "destination": "/TAT%20darslar/index.html", "permanent": false },
+
+    {
+      "source": "/1-dars",
+      "destination": "/TAT%20darslar/1.%20Axborot/offline/1-dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/2-dars",
+      "destination": "/TAT%20darslar/2.%20Sanoq%20sistemalari/offline/2-dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/3-dars",
+      "destination": "/TAT%20darslar/3.%20Avtomatlashtirish/offline/3-dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/4-dars",
+      "destination": "/TAT%20darslar/4-dars/offline/4-dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/5-dars",
+      "destination": "/TAT%20darslar/5.%20Kompyuter%20va%20uning%20qurilmalari/dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/5-test",
+      "destination": "/TAT%20darslar/5.%20Kompyuter%20va%20uning%20qurilmalari/test-5.html",
+      "permanent": false
+    }
+  ],
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(?:css|js|jpg|jpeg|png|svg|webp|woff2)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
+    },
+    {
+      "source": "/(.*)/_next/static/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/TAT%20darslar/nazorat-testlari.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ]
+}
