@@ -1423,6 +1423,474 @@
 
       .teacher-zone-head { margin-top: 2.5rem; }
     }
+
+    /* ====================================================================== */
+    /* KMR 2026-2027 INTERAKTIV JADVALI (O'QITUVCHI BO'LIMI)                  */
+    /* ====================================================================== */
+    .kmr-section {
+      margin-top: 2.75rem;
+      background: linear-gradient(180deg, rgba(15, 22, 36, 0.95) 0%, rgba(10, 15, 26, 0.98) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.28);
+      border-radius: 24px;
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .kmr-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .kmr-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .kmr-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.32);
+      padding: 0.28rem 0.75rem;
+      border-radius: 9999px;
+      width: fit-content;
+    }
+
+    .kmr-main-title {
+      font-size: 1.35rem;
+      font-weight: 850;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .kmr-subtitle {
+      font-size: 0.84rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .kmr-overall-box {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 0.85rem 1.15rem;
+      min-width: 230px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .kmr-overall-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .kmr-overall-pct {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #34d399;
+    }
+
+    .kmr-bar-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .kmr-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0ea5e9, #10b981);
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* 5 Group Cards Grid */
+    .kmr-groups-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.35rem;
+    }
+
+    @media (max-width: 900px) {
+      .kmr-groups-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .kmr-groups-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .kmr-section {
+        padding: 1.1rem 0.85rem;
+        border-radius: 18px;
+      }
+    }
+
+    .kmr-group-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 0.85rem 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .kmr-group-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .kmr-group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .kmr-group-name {
+      font-size: 0.9rem;
+      font-weight: 850;
+      color: #f8fafc;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .kmr-group-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    .kmr-group-stat {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    .kmr-group-sub {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Filter & Search Row */
+    .kmr-controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .kmr-search-box {
+      position: relative;
+      flex: 1;
+      min-width: 230px;
+    }
+
+    .kmr-search-box input {
+      width: 100%;
+      background: rgba(7, 11, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.65rem 0.95rem 0.65rem 2.35rem;
+      color: #f8fafc;
+      font-size: 0.84rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .kmr-search-box input:focus {
+      border-color: #38bdf8;
+    }
+
+    .kmr-search-box svg {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    .kmr-filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .kmr-filter-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.48rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.18s ease;
+    }
+
+    .kmr-filter-btn:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .kmr-filter-btn.active {
+      background: #2563eb;
+      border-color: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Table Container */
+    .kmr-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: #090d16;
+      max-height: 680px;
+      overflow-y: auto;
+    }
+
+    .kmr-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 780px;
+      text-align: left;
+    }
+
+    .kmr-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #101726;
+      border-bottom: 2px solid rgba(59, 130, 246, 0.35);
+      padding: 0.9rem 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .kmr-table thead th.col-group {
+      text-align: center;
+      width: 86px;
+      min-width: 86px;
+      background: #131c2e;
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .kmr-th-group-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+
+    .kmr-th-group-code {
+      font-size: 0.84rem;
+      font-weight: 900;
+      color: #38bdf8;
+      letter-spacing: 0.02em;
+    }
+
+    .kmr-th-group-sub {
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .kmr-table tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    .kmr-table tbody tr:hover td {
+      background: rgba(56, 189, 248, 0.04);
+    }
+
+    .kmr-table tbody tr.row-all-done td {
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .kmr-table tbody td {
+      padding: 0.85rem 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: middle;
+    }
+
+    .kmr-col-num {
+      width: 52px;
+      text-align: center;
+    }
+
+    .kmr-num-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      font-weight: 850;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .row-all-done .kmr-num-pill {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+
+    .kmr-topic-title {
+      font-size: 0.9rem;
+      font-weight: 750;
+      color: #f1f5f9;
+      line-height: 1.4;
+      margin-bottom: 0.35rem;
+    }
+
+    .kmr-topic-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .kmr-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .kmr-tag.nazariy {
+      background: rgba(59, 130, 246, 0.16);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .kmr-tag.amaliy {
+      background: rgba(20, 184, 166, 0.16);
+      color: #2dd4bf;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    .kmr-tag.hours {
+      background: rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+    }
+
+    .kmr-tag.mt {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .kmr-tag.on-badge {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .kmr-tag.yn-badge {
+      background: rgba(244, 63, 94, 0.2);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    .kmr-cell-check {
+      text-align: center;
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .kmr-check-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .kmr-check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+      padding: 0;
+    }
+
+    .kmr-check-btn:hover {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      transform: scale(1.06);
+    }
+
+    .kmr-check-btn.checked {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+      transform: scale(1.02);
+    }
+
+    .kmr-check-date {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #34d399;
+      min-height: 0.75rem;
+      line-height: 1;
+    }
   </style>
 </head>
 <body class="role-locked">
@@ -1868,6 +2336,67 @@
         Bu havolalar talabalar ro‘yxatida ko‘rinmaydi. Ro‘yxatni
         <strong>nazorat-testlari.js</strong> faylidan tahrirlaysiz.
       </div>
+
+      <!-- ==================== KMR 2026-2027 INTERAKTIV JADVALI ==================== -->
+      <div class="kmr-section" id="kmr-tracker">
+        <div class="kmr-top-bar">
+          <div class="kmr-title-group">
+            <span class="kmr-eyebrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"/></svg>
+              Taqvim-Mavzular Rejasi (KMR • 2026–2027)
+            </span>
+            <h3 class="kmr-main-title">Tibbiyotda axborot texnologiyalari — Darslar monitoringi</h3>
+            <p class="kmr-subtitle">1-kurs, 1-semestr • Jami 32 ta mavzu (64 soat: 16 nazariy, 48 amaliy, 26 mustaqil ta’lim) • Guruhlar: 26-02 dan 26-06 gacha</p>
+          </div>
+
+          <div class="kmr-overall-box">
+            <div class="kmr-overall-top">
+              <span id="kmr-overall-count">Bajarildi: 0 / 160 dars</span>
+              <span class="kmr-overall-pct" id="kmr-overall-pct">0%</span>
+            </div>
+            <div class="kmr-bar-track">
+              <div class="kmr-bar-fill" id="kmr-overall-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Group Progress Cards (26-02 .. 26-06) -->
+        <div class="kmr-groups-grid" id="kmr-groups-summary"></div>
+
+        <!-- Search & Filter Controls -->
+        <div class="kmr-controls-row">
+          <div class="kmr-search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="kmr-search-input" placeholder="Mavzu raqami yoki nomini qidiring..." oninput="filterKmrTable()" />
+          </div>
+
+          <div class="kmr-filter-pills">
+            <button type="button" class="kmr-filter-btn active" data-filter="all" onclick="setKmrFilter('all', this)">Barchasi (32)</button>
+            <button type="button" class="kmr-filter-btn" data-filter="Nazariy" onclick="setKmrFilter('Nazariy', this)">Nazariy (8)</button>
+            <button type="button" class="kmr-filter-btn" data-filter="Amaliy" onclick="setKmrFilter('Amaliy', this)">Amaliy (24)</button>
+            <button type="button" class="kmr-filter-btn" data-filter="done" onclick="setKmrFilter('done', this)">To‘liq o‘tilgan</button>
+            <button type="button" class="kmr-filter-btn" data-filter="pending" onclick="setKmrFilter('pending', this)">O‘tilmagan</button>
+          </div>
+        </div>
+
+        <!-- 32 Topics Matrix Table -->
+        <div class="kmr-table-wrap">
+          <table class="kmr-table">
+            <thead>
+              <tr>
+                <th class="kmr-col-num">№</th>
+                <th>Mavzu nomi va dars turi</th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-02</span><span class="kmr-th-group-sub" id="th-sub-26-02">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-03</span><span class="kmr-th-group-sub" id="th-sub-26-03">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-04</span><span class="kmr-th-group-sub" id="th-sub-26-04">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-05</span><span class="kmr-th-group-sub" id="th-sub-26-05">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-06</span><span class="kmr-th-group-sub" id="th-sub-26-06">0/32</span></div></th>
+              </tr>
+            </thead>
+            <tbody id="kmr-tbody"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <footer class="clean-footer">
@@ -1985,7 +2514,10 @@
       if (name) name.textContent = (role === 'teacher') ? 'O‘qituvchi' : 'Talaba';
       var adminCard = document.getElementById('lesson3-admin-card');
       if (adminCard) adminCard.style.display = (role === 'teacher') ? 'flex' : 'none';
-      if (role === 'teacher') renderControlLinks();
+      if (role === 'teacher') {
+        renderControlLinks();
+        if (typeof initKmrTracker === 'function') initKmrTracker();
+      }
     }
 
     function closeRoleGate() {
@@ -2233,6 +2765,248 @@
         }
       });
     }
+
+    /* ====================================================================== */
+    /* KMR 2026–2027 INTERAKTIV MONITORING JADVALI (32 MAVZU × 5 GURUH)       */
+    /* ====================================================================== */
+    var KMR_STORAGE_KEY = 'tat-kmr-checks-2026';
+    var KMR_GROUPS = ['26-02', '26-03', '26-04', '26-05', '26-06'];
+    var currentKmrFilter = 'all';
+
+    var KMR_TOPICS = [
+      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './1. Axborot tushunchasi/1-dars.html' },
+      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './2. Axborot turlari/2-dars.html' },
+      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './3. Avtomatlashtirish/offline/3-dars.html' },
+      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './4. AKT/4-dars.html' },
+      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './5. Dasturiy ta\'minot/5-dars.html' },
+      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN', link: './6. Windows va Arxivlash/dars.html' },
+      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN', link: './6. Windows va Arxivlash/dars.html' },
+      { id: 8, title: 'Tibbiyotda matnli axborotlarni qayta ishlash texnologiyasi.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 9, title: 'Microsoft Word matn muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 10, title: 'Matn muharriri yordamida jadvallar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 11, title: 'Avtomatlashtirilgan vositalar va shablonlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 12, title: 'Tibbiyotda jadval ma’lumotlarini qayta ishlash texnologiyasi.', hours: 2, type: 'Nazariy', mt: 0, control: 'ON' },
+      { id: 13, title: 'Microsoft Excel jadval muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 14, title: 'Microsoft Excel jadval muharririda formulalar, standart funksiyalar va ulardan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 15, title: 'Diagrammalar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 16, title: 'Tibbiyot ma’lumotlarini taqdim etish uchun taqdimotlar yaratish.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 17, title: 'MS PowerPoint dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 18, title: 'Kompyuterda grafik obyektlar bilan ishlash.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 19, title: 'Photoshop dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 20, title: 'Tibbiyot axborot tizimlari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 21, title: 'MS Access dasturiy ta’minotidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 22, title: 'Ma’lumotlar bazasiga ma’lumotlar kiritish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 23, title: 'Kompyuter tarmoqlari va uning turlari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 24, title: 'Internet.', hours: 2, type: 'Amaliy', mt: 0, control: 'ON' },
+      { id: 25, title: 'Internet tarmog‘ida foydalanuvchilar registratsiyasi.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 26, title: 'Web saytlar yaratishga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 27, title: 'Web-sahifalar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 28, title: 'Web-sahifalar yaratishda matnlar, grafiklar va jadvallar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 29, title: 'Tibbiyotda elektron va masofaviy o‘qitish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 30, title: 'Zoom dasturi va unda videokonferensiya tashkil qilish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
+      { id: 31, title: 'Tibbiyot tizimlarining axborot xavfsizligini ta’minlash asoslari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
+      { id: 32, title: 'Teletibbiyot. Teletibbiyot tizimlari. Teletibbiyotga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'YN' }
+    ];
+
+    function loadKmrState() {
+      try {
+        var raw = localStorage.getItem(KMR_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveKmrState(state) {
+      try {
+        localStorage.setItem(KMR_STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function getTodayShortDate() {
+      var d = new Date();
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      return day + '.' + month;
+    }
+
+    function toggleKmrCheck(topicId, groupCode) {
+      var state = loadKmrState();
+      var key = topicId + '_' + groupCode;
+      if (state[key]) {
+        delete state[key];
+      } else {
+        state[key] = getTodayShortDate();
+      }
+      saveKmrState(state);
+      renderKmrAll();
+    }
+
+    function toggleKmrRowAll(topicId) {
+      var state = loadKmrState();
+      var allChecked = KMR_GROUPS.every(function(g) { return !!state[topicId + '_' + g]; });
+      var today = getTodayShortDate();
+      KMR_GROUPS.forEach(function(g) {
+        var key = topicId + '_' + g;
+        if (allChecked) {
+          delete state[key];
+        } else if (!state[key]) {
+          state[key] = today;
+        }
+      });
+      saveKmrState(state);
+      renderKmrAll();
+    }
+
+    function setKmrFilter(filterType, btnEl) {
+      currentKmrFilter = filterType;
+      var btns = document.querySelectorAll('.kmr-filter-btn');
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      if (btnEl) btnEl.classList.add('active');
+      filterKmrTable();
+    }
+
+    function filterKmrTable() {
+      var qInput = document.getElementById('kmr-search-input');
+      var query = qInput ? qInput.value.toLowerCase().trim() : '';
+      var state = loadKmrState();
+      var rows = document.querySelectorAll('#kmr-tbody tr[data-topic-id]');
+
+      rows.forEach(function(row) {
+        var tid = parseInt(row.getAttribute('data-topic-id'), 10);
+        var ttype = row.getAttribute('data-type') || '';
+        var tsearch = (row.getAttribute('data-search') || '').toLowerCase();
+        var checkedCount = 0;
+        KMR_GROUPS.forEach(function(g) {
+          if (state[tid + '_' + g]) checkedCount++;
+        });
+
+        var matchSearch = !query || tsearch.indexOf(query) > -1;
+        var matchFilter = true;
+        if (currentKmrFilter === 'Nazariy') matchFilter = (ttype === 'Nazariy');
+        else if (currentKmrFilter === 'Amaliy') matchFilter = (ttype === 'Amaliy');
+        else if (currentKmrFilter === 'done') matchFilter = (checkedCount === KMR_GROUPS.length);
+        else if (currentKmrFilter === 'pending') matchFilter = (checkedCount < KMR_GROUPS.length);
+
+        row.style.display = (matchSearch && matchFilter) ? '' : 'none';
+      });
+    }
+
+    function renderKmrAll() {
+      var state = loadKmrState();
+      var tbody = document.getElementById('kmr-tbody');
+      var groupsGrid = document.getElementById('kmr-groups-summary');
+      if (!tbody || !groupsGrid) return;
+
+      var totalChecks = 0;
+      var maxChecks = KMR_TOPICS.length * KMR_GROUPS.length; // 160
+      var groupCounts = {};
+      KMR_GROUPS.forEach(function(g) { groupCounts[g] = 0; });
+
+      var rowsHtml = '';
+      for (var i = 0; i < KMR_TOPICS.length; i++) {
+        var t = KMR_TOPICS[i];
+        var rowDoneCount = 0;
+        for (var j = 0; j < KMR_GROUPS.length; j++) {
+          var gCode = KMR_GROUPS[j];
+          if (state[t.id + '_' + gCode]) {
+            rowDoneCount++;
+            groupCounts[gCode]++;
+            totalChecks++;
+          }
+        }
+        var isRowCompleted = (rowDoneCount === KMR_GROUPS.length);
+        var typeBadgeClass = (t.type === 'Nazariy') ? 'kmr-badge-theory' : 'kmr-badge-practice';
+        var ctrlBadge = '';
+        if (t.control === 'ON') {
+          ctrlBadge = '<span class="kmr-meta-badge kmr-badge-on">Oraliq nazorat (ON)</span>';
+        } else if (t.control === 'YN') {
+          ctrlBadge = '<span class="kmr-meta-badge kmr-badge-yn">Yakuniy nazorat (YN)</span>';
+        }
+
+        var mtBadge = t.mt > 0 ? '<span class="kmr-meta-badge kmr-badge-mt">Mustaqil ta’lim: ' + t.mt + ' s</span>' : '';
+        var linkBadge = t.link
+          ? '<a href="' + t.link + '" class="kmr-meta-badge" style="color:#818cf8;border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.12);text-decoration:none;">Darsni ochish →</a>'
+          : '';
+
+        var searchStr = t.id + ' ' + t.title + ' ' + t.type + ' ' + t.control;
+
+        rowsHtml +=
+          '<tr data-topic-id="' + t.id + '" data-type="' + t.type + '" data-search="' + searchStr.replace(/"/g, '&quot;') + '" class="' + (isRowCompleted ? 'row-completed' : '') + '">' +
+            '<td class="kmr-col-num">' +
+              '<span class="kmr-num-pill" title="Barcha guruhlarni belgilash / bekor qilish" style="cursor:pointer;" onclick="toggleKmrRowAll(' + t.id + ')">' + t.id + '</span>' +
+            '</td>' +
+            '<td class="kmr-topic-cell">' +
+              '<span class="kmr-topic-title">' + t.title + '</span>' +
+              '<div class="kmr-topic-meta">' +
+                '<span class="kmr-meta-badge ' + typeBadgeClass + '">' + t.type + ' • ' + t.hours + ' soat</span>' +
+                mtBadge +
+                ctrlBadge +
+                linkBadge +
+              '</div>' +
+            '</td>';
+
+        for (var k = 0; k < KMR_GROUPS.length; k++) {
+          var grp = KMR_GROUPS[k];
+          var stamp = state[t.id + '_' + grp];
+          var checkedCls = stamp ? ' is-checked' : '';
+          var stampText = stamp ? stamp : '—';
+          rowsHtml +=
+            '<td class="kmr-check-cell">' +
+              '<div class="kmr-check-wrap">' +
+                '<button type="button" class="kmr-check-btn' + checkedCls + '" onclick="toggleKmrCheck(' + t.id + ', \'' + grp + '\')" title="Guruh ' + grp + ' — ' + t.id + '-mavzu">' +
+                  '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+                '</button>' +
+                '<span class="kmr-check-date">' + stampText + '</span>' +
+              '</div>' +
+            '</td>';
+        }
+
+        rowsHtml += '</tr>';
+      }
+
+      tbody.innerHTML = rowsHtml;
+
+      // Update 5 group cards and table column header counters
+      var cardsHtml = '';
+      for (var m = 0; m < KMR_GROUPS.length; m++) {
+        var gc = KMR_GROUPS[m];
+        var cnt = groupCounts[gc] || 0;
+        var pct = Math.round((cnt / KMR_TOPICS.length) * 100);
+        var thSub = document.getElementById('th-sub-' + gc);
+        if (thSub) thSub.textContent = cnt + ' / ' + KMR_TOPICS.length;
+
+        cardsHtml +=
+          '<div class="kmr-group-card">' +
+            '<div class="kmr-group-head">' +
+              '<span class="kmr-group-name">' + gc + ' <span class="kmr-group-tag">GURUH</span></span>' +
+              '<span class="kmr-group-count">' + cnt + ' / ' + KMR_TOPICS.length + ' (' + pct + '%)</span>' +
+            '</div>' +
+            '<div class="kmr-group-bar">' +
+              '<div class="kmr-group-bar-fill" style="width:' + pct + '%;"></div>' +
+            '</div>' +
+          '</div>';
+      }
+      groupsGrid.innerHTML = cardsHtml;
+
+      // Update overall progress bar
+      var overallPct = Math.round((totalChecks / maxChecks) * 100);
+      var countEl = document.getElementById('kmr-overall-count');
+      var pctEl = document.getElementById('kmr-overall-pct');
+      var barEl = document.getElementById('kmr-overall-bar');
+      if (countEl) countEl.textContent = 'Bajarildi: ' + totalChecks + ' / ' + maxChecks + ' dars';
+      if (pctEl) pctEl.textContent = overallPct + '%';
+      if (barEl) barEl.style.width = overallPct + '%';
+
+      filterKmrTable();
+    }
+
+    function initKmrTracker() {
+      renderKmrAll();
+    }
+
+    // Initialize KMR tracker immediately on load
+    initKmrTracker();
   </script>
 </body>
 </html>
