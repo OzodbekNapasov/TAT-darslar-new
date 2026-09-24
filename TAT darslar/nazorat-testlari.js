@@ -41,5 +41,17 @@ window.NAZORAT_TESTLARI = [
     nom: 'Windows OT — Bilimni sinash testi (20 ta savol)',
     havola: './6. Windows operatsion tizimi/test.html',
     izoh: 'Talabalar va o‘qituvchi uchun lokal 20 talik test (50/70/85/100 baholash mezoni bilan).'
+  },
+  {
+    dars: '7-dars',
+    nom: 'Fayllar, papkalar va arxivlash — Darslik',
+    havola: './7. Fayllar va arxivlash/dars.html',
+    izoh: 'Papka yaratish va tezkor tugmalar, arxivlash usullari, 25 ta nazorat savoli javoblari bilan.'
+  },
+  {
+    dars: '7-dars',
+    nom: 'Fayllar, papkalar va arxivlash — Test (20 ta savol)',
+    havola: './7. Fayllar va arxivlash/test.html',
+    izoh: 'Lokal 20 talik test, har bir savolga to‘g‘ri javob va izoh bilan.'
   }
 ];

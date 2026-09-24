@@ -1331,14 +1331,88 @@
       .header-titles h1 {
         font-size: 1.4rem;
       }
+      /* Yopishqoq menyu telefonda ekranning katta qismini egallamasin: 2x2 ixcham panjara */
+      .tabs-nav-container {
+        top: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
       .tabs-nav {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+        padding: 0.3rem;
       }
       .tab-btn {
         justify-content: flex-start;
+        gap: 0.4rem;
+        padding: 0.55rem 0.55rem;
+        font-size: 0.76rem;
+        line-height: 1.2;
+        text-align: left;
+        white-space: normal;
+      }
+      .tab-btn svg {
+        width: 15px;
+        height: 15px;
       }
       .device-info-content {
         padding: 1.15rem;
+      }
+
+      /* Sarlavha: ikonka tepada, matn butun kenglikda */
+      .header-brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+      }
+      .header-titles > div:first-child {
+        flex-wrap: wrap;
+      }
+
+      /* Qisqa nishonlar (5-DARS, 1-GURUH ...) ikki qatorga bo'linmasin.
+         Uzun matnli nishonlarga tegmaymiz — ular o'ralishi kerak. */
+      .header-titles .badge,
+      .section-header .badge,
+      .concept-header .badge,
+      .storage-deep-body .badge,
+      .custom-table .badge {
+        white-space: nowrap;
+      }
+      .concept-header {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .section-header h2 {
+        flex-wrap: wrap;
+        font-size: 1.25rem;
+        gap: 0.45rem;
+      }
+      .spec-badge {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+
+      /* HDD / SSD kartalari: sarlavha va nishon sig'masa pastga tushsin */
+      .storage-deep-body {
+        padding: 1.1rem;
+      }
+      .storage-deep-body > div:first-child {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .device-insights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Test: ichma-ich bo'shliqlar javob tugmalarini siqib qo'ymasin */
+      .quiz-container {
+        padding: 1.1rem 0.85rem;
+      }
+      .quiz-question-card {
+        padding: 1rem 0.9rem;
+      }
+      .quiz-opt-btn {
+        gap: 0.65rem;
+        padding: 0.7rem 0.8rem;
       }
     }
 

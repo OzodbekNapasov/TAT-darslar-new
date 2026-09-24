@@ -49,6 +49,16 @@
       "source": "/6-test",
       "destination": "/TAT%20darslar/6.%20Windows%20operatsion%20tizimi/test.html",
       "permanent": false
+    },
+    {
+      "source": "/7-dars",
+      "destination": "/TAT%20darslar/7.%20Fayllar%20va%20arxivlash/dars.html",
+      "permanent": false
+    },
+    {
+      "source": "/7-test",
+      "destination": "/TAT%20darslar/7.%20Fayllar%20va%20arxivlash/test.html",
+      "permanent": false
     }
   ],
 

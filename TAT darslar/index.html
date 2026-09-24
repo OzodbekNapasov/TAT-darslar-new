@@ -405,6 +405,13 @@
       --atmosphere-bg: radial-gradient(circle at 75% 20%, #818cf8 0%, #4f46e5 45%, #1e1b4b 85%);
     }
 
+    /* Card 7: Folder Amber / Golden Glow */
+    .theme-amber {
+      --glow-color: #fcd34d;
+      --glow-aura: rgba(245, 184, 61, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #fcd34d 0%, #d97706 45%, #422006 85%);
+    }
+
     /* Upcoming Card State */
     .upcoming-wrapper .taskello-card {
       cursor: default;
@@ -606,8 +613,9 @@
 
     .profile-head {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.3rem 0.6rem;
       margin-bottom: 0.25rem;
     }
 
@@ -624,6 +632,7 @@
       border-radius: 9999px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .student-pill {
@@ -1937,6 +1946,112 @@
       opacity: 1;
       transform: scale(1);
     }
+
+    /* ====================================================================== */
+    /* TELEFON: sarlavha (o'qituvchi), KMR oynasi va 3-dars oynasi            */
+    /* ====================================================================== */
+    @media (max-width: 560px) {
+      /* O'qituvchida 2 ta tugma bor — ular sarlavha nomi ustiga chiqmasin */
+      html[data-role="teacher"] .clean-header {
+        flex-wrap: wrap;
+      }
+      html[data-role="teacher"] .header-brand {
+        flex: 1 1 100%;
+      }
+      html[data-role="teacher"] .header-tools {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .kmr-header-btn { white-space: nowrap; }
+
+      /* KMR oynasi */
+      .kmr-modal-backdrop { padding: 0.5rem; }
+      .kmr-modal-window { max-height: calc(100vh - 1rem); max-height: calc(100dvh - 1rem); }
+      .kmr-modal-header {
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        padding: 0.75rem 0.85rem;
+      }
+      .kmr-modal-title-wrap {
+        flex-wrap: wrap;
+        min-width: 0;
+        gap: 0.35rem 0.6rem;
+      }
+      .kmr-modal-title-wrap span { white-space: nowrap; }
+      .kmr-modal-close {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+      }
+      .kmr-toolbar { padding: 0.6rem 0.85rem; }
+      .kmr-controls-right { width: 100%; }
+      .kmr-search-mini { width: 100%; }
+      /* iPhone'da 16px dan kichik shrift maydonni avtomatik kattalashtiradi */
+      .kmr-search-mini input { font-size: 16px; padding-top: 0.45rem; padding-bottom: 0.45rem; }
+      .kmr-filter-pills { flex-wrap: wrap; }
+      .kmr-filter-btn { padding: 0.45rem 0.65rem; font-size: 0.74rem; }
+
+      .kmr-table { min-width: 520px; }
+      .kmr-table thead th.col-group { width: 52px; min-width: 52px; }
+      .kmr-topic-title { font-size: 0.76rem; }
+      .kmr-topic-row-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+      /* Jadval o'ngga surilganda ham mavzu raqami ko'rinib tursin */
+      .kmr-table thead th.kmr-col-num,
+      .kmr-table tbody td.kmr-col-num {
+        position: sticky;
+        left: 0;
+        z-index: 5;
+        width: 38px;
+        background: #090d16;
+        box-shadow: 1px 0 0 rgba(255, 255, 255, 0.08);
+      }
+      .kmr-table thead th.kmr-col-num { z-index: 25; background: #111827; }
+      .kmr-table tbody tr.row-completed td.kmr-col-num {
+        background: linear-gradient(rgba(16, 185, 129, 0.055), rgba(16, 185, 129, 0.055)), #090d16;
+      }
+
+      /* 3-dars profil oynasi */
+      .modal-backdrop {
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 0.75rem;
+      }
+      .modal-dialog {
+        margin: auto;
+        padding: 1.15rem;
+        border-radius: 22px;
+      }
+      .modal-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.9rem;
+      }
+      .modal-title { font-size: 1.15rem; }
+      .profile-card {
+        gap: 0.8rem;
+        padding: 0.9rem;
+        border-radius: 16px;
+      }
+      .profile-icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+      }
+      .profile-head {
+        flex-wrap: wrap;
+        gap: 0.3rem 0.5rem;
+      }
+      .profile-role-title { font-size: 0.98rem; }
+    }
+
+    /* Juda tor telefonlar (320–360px) */
+    @media (max-width: 360px) {
+      .kmr-header-btn { padding: 0.5rem 0.7rem; gap: 0.35rem; }
+      .role-pill { padding: 0.45rem 0.7rem; }
+    }
   </style>
 </head>
 <body class="role-locked">
@@ -2450,6 +2565,44 @@
                 <span class="folder-unit-label">Dars</span>
               </div>
               <div class="folder-stat-right">20 Test &amp; Trenajyor</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 7 (7-DARS: FAYLLAR, PAPKALAR VA ARXIVLASH) ==================== -->
+      <div class="taskello-card-wrapper theme-amber">
+        <a href="./7. Fayllar va arxivlash/dars.html" class="taskello-card" data-search="7-dars fayl papka katalog arxiv arxivlash zip rar 7z winrar 7-zip siqish nusxalash kochirish ochirish savat tezkor tugmalar ctrl shift n zaxira nusxa backup">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#fcd34d" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#f59e0b" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#d97706" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>7-Dars
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Fayllar, papkalar va arxivlash</div>
+              <div class="folder-subtitle">Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">07</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">20 Test</div>
             </div>
           </div>
         </a>
