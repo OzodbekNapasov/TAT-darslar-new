@@ -571,6 +571,74 @@
         font-size: 1.15rem;
       }
     }
+    /* RO'YXATDAN O'TISH, TALABA SATRI VA YUBORISH HOLATI */
+    .reg-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    @media (min-width: 600px) {
+      .reg-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .field-group input, .field-group select {
+      font-size: 16px; /* iPhone maydonni avtomatik kattalashtirmasin */
+    }
+
+    .reg-error {
+      display: none;
+      margin-top: 0.9rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .reg-error.show { display: block; }
+
+    .student-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.25rem;
+      padding: 0.8rem 1.1rem;
+      margin-bottom: 1.25rem;
+      border-radius: 14px;
+      background: rgba(0, 120, 212, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .student-strip strong { color: var(--text-main); }
+
+    .send-status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 0 auto 1.5rem;
+      max-width: 520px;
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+    }
+
+    .send-status strong { font-size: 0.95rem; color: var(--text-main); }
+    .send-status.loading { border-color: rgba(56, 189, 248, 0.35); background: rgba(0, 120, 212, 0.1); }
+    .send-status.success { border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1); }
+    .send-status.success strong { color: #34d399; }
+    .send-status.error { border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.1); }
+    .send-status.error strong { color: #fca5a5; }
+    .send-status .nav-btn { margin-top: 0.4rem; }
+
+    .opt-label input[type="radio"]:disabled { cursor: default; }
   </style>
 </head>
 <body>
@@ -610,10 +678,10 @@
       <div class="test-header">
         <span class="test-badge">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          20 ta savol • Ro‘yxatdan o‘tish shart emas
+          20 ta savol • Natija o‘qituvchiga yuboriladi
         </span>
         <h2 class="test-title">Fayllar, papkalar va arxivlash testi</h2>
-        <p class="test-subtitle">Hech qanday ma'lumot kiritmasdan savollarga javob bering va yakunda bahongiz hamda tahlilni shu zahotiyoq ko'ring.</p>
+        <p class="test-subtitle">Familiya, ism va guruhingizni kiriting. Har bir talabaga 30 talik bankdan tasodifiy 20 ta savol tushadi, javob variantlari ham aralashtiriladi.</p>
       </div>
 
       <!-- GRADING SCALE INFO -->
@@ -638,16 +706,59 @@
         </div>
       </div>
 
-      <!-- FORM -->
-      <form id="quiz-form" onsubmit="submitTest(event)">
-        <!-- QUESTIONS LIST -->
-        <div id="questions-list"></div>
-
-        <button type="submit" class="btn-submit" id="btn-submit">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span>Testni yakunlash va natijani ko'rish</span>
+      <!-- RO'YXATDAN O'TISH: F.I.O VA GURUH -->
+      <form class="auth-card" id="reg-form" onsubmit="startTest(event)" novalidate>
+        <div class="auth-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Talaba ma’lumotlari</span>
+        </div>
+        <div class="reg-grid">
+          <div class="field-group">
+            <label for="inp-lastname">Familiya</label>
+            <input type="text" id="inp-lastname" autocomplete="family-name" placeholder="Masalan: Valiyev" maxlength="40">
+          </div>
+          <div class="field-group">
+            <label for="inp-firstname">Ism</label>
+            <input type="text" id="inp-firstname" autocomplete="given-name" placeholder="Masalan: Ali" maxlength="40">
+          </div>
+          <div class="field-group">
+            <label for="inp-middlename">Otasining ismi</label>
+            <input type="text" id="inp-middlename" autocomplete="additional-name" placeholder="Masalan: Karimovich" maxlength="40">
+          </div>
+          <div class="field-group">
+            <label for="inp-group">Guruh</label>
+            <select id="inp-group">
+              <option value="" selected disabled>Guruhni tanlang...</option>
+              <option value="26-01">26-01 guruhi</option>
+              <option value="26-02">26-02 guruhi</option>
+              <option value="26-03">26-03 guruhi</option>
+              <option value="26-04">26-04 guruhi</option>
+              <option value="26-05">26-05 guruhi</option>
+              <option value="26-06">26-06 guruhi</option>
+              <option value="26-07">26-07 guruhi</option>
+            </select>
+          </div>
+        </div>
+        <div class="reg-error" id="reg-error" role="alert"></div>
+        <button type="submit" class="btn-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Testni boshlash</span>
         </button>
       </form>
+
+      <!-- TEST (ro'yxatdan o'tgach ko'rinadi) -->
+      <div id="quiz-area" style="display:none;">
+        <div class="student-strip" id="student-strip"></div>
+
+        <form id="quiz-form" onsubmit="submitTest(event)">
+          <div id="questions-list"></div>
+
+          <button type="submit" class="btn-submit" id="btn-submit">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Testni yakunlash va natijani ko'rish</span>
+          </button>
+        </form>
+      </div>
 
       <!-- RESULT CARD -->
       <div class="result-card" id="result-box">
@@ -657,8 +768,14 @@
         <h3 style="font-size:1.45rem; font-weight:850; color:#38bdf8;" id="res-student-title">Natija</h3>
         <div class="result-score" id="res-score">0 / 20</div>
         <div class="result-grade" id="res-grade" style="color:#34d399;">Baho: 5 (A'lo)</div>
-        <p class="result-details" id="res-desc">Siz 20 ta savoldan barchasiga to'g'ri javob berdingiz!</p>
-        
+        <p class="result-details" id="res-desc"></p>
+
+        <div class="send-status" id="send-status">
+          <strong id="send-title">Natija o‘qituvchiga yuborilmoqda...</strong>
+          <span id="send-msg">Iltimos, sahifani yopmang.</span>
+          <button type="button" class="nav-btn" id="btn-resend" onclick="resendResult()" style="display:none;">Qayta yuborish</button>
+        </div>
+
         <div class="result-actions">
           <button type="button" class="nav-btn" onclick="restartTest()" style="padding:0.75rem 1.5rem; font-size:0.9rem;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
@@ -682,7 +799,7 @@
           <strong>Shahrisabz Tibbiyot Texnikumi</strong> — Tibbiyotda axborot texnologiyalari fani
         </div>
         <div>
-          <span>Lokal offlayn test tizimi • Natija saqlanadi</span>
+          <span>7-Dars testi • Natija o‘qituvchining Telegram botiga yuboriladi</span>
         </div>
       </div>
     </div>
@@ -690,354 +807,333 @@
 
   <script>
     /* ====================================================================== */
-    /* 20 TA TEST SAVOLLARI (Variantlar balansi: A:5, B:5, C:5, D:5)          */
+    /* SOZLAMALAR                                                             */
     /* ====================================================================== */
-    var QUESTIONS = [
-      {
-        id: 1,
-        q: "Windows’da yangi papka yaratishning tezkor tugmalari qaysi?",
-        opts: [
-          "A) Ctrl + Shift + N",
-          "B) Ctrl + N",
-          "C) Alt + F4",
-          "D) Ctrl + P"
-        ],
-        ans: 0,
-        exp: "Ctrl + Shift + N Provodnikda va ish stolida darhol “Yangi papka” yaratadi. Faqat Ctrl + N esa yangi Provodnik oynasini ochadi."
-      },
-      {
-        id: 2,
-        q: "Belgilangan fayl yoki papka nomini o‘zgartirish uchun qaysi tugma bosiladi?",
-        opts: [
-          "A) F1",
-          "B) F2",
-          "C) F5",
-          "D) Esc"
-        ],
-        ans: 1,
-        exp: "F2 — nomini o‘zgartirish (Rename). F1 — yordam, F5 — oynani yangilash."
-      },
-      {
-        id: 3,
-        q: "Arxivlash nima?",
-        opts: [
-          "A) Faylni butunlay o‘chirib yuborish",
-          "B) Faylni printerda chop etish",
-          "C) Bir yoki bir nechta faylni bitta faylga jamlab, siqish",
-          "D) Fayl nomini o‘zgartirish"
-        ],
-        ans: 2,
-        exp: "Arxivlash — fayl va papkalarni maxsus dastur yordamida bitta faylga (arxivga) jamlash va hajmini kichraytirish."
-      },
-      {
-        id: 4,
-        q: "Faylni belgilab Delete tugmasi bosilsa, u qayerga tushadi?",
-        opts: [
-          "A) Fleshkaga",
-          "B) Ish stoliga",
-          "C) “Hujjatlar” papkasiga",
-          "D) Savatga (Korzina)"
-        ],
-        ans: 3,
-        exp: "Delete bosilganda fayl Savatga tushadi va uni u yerdan “Tiklash” orqali qaytarish mumkin."
-      },
-      {
-        id: 5,
-        q: "Faylni Savatga tushirmasdan butunlay o‘chirish uchun qaysi birikma ishlatiladi?",
-        opts: [
-          "A) Shift + Delete",
-          "B) Ctrl + Delete",
-          "C) Alt + Delete",
-          "D) Ctrl + D"
-        ],
-        ans: 0,
-        exp: "Shift + Delete faylni Savatga tushirmasdan o‘chiradi. Uni oddiy yo‘l bilan tiklab bo‘lmaydi, shuning uchun ehtiyot bo‘lish kerak."
-      },
-      {
-        id: 6,
-        q: "Quyidagilardan qaysi biri arxiv fayl kengaytmasi EMAS?",
-        opts: [
-          "A) .zip",
-          "B) .rar",
-          "C) .7z",
-          "D) .docx"
-        ],
-        ans: 3,
-        exp: ".zip, .rar va .7z — arxiv formatlari. .docx esa Microsoft Word hujjatining kengaytmasi."
-      },
-      {
-        id: 7,
-        q: "Faylni boshqa joyga ko‘chirish uchun (kesish) qaysi birikma bosiladi?",
-        opts: [
-          "A) Ctrl + C",
-          "B) Ctrl + X",
-          "C) Ctrl + Z",
-          "D) Ctrl + A"
-        ],
-        ans: 1,
-        exp: "Ctrl + X — kesish. Keyin yangi joyda Ctrl + V bosilsa, fayl eski joyidan yangi joyga ko‘chadi."
-      },
-      {
-        id: 8,
-        q: "7-Zip dasturining asosiy (o‘ziga xos) arxiv formati qaysi?",
-        opts: [
-          "A) .rar",
-          "B) .exe",
-          "C) .7z",
-          "D) .pdf"
-        ],
-        ans: 2,
-        exp: "7-Zip bepul dastur bo‘lib, uning asosiy formati .7z — eng yuqori siqish darajasini beradi. .rar esa WinRAR formati."
-      },
-      {
-        id: 9,
-        q: "Fayl yo‘li (manzili) qaysi javobda to‘g‘ri yozilgan?",
-        opts: [
-          "A) D:\\Bemorlar\\2026\\Aliyev.docx",
-          "B) Aliyev.docx:D/Bemorlar",
-          "C) D-Bemorlar-2026-Aliyev",
-          "D) 2026.Bemorlar.D:Aliyev"
-        ],
-        ans: 0,
-        exp: "Fayl yo‘li disk nomidan boshlanadi, keyin papkalar va oxirida fayl nomi keladi. Ular teskari chiziq (\\) bilan ajratiladi."
-      },
-      {
-        id: 10,
-        q: "Papkaning kengaytmasi qanday bo‘ladi?",
-        opts: [
-          "A) .fold",
-          "B) .dir",
-          "C) .exe",
-          "D) Papkaning kengaytmasi bo‘lmaydi"
-        ],
-        ans: 3,
-        exp: "Kengaytma faqat fayllarda bo‘ladi va fayl turini bildiradi. Papkaning kengaytmasi bo‘lmaydi."
-      },
-      {
-        id: 11,
-        q: "Windows qaysi formatdagi arxivni qo‘shimcha dasturisiz yarata oladi?",
-        opts: [
-          "A) .rar",
-          "B) .zip",
-          "C) .iso",
-          "D) .mp4"
-        ],
-        ans: 1,
-        exp: "Windows’da o‘ng tugma → “ZIP faylga siqish” (Windows 10 da “Yuborish” → “Siqilgan ZIP papka”) orqali ZIP arxivni qo‘shimcha dasturisiz yaratish mumkin."
-      },
-      {
-        id: 12,
-        q: "Quyidagi fayllardan qaysi biri arxivlanganda eng yaxshi siqiladi?",
-        opts: [
-          "A) .jpg rasm",
-          "B) .mp4 video",
-          "C) .txt matnli fayl",
-          "D) .mp3 musiqa"
-        ],
-        ans: 2,
-        exp: "Oddiy matn (.txt) juda yaxshi siqiladi. .jpg, .mp4 va .mp3 fayllari yaratilayotganda allaqachon siqilgan, shuning uchun deyarli kichraymaydi."
-      },
-      {
-        id: 13,
-        q: "Provodnik (File Explorer) oynasini tez ochish uchun qaysi birikma bosiladi?",
-        opts: [
-          "A) Win + E",
-          "B) Win + D",
-          "C) Ctrl + Esc",
-          "D) Alt + Tab"
-        ],
-        ans: 0,
-        exp: "Win + E — Provodnikni ochadi (E — Explorer). Win + D ish stolini ko‘rsatadi, Alt + Tab oynalar orasida o‘tadi."
-      },
-      {
-        id: 14,
-        q: "Papkadagi barcha fayllarni birdaniga belgilash uchun qaysi birikma ishlatiladi?",
-        opts: [
-          "A) Ctrl + S",
-          "B) Ctrl + B",
-          "C) Ctrl + F",
-          "D) Ctrl + A"
-        ],
-        ans: 3,
-        exp: "Ctrl + A (All — hammasi) ochiq papkadagi barcha fayl va papkalarni belgilaydi."
-      },
-      {
-        id: 15,
-        q: "Nusxalangan (Ctrl + C) faylni yangi joyga qo‘yish uchun qaysi birikma bosiladi?",
-        opts: [
-          "A) Ctrl + X",
-          "B) Ctrl + V",
-          "C) Ctrl + Y",
-          "D) Ctrl + N"
-        ],
-        ans: 1,
-        exp: "Ctrl + V — qo‘yish (Paste). Nusxalash: Ctrl + C, keyin Ctrl + V."
-      },
-      {
-        id: 16,
-        q: "Bemor ma’lumotlari bor arxivga parol qo‘yish nima uchun kerak?",
-        opts: [
-          "A) Arxiv hajmini kattalashtirish uchun",
-          "B) Arxiv tezroq ochilishi uchun",
-          "C) Ma’lumot maxfiyligini saqlash, begona odam ocha olmasligi uchun",
-          "D) Arxivni rangli qilish uchun"
-        ],
-        ans: 2,
-        exp: "Bemor haqidagi ma’lumot tibbiy sir. Parolli arxivni fleshka yo‘qolsa ham parolsiz hech kim ocha olmaydi."
-      },
-      {
-        id: 17,
-        q: "Windows’da ZIP arxivdagi fayllarni chiqarib olish buyrug‘i qaysi?",
-        opts: [
-          "A) “Hammasini chiqarish” (Extract All)",
-          "B) “Chop etish” (Print)",
-          "C) “Nomini o‘zgartirish” (Rename)",
-          "D) “Xususiyatlar” (Properties)"
-        ],
-        ans: 0,
-        exp: "ZIP fayl ustida o‘ng tugma → “Hammasini chiqarish” → “Chiqarish”. Fayllar asl holida papkaga chiqariladi."
-      },
-      {
-        id: 18,
-        q: "Quyidagi belgilardan qaysi birini fayl nomida ishlatib BO‘LMAYDI?",
-        opts: [
-          "A) _ (pastki chiziq)",
-          "B) - (defis)",
-          "C) 2026 (raqamlar)",
-          "D) ? (so‘roq belgisi)"
-        ],
-        ans: 3,
-        exp: "Windows fayl nomida 9 ta belgini taqiqlaydi: \\ / : * ? \" &lt; &gt; |. Pastki chiziq, defis va raqamlarni bemalol ishlatish mumkin."
-      },
-      {
-        id: 19,
-        q: "Ketma-ket turmagan bir nechta faylni tanlab-tanlab belgilash uchun nima qilinadi?",
-        opts: [
-          "A) Alt bosib turib fayllar ustiga bosiladi",
-          "B) Ctrl bosib turib fayllar ustiga bosiladi",
-          "C) Win bosib turib fayllar ustiga bosiladi",
-          "D) Faqat sichqonchaning o‘ng tugmasi bosiladi"
-        ],
-        ans: 1,
-        exp: "Ctrl + sichqoncha bosish — tanlab-tanlab belgilash. Shift + bosish esa birinchi va oxirgi fayl orasidagi hammasini ketma-ket belgilaydi."
-      },
-      {
-        id: 20,
-        q: "Zaxira nusxa olishdagi “3-2-1” qoidasi nimani bildiradi?",
-        opts: [
-          "A) 3 kunda 2 marta, 1 soat davomida saqlash",
-          "B) 3 ta papka, 2 ta fayl, 1 ta arxiv",
-          "C) 3 ta nusxa, 2 xil qurilmada, 1 tasi boshqa joyda",
-          "D) 3 ta parol, 2 ta fleshka, 1 ta kompyuter"
-        ],
-        ans: 2,
-        exp: "3-2-1: ma’lumotning 3 ta nusxasi, 2 xil qurilmada (kompyuter va fleshka yoki disk), 1 tasi boshqa joyda (bulutli xotira yoki boshqa bino)."
-      }
+    // 5-dars testi bilan bir xil Google Apps Script manzili: u natijani
+    // o'qituvchining Telegram botiga yuboradi ("7-Dars" listiga ham yoziladi).
+    var BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwlnNlpNGLWH3hs_pUXXias8x-uSYMj3kC5Ildf4bFuyySJO9ihVaGFMUU2A_FUqeys/exec";
+    var LESSON_NAME = "7-Dars: Fayllar va papkalar, arxivlash";
+    var QUESTIONS_PER_TEST = 20;
+
+    /* ====================================================================== */
+    /* 30 TALIK SAVOLLAR BANKI (ans — opts ichidagi to'g'ri javob indeksi)     */
+    /* Har bir talabaga tasodifiy 20 tasi, aralashtirilgan variantlar bilan.  */
+    /* ====================================================================== */
+    var QUESTION_BANK = [
+      { q: "Windows’da yangi papka yaratishning tezkor tugmalari qaysi?",
+        opts: ["Ctrl + Shift + N", "Ctrl + N", "Alt + F4", "Ctrl + P"], ans: 0,
+        exp: "Ctrl + Shift + N Provodnikda va ish stolida darhol “Yangi papka” yaratadi. Faqat Ctrl + N esa yangi Provodnik oynasini ochadi." },
+      { q: "Belgilangan fayl yoki papka nomini o‘zgartirish uchun qaysi tugma bosiladi?",
+        opts: ["F2", "F1", "F5", "Esc"], ans: 0,
+        exp: "F2 — nomini o‘zgartirish (Rename). F1 — yordam, F5 — oynani yangilash." },
+      { q: "Arxivlash nima?",
+        opts: ["Bir yoki bir nechta faylni bitta faylga jamlab, siqish", "Faylni butunlay o‘chirib yuborish", "Faylni printerda chop etish", "Fayl nomini o‘zgartirish"], ans: 0,
+        exp: "Arxivlash — fayl va papkalarni maxsus dastur yordamida bitta faylga (arxivga) jamlash va hajmini kichraytirish." },
+      { q: "Faylni belgilab Delete tugmasi bosilsa, u qayerga tushadi?",
+        opts: ["Savatga (Korzina)", "Fleshkaga", "Ish stoliga", "“Hujjatlar” papkasiga"], ans: 0,
+        exp: "Delete bosilganda fayl Savatga tushadi va uni u yerdan “Tiklash” orqali qaytarish mumkin." },
+      { q: "Faylni Savatga tushirmasdan butunlay o‘chirish uchun qaysi birikma ishlatiladi?",
+        opts: ["Shift + Delete", "Ctrl + Delete", "Alt + Delete", "Win + Delete"], ans: 0,
+        exp: "Shift + Delete faylni Savatga tushirmasdan o‘chiradi. Uni oddiy yo‘l bilan tiklab bo‘lmaydi, shuning uchun ehtiyot bo‘lish kerak." },
+      { q: "Quyidagilardan qaysi biri arxiv fayl kengaytmasi EMAS?",
+        opts: [".docx", ".zip", ".rar", ".7z"], ans: 0,
+        exp: ".zip, .rar va .7z — arxiv formatlari. .docx esa Microsoft Word hujjatining kengaytmasi." },
+      { q: "Faylni boshqa joyga ko‘chirish uchun (kesish) qaysi birikma bosiladi?",
+        opts: ["Ctrl + X", "Ctrl + C", "Ctrl + Z", "Ctrl + A"], ans: 0,
+        exp: "Ctrl + X — kesish. Keyin yangi joyda Ctrl + V bosilsa, fayl eski joyidan yangi joyga ko‘chadi." },
+      { q: "7-Zip dasturining asosiy (o‘ziga xos) arxiv formati qaysi?",
+        opts: [".7z", ".rar", ".exe", ".pdf"], ans: 0,
+        exp: "7-Zip bepul dastur bo‘lib, uning asosiy formati .7z — eng yuqori siqish darajasini beradi. .rar esa WinRAR formati." },
+      { q: "Fayl yo‘li (manzili) qaysi javobda to‘g‘ri yozilgan?",
+        opts: ["D:\\Bemorlar\\2026\\Aliyev.docx", "Aliyev.docx:D/Bemorlar", "D-Bemorlar-2026-Aliyev", "2026.Bemorlar.D:Aliyev"], ans: 0,
+        exp: "Fayl yo‘li disk nomidan boshlanadi, keyin papkalar va oxirida fayl nomi keladi. Ular teskari chiziq (\\) bilan ajratiladi." },
+      { q: "Papkaning kengaytmasi qanday bo‘ladi?",
+        opts: ["Papkaning kengaytmasi bo‘lmaydi", ".fold", ".dir", ".exe"], ans: 0,
+        exp: "Kengaytma faqat fayllarda bo‘ladi va fayl turini bildiradi. Papkaning kengaytmasi bo‘lmaydi." },
+      { q: "Windows qaysi formatdagi arxivni qo‘shimcha dasturisiz yarata oladi?",
+        opts: [".zip", ".rar", ".iso", ".mp4"], ans: 0,
+        exp: "Windows’da o‘ng tugma → “ZIP faylga siqish” (Windows 10 da “Yuborish” → “Siqilgan ZIP papka”) orqali ZIP arxivni qo‘shimcha dasturisiz yaratish mumkin." },
+      { q: "Quyidagi fayllardan qaysi biri arxivlanganda eng yaxshi siqiladi?",
+        opts: [".txt matnli fayl", ".jpg rasm", ".mp4 video", ".mp3 musiqa"], ans: 0,
+        exp: "Oddiy matn (.txt) juda yaxshi siqiladi. .jpg, .mp4 va .mp3 fayllari yaratilayotganda allaqachon siqilgan, shuning uchun deyarli kichraymaydi." },
+      { q: "Provodnik (File Explorer) oynasini tez ochish uchun qaysi birikma bosiladi?",
+        opts: ["Win + E", "Win + D", "Ctrl + Esc", "Alt + Tab"], ans: 0,
+        exp: "Win + E — Provodnikni ochadi (E — Explorer). Win + D ish stolini ko‘rsatadi, Alt + Tab oynalar orasida o‘tadi." },
+      { q: "Papkadagi barcha fayllarni birdaniga belgilash uchun qaysi birikma ishlatiladi?",
+        opts: ["Ctrl + A", "Ctrl + S", "Ctrl + B", "Ctrl + F"], ans: 0,
+        exp: "Ctrl + A (All — hammasi) ochiq papkadagi barcha fayl va papkalarni belgilaydi." },
+      { q: "Nusxalangan (Ctrl + C) faylni yangi joyga qo‘yish uchun qaysi birikma bosiladi?",
+        opts: ["Ctrl + V", "Ctrl + X", "Ctrl + Y", "Ctrl + N"], ans: 0,
+        exp: "Ctrl + V — qo‘yish (Paste). Nusxalash: Ctrl + C, keyin Ctrl + V." },
+      { q: "Bemor ma’lumotlari bor arxivga parol qo‘yish nima uchun kerak?",
+        opts: ["Ma’lumot maxfiyligini saqlash, begona odam ocha olmasligi uchun", "Arxiv hajmini kattalashtirish uchun", "Arxiv tezroq ochilishi uchun", "Arxivni rangli qilish uchun"], ans: 0,
+        exp: "Bemor haqidagi ma’lumot tibbiy sir. Parolli arxivni fleshka yo‘qolsa ham parolsiz hech kim ocha olmaydi." },
+      { q: "Windows’da ZIP arxivdagi fayllarni chiqarib olish buyrug‘i qaysi?",
+        opts: ["“Hammasini chiqarish” (Extract All)", "“Chop etish” (Print)", "“Nomini o‘zgartirish” (Rename)", "“Xususiyatlar” (Properties)"], ans: 0,
+        exp: "ZIP fayl ustida o‘ng tugma → “Hammasini chiqarish” → “Chiqarish”. Fayllar asl holida papkaga chiqariladi." },
+      { q: "Quyidagi belgilardan qaysi birini fayl nomida ishlatib BO‘LMAYDI?",
+        opts: ["? (so‘roq belgisi)", "_ (pastki chiziq)", "- (defis)", "2026 (raqamlar)"], ans: 0,
+        exp: "Windows fayl nomida 9 ta belgini taqiqlaydi: \\ / : * ? \" &lt; &gt; |. Pastki chiziq, defis va raqamlarni bemalol ishlatish mumkin." },
+      { q: "Ketma-ket turmagan bir nechta faylni tanlab-tanlab belgilash uchun nima qilinadi?",
+        opts: ["Ctrl bosib turib fayllar ustiga bosiladi", "Alt bosib turib fayllar ustiga bosiladi", "Win bosib turib fayllar ustiga bosiladi", "Faqat sichqonchaning o‘ng tugmasi bosiladi"], ans: 0,
+        exp: "Ctrl + sichqoncha bosish — tanlab-tanlab belgilash. Shift + bosish esa birinchi va oxirgi fayl orasidagi hammasini ketma-ket belgilaydi." },
+      { q: "Zaxira nusxa olishdagi “3-2-1” qoidasi nimani bildiradi?",
+        opts: ["3 ta nusxa, 2 xil qurilmada, 1 tasi boshqa joyda", "3 kunda 2 marta, 1 soat davomida saqlash", "3 ta papka, 2 ta fayl, 1 ta arxiv", "3 ta parol, 2 ta fleshka, 1 ta kompyuter"], ans: 0,
+        exp: "3-2-1: ma’lumotning 3 ta nusxasi, 2 xil qurilmada (kompyuter va fleshka yoki disk), 1 tasi boshqa joyda (bulutli xotira yoki boshqa bino)." },
+      { q: "Ish stolida sichqoncha yordamida yangi papka qanday yaratiladi?",
+        opts: ["Bo‘sh joyda o‘ng tugma → Yangi → Papka", "Chap tugmani ikki marta bosish → Papka", "Pusk → Kompyuterni o‘chirish", "Ctrl + P → Papka"], ans: 0,
+        exp: "Bo‘sh joyda sichqonchaning o‘ng tugmasi bosiladi, kontekst menyudan “Yangi” (New) → “Papka” (Folder) tanlanadi, nom yozilib Enter bosiladi." },
+      { q: "Nusxalash bilan ko‘chirishning farqi nimada?",
+        opts: ["Nusxalashda fayl eski joyida ham qoladi, ko‘chirishda eski joyidan yo‘qoladi", "Hech qanday farqi yo‘q", "Ko‘chirishda fayl ikkita bo‘ladi", "Nusxalashda fayl o‘chib ketadi"], ans: 0,
+        exp: "Nusxalash (Ctrl + C → Ctrl + V) faylning nusxasini yaratadi. Ko‘chirish (Ctrl + X → Ctrl + V) faylni eski joyidan olib, yangi joyga o‘tkazadi." },
+      { q: "Savatga tushgan faylni eski joyiga qaytarish buyrug‘i qaysi?",
+        opts: ["“Tiklash” (Restore)", "“Savatni tozalash”", "“Nusxalash”", "“Xususiyatlar”"], ans: 0,
+        exp: "Savat ochiladi, fayl ustida o‘ng tugma → “Tiklash”. Fayl o‘zining eski joyiga qaytadi. “Savatni tozalash” esa hammasini butunlay o‘chiradi." },
+      { q: "Ctrl + Z birikmasi nima qiladi?",
+        opts: ["Oxirgi bajarilgan amalni bekor qiladi", "Yangi papka yaratadi", "Faylni arxivlaydi", "Kompyuterni o‘chiradi"], ans: 0,
+        exp: "Ctrl + Z — bekor qilish (Undo). Adashib o‘chirilgan yoki ko‘chirilgan faylni darhol qaytarish mumkin." },
+      { q: "Fayl kengaytmasi (masalan .docx, .xlsx) nimani bildiradi?",
+        opts: ["Fayl turini va uni qaysi dastur ochishini", "Fayl yaratilgan sanani", "Fayl muallifining ismini", "Faylning parolini"], ans: 0,
+        exp: "Kengaytma — fayl nomidagi nuqtadan keyingi qism. U fayl turini bildiradi: .docx — Word, .xlsx — Excel, .jpg — rasm." },
+      { q: "Provodnikda faylni nomi bo‘yicha qidirish uchun qaysi tugma bosiladi?",
+        opts: ["Ctrl + F (yoki F3)", "Ctrl + S", "F2", "Alt + F4"], ans: 0,
+        exp: "Ctrl + F yoki F3 qidiruv maydoniga o‘tkazadi. Fayl nomining bir qismini yozish kifoya." },
+      { q: "Fayl arxivlanib, keyin arxivdan chiqarilsa, undagi ma’lumot bilan nima bo‘ladi?",
+        opts: ["O‘zgarmaydi — asl holida qaytadi", "Yarmi yo‘qoladi", "Sifati pasayadi", "Fayl ochilmay qoladi"], ans: 0,
+        exp: "Arxivlash ma’lumotni yo‘qotmaydi: arxivdan chiqarilgan hujjat asl nusxasi bilan bir xil bo‘ladi. Shuning uchun tibbiy hujjatlarni arxivlash xavfsiz." },
+      { q: "Quyidagi arxivator dasturlardan qaysi biri mutlaqo bepul?",
+        opts: ["7-Zip", "Microsoft Word", "Adobe Photoshop", "Microsoft Excel"], ans: 0,
+        exp: "7-Zip — mutlaqo bepul arxivator. WinRAR ham arxivator, lekin u pullik (40 kunlik sinov muddati bor). Word, Excel va Photoshop arxivator emas." },
+      { q: "Ko‘p qismli (ko‘p tomli) arxiv qachon kerak bo‘ladi?",
+        opts: ["Arxiv juda katta bo‘lib, pochta yoki fleshka hajmi yetmaganda", "Faylni chop etishda", "Fayl nomini o‘zgartirishda", "Kompyuterni yoqishda"], ans: 0,
+        exp: "Ko‘p qismli arxiv katta arxivni bir necha teng bo‘lakka bo‘ladi. Ochish uchun barcha qismlar bitta papkada bo‘lishi kerak." },
+      { q: "Fayl xususiyatlarini (hajmi, yaratilgan sanasi) ko‘rish uchun qaysi birikma bosiladi?",
+        opts: ["Alt + Enter", "Ctrl + Enter", "Shift + Tab", "Win + L"], ans: 0,
+        exp: "Alt + Enter belgilangan fayl yoki papkaning “Xususiyatlar” (Properties) oynasini ochadi. Win + L esa kompyuterni qulflaydi." }
     ];
 
-    function renderQuestions() {
-      var container = document.getElementById('questions-list');
-      var html = '';
+    var QUESTIONS = [];      // joriy test savollari (aralashtirilgan)
+    var student = null;      // { lastName, firstName, middleName, group, fullName }
+    var startedAt = 0;
+    var lastPayload = null;
+    var isSubmitted = false;
 
-      QUESTIONS.forEach(function(item, idx) {
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    // Bankdan tasodifiy 20 ta savol, har birining variantlari aralashtiriladi
+    function buildQuestions() {
+      return shuffle(QUESTION_BANK).slice(0, QUESTIONS_PER_TEST).map(function (item, idx) {
+        var order = shuffle(item.opts.map(function (_, i) { return i; }));
+        return {
+          id: idx + 1,
+          q: item.q,
+          opts: order.map(function (i) { return item.opts[i]; }),
+          ans: order.indexOf(item.ans),
+          exp: item.exp
+        };
+      });
+    }
+
+    function renderQuestions() {
+      var letters = ['A', 'B', 'C', 'D'];
+      var html = '';
+      QUESTIONS.forEach(function (item, idx) {
         html += '<div class="question-card" id="q_card_' + item.id + '">';
         html += '  <div class="q-head">';
         html += '    <div class="q-num">' + (idx + 1) + '</div>';
         html += '    <div class="q-text">' + item.q + '</div>';
         html += '  </div>';
         html += '  <div class="q-options">';
-
-        item.opts.forEach(function(opt, oIdx) {
+        item.opts.forEach(function (opt, oIdx) {
           html += '<label class="opt-label" id="lbl_' + item.id + '_' + oIdx + '">';
           html += '  <input type="radio" name="q_' + item.id + '" value="' + oIdx + '" required>';
-          html += '  <span>' + opt + '</span>';
+          html += '  <span>' + letters[oIdx] + ') ' + opt + '</span>';
           html += '</label>';
         });
-
         html += '  </div>';
-        html += '  <div class="q-explanation" id="exp_' + item.id + '">';
-        html += '    <strong>Izoh:</strong> ' + item.exp;
-        html += '  </div>';
+        html += '  <div class="q-explanation" id="exp_' + item.id + '"><strong>Izoh:</strong> ' + item.exp + '</div>';
         html += '</div>';
       });
-
-      container.innerHTML = html;
+      document.getElementById('questions-list').innerHTML = html;
     }
 
+    /* ====================================================================== */
+    /* 1. RO'YXATDAN O'TISH                                                   */
+    /* ====================================================================== */
+    function cleanName(v) {
+      return v.replace(/\s+/g, ' ').trim();
+    }
+
+    function startTest(e) {
+      e.preventDefault();
+      var lastName = cleanName(document.getElementById('inp-lastname').value);
+      var firstName = cleanName(document.getElementById('inp-firstname').value);
+      var middleName = cleanName(document.getElementById('inp-middlename').value);
+      var group = document.getElementById('inp-group').value;
+      var err = document.getElementById('reg-error');
+
+      var problem = '';
+      var focusId = '';
+      if (lastName.length < 2) { problem = 'Familiyangizni kiriting.'; focusId = 'inp-lastname'; }
+      else if (firstName.length < 2) { problem = 'Ismingizni kiriting.'; focusId = 'inp-firstname'; }
+      else if (middleName.length < 2) { problem = 'Otangizning ismini kiriting.'; focusId = 'inp-middlename'; }
+      else if (!group) { problem = 'Guruhingizni ro‘yxatdan tanlang.'; focusId = 'inp-group'; }
+
+      if (problem) {
+        err.textContent = problem;
+        err.classList.add('show');
+        document.getElementById(focusId).focus();
+        return;
+      }
+      err.classList.remove('show');
+
+      student = {
+        lastName: lastName,
+        firstName: firstName,
+        middleName: middleName,
+        group: group,
+        fullName: lastName + ' ' + firstName + ' ' + middleName
+      };
+
+      QUESTIONS = buildQuestions();
+      renderQuestions();
+      startedAt = Date.now();
+
+      document.getElementById('student-strip').innerHTML =
+        '<span>Talaba: <strong>' + escapeHtml(student.fullName) + '</strong></span>' +
+        '<span>Guruh: <strong>' + escapeHtml(student.group) + '</strong></span>';
+      document.getElementById('reg-form').style.display = 'none';
+      document.getElementById('quiz-area').style.display = 'block';
+      document.getElementById('quiz-area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ====================================================================== */
+    /* 2. TESTNI YAKUNLASH VA BAHOLASH                                        */
+    /* ====================================================================== */
     function submitTest(e) {
       e.preventDefault();
+      if (isSubmitted) return;
+      isSubmitted = true;
 
       var correctCount = 0;
-      QUESTIONS.forEach(function(item) {
+      QUESTIONS.forEach(function (item) {
         var radios = document.getElementsByName('q_' + item.id);
         var selected = -1;
         for (var i = 0; i < radios.length; i++) {
-          if (radios[i].checked) {
-            selected = parseInt(radios[i].value, 10);
-            break;
-          }
+          if (radios[i].checked) selected = parseInt(radios[i].value, 10);
+          radios[i].disabled = true;
         }
-
-        // Color labels
         for (var j = 0; j < radios.length; j++) {
           var lbl = document.getElementById('lbl_' + item.id + '_' + j);
-          if (lbl) {
-            lbl.classList.remove('correct', 'incorrect');
-            if (j === item.ans) lbl.classList.add('correct');
-            else if (j === selected) lbl.classList.add('incorrect');
-          }
+          if (!lbl) continue;
+          lbl.classList.remove('correct', 'incorrect');
+          if (j === item.ans) lbl.classList.add('correct');
+          else if (j === selected) lbl.classList.add('incorrect');
         }
-
-        // Show explanation
         var exp = document.getElementById('exp_' + item.id);
         if (exp) exp.style.display = 'block';
-
         if (selected === item.ans) correctCount++;
       });
 
       var total = QUESTIONS.length;
       var percent = Math.round((correctCount / total) * 100);
-      var grade = "2 (Qoniqarsiz)";
-      var gradeColor = "#ef4444";
+      var grade = 2, gradeLabel = 'Qoniqarsiz', gradeColor = '#ef4444';
+      if (percent >= 85) { grade = 5; gradeLabel = "A'lo"; gradeColor = '#10b981'; }
+      else if (percent >= 70) { grade = 4; gradeLabel = 'Yaxshi'; gradeColor = '#38bdf8'; }
+      else if (percent >= 50) { grade = 3; gradeLabel = 'Qoniqarli'; gradeColor = '#f59e0b'; }
 
-      // Baholash: 50 dan pasti -> 2; 70 dan pasti -> 3; 85 dan pasti -> 4; 85–100 -> 5
-      if (percent < 50) {
-        grade = "2 (Qoniqarsiz)";
-        gradeColor = "#ef4444";
-      } else if (percent < 70) {
-        grade = "3 (Qoniqarli)";
-        gradeColor = "#f59e0b";
-      } else if (percent < 85) {
-        grade = "4 (Yaxshi)";
-        gradeColor = "#38bdf8";
-      } else {
-        grade = "5 (A'lo)";
-        gradeColor = "#10b981";
-      }
+      var secs = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
+      var timeSpent = Math.floor(secs / 60) + ' daq ' + (secs % 60) + ' soniya';
 
       var resBox = document.getElementById('result-box');
       resBox.style.display = 'block';
-      document.getElementById('res-student-title').textContent = 'Test Natijasi';
+      document.getElementById('res-student-title').textContent = student.fullName + ' • ' + student.group;
       document.getElementById('res-score').textContent = correctCount + ' / ' + total + ' (' + percent + '%)';
-      
       var gradeEl = document.getElementById('res-grade');
-      gradeEl.textContent = 'Baho: ' + grade;
+      gradeEl.textContent = 'Baho: ' + grade + ' (' + gradeLabel + ')';
       gradeEl.style.color = gradeColor;
-
-      document.getElementById('res-desc').textContent = "To'g'ri javoblar: " + correctCount + " ta. Xatolar: " + (total - correctCount) + " ta. Yuqoridagi savollarda to'g'ri javoblar va izohlar yashil rangda ko'rsatildi.";
-      
+      document.getElementById('res-desc').textContent =
+        "To'g'ri javoblar: " + correctCount + " ta. Xatolar: " + (total - correctCount) + " ta. Sarflangan vaqt: " + timeSpent +
+        ". Yuqoridagi savollarda to'g'ri javoblar yashil rangda, izohlari bilan ko'rsatildi.";
       document.getElementById('btn-submit').style.display = 'none';
+
+      sendResult({
+        lesson: LESSON_NAME,
+        studentName: student.fullName,
+        lastName: student.lastName,
+        firstName: student.firstName,
+        middleName: student.middleName,
+        group: student.group,
+        correctCount: correctCount,
+        totalQuestions: total,
+        percent: percent,
+        grade: grade,
+        gradeLabel: gradeLabel,
+        timeSpent: timeSpent,
+        date: new Date().toLocaleString('uz-UZ')
+      });
 
       resBox.scrollIntoView({ behavior: 'smooth' });
     }
 
+    /* ====================================================================== */
+    /* 3. NATIJANI O'QITUVCHINING TELEGRAM BOTIGA YUBORISH                    */
+    /* ====================================================================== */
+    function setSendStatus(state, title, msg) {
+      var box = document.getElementById('send-status');
+      box.className = 'send-status ' + state;
+      document.getElementById('send-title').textContent = title;
+      document.getElementById('send-msg').textContent = msg;
+      document.getElementById('btn-resend').style.display = (state === 'error') ? 'inline-flex' : 'none';
+    }
+
+    function sendResult(payload) {
+      lastPayload = payload;
+      try { localStorage.setItem('tat_backup_result_7', JSON.stringify(payload)); } catch (e) {}
+
+      setSendStatus('loading', 'Natija o‘qituvchiga yuborilmoqda...', 'Iltimos, sahifani yopmang.');
+
+      var controller = ('AbortController' in window) ? new AbortController() : null;
+      var timer = setTimeout(function () { if (controller) controller.abort(); }, 15000);
+
+      // no-cors: Apps Script javobini o'qimaymiz, faqat so'rov yetib borishi muhim
+      fetch(BACKEND_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        signal: controller ? controller.signal : undefined
+      }).then(function () {
+        clearTimeout(timer);
+        setSendStatus('success', 'Natija o‘qituvchiga yuborildi!', 'Bahongiz o‘qituvchining Telegram botiga yetkazildi.');
+      }).catch(function () {
+        clearTimeout(timer);
+        setSendStatus('error', 'Natija yuborilmadi', 'Internet aloqasini tekshirib, “Qayta yuborish” tugmasini bosing. Natijangiz qurilmada saqlab qo‘yildi.');
+      });
+    }
+
+    function resendResult() {
+      if (lastPayload) sendResult(lastPayload);
+    }
+
     function restartTest() {
-      if (confirm("Testni qaytadan boshlashni xohlaysizmi?")) {
+      if (confirm("Testni qaytadan boshlashni xohlaysizmi? Yangi natija ham o'qituvchiga yuboriladi.")) {
         window.location.reload();
       }
     }
-
-    renderQuestions();
   </script>
 </body>
 </html>

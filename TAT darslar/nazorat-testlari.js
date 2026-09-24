@@ -52,6 +52,6 @@ window.NAZORAT_TESTLARI = [
     dars: '7-dars',
     nom: 'Fayllar, papkalar va arxivlash — Test (20 ta savol)',
     havola: './7. Fayllar va arxivlash/test.html',
-    izoh: 'Lokal 20 talik test, har bir savolga to‘g‘ri javob va izoh bilan.'
+    izoh: 'F.I.O va guruh bilan; 30 talik bankdan tasodifiy 20 ta savol. Natija Telegram botga keladi.'
   }
 ];
