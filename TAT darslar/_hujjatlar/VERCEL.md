@@ -53,7 +53,6 @@ shart. Uzun manzillar ham avvalgidek ishlayveradi.
 | Nima | Qayerda |
 | --- | --- |
 | O'qituvchi PIN kodi | `TAT darslar/index.html` → `var TEACHER_PIN = '...'` |
-| Nazorat testlari havolalari | `TAT darslar/nazorat-testlari.js` |
 | Qisqa havolalar | `vercel.json` → `redirects` |
 
 Faylni tahrirlab, GitHub'ga push qilsangiz Vercel o'zi yangilaydi.

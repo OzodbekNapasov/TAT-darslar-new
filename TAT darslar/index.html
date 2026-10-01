@@ -68,12 +68,12 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      background: radial-gradient(circle at 30% 30%, #93c5fd, #4f46e5);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.75);
       flex-shrink: 0;
     }
 
@@ -86,7 +86,7 @@
 
     .header-title-block p {
       font-size: 0.85rem;
-      color: var(--text-muted);
+      color: #cbd5e1;
       font-weight: 500;
       margin-top: 0.15rem;
     }
@@ -110,9 +110,11 @@
 
     .search-input-pill input {
       width: 100%;
-      background: var(--search-bg);
-      border: 1.5px solid var(--search-border);
+      background: rgba(15, 23, 42, 0.75);
+      border: 1.5px solid rgba(129, 140, 248, 0.4);
       border-radius: 9999px;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
       padding: 0.8rem 2.8rem 0.8rem 1.4rem;
       font-size: 0.9rem;
       font-family: inherit;
@@ -123,12 +125,12 @@
     }
 
     .search-input-pill input::placeholder {
-      color: var(--search-placeholder);
+      color: #94a3b8;
     }
 
     .search-input-pill input:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+      border-color: #818cf8;
+      box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25), 0 0 30px rgba(99, 102, 241, 0.45);
     }
 
     .search-icon-right {
@@ -141,288 +143,181 @@
     }
 
     /* ====================================================================== */
-    /* Taskello Cards Grid with Glowing Aura Animation                        */
+    /* YULDUZLAR FONI VA DARS KARTALARI                                       */
     /* ====================================================================== */
+    body {
+      background: radial-gradient(ellipse at 50% -10%, #172554 0%, #070b18 55%, #03040a 100%) fixed;
+    }
+
+    #star-sky {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body > .container { position: relative; z-index: 1; }
+
+    .star-hero {
+      text-align: center;
+      margin: 0.5rem 0 1.6rem;
+    }
+
+    .star-hero h2 {
+      font-size: clamp(1.9rem, 4.6vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-shadow: 0 0 40px rgba(129, 140, 248, 0.55);
+    }
+
+    .star-hero p {
+      color: #cbd5e1;
+      margin-top: 0.45rem;
+      font-size: 0.95rem;
+    }
+
     .cards-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2.25rem 2rem;
+      gap: 1.1rem;
     }
 
-    @media (min-width: 680px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    @media (min-width: 640px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (min-width: 1024px) {
-      .cards-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    @media (min-width: 900px) {
+      .cards-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* Ambient Breathing Glow Animation Keyframes (Stationary in place) */
-    @keyframes breathing-glow {
-      0%, 100% {
-        opacity: 0.35;
-        filter: blur(20px);
-      }
-      50% {
-        opacity: 0.7;
-        filter: blur(28px);
-      }
+    @media (min-width: 1100px) {
+      .cards-grid { grid-template-columns: repeat(4, 1fr); }
     }
 
-    @keyframes atmosphere-pulse {
-      0%, 100% {
-        filter: brightness(1) contrast(1);
-      }
-      50% {
-        filter: brightness(1.12) contrast(1.05);
-      }
-    }
+    .taskello-card-wrapper { --c: #38bdf8; --c2: #2563eb; position: relative; }
 
-    /* Card Wrapper (for glow aura) */
-    .taskello-card-wrapper {
-      position: relative;
-      border-radius: 36px;
-    }
-
-    /* The glowing halo underneath the card */
-    .taskello-card-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      border-radius: 36px;
-      background: var(--glow-aura);
-      filter: blur(22px);
-      opacity: 0.4;
-      z-index: 0;
-      animation: breathing-glow 3.6s infinite ease-in-out;
-      transition: opacity 0.3s ease, filter 0.3s ease;
-      pointer-events: none;
-    }
-
-    .taskello-card-wrapper:hover::before {
-      opacity: 0.95;
-      filter: blur(32px);
-    }
-
-    /* Taskello Card Itself (Stationary, No Jumping) */
+    /* Karta: deyarli to'q fon (matn aniq o'qilsin), kursor ortidan yuruvchi rangli hoshiya */
     .taskello-card {
+      --x: 0px;
+      --y: 0px;
       position: relative;
-      z-index: 1;
-      height: 340px;
-      border-radius: 34px;
-      border: 3.5px solid #000000;
-      outline: 1px solid rgba(255, 255, 255, 0.12);
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      min-height: 250px;
+      height: 100%;
+      padding: 1.3rem 1.3rem 1.2rem;
+      border-radius: 22px;
       overflow: hidden;
-      background: #000000;
       text-decoration: none;
       color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
+      background:
+        radial-gradient(320px circle at var(--x) var(--y), color-mix(in srgb, var(--c) 13%, transparent), transparent 55%),
+        linear-gradient(160deg, rgba(17, 22, 40, 0.97), rgba(9, 12, 24, 0.97));
+      border: 1px solid color-mix(in srgb, var(--c) 30%, rgba(255, 255, 255, 0.06));
+      box-shadow: 0 14px 34px -18px rgba(0, 0, 0, 0.9);
+      transition: transform 0.3s cubic-bezier(.2, .8, .2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .taskello-card-wrapper:hover .taskello-card {
-      border-color: var(--glow-color);
-      box-shadow: 0 0 38px -2px var(--glow-aura), 0 16px 36px -4px rgba(0, 0, 0, 0.7);
-    }
-
-    /* Top Abstract Radiant Atmosphere */
-    .card-atmosphere {
+    .taskello-card::before {
+      content: '';
       position: absolute;
       inset: 0;
-      z-index: 1;
-      background: var(--atmosphere-bg);
-      animation: atmosphere-pulse 4s infinite ease-in-out;
-      transition: filter 0.3s ease;
-    }
-
-    .taskello-card-wrapper:hover .card-atmosphere {
-      filter: brightness(1.2) contrast(1.08);
-    }
-
-    /* Top Right Label (Matching "Taskello App Card Design") */
-    .card-top-tag {
-      position: absolute;
-      top: 1.35rem;
-      right: 1.4rem;
-      z-index: 2;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.95);
-      text-align: right;
-      line-height: 1.25;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-      transition: text-shadow 0.25s ease;
-    }
-
-    .taskello-card-wrapper:hover .card-top-tag {
-      text-shadow: 0 0 14px var(--glow-color);
-    }
-
-    /* Folder Tab Cutout SVG */
-    .folder-sheet-svg-wrap {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      z-index: 3;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: radial-gradient(260px circle at var(--x) var(--y), var(--c), transparent 70%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
       pointer-events: none;
     }
 
-    .folder-sheet-svg {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .taskello-card:hover {
+      transform: translateY(-5px);
+      border-color: color-mix(in srgb, var(--c) 60%, transparent);
+      box-shadow: 0 22px 40px -18px color-mix(in srgb, var(--c) 75%, transparent);
     }
 
-    /* Folder Content (Carefully Padded Inside the Dark Sheet) */
-    .card-folder-content {
-      position: relative;
-      z-index: 4;
+    .taskello-card:hover::before { opacity: 1; }
+
+    /* 3-namunadagidek katta ikonka: burchakda, qiya, xira */
+    .star-bg-ic {
+      position: absolute;
+      right: -22px;
+      bottom: -26px;
+      z-index: -1;
+      color: var(--c);
+      opacity: 0.17;
+      transform: rotate(-12deg);
+      transition: transform 0.5s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .taskello-card:hover .star-bg-ic {
+      transform: rotate(0deg) scale(1.1);
+      opacity: 0.26;
+    }
+
+    .star-top {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
       justify-content: space-between;
-      height: 200px;
-      padding: 1.85rem 1.6rem 1.6rem 1.6rem;
-      box-sizing: border-box;
-    }
-
-    .folder-upper-block {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    /* Title (e.g. "Axborot haqida tushuncha") */
-    .folder-main-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.28;
-      letter-spacing: -0.015em;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Subtitle (e.g. "Axborot shakllari va kompyuter asoslari") */
-    .folder-subtitle {
-      font-size: 0.825rem;
-      color: #9ca3af;
-      font-weight: 500;
-      line-height: 1.35;
-    }
-
-    /* Bottom Row (Big Number + Notes count) */
-    .folder-bottom-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding-top: 0.75rem;
-    }
-
-    .folder-stat-left {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
+      gap: 0.6rem;
     }
 
     .folder-big-number {
-      font-size: 1.95rem;
+      font-size: 2.5rem;
       font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      color: var(--c);
+      text-shadow: 0 0 22px color-mix(in srgb, var(--c) 55%, transparent);
+    }
+
+    .card-top-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
       color: #ffffff;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      transition: text-shadow 0.25s ease;
+      background: color-mix(in srgb, var(--c) 26%, rgba(255, 255, 255, 0.04));
+      border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
-    .taskello-card-wrapper:hover .folder-big-number {
-      text-shadow: 0 0 16px var(--glow-color);
+    .star-body { display: flex; flex-direction: column; gap: 0.35rem; }
+
+    .folder-main-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      line-height: 1.28;
+      letter-spacing: -0.01em;
+      color: #ffffff;
     }
 
-    .folder-unit-label {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.8);
+    .folder-subtitle {
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: #cbd5e1;
     }
 
     .folder-stat-right {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.01em;
+      margin-top: auto;
+      align-self: flex-start;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #0b1020;
+      background: var(--c);
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
     }
 
-    /* ====================================================================== */
-    /* Card Color Schemes (Atmosphere Gradients & Glowing Lights)             */
-    /* ====================================================================== */
-    
-    /* Card 1: Vivid Electric Blue / Cyan Glow */
-    .theme-blue {
-      --glow-color: #38bdf8;
-      --glow-aura: rgba(56, 189, 248, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #38bdf8 0%, #2563eb 45%, #0f172a 85%);
-    }
-
-    /* Card 2: Radiant Purple / Violet Glow */
-    .theme-purple {
-      --glow-color: #c084fc;
-      --glow-aura: rgba(192, 132, 252, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #e879f9 0%, #7c3aed 45%, #2e1065 85%);
-    }
-
-    /* Card 3: Emerald / Neon Mint Glow */
-    .theme-teal {
-      --glow-color: #34d399;
-      --glow-aura: rgba(52, 211, 153, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #34d399 0%, #0d9488 45%, #042f2e 85%);
-    }
-
-    /* Card 4: Electric Sapphire Glow */
-    .theme-sapphire {
-      --glow-color: #06b6d4;
-      --glow-aura: rgba(6, 182, 212, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #22d3ee 0%, #0284c7 45%, #082f49 85%);
-    }
-
-    /* Card 5: Taskello Exact Fiery Flame Glow */
-    .theme-flame {
-      --glow-color: #fb923c;
-      --glow-aura: rgba(249, 115, 22, 0.55);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #fb923c 0%, #ea580c 45%, #450a0a 85%);
-    }
-
-    /* Card 6: Cyber Indigo / Neon Violet Glow */
-    .theme-indigo {
-      --glow-color: #a5b4fc;
-      --glow-aura: rgba(165, 180, 252, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #818cf8 0%, #4f46e5 45%, #1e1b4b 85%);
-    }
-
-    /* Card 7: Folder Amber / Golden Glow */
-    .theme-amber {
-      --glow-color: #fcd34d;
-      --glow-aura: rgba(245, 184, 61, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #fcd34d 0%, #d97706 45%, #422006 85%);
-    }
-
-    /* Card 8: Word Royal Blue Glow */
-    .theme-word {
-      --glow-color: #7cc0f5;
-      --glow-aura: rgba(65, 165, 238, 0.5);
-      --atmosphere-bg: radial-gradient(circle at 75% 20%, #41a5ee 0%, #185abd 45%, #0b1e45 85%);
-    }
-
-    /* Upcoming Card State */
-    .upcoming-wrapper .taskello-card {
-      cursor: default;
-      opacity: 0.9;
+    @media (prefers-reduced-motion: reduce) {
+      .taskello-card, .star-bg-ic { transition: none; }
     }
 
     /* Empty state */
@@ -430,7 +325,7 @@
       display: none;
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--text-muted);
+      color: #cbd5e1;
       font-size: 1rem;
       font-weight: 600;
     }
@@ -1250,134 +1145,11 @@
     }
 
     /* ====================================================================== */
-    /* O'QITUVCHI ZONASI (nazorat testlari)                                   */
+    /* O'QITUVCHI ZONASI (KMR jadvali)                                        */
     /* ====================================================================== */
     .teacher-zone { display: none; }
 
     [data-role="teacher"] .teacher-zone { display: block; }
-
-    .teacher-zone-head {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      margin: 3.25rem 0 1.1rem 0;
-    }
-
-    .teacher-zone-head h2 {
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-
-    .teacher-zone-head .zone-line {
-      height: 1px;
-      flex: 1;
-      background: var(--search-border);
-    }
-
-    .teacher-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 9999px;
-      background: rgba(20, 184, 166, 0.14);
-      border: 1px solid rgba(20, 184, 166, 0.35);
-      color: #2dd4bf;
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-
-    .control-links {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.85rem;
-    }
-
-    @media (min-width: 720px) {
-      .control-links {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .control-link {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      padding: 1.05rem 1.15rem;
-      border-radius: 20px;
-      border: 1px solid var(--search-border);
-      background: var(--search-bg);
-      text-decoration: none;
-      color: var(--text-main);
-      transition: border-color 0.2s ease, transform 0.15s ease;
-      min-height: 72px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .control-link:hover {
-      border-color: #14b8a6;
-    }
-
-    .control-link:active { transform: scale(0.99); }
-
-    .control-link-tag {
-      flex-shrink: 0;
-      padding: 0.3rem 0.6rem;
-      border-radius: 10px;
-      background: rgba(20, 184, 166, 0.14);
-      color: #2dd4bf;
-      font-size: 0.72rem;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .control-link-text {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .control-link-text strong {
-      display: block;
-      font-size: 0.92rem;
-      font-weight: 700;
-      /* uzun havola nomi telefonda satrdan chiqib ketmasin */
-      overflow-wrap: anywhere;
-    }
-
-    .control-link-text span {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-      margin-top: 0.15rem;
-      overflow-wrap: anywhere;
-    }
-
-    .teacher-note {
-      margin-top: 1rem;
-      padding: 0.9rem 1.05rem;
-      border-radius: 16px;
-      border: 1px solid rgba(251, 191, 36, 0.3);
-      background: rgba(251, 191, 36, 0.09);
-      color: #fcd34d;
-      font-size: 0.79rem;
-      line-height: 1.55;
-    }
-
-    .control-empty {
-      padding: 1.5rem 1.15rem;
-      border-radius: 20px;
-      border: 1px dashed var(--search-border);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      line-height: 1.6;
-      text-align: center;
-    }
 
     /* ====================================================================== */
     /* TELEFON UCHUN UMUMIY MOSLASHTIRISH                                     */
@@ -1424,20 +1196,12 @@
       /* iPhone'da 16px dan kichik shrift maydonni avtomatik kattalashtiradi */
       .search-input-pill input { font-size: 16px; }
 
-      .cards-grid { gap: 1.6rem; }
+      .taskello-card { min-height: 0; padding: 1.15rem; }
 
-      .taskello-card { height: 310px; }
-
-      .card-folder-content {
-        height: 186px;
-        padding: 1.6rem 1.25rem 1.35rem 1.25rem;
-      }
-
-      .folder-main-title { font-size: 1.05rem; }
+      .star-hero { margin-bottom: 1.6rem; }
 
       .role-gate-title { font-size: 1.28rem; }
 
-      .teacher-zone-head { margin-top: 2.5rem; }
     }
 
     /* ====================================================================== */
@@ -2147,16 +1911,12 @@
             
             <div class="role-btn-body">
               <strong class="role-title">O‘qituvchi</strong>
-              <span class="role-subtitle">Barcha o‘quv materiallari, nazorat testlari va monitoring</span>
+              <span class="role-subtitle">Barcha o‘quv materiallari, KMR jadvali va monitoring</span>
               
               <ul class="role-features">
                 <li>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                   <span>Barcha darslarga to‘liq kirish</span>
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Nazorat testlari yashirin havolalari</span>
                 </li>
                 <li>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -2201,6 +1961,8 @@
 
     </div>
   </div>
+
+  <canvas id="star-sky" aria-hidden="true"></canvas>
 
   <div class="container">
     
@@ -2253,18 +2015,6 @@
         </button>
       </div>
 
-      <div class="teacher-zone-head">
-        <h2>Nazorat testlari</h2>
-        <span class="teacher-badge">Faqat o‘qituvchi</span>
-        <span class="zone-line"></span>
-      </div>
-
-      <div class="control-links" id="control-links"></div>
-
-      <div class="teacher-note">
-        Bu havolalar talabalar ro‘yxatida ko‘rinmaydi. Ro‘yxatni
-        <strong>nazorat-testlari.js</strong> faylidan tahrirlaysiz.
-      </div>
     </section>
 
     <!-- ==================== KMR 2026-2027 IXCHAM MODAL OYNASI ==================== -->
@@ -2318,7 +2068,12 @@
       </div>
     </div>
 
-    <!-- ==================== SEARCH BAR ==================== -->
+    <!-- ==================== SARLAVHA VA QIDIRUV ==================== -->
+    <section class="star-hero">
+      <h2>Bilimlar galaktikasi</h2>
+      <p id="star-hero-date">Darslar mundarijasi</p>
+    </section>
+
     <div class="search-wrapper">
       <div class="search-input-pill">
         <input 
@@ -2345,387 +2100,132 @@
     <main class="cards-grid" id="cards-container">
 
       <!-- ==================== CARD 1 (1-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-blue" data-kmr-id="1" data-kmr-type="Nazariy" data-kmr-title="Axborot haqida tushuncha. Axborot shakllari va kompyuter asoslari.">
-        <a href="./1. Axborot/offline/1-dars.html" class="taskello-card" data-search="1-dars axborot haqida tushuncha axborot texnologiyalari kompyuter qismlari klaviatura sichqoncha ish stoli test">
-          <!-- Atmosphere with Glowing Bokeh -->
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#60a5fa" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#38bdf8" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#2563eb" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="1" data-kmr-type="Nazariy" data-kmr-title="Axborot haqida tushuncha. Axborot shakllari va kompyuter asoslari." style="--c: #38bdf8; --c2: #2563eb;">
+        <a href="./1. Axborot/offline/1-dars.html" data-search="1-dars axborot haqida tushuncha axborot texnologiyalari kompyuter qismlari klaviatura sichqoncha ish stoli test" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 6.5l3.6 3.4M18 6.5l-3.6 3.4M6 17.5l3.6-3.4M18 17.5l-3.6-3.4"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">01</span><span class="card-top-tag">1-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Axborot haqida tushuncha</div>
+            <div class="folder-subtitle">Axborot shakllari va kompyuter asoslari</div>
           </div>
-
-          <!-- Top-Right Tag -->
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>1-Dars
-          </div>
-
-          <!-- Folder SVG (Smooth Cutout with Low Drop) -->
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Tab top at y=116, drops smoothly to y=138, text starts safely at y=145+ -->
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <!-- Folder Content (Completely Inside the Dark Area) -->
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Axborot haqida tushuncha</div>
-              <div class="folder-subtitle">Axborot shakllari va kompyuter asoslari</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">01</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">20 Test</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">20 Test</div>
         </a>
       </div>
 
       <!-- ==================== CARD 2 (2-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-purple" data-kmr-id="2" data-kmr-type="Nazariy" data-kmr-title="Sanoq sistemalari & Xavfsizlik. 2 lik va 10 lik sanoq, texnika xavfsizligi.">
-        <a href="./2. Sanoq sistemalari/offline/2-dars.html" class="taskello-card" data-search="2-dars sanoq sistemalari axborot turlari texnika xavfsizligi ikkilik onlik sanoq test">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#e879f9" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#a855f7" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#7c3aed" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="2" data-kmr-type="Nazariy" data-kmr-title="Sanoq sistemalari & Xavfsizlik. 2 lik va 10 lik sanoq, texnika xavfsizligi." style="--c: #c084fc; --c2: #7c3aed;">
+        <a href="./2. Sanoq sistemalari/offline/2-dars.html" data-search="2-dars sanoq sistemalari axborot turlari texnika xavfsizligi ikkilik onlik sanoq test" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="7" rx="2.5"/><path d="M14 4v7M12.5 5.5L14 4"/><path d="M5.5 14v7M4 15.5L5.5 14"/><rect x="11" y="14" width="5" height="7" rx="2.5"/><path d="M21 12.5v4.5c0 2-1.5 3.5-2 4"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">02</span><span class="card-top-tag">2-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Sanoq sistemalari & Xavfsizlik</div>
+            <div class="folder-subtitle">2 lik va 10 lik sanoq, texnika xavfsizligi</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>2-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Sanoq sistemalari & Xavfsizlik</div>
-              <div class="folder-subtitle">2 lik va 10 lik sanoq, texnika xavfsizligi</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">02</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">20 Test</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">20 Test</div>
         </a>
       </div>
 
       <!-- ==================== CARD 3 (3-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-teal" data-kmr-id="3" data-kmr-type="Nazariy" data-kmr-title="Ishchi o‘rinlari & O‘lchov birliklari. AIO, o‘lchov birliklari va EMR karta.">
-        <a href="javascript:void(0)" onclick="openLesson3Modal(event)" class="taskello-card" data-search="3-dars tibbiyotda ishchi o'rinlarini avtomatlashtirish aio emr elektron tibbiy karta o'lchov birliklari bit bayt kb mb gb tb parol qoidalari tibbiy sir windows papka fayl amaliyot test admin talaba profili">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#5eead4" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#14b8a6" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#0f766e" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="3" data-kmr-type="Nazariy" data-kmr-title="Ishchi o‘rinlari & O‘lchov birliklari. AIO, o‘lchov birliklari va EMR karta." style="--c: #34d399; --c2: #0d9488;">
+        <a href="javascript:void(0)" onclick="openLesson3Modal(event)" data-search="3-dars tibbiyotda ishchi o'rinlarini avtomatlashtirish aio emr elektron tibbiy karta o'lchov birliklari bit bayt kb mb gb tb parol qoidalari tibbiy sir windows papka fayl amaliyot test admin talaba profili" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M5 10h3l2-4 3 8 2-4h4"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">03</span><span class="card-top-tag">3-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Ishchi o‘rinlari & O‘lchov birliklari</div>
+            <div class="folder-subtitle">AIO, o‘lchov birliklari va EMR karta</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>3-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Ishchi o‘rinlari & O‘lchov birliklari</div>
-              <div class="folder-subtitle">AIO, o‘lchov birliklari va EMR karta</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">03</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">20 Test</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">20 Test</div>
         </a>
       </div>
 
       <!-- ==================== CARD 4 (4-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-sapphire" data-kmr-id="4" data-kmr-type="Amaliy" data-kmr-title="Klaviatura va sichqoncha asoslari. Klaviatura zonalari, tez yozish va sichqoncha.">
-        <a href="./4-dars/offline/4-dars.html" class="taskello-card" data-search="4-dars klaviatura va sichqoncha asoslari klaviatura zonalari 10 barmoq tez yozish teztype hotkeys tezkor tugmalar sichqoncha texnikasi dpi sensor kursor viktorina trenajyor">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#38bdf8" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#0284c7" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#0369a1" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="4" data-kmr-type="Amaliy" data-kmr-title="Klaviatura va sichqoncha asoslari. Klaviatura zonalari, tez yozish va sichqoncha." style="--c: #22d3ee; --c2: #0284c7;">
+        <a href="./4-dars/offline/4-dars.html" data-search="4-dars klaviatura va sichqoncha asoslari klaviatura zonalari 10 barmoq tez yozish teztype hotkeys tezkor tugmalar sichqoncha texnikasi dpi sensor kursor viktorina trenajyor" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M10 13h.01M14 13h.01M18 13h.01M8 16h8"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">04</span><span class="card-top-tag">4-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Klaviatura va sichqoncha asoslari</div>
+            <div class="folder-subtitle">Klaviatura zonalari, tez yozish va sichqoncha</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>4-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Klaviatura va sichqoncha asoslari</div>
-              <div class="folder-subtitle">Klaviatura zonalari, tez yozish va sichqoncha</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">04</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">Viktorina &amp; Mashq</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">Viktorina &amp; Mashq</div>
         </a>
       </div>
 
       <!-- ==================== CARD 5 (5-DARS: KOMPYUTER VA UNING QURILMALARI) ==================== -->
-      <div class="taskello-card-wrapper theme-flame" data-kmr-id="5" data-kmr-type="Amaliy" data-kmr-title="Kompyuter va uning qurilmalari. Asosiy, qo‘shimcha qurilmalar va xotira (HDD & SSD).">
-        <a href="./5. Kompyuter va uning qurilmalari/dars.html" class="taskello-card" data-search="5-dars kompyuter va uning qurilmalari protsessor cpu ram operativ xotira ona plata videokarta gpu quvvat bloki kuler korpus monitor klaviatura sichqoncha printer skaner hdd ssd xotira test">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#fb923c" fill-opacity="0.5" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#ea580c" fill-opacity="0.4" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#c2410c" fill-opacity="0.45" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="5" data-kmr-type="Amaliy" data-kmr-title="Kompyuter va uning qurilmalari. Asosiy, qo‘shimcha qurilmalar va xotira (HDD & SSD)." style="--c: #fb923c; --c2: #ea580c;">
+        <a href="./5. Kompyuter va uning qurilmalari/dars.html" data-search="5-dars kompyuter va uning qurilmalari protsessor cpu ram operativ xotira ona plata videokarta gpu quvvat bloki kuler korpus monitor klaviatura sichqoncha printer skaner hdd ssd xotira test" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">05</span><span class="card-top-tag">5-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Kompyuter va uning qurilmalari</div>
+            <div class="folder-subtitle">Asosiy, qo'shimcha qurilmalar va xotira (HDD &amp; SSD)</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>5-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Kompyuter va uning qurilmalari</div>
-              <div class="folder-subtitle">Asosiy, qo'shimcha qurilmalar va xotira (HDD &amp; SSD)</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">05</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">17 Qurilma &amp; Test</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">17 Qurilma &amp; Test</div>
         </a>
       </div>
 
       <!-- ==================== CARD 6 (6-DARS: WINDOWS OPERATSION TIZIMI) ==================== -->
-      <div class="taskello-card-wrapper theme-indigo" data-kmr-id="6" data-kmr-type="Amaliy" data-kmr-title="Windows operatsion tizimi. OT tushunchasi, dasturlar logolari, fayllar & trenajyor.">
-        <a href="./6. Windows operatsion tizimi/dars.html" class="taskello-card" data-search="6-dars windows operatsion tizim ot dasturlar logo dasturiy taminot tizimli amaliy utilita fayl papka kengaytma trenajyor test">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#a5b4fc" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#6366f1" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#4f46e5" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="6" data-kmr-type="Amaliy" data-kmr-title="Windows operatsion tizimi. OT tushunchasi, dasturlar logolari, fayllar & trenajyor." style="--c: #818cf8; --c2: #4f46e5;">
+        <a href="./6. Windows operatsion tizimi/dars.html" data-search="6-dars windows operatsion tizim ot dasturlar logo dasturiy taminot tizimli amaliy utilita fayl papka kengaytma trenajyor test" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="5.5" cy="5.5" r=".6"/><circle cx="8" cy="5.5" r=".6"/><path d="M8 22h8"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">06</span><span class="card-top-tag">6-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Windows operatsion tizimi</div>
+            <div class="folder-subtitle">OT tushunchasi, dasturlar logolari, fayllar &amp; trenajyor</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>6-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Windows operatsion tizimi</div>
-              <div class="folder-subtitle">OT tushunchasi, dasturlar logolari, fayllar &amp; trenajyor</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">06</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">20 Test &amp; Trenajyor</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">20 Test &amp; Trenajyor</div>
         </a>
       </div>
 
       <!-- ==================== CARD 7 (7-DARS: FAYLLAR, PAPKALAR VA ARXIVLASH) ==================== -->
-      <div class="taskello-card-wrapper theme-amber" data-kmr-id="7" data-kmr-type="Amaliy" data-kmr-title="Fayllar, papkalar va arxivlash. Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z.">
-        <a href="./7. Fayllar va arxivlash/dars.html" class="taskello-card" data-search="7-dars fayl papka katalog arxiv arxivlash zip rar 7z winrar 7-zip siqish nusxalash kochirish ochirish savat tezkor tugmalar ctrl shift n zaxira nusxa backup">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#fcd34d" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#f59e0b" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#d97706" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="7" data-kmr-type="Amaliy" data-kmr-title="Fayllar, papkalar va arxivlash. Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z." style="--c: #fbbf24; --c2: #d97706;">
+        <a href="./7. Fayllar va arxivlash/dars.html" data-search="7-dars fayl papka katalog arxiv arxivlash zip rar 7z winrar 7-zip siqish nusxalash kochirish ochirish savat tezkor tugmalar ctrl shift n zaxira nusxa backup" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 10v6M12 16l-2.5-2.5M12 16l2.5-2.5"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">07</span><span class="card-top-tag">7-dars</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Fayllar, papkalar va arxivlash</div>
+            <div class="folder-subtitle">Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>7-Dars
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Fayllar, papkalar va arxivlash</div>
-              <div class="folder-subtitle">Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">07</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">20 Test</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">20 Test</div>
         </a>
       </div>
 
       <!-- ==================== CARD 8a (8-DARS, 1-MAVZU: MS OFFICE DASTURLARI) ==================== -->
-      <div class="taskello-card-wrapper theme-word" data-kmr-skip="1">
-        <a href="./8. MS Office va Word/office.html" class="taskello-card" data-search="8-dars microsoft office paket dasturlar word excel powerpoint outlook access onenote teams onedrive versiya microsoft 365 docx xlsx pptx libreoffice">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-skip="1" style="--c: #f472b6; --c2: #db2777;">
+        <a href="./8. MS Office va Word/office.html" data-search="8-dars microsoft office paket dasturlar word excel powerpoint outlook access onenote teams onedrive versiya microsoft 365 docx xlsx pptx libreoffice" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">08</span><span class="card-top-tag">8-dars • 1-mavzu</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Microsoft Office dasturlari</div>
+            <div class="folder-subtitle">Paket tarkibi, versiyalar, umumiy oyna va mashq</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>8-Dars • 1-mavzu
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Microsoft Office dasturlari</div>
-              <div class="folder-subtitle">Paket tarkibi, versiyalar, umumiy oyna va mashq</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">08</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">8 ta dastur &amp; Mashq</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">8 ta dastur &amp; Mashq</div>
         </a>
       </div>
 
       <!-- ==================== CARD 8b (8-DARS, 2-MAVZU: WORD MATN MUHARRIRI) ==================== -->
-      <div class="taskello-card-wrapper theme-word" data-kmr-id="8" data-kmr-type="Amaliy" data-kmr-title="MS Office va Word bilan tanishuv. Office dasturlari, Word oynasi, matnni formatlash.">
-        <a href="./8. MS Office va Word/dars.html" class="taskello-card" data-search="8-dars microsoft office ms word matn muharriri excel powerpoint outlook access lenta ribbon hujjat saqlash docx pdf formatlash shrift abzats tekislash tezkor tugmalar ctrl s">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-id="8" data-kmr-type="Amaliy" data-kmr-title="MS Office va Word bilan tanishuv. Office dasturlari, Word oynasi, matnni formatlash." style="--c: #60a5fa; --c2: #1d4ed8;">
+        <a href="./8. MS Office va Word/dars.html" data-search="8-dars microsoft office ms word matn muharriri excel powerpoint outlook access lenta ribbon hujjat saqlash docx pdf formatlash shrift abzats tekislash tezkor tugmalar ctrl s" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">08</span><span class="card-top-tag">8-dars • 2-mavzu</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">Word matn muharriri</div>
+            <div class="folder-subtitle">Word oynasi, hujjat bilan ishlash, formatlash</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>8-Dars • 2-mavzu
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">Word matn muharriri</div>
-              <div class="folder-subtitle">Word oynasi, hujjat bilan ishlash, formatlash</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">08</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">Trenajyor &amp; Amaliyot</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">Trenajyor &amp; Amaliyot</div>
         </a>
       </div>
 
       <!-- ==================== CARD W (MS WORD: 6 TA AMALIY MASHG‘ULOT) ==================== -->
-      <div class="taskello-card-wrapper theme-word" data-kmr-skip="1">
-        <a href="./WORD 6 darsi/index.html" class="taskello-card" data-search="word amaliy mashg'ulot 6 dars ariza jadval tablitsa rasm shakl ro'yxat almashtirish ustun kolonki wordart ramka pdf chop etish printer tarqatma">
-          <div class="card-atmosphere">
-            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
-              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
-              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
-            </svg>
+      <div class="taskello-card-wrapper" data-kmr-skip="1" style="--c: #fb7185; --c2: #e11d48;">
+        <a href="./WORD 6 darsi/index.html" data-search="word amaliy mashg'ulot 6 dars ariza jadval tablitsa rasm shakl ro'yxat almashtirish ustun kolonki wordart ramka pdf chop etish printer tarqatma" class="taskello-card">
+          <span class="star-bg-ic"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></span>
+          <div class="star-top"><span class="folder-big-number">W6</span><span class="card-top-tag">Word amaliyoti</span></div>
+          <div class="star-body">
+            <div class="folder-main-title">MS Word amaliy mashg‘ulotlari</div>
+            <div class="folder-subtitle">Ariza, jadval, rasm, ro‘yxat, ustunlar, PDF va chop etish</div>
           </div>
-
-          <div class="card-top-tag">
-            Tibbiyotda AT<br>Word amaliyoti
-          </div>
-
-          <div class="folder-sheet-svg-wrap">
-            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
-            </svg>
-          </div>
-
-          <div class="card-folder-content">
-            <div class="folder-upper-block">
-              <div class="folder-main-title">MS Word amaliy mashg‘ulotlari</div>
-              <div class="folder-subtitle">Ariza, jadval, rasm, ro‘yxat, ustunlar, PDF va chop etish</div>
-            </div>
-
-            <div class="folder-bottom-row">
-              <div class="folder-stat-left">
-                <span class="folder-big-number">6×</span>
-                <span class="folder-unit-label">Dars</span>
-              </div>
-              <div class="folder-stat-right">6 ta tarqatma PDF</div>
-            </div>
-          </div>
+          <div class="folder-stat-right">6 ta tarqatma PDF</div>
         </a>
       </div>
 
@@ -2828,8 +2328,6 @@
     </div>
   </div>
 
-  <!-- O'qituvchi ko'radigan nazorat testlari ro'yxati -->
-  <script src="./nazorat-testlari.js"></script>
 
   <script>
     /* ====================================================================== */
@@ -2909,7 +2407,6 @@
       var adminCard = document.getElementById('lesson3-admin-card');
       if (adminCard) adminCard.style.display = (role === 'teacher') ? 'flex' : 'none';
       if (role === 'teacher') {
-        try { renderControlLinks(); } catch (e) {}
         try { initKmrTracker(); } catch (e) {}
       }
     }
@@ -2966,41 +2463,6 @@
         input.value = '';
         input.focus();
       }
-    }
-
-    /** nazorat-testlari.js dagi ro'yxatni chizadi */
-    function renderControlLinks() {
-      var box = document.getElementById('control-links');
-      if (!box || box.getAttribute('data-filled') === '1') return;
-
-      var list = window.NAZORAT_TESTLARI || [];
-
-      if (!list.length) {
-        box.innerHTML =
-          '<div class="control-empty">Hozircha havola qo‘shilmagan.<br>' +
-          '<strong>nazorat-testlari.js</strong> faylini ochib, havolalaringizni yozing.</div>';
-        box.setAttribute('data-filled', '1');
-        return;
-      }
-
-      var html = '';
-      for (var i = 0; i < list.length; i++) {
-        var it = list[i] || {};
-        html +=
-          '<a class="control-link" target="_blank" rel="noopener noreferrer" href="' + (it.havola || '#') + '">' +
-            '<span class="control-link-tag">' + (it.dars || '—') + '</span>' +
-            '<span class="control-link-text">' +
-              '<strong>' + (it.nom || 'Havola') + '</strong>' +
-              '<span>' + (it.izoh || '') + '</span>' +
-            '</span>' +
-            '<span class="profile-arrow">' +
-              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
-              '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
-            '</span>' +
-          '</a>';
-      }
-      box.innerHTML = html;
-      box.setAttribute('data-filled', '1');
     }
 
     function loadKmrState() {
@@ -3313,6 +2775,84 @@
     }
 
     initKmrTracker();
+  </script>
+  <script>
+    /* ====================================================================== */
+    /* YULDUZLAR FONI, KARTADAGI YORUG'LIK VA SANA                            */
+    /* ====================================================================== */
+    (function () {
+      // Sarlavha ostidagi sana va materiallar soni
+      var d = new Date();
+      var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+      var n = document.querySelectorAll('#cards-container .taskello-card-wrapper').length;
+      var dateEl = document.getElementById('star-hero-date');
+      if (dateEl) dateEl.textContent = d.getFullYear() + '-yil ' + d.getDate() + '-' + months[d.getMonth()] + ' • ' + n + ' ta material';
+
+      // Kartadagi rangli yorug'lik va hoshiya sichqoncha ortidan yuradi
+      var cards = document.querySelectorAll('#cards-container .taskello-card');
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('pointermove', function (e) {
+          var r = this.getBoundingClientRect();
+          this.style.setProperty('--x', (e.clientX - r.left) + 'px');
+          this.style.setProperty('--y', (e.clientY - r.top) + 'px');
+        });
+      }
+
+      // Bir-biriga ulanib harakatlanuvchi rangli yulduzlar (sichqonchaga ham ulanadi)
+      var cv = document.getElementById('star-sky');
+      if (!cv || !cv.getContext) return;
+      var ctx = cv.getContext('2d'), W, H, pts = [], mouse = { x: -999, y: -999 };
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var colors = [];
+      var wraps = document.querySelectorAll('#cards-container .taskello-card-wrapper');
+      for (var k = 0; k < wraps.length; k++) colors.push(getComputedStyle(wraps[k]).getPropertyValue('--c').trim() || '#93c5fd');
+      if (!colors.length) colors = ['#93c5fd'];
+
+      function size() {
+        W = cv.width = window.innerWidth;
+        H = cv.height = window.innerHeight;
+        var count = Math.min(110, Math.round(W * H / 14000));
+        pts = [];
+        for (var i = 0; i < count; i++) {
+          pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+                     r: Math.random() * 1.6 + 0.6, c: colors[i % colors.length] });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < pts.length; i++) {
+          var p = pts[i];
+          if (!reduce) {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > W) p.vx *= -1;
+            if (p.y < 0 || p.y > H) p.vy *= -1;
+          }
+          for (var j = i + 1; j < pts.length; j++) {
+            var q = pts[j], dx = p.x - q.x, dy = p.y - q.y, dd = dx * dx + dy * dy;
+            if (dd < 13000) {
+              ctx.strokeStyle = 'rgba(148,163,184,' + (0.22 * (1 - dd / 13000)) + ')';
+              ctx.lineWidth = 0.8;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            }
+          }
+          var mx = p.x - mouse.x, my = p.y - mouse.y, md = mx * mx + my * my;
+          if (md < 26000) {
+            ctx.strokeStyle = 'rgba(165,180,252,' + (0.5 * (1 - md / 26000)) + ')';
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
+          ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 8;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+        if (!reduce) requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', function () { size(); if (reduce) draw(); });
+      window.addEventListener('pointermove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+      size();
+      draw();
+    })();
   </script>
 </body>
 </html>
