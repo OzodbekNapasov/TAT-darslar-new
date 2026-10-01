@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8-Dars: Microsoft Office dasturlari — Tibbiyotda Axborot Texnologiyalari</title>
+  <meta name="description" content="Microsoft Office paketi nima, unga kiruvchi dasturlar va ularning tibbiyotda qo‘llanilishi, Office versiyalari, umumiy oyna tuzilishi va tezkor tugmalar, dasturlarning birgalikda ishlashi, fayl kengaytmalari va mashq.">
+  <link rel="icon" type="image/svg+xml" href="./images/logos/word.svg">
+  <script>
+    // Rol mundarijadagi tanlovdan olinadi: faqat o'qituvchida savol-javob bo'limi ochiladi
+    try {
+      if (localStorage.getItem('tat-role') === 'teacher') {
+        document.documentElement.setAttribute('data-role', 'teacher');
+      }
+    } catch (e) {}
+  </script>
+  <style>
+    :root {
+      --bg-page: #07090e;
+      --bg-card: #0e121a;
+      --bg-card-hover: #131926;
+      --border-color: #1e2638;
+      --border-accent: rgba(0, 120, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --win-blue: #0078d4;
+      --folder: #f5b83d;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --purple: #8b5cf6;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Nazorat savollari javoblari bilan faqat o'qituvchi rolida ko'rinadi
+       (rol mundarijada tanlanadi va localStorage'da 'tat-role' sifatida saqlanadi) */
+    html:not([data-role="teacher"]) .teacher-only {
+      display: none !important;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(0, 120, 212, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 10% 30%, rgba(245, 184, 61, 0.06) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+    }
+
+    p, h1, h2, h3, h4, li, span, td, th, code, strong {
+      overflow-wrap: break-word;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      padding: 0.05rem 0.35rem;
+      color: #e2e8f0;
+    }
+
+    strong { color: var(--text-main); }
+
+    /* ====================================================================== */
+    /* TOP NAVIGATION BAR                                                     */
+    /* ====================================================================== */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+
+    .nav-logo-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(245, 184, 61, 0.14);
+      border: 1px solid rgba(245, 184, 61, 0.35);
+      color: var(--folder);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-title-block { min-width: 0; }
+
+    .nav-title-block h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .nav-title-block p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: inherit;
+      padding: 0.5rem 0.95rem;
+      border-radius: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-muted);
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      border-color: #3b82f6;
+      background: var(--bg-card-hover);
+    }
+
+    .nav-btn-primary {
+      background: var(--win-blue);
+      border-color: var(--win-blue);
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(0, 120, 212, 0.35);
+    }
+
+    .nav-btn-primary:hover {
+      background: #0066b8;
+      transform: translateY(-1px);
+    }
+
+    /* ====================================================================== */
+    /* HERO BANNER                                                            */
+    /* ====================================================================== */
+    .hero {
+      padding: 3rem 0 2.25rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(245, 184, 61, 0.13);
+      color: var(--folder);
+      border: 1px solid rgba(245, 184, 61, 0.32);
+      white-space: nowrap;
+    }
+
+    .hero-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.18;
+      margin-bottom: 0.85rem;
+      max-width: 900px;
+    }
+
+    .hero-title span { color: var(--folder); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 0.55rem 1.1rem;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .hero-chip svg { flex-shrink: 0; }
+
+    .hero-chip:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .hero-chip.chip-test {
+      background: rgba(0, 120, 212, 0.18);
+      border-color: #0078d4;
+      color: #60a5fa;
+    }
+
+    /* ====================================================================== */
+    /* SECTIONS LAYOUT                                                        */
+    /* ====================================================================== */
+    main { padding: 3rem 0 4.5rem 0; }
+
+    .section-block {
+      margin-bottom: 4rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-head {
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .section-num {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 800px;
+    }
+
+    .sub-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin: 2.25rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .sub-title svg { color: var(--folder); flex-shrink: 0; }
+
+    .grid-2, .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+    }
+
+    /* Grid bolasi o'z mazmuni (masalan, papkalar daraxti) sabab kengayib ketmasin */
+    .grid-2 > *, .grid-3 > *, .sc-grid > *, .folder-ways > * { min-width: 0; }
+
+    @media (min-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ====================================================================== */
+    /* CARDS                                                                  */
+    /* ====================================================================== */
+    .concept-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.65rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .concept-card.highlight {
+      border-color: var(--border-accent);
+      background: linear-gradient(135deg, rgba(0, 120, 212, 0.08) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .concept-card.folder {
+      border-color: rgba(245, 184, 61, 0.35);
+      background: linear-gradient(135deg, rgba(245, 184, 61, 0.08) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(0, 120, 212, 0.15);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon.yellow { background: rgba(245, 184, 61, 0.15); color: var(--folder); }
+    .card-icon.green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .card-icon.rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+    .card-icon.purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+
+    .concept-card h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .concept-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .concept-card p:last-child { margin-bottom: 0; }
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    /* li oddiy blok: ichidagi <strong>/<code> matn bilan birga o'raladi */
+    .check-list li {
+      position: relative;
+      padding-left: 1.75rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .check-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
+    }
+
+    .check-list.cross li::before {
+      background: rgba(244, 63, 94, 0.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fb7185' stroke-width='3.2' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / 11px no-repeat;
+    }
+
+    .callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      border-radius: 14px;
+      padding: 0.9rem 1.05rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-top: 1.15rem;
+      background: rgba(0, 120, 212, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: #cfe8fb;
+    }
+
+    .callout svg { flex-shrink: 0; margin-top: 2px; }
+    .callout.warn { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #fde68a; }
+    .callout.danger { background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3); color: #fecdd3; }
+    .callout.good { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #a7f3d0; }
+
+    /* "Qachon foydalanamiz?" — vaziyat va yechim */
+    .scenario {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .scenario-tag {
+      align-self: flex-start;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(245, 184, 61, 0.14);
+      color: var(--folder);
+      white-space: nowrap;
+    }
+
+    .scenario-q {
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .scenario-a {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.6rem;
+    }
+
+    .scenario-a strong { color: #34d399; }
+
+    /* ====================================================================== */
+    /* TABLES                                                                 */
+    /* ====================================================================== */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 1.25rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .ext-table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+
+    .ext-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.72rem;
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .ext-table td {
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      vertical-align: top;
+    }
+
+    .ext-table tr:last-child td { border-bottom: none; }
+
+    .ext-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .ext-badge.blue { background: rgba(0, 120, 212, 0.2); color: #60a5fa; }
+    .ext-badge.green { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .ext-badge.orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+    .ext-badge.red { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .ext-badge.purple { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+    .ext-badge.yellow { background: rgba(245, 184, 61, 0.18); color: var(--folder); }
+
+    /* ====================================================================== */
+    /* AMALLAR (sichqoncha + klaviatura)                                      */
+    /* ====================================================================== */
+    .op-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .op-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .op-head .card-icon { width: 38px; height: 38px; border-radius: 11px; margin: 0; flex-shrink: 0; }
+
+    .op-head h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .op-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .op-label {
+      flex-shrink: 0;
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.45rem;
+      border-radius: 6px;
+      margin-top: 2px;
+      white-space: nowrap;
+      width: 88px;
+      text-align: center;
+    }
+
+    .op-label.mouse { background: rgba(245, 184, 61, 0.14); color: var(--folder); }
+    .op-label.keys { background: rgba(0, 120, 212, 0.18); color: #60a5fa; }
+
+    .crumb {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .crumb b {
+      color: var(--folder);
+      font-weight: 700;
+    }
+
+    /* ====================================================================== */
+    /* TEZKOR TUGMALAR                                                        */
+    /* ====================================================================== */
+    .key-cap {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom-width: 3px;
+      border-radius: 7px;
+      padding: 0.18rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
+
+    .keys {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .keys .plus {
+      color: var(--text-subtle);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .keys .or {
+      color: var(--text-subtle);
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin: 0 0.15rem;
+    }
+
+    .kbd-hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(245, 184, 61, 0.12) 0%, rgba(14, 18, 26, 0.96) 70%);
+      border: 1px solid rgba(245, 184, 61, 0.4);
+      border-radius: 22px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (min-width: 860px) {
+      .kbd-hero { grid-template-columns: auto 1fr; gap: 2rem; }
+    }
+
+    .kbd-hero .keys { gap: 0.5rem; }
+
+    .kbd-hero .key-cap {
+      font-size: 1.35rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 11px;
+      border-bottom-width: 4px;
+      color: var(--folder);
+      border-color: rgba(245, 184, 61, 0.45);
+      background: rgba(245, 184, 61, 0.1);
+    }
+
+    .kbd-hero .keys .plus { font-size: 1.2rem; }
+
+    .kbd-hero h3 {
+      font-size: 1.3rem;
+      font-weight: 850;
+      margin-bottom: 0.35rem;
+    }
+
+    .kbd-hero p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .kbd-hero-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #0b0d12;
+      background: var(--folder);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+    }
+
+    .folder-ways {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .folder-ways { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .way-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .way-card .way-num {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+      margin-bottom: 0.35rem;
+    }
+
+    .way-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .sc-group-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-subtle);
+      margin: 1.75rem 0 0.75rem 0;
+    }
+
+    .sc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .sc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .sc-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .sc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 0.95rem 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sc-card.danger { border-color: rgba(244, 63, 94, 0.35); }
+
+    .sc-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .sc-when {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.35rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .tool-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+
+    .tool-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+    .tool-top h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .tool-top span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .tool-steps-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+    }
+
+    .tool-steps {
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tool-steps li::marker { color: var(--folder); font-weight: 800; }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .tool-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tool-tag.good { color: #34d399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08); }
+
+    /* ====================================================================== */
+    /* NAZORAT SAVOLLARI (SAVOL-JAVOB)                                        */
+    /* ====================================================================== */
+    .qa-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .qa-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .qa-item[open] { border-color: rgba(56, 189, 248, 0.45); }
+
+    .qa-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.95rem 1.1rem;
+      font-size: 0.95rem;
+      font-weight: 750;
+      line-height: 1.45;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .qa-item summary::-webkit-details-marker { display: none; }
+
+    .qa-num {
+      flex-shrink: 0;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(0, 120, 212, 0.18);
+      color: #60a5fa;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qa-q { flex: 1; padding-top: 2px; }
+
+    .qa-chevron {
+      flex-shrink: 0;
+      margin-top: 4px;
+      color: var(--text-subtle);
+      transition: transform 0.2s ease;
+    }
+
+    .qa-item[open] .qa-chevron { transform: rotate(180deg); color: #38bdf8; }
+
+    .qa-a {
+      padding: 0 1.1rem 1.05rem calc(1.1rem + 28px + 0.75rem);
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.65;
+    }
+
+    .qa-a p + p, .qa-a p + ul, .qa-a ul + p { margin-top: 0.5rem; }
+
+    .qa-a ul {
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .qa-a .qa-label {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #34d399;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ====================================================================== */
+    /* TEST CTA                                                               */
+    /* ====================================================================== */
+    .test-cta {
+      text-align: center;
+      padding: 2.25rem 1.5rem;
+    }
+
+    .test-cta-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: rgba(0, 120, 212, 0.18);
+      border: 1px solid rgba(0, 120, 212, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .test-cta h3 { font-size: 1.3rem; }
+
+    .test-cta p {
+      max-width: 580px;
+      margin: 0 auto 1.25rem !important;
+    }
+
+    .test-cta .nav-btn {
+      font-size: 1rem;
+      padding: 0.85rem 2.25rem;
+    }
+
+    /* ====================================================================== */
+    /* FOOTER                                                                 */
+    /* ====================================================================== */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: rgba(7, 9, 14, 0.95);
+      padding: 2rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-inner a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; text-align: left; }
+    }
+
+    /* ====================================================================== */
+    /* FULL-SCREEN SPLASH COVER (100VH: FAQAT MAVZU VA SANA)                  */
+    /* ====================================================================== */
+    .splash-overlay {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      background-image: url('./images/win11_bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+      overflow: hidden;
+    }
+
+    .splash-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(7, 9, 14, 0.62);
+    }
+
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 2.5rem;
+      max-width: 920px;
+    }
+
+    .splash-title {
+      font-size: clamp(2rem, 5.2vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 1.1rem;
+    }
+
+    .splash-date {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* ====================================================================== */
+    /* TELEFON UCHUN MOSLASHTIRISH                                            */
+    /* ====================================================================== */
+    @media (max-width: 768px) {
+      body, .splash-overlay { background-attachment: scroll !important; }
+
+      .splash-overlay {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 1rem;
+      }
+
+      .splash-content {
+        padding: 1.5rem 0.85rem;
+        width: 100%;
+      }
+
+      .splash-title {
+        font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+        line-height: 1.22;
+        margin-bottom: 0.9rem;
+      }
+
+      .splash-date { font-size: 0.96rem; }
+
+      .container { padding: 0 0.9rem; }
+
+      .top-nav { padding: 0.55rem 0; }
+
+      .nav-inner { gap: 0.45rem; }
+
+      .nav-brand { gap: 0.5rem; flex: 1; }
+
+      .nav-logo-box { width: 32px; height: 32px; border-radius: 8px; }
+
+      .nav-logo-box svg { width: 17px; height: 17px; }
+
+      .nav-title-block { overflow: hidden; }
+
+      .nav-title-block h1 {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nav-title-block p { display: none; }
+
+      .nav-actions { gap: 0.35rem; }
+
+      .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.74rem;
+        border-radius: 8px;
+        gap: 0.28rem;
+      }
+
+      .hero { padding: 1.5rem 0 1.35rem 0; }
+
+      .hero-title { font-size: 1.45rem; line-height: 1.25; }
+
+      .hero-desc { font-size: 0.9rem; margin-bottom: 1.15rem; }
+
+      .hero-quick-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+      }
+
+      .hero-chip {
+        font-size: 0.76rem;
+        padding: 0.55rem 0.6rem;
+        gap: 0.35rem;
+        line-height: 1.25;
+      }
+
+      .hero-chip svg { width: 14px; height: 14px; }
+
+      main { padding: 1.5rem 0 2.75rem 0; }
+
+      .section-block { margin-bottom: 2.75rem; scroll-margin-top: 60px; }
+
+      .section-title { font-size: 1.28rem; line-height: 1.3; }
+
+      .section-desc { font-size: 0.88rem; }
+
+      .sub-title { font-size: 1rem; margin-top: 1.75rem; }
+
+      .concept-card, .tool-card { padding: 1.15rem 1rem; border-radius: 16px; }
+
+      .op-card, .scenario { padding: 1rem; }
+
+      .kbd-hero { padding: 1.25rem 1.1rem; border-radius: 18px; }
+
+      .kbd-hero .key-cap { font-size: 1.1rem; padding: 0.35rem 0.7rem; }
+
+      .kbd-hero h3 { font-size: 1.12rem; }
+
+      .qa-item summary { padding: 0.85rem 0.9rem; font-size: 0.9rem; gap: 0.6rem; }
+
+      .qa-a { padding: 0 0.9rem 0.95rem 0.9rem; font-size: 0.86rem; }
+
+      .test-cta { padding: 1.75rem 1rem; }
+
+      .test-cta .nav-btn { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
+
+      footer { padding: 1.5rem 0; }
+    }
+
+    @media (max-width: 380px) {
+      .op-row { flex-direction: column; gap: 0.3rem; }
+      .op-label { width: auto; }
+      .hero-chip { font-size: 0.72rem; padding: 0.55rem 0.45rem; }
+      .hero-chip svg { display: none; }
+    }
+
+    /* ====================================================================== */
+    /* 8-DARS: WORD RANGLARI                                                  */
+    /* ====================================================================== */
+    :root {
+      --word: #41a5ee;
+      --word-mid: #2b7cd3;
+      --word-deep: #185abd;
+    }
+
+    body {
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(43, 124, 211, 0.16) 0%, transparent 50%),
+        radial-gradient(circle at 10% 30%, rgba(65, 165, 238, 0.07) 0%, transparent 40%);
+    }
+
+    .nav-logo-box {
+      background: rgba(43, 124, 211, 0.16);
+      border-color: rgba(65, 165, 238, 0.4);
+      padding: 6px;
+    }
+
+    .nav-logo-box img { width: 100%; height: 100%; object-fit: contain; }
+
+    .hero-badge {
+      background: rgba(43, 124, 211, 0.16);
+      color: #7cc0f5;
+      border-color: rgba(65, 165, 238, 0.38);
+    }
+
+    .hero-title span { color: var(--word); }
+
+    .hero-chip.chip-practice {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+
+    .concept-card.word {
+      border-color: rgba(65, 165, 238, 0.38);
+      background: linear-gradient(135deg, rgba(43, 124, 211, 0.12) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .sub-title svg { color: var(--word); }
+
+    /* ====================================================================== */
+    /* OFFICE DASTURLARI                                                      */
+    /* ====================================================================== */
+    .app-tile {
+      width: 100%;
+      height: 100%;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #ffffff;
+    }
+
+    .app-tile.outlook { background: linear-gradient(135deg, #28a8ea, #0364b8); }
+    .app-tile.access { background: linear-gradient(135deg, #c13b3b, #841f1f); }
+    .app-tile.onenote { background: linear-gradient(135deg, #ca64ea, #7719aa); }
+    .app-tile.teams { background: linear-gradient(135deg, #7b83eb, #4b53bc); }
+
+    .tool-card.main-app {
+      border-color: rgba(65, 165, 238, 0.45);
+      background: linear-gradient(135deg, rgba(43, 124, 211, 0.12) 0%, rgba(14, 18, 26, 0.96) 100%);
+    }
+
+    .tool-card p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .tool-use {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      line-height: 1.5;
+    }
+
+    .tool-use b { color: #34d399; }
+
+    /* Versiyalar lentasi */
+    .timeline {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .timeline { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .tl-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--word-mid);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tl-item strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--word);
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-item.key { border-left-color: var(--folder); }
+    .tl-item.key strong { color: var(--folder); }
+
+
+    .app-tile.onedrive { background: linear-gradient(135deg, #3d9be9, #0364b8); }
+
+    .tool-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    /* Dasturlar birgalikda: ketma-ket qadamlar */
+    .chain {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      counter-reset: chain;
+    }
+
+    .chain > * { min-width: 0; }
+
+    @media (min-width: 768px) {
+      .chain { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .chain { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .chain-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .chain-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .chain-head .tool-logo { width: 38px; height: 38px; padding: 5px; border-radius: 10px; }
+
+    .chain-head h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .chain-head small {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+    }
+
+    /* Qaysi dasturni tanlaysiz? */
+    .quiz-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-score {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .quiz-score b { color: #34d399; }
+
+    .quiz-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .quiz-list > * { min-width: 0; }
+
+    @media (min-width: 900px) {
+      .quiz-list { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .quiz-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .quiz-item.ok { border-color: rgba(16, 185, 129, 0.5); }
+    .quiz-item.bad { border-color: rgba(244, 63, 94, 0.5); }
+
+    .quiz-q {
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.45;
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .quiz-q .qa-num { margin-top: -2px; }
+
+    .quiz-opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .quiz-opts button {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem 0.7rem;
+      border-radius: 9px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .quiz-opts button:hover:not(:disabled) { color: var(--text-main); border-color: #3b82f6; }
+    .quiz-opts button:disabled { cursor: default; opacity: 0.55; }
+    .quiz-opts button.right { opacity: 1; background: rgba(16, 185, 129, 0.16); border-color: rgba(16, 185, 129, 0.6); color: #34d399; }
+    .quiz-opts button.wrong { opacity: 1; background: rgba(244, 63, 94, 0.14); border-color: rgba(244, 63, 94, 0.55); color: #fb7185; }
+
+    .quiz-why {
+      font-size: 0.83rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.55rem;
+    }
+
+    .quiz-why[hidden] { display: none; }
+
+    .quiz-why b { color: #34d399; }
+    .quiz-item.bad .quiz-why b { color: #fb7185; }
+
+    @media (max-width: 768px) {
+      .quiz-item, .chain-step { padding: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MUQOVA (100VH: FAQAT MAVZU VA SANA) -->
+  <div class="splash-overlay" id="splash" onclick="scrollToLesson()">
+    <div class="splash-content">
+      <h1 class="splash-title">Microsoft Office dasturlari</h1>
+      <p class="splash-date" id="splash-date-text">Bugun</p>
+    </div>
+  </div>
+
+  <!-- YUQORI MENYU -->
+  <header class="top-nav" id="lesson-start">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand" title="Bosh Mundarijaga qaytish">
+          <div class="nav-logo-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7cc0f5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <div class="nav-title-block">
+            <h1>8-Dars: Microsoft Office dasturlari</h1>
+            <p>Shahrisabz Tibbiyot Texnikumi • Hamshiralik ishi</p>
+          </div>
+        </a>
+
+        <div class="nav-actions">
+          <a href="../index.html" class="nav-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>Mundarija</span>
+          </a>
+          <a href="./dars.html" class="nav-btn nav-btn-primary">
+            <span>Word darsi</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-badge-row">
+        <span class="hero-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          8-Dars • 1-mavzu
+        </span>
+        <span class="hero-date" id="hero-live-date">Bugun</span>
+      </div>
+
+      <h1 class="hero-title"><span>Microsoft Office</span> dasturlari</h1>
+      <p class="hero-desc">
+        Office paketi nima, unga qaysi dasturlar kiradi va har biri tibbiyotda nima uchun kerak, Office versiyalari, barcha Office dasturlari uchun umumiy oyna tuzilishi va tezkor tugmalar, dasturlarning birgalikda ishlashi. Dars oxirida “Qaysi dasturni tanlaysiz?” mashqi bor. Keyingi mavzu — <a href="./dars.html" style="color:#7cc0f5;font-weight:700;">Word matn muharriri</a>.
+      </p>
+
+      <div class="hero-quick-links">
+        <a href="#sec-what" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          1. Office nima?
+        </a>
+        <a href="#sec-apps" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          2. Dasturlar
+        </a>
+        <a href="#sec-versions" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          3. Versiyalar
+        </a>
+        <a href="#sec-common" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/></svg>
+          4. Umumiy oyna
+        </a>
+        <a href="#sec-together" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          5. Birgalikda ishlash
+        </a>
+        <a href="#sec-files" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          6. Fayllar va muqobillar
+        </a>
+        <a href="#sec-quiz" class="hero-chip chip-practice">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          7. Mashq
+        </a>
+        <a href="#sec-qa" class="hero-chip teacher-only">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          8. Savol-javob
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+
+      <!-- ==================== 1-QISM: OFFICE NIMA ==================== -->
+      <section id="sec-what" class="section-block">
+        <div class="section-head">
+          <span class="section-num">1-Qism</span>
+          <h2 class="section-title">Microsoft Office nima va u nima uchun kerak?</h2>
+          <p class="section-desc"><strong>Microsoft Office</strong> — Microsoft kompaniyasi tomonidan yaratilgan, ofis ishlari uchun mo‘ljallangan <strong>amaliy dasturlar paketi</strong> (to‘plami). “Office” so‘zi inglizcha “idora, ish joyi” degan ma’noni bildiradi.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="concept-card word">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3>Dasturlar paketi deganda nima tushuniladi?</h3>
+            <p><strong>Dasturlar paketi</strong> — bitta kompaniya tomonidan yaratilgan, birgalikda o‘rnatiladigan va bir-biri bilan ishlay oladigan dasturlar to‘plami.</p>
+            <p>5-darsda o‘rganganimizdek, dasturiy ta’minot <strong>tizimli</strong>, <strong>amaliy</strong> va <strong>uskunaviy</strong> turlarga bo‘linadi. Office — <strong>amaliy</strong> dasturlar paketi: u foydalanuvchining kundalik ishini (hujjat, jadval, taqdimot) bajaradi.</p>
+          </div>
+
+          <div class="concept-card folder">
+            <div class="card-icon yellow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Nega alohida dasturlar emas, aynan paket?</h3>
+            <ul class="check-list">
+              <li><strong>Bir xil ko‘rinish.</strong> Word’ni o‘rgangan odam Excel va PowerPoint’da ham tez ishlay boshlaydi.</li>
+              <li><strong>Ma’lumot almashish.</strong> Excel jadvalini Word hisobotiga, diagrammani taqdimotga bemalol qo‘yish mumkin.</li>
+              <li><strong>Umumiy tezkor tugmalar.</strong> <span class="key-cap">Ctrl</span> + <span class="key-cap">S</span>, <span class="key-cap">Ctrl</span> + <span class="key-cap">C</span> barcha dasturlarda bir xil ishlaydi.</li>
+              <li><strong>Bitta litsenziya.</strong> Paket bir marta o‘rnatiladi va barcha dasturlar birga yangilanadi.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Tibbiyot muassasasida Office qayerda ishlatiladi?
+        </h3>
+
+        <div class="grid-3">
+          <div class="scenario">
+            <span class="scenario-tag">Qabulxona</span>
+            <div class="scenario-q">Bemorlarni ro‘yxatga olish, navbat va qabul jadvalini yuritish.</div>
+            <div class="scenario-a"><strong>Excel</strong> — ro‘yxat va jadval, <strong>Outlook</strong> — shifokorlar qabul kalendari.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Hamshiralar posti</span>
+            <div class="scenario-q">Yo‘llanma, smenani topshirish hisoboti, bemorlar uchun eslatmalar.</div>
+            <div class="scenario-a"><strong>Word</strong> — matnli hujjatlar, <strong>Excel</strong> — harorat va qon bosimi varaqasi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Bosh hamshira</span>
+            <div class="scenario-q">Bo‘limlar bo‘yicha oylik hisobot va majlis uchun ma’ruza.</div>
+            <div class="scenario-a"><strong>Excel</strong> — hisob-kitob, <strong>Word</strong> — hisobot, <strong>PowerPoint</strong> — majlis taqdimoti.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Dorixona</span>
+            <div class="scenario-q">Dorilar kirimi, chiqimi va qoldig‘ini hisobga olish.</div>
+            <div class="scenario-a"><strong>Excel</strong> yoki katta hajmda <strong>Access</strong> ma’lumotlar bazasi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">O‘quv xonasi</span>
+            <div class="scenario-q">Yosh hamshiralar uchun seminar yoki aholi bilan sanitariya-oqartuv suhbati.</div>
+            <div class="scenario-a"><strong>PowerPoint</strong> — rasm va sxemalar bilan taqdimot.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Masofadan</span>
+            <div class="scenario-q">Boshqa shahardagi mutaxassis bilan maslahatlashish, hujjatni birga tahrirlash.</div>
+            <div class="scenario-a"><strong>Teams</strong> — videoaloqa, <strong>OneDrive</strong> — hujjatni bulut orqali ulashish.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 2-QISM: DASTURLAR ==================== -->
+      <section id="sec-apps" class="section-block">
+        <div class="section-head">
+          <span class="section-num">2-Qism</span>
+          <h2 class="section-title">Office paketiga kiruvchi dasturlar</h2>
+          <p class="section-desc">Har bir dasturning o‘z vazifasi, fayl kengaytmasi va ishga tushirish buyrug‘i bor. Buyruqni <span class="key-cap">Win</span> + <span class="key-cap">R</span> oynasiga yozib <span class="key-cap">Enter</span> bossangiz, dastur darhol ochiladi.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="tool-card main-app">
+            <div class="tool-top">
+              <div class="tool-logo"><img src="./images/logos/word.svg" alt="Word"></div>
+              <div><h4>Word</h4><span>Matn muharriri (protsessori)</span></div>
+            </div>
+            <p>Matnli hujjatlarni yaratish, tahrirlash, bezash va chop etish. Jadval, rasm va ro‘yxatlar qo‘shish.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> yo‘llanma, ma’lumotnoma, epikriz, hisobot, ariza, bemorga eslatma.</div>
+            <div class="tool-meta"><span class="tool-tag">.docx</span><span class="tool-tag good">Win+R: winword</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><img src="./images/logos/excel.svg" alt="Excel"></div>
+              <div><h4>Excel</h4><span>Elektron jadval</span></div>
+            </div>
+            <p>Katakchalardan iborat jadvallar, formulalar yordamida hisob-kitob, saralash, filtrlash va diagrammalar.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> bemorlar ro‘yxati, harorat varaqasi, dori sarfi, oylik statistika.</div>
+            <div class="tool-meta"><span class="tool-tag">.xlsx</span><span class="tool-tag good">Win+R: excel</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><img src="./images/logos/powerpoint.svg" alt="PowerPoint"></div>
+              <div><h4>PowerPoint</h4><span>Taqdimotlar</span></div>
+            </div>
+            <p>Matn, rasm, diagramma va videodan iborat slaydlar tayyorlash va ularni ekranda namoyish qilish.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> seminar, konferensiya, sanitariya-oqartuv suhbati, majlis.</div>
+            <div class="tool-meta"><span class="tool-tag">.pptx</span><span class="tool-tag good">Win+R: powerpnt</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><div class="app-tile outlook">O</div></div>
+              <div><h4>Outlook</h4><span>Pochta va kalendar</span></div>
+            </div>
+            <p>Elektron xatlar yuborish va qabul qilish, kalendar (uchrashuvlar, eslatmalar), kontaktlar va vazifalar.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> rahbariyat bilan yozishma, majlislar va navbatchilik jadvali.</div>
+            <div class="tool-meta"><span class="tool-tag">.msg / .pst</span><span class="tool-tag good">Win+R: outlook</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><div class="app-tile access">A</div></div>
+              <div><h4>Access</h4><span>Ma’lumotlar bazasi</span></div>
+            </div>
+            <p>Katta hajmdagi bog‘langan ma’lumotlarni jadvallar, so‘rovlar, formalar va hisobotlar ko‘rinishida saqlash.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> bemorlar bazasi, dorixona hisobi, laboratoriya natijalari arxivi.</div>
+            <div class="tool-meta"><span class="tool-tag">.accdb</span><span class="tool-tag good">Win+R: msaccess</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><div class="app-tile onenote">N</div></div>
+              <div><h4>OneNote</h4><span>Elektron daftar</span></div>
+            </div>
+            <p>Qaydlar, rasmlar, ro‘yxatlar va qo‘lda chizilgan yozuvlarni daftar → bo‘lim → sahifa tartibida saqlash.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> ma’ruza konspekti, muolaja algoritmlari, kunlik ish rejasi.</div>
+            <div class="tool-meta"><span class="tool-tag">.one</span><span class="tool-tag good">Win+R: onenote</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><div class="app-tile teams">T</div></div>
+              <div><h4>Teams</h4><span>Jamoa bilan ishlash</span></div>
+            </div>
+            <p>Videoqo‘ng‘iroqlar, onlayn yig‘ilishlar, guruh chatlari va fayllarni birgalikda ishlash.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> masofaviy konsilium, onlayn o‘quv seminarlari.</div>
+            <div class="tool-meta"><span class="tool-tag">Internet kerak</span></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-top">
+              <div class="tool-logo"><div class="app-tile onedrive">☁</div></div>
+              <div><h4>OneDrive</h4><span>Bulutli xotira</span></div>
+            </div>
+            <p>Fayllarni internetdagi xotirada saqlash. Hujjat istalgan kompyuter yoki telefondan ochiladi, havola orqali ulashiladi.</p>
+            <div class="tool-use"><b>Tibbiyotda:</b> hujjatlarning zaxira nusxasi, hamkasblar bilan fayl almashish.</div>
+            <div class="tool-meta"><span class="tool-tag">Internet kerak</span></div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span><strong>Eslab qoling:</strong> paketning asosiy uch dasturi — <strong>Word</strong> (matn), <strong>Excel</strong> (jadval) va <strong>PowerPoint</strong> (taqdimot). Ular barcha versiyalarda bor va keyingi darslarda alohida o‘rganiladi. Qolgan dasturlar paket versiyasiga qarab bo‘lishi yoki bo‘lmasligi mumkin.</span>
+        </div>
+      </section>
+
+      <!-- ==================== 3-QISM: VERSIYALAR ==================== -->
+      <section id="sec-versions" class="section-block">
+        <div class="section-head">
+          <span class="section-num">3-Qism</span>
+          <h2 class="section-title">Office versiyalari va tarqatilish turlari</h2>
+          <p class="section-desc">Office 30 yildan ortiq vaqt davomida rivojlanib keladi. Kompyuterlarda turli versiyalar uchraydi, shuning uchun ularning asosiy farqlarini bilish foydali.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item"><strong>1983</strong>Word dasturining birinchi versiyasi chiqdi.</div>
+          <div class="tl-item"><strong>1990</strong>Word, Excel va PowerPoint birinchi marta bitta <b>Office</b> paketiga jamlandi.</div>
+          <div class="tl-item"><strong>1997 – 2003</strong>Office 97, 2000, XP, 2003. Hujjatlar <code>.doc</code>, <code>.xls</code>, <code>.ppt</code> formatida saqlanardi.</div>
+          <div class="tl-item key"><strong>2007</strong>Menyular o‘rniga <b>Lenta</b> (Ribbon) paydo bo‘ldi, yangi <code>.docx</code>, <code>.xlsx</code>, <code>.pptx</code> formatlari joriy qilindi.</div>
+          <div class="tl-item"><strong>2010 – 2016</strong>Office 2010, 2013, 2016. Bulut (OneDrive) bilan ishlash qo‘shildi.</div>
+          <div class="tl-item"><strong>2019 – 2024</strong>Office 2019, 2021, 2024 — bir marta sotib olinadigan versiyalar.</div>
+          <div class="tl-item key"><strong>Microsoft 365</strong>Obuna asosidagi versiya: dasturlar doimiy yangilanib turadi.</div>
+          <div class="tl-item"><strong>Onlayn</strong>Word, Excel va PowerPoint’ning brauzerda ishlaydigan bepul versiyalari.</div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Office qanday ko‘rinishlarda tarqatiladi?
+        </h3>
+        <div class="table-container">
+          <table class="ext-table">
+            <thead>
+              <tr><th>Turi</th><th>Qanday olinadi</th><th>Afzalligi</th><th>Kamchiligi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Office 2021 / 2024</strong></td><td>Bir marta sotib olinadi</td><td>Doimiy ishlaydi, internet shart emas</td><td>Yangi imkoniyatlar qo‘shilmaydi</td></tr>
+              <tr><td><strong>Microsoft 365</strong></td><td>Oylik yoki yillik obuna</td><td>Doim eng yangi versiya, OneDrive’da katta joy</td><td>Obuna to‘lovi to‘xtasa, tahrirlash cheklanadi</td></tr>
+              <tr><td><strong>Office onlayn</strong></td><td>Bepul, Microsoft hisobi orqali</td><td>Brauzerda ishlaydi, o‘rnatish shart emas</td><td>Internet kerak, imkoniyatlari kamroq</td></tr>
+              <tr><td><strong>Telefon ilovalari</strong></td><td>Play Market / App Store</td><td>Hujjatni yo‘lda ko‘rish va tahrirlash</td><td>Kichik ekran, katta hujjatga noqulay</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span><strong>Versiyani qanday bilish mumkin?</strong> Istalgan Office dasturida <strong>Fayl</strong> → <strong>Hisob</strong> (Account / Учетная запись) bo‘limini oching — u yerda versiya va litsenziya haqida ma’lumot yozilgan.</span>
+        </div>
+      </section>
+
+      <!-- ==================== 4-QISM: UMUMIY OYNA ==================== -->
+      <section id="sec-common" class="section-block">
+        <div class="section-head">
+          <span class="section-num">4-Qism</span>
+          <h2 class="section-title">Barcha Office dasturlari uchun umumiy narsalar</h2>
+          <p class="section-desc">Word, Excel va PowerPoint oynalari bir xil qoliplarga ega. Faqat o‘rtadagi ish maydoni farq qiladi: Word’da — varaq, Excel’da — katakchalar, PowerPoint’da — slayd.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="concept-card">
+            <h3>Fayl menyusi</h3>
+            <p>Hujjatning o‘zi bilan ishlash: <strong>Yaratish, Ochish, Saqlash, Boshqacha saqlash, Chop etish, Yopish, Hisob, Parametrlar</strong>. Barcha dasturlarda bir xil.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Lenta (Ribbon)</h3>
+            <p>Buyruqlar yorliqlar va guruhlarga ajratilgan panel. <strong>Bosh sahifa</strong> (Home / Главная) va <strong>Qo‘yish</strong> (Insert / Вставка) yorliqlari hamma dasturda bor.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Tezkor kirish paneli</h3>
+            <p>Sarlavha qatoridagi kichik panel: <strong>Saqlash</strong>, <strong>Bekor qilish</strong>, <strong>Qaytarish</strong>. Unga o‘zingizga kerakli buyruqlarni qo‘shish mumkin.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Sarlavha qatori</h3>
+            <p>Oynaning eng yuqori qismi: fayl nomi va dastur nomi (masalan, “Hisobot — Word”), oynani yig‘ish, kattalashtirish va yopish tugmalari.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Holat qatori</h3>
+            <p>Oynaning eng pastki qatori: sahifa yoki slayd raqami, so‘zlar soni yoki yig‘indi, ko‘rinish rejimlari va masshtab (zoom).</p>
+          </div>
+          <div class="concept-card">
+            <h3>Bosh oyna (Start ekrani)</h3>
+            <p>Dastur ochilganda chiqadigan oyna: <strong>Yangi</strong> bo‘sh fayl, tayyor <strong>shablonlar</strong> va <strong>so‘nggi</strong> ochilgan fayllar ro‘yxati.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+          Barcha Office dasturlarida ishlaydigan tezkor tugmalar
+        </h3>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">N</span></span><span class="sc-name">Yangi fayl</span><span class="sc-when">Yangi hujjat, kitob yoki taqdimot.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">O</span></span><span class="sc-name">Ochish</span><span class="sc-when">Kompyuterdagi faylni ochish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">S</span></span><span class="sc-name">Saqlash</span><span class="sc-when">Ishlash davomida tez-tez bosing.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">F12</span></span><span class="sc-name">Boshqacha saqlash</span><span class="sc-when">Boshqa nom, joy yoki format (PDF).</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">P</span></span><span class="sc-name">Chop etish</span><span class="sc-when">Printerga yuborish va oldindan ko‘rish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Z</span> / <span class="key-cap">Y</span></span><span class="sc-name">Bekor qilish / Qaytarish</span><span class="sc-when">Oxirgi amalni bekor qilish yoki qaytarish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">C</span> <span class="key-cap">X</span> <span class="key-cap">V</span></span><span class="sc-name">Nusxalash, kesish, qo‘yish</span><span class="sc-when">Dasturlar orasida ham ishlaydi: Excel’dan Word’ga.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">F</span></span><span class="sc-name">Qidirish</span><span class="sc-when">Fayl ichidan so‘z yoki raqam topish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">F1</span></span><span class="sc-name">Lentani yashirish</span><span class="sc-when">Ish maydonini kattalashtirish uchun.</span></div>
+        </div>
+      </section>
+
+      <!-- ==================== 5-QISM: BIRGALIKDA ISHLASH ==================== -->
+      <section id="sec-together" class="section-block">
+        <div class="section-head">
+          <span class="section-num">5-Qism</span>
+          <h2 class="section-title">Office dasturlarining birgalikda ishlashi</h2>
+          <p class="section-desc">Paketning eng katta afzalligi — dasturlar bir-biriga ma’lumot uzata oladi. Misol: bosh hamshira oylik hisobotni to‘rt qadamda tayyorlaydi.</p>
+        </div>
+
+        <div class="chain">
+          <div class="chain-step">
+            <div class="chain-head">
+              <div class="tool-logo"><img src="./images/logos/excel.svg" alt=""></div>
+              <div><small>1-qadam</small><h4>Excel’da hisoblash</h4></div>
+            </div>
+            Bo‘limlar bo‘yicha bemorlar soni jadvalga kiritiladi, jami formulalar bilan hisoblanadi va diagramma quriladi.
+          </div>
+          <div class="chain-step">
+            <div class="chain-head">
+              <div class="tool-logo"><img src="./images/logos/word.svg" alt=""></div>
+              <div><small>2-qadam</small><h4>Word’da hisobot</h4></div>
+            </div>
+            Hisobot matni yoziladi. Excel jadvali <span class="key-cap">Ctrl</span> + <span class="key-cap">C</span> → <span class="key-cap">Ctrl</span> + <span class="key-cap">V</span> bilan hisobotga qo‘yiladi va PDF qilib saqlanadi.
+          </div>
+          <div class="chain-step">
+            <div class="chain-head">
+              <div class="tool-logo"><img src="./images/logos/powerpoint.svg" alt=""></div>
+              <div><small>3-qadam</small><h4>PowerPoint’da taqdimot</h4></div>
+            </div>
+            Majlis uchun 5–6 slayd tayyorlanadi, Excel’dagi diagramma slaydga qo‘yiladi.
+          </div>
+          <div class="chain-step">
+            <div class="chain-head">
+              <div class="tool-logo"><div class="app-tile outlook">O</div></div>
+              <div><small>4-qadam</small><h4>Outlook’da yuborish</h4></div>
+            </div>
+            Hisobot (PDF) va taqdimot rahbariyatga elektron xat orqali yuboriladi.
+          </div>
+        </div>
+
+        <div class="callout good">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Barcha Office dasturlari hujjatni <strong>PDF</strong> formatida saqlay oladi: <strong>Fayl</strong> → <strong>Boshqacha saqlash</strong> (<span class="key-cap">F12</span>) → fayl turi <strong>PDF</strong>. PDF hujjat har qanday qurilmada bir xil ko‘rinadi va oson o‘zgartirilmaydi.</span>
+        </div>
+      </section>
+
+      <!-- ==================== 6-QISM: FAYLLAR VA MUQOBILLAR ==================== -->
+      <section id="sec-files" class="section-block">
+        <div class="section-head">
+          <span class="section-num">6-Qism</span>
+          <h2 class="section-title">Office fayllarining kengaytmalari va muqobil dasturlar</h2>
+          <p class="section-desc">Kengaytmaning oxiridagi <strong>x</strong> harfi faylning 2007-yildan keyingi yangi formatda saqlanganini bildiradi. Eski formatdagi fayllar ham yangi Office’da ochiladi.</p>
+        </div>
+
+        <div class="table-container">
+          <table class="ext-table">
+            <thead>
+              <tr><th>Dastur</th><th>Yangi format (2007+)</th><th>Eski format (97–2003)</th><th>Shablon</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Word</strong> — hujjat</td><td><span class="ext-badge blue">.docx</span></td><td><span class="ext-badge blue">.doc</span></td><td><span class="ext-badge blue">.dotx</span></td></tr>
+              <tr><td><strong>Excel</strong> — kitob (jadval)</td><td><span class="ext-badge green">.xlsx</span></td><td><span class="ext-badge green">.xls</span></td><td><span class="ext-badge green">.xltx</span></td></tr>
+              <tr><td><strong>PowerPoint</strong> — taqdimot</td><td><span class="ext-badge orange">.pptx</span></td><td><span class="ext-badge orange">.ppt</span></td><td><span class="ext-badge orange">.potx</span></td></tr>
+              <tr><td><strong>Access</strong> — ma’lumotlar bazasi</td><td><span class="ext-badge red">.accdb</span></td><td><span class="ext-badge red">.mdb</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          Office’ning muqobil (o‘xshash) dasturlari
+        </h3>
+        <div class="table-container">
+          <table class="ext-table">
+            <thead>
+              <tr><th>Paket</th><th>Matn</th><th>Jadval</th><th>Taqdimot</th><th>Xususiyati</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Microsoft Office</strong></td><td>Word</td><td>Excel</td><td>PowerPoint</td><td>Eng keng tarqalgan, pullik</td></tr>
+              <tr><td><strong>LibreOffice</strong></td><td>Writer</td><td>Calc</td><td>Impress</td><td>Mutlaqo bepul, <code>.docx</code> ni ham ochadi</td></tr>
+              <tr><td><strong>Google</strong></td><td>Docs</td><td>Sheets</td><td>Slides</td><td>Bepul, brauzerda ishlaydi, internet kerak</td></tr>
+              <tr><td><strong>WPS Office</strong></td><td>Writer</td><td>Spreadsheets</td><td>Presentation</td><td>Kompyuter va telefon uchun, Office’ga o‘xshash</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== 7-QISM: MASHQ ==================== -->
+      <section id="sec-quiz" class="section-block">
+        <div class="section-head">
+          <span class="section-num">7-Qism • Mashq</span>
+          <h2 class="section-title">Qaysi dasturni tanlaysiz?</h2>
+          <p class="section-desc">Har bir vaziyat uchun eng mos Office dasturini tanlang. Javob darhol tekshiriladi va izoh beriladi.</p>
+        </div>
+
+        <div class="quiz-top">
+          <span class="quiz-score" id="quiz-score">To‘g‘ri javoblar: <b>0</b> / 8</span>
+          <button type="button" class="nav-btn" id="quiz-reset">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span>Qaytadan</span>
+          </button>
+        </div>
+        <div class="quiz-list" id="quiz-list"></div>
+      </section>
+
+      <!-- ==================== 8-QISM: NAZORAT SAVOLLARI (FAQAT O'QITUVCHI) ==================== -->
+      <section id="sec-qa" class="section-block teacher-only" style="margin-bottom: 1rem;">
+        <div class="section-head">
+          <span class="section-num">8-Qism • Faqat o‘qituvchi</span>
+          <h2 class="section-title">Nazorat savollari va javoblari</h2>
+          <p class="section-desc">Savol ustiga bosing, javobi ochiladi. Avval javobni o‘zingiz eslashga harakat qiling, so‘ng tekshiring.</p>
+        </div>
+
+        <div class="qa-toolbar">
+          <span class="qa-count" id="qa-count">15 ta savol</span>
+          <button type="button" class="nav-btn" id="qa-toggle" onclick="toggleAllAnswers()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span>Barcha javoblarni ochish</span>
+          </button>
+        </div>
+
+        <div class="qa-list" id="qa-list"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong>Shahrisabz Tibbiyot Texnikumi</strong> — Tibbiyotda axborot texnologiyalari fani
+        </div>
+        <div>
+          <span>100% Offline rejim • 8-Dars</span> •
+          <a href="./dars.html">Word darsi</a> •
+          <a href="../index.html">Mundarija</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Jonli sana (hero va muqova)
+    (function () {
+      var now = new Date();
+      var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+      var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+      var str = now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
+      var ids = ['hero-live-date', 'splash-date-text'];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el) el.textContent = str;
+      }
+    })();
+
+    // Muqovadan darsga o'tish
+    function scrollToLesson() {
+      var target = document.getElementById('lesson-start');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ======================================================================
+    // MASHQ: QAYSI DASTURNI TANLAYSIZ?
+    // ======================================================================
+    (function () {
+      var APPS = ['Word', 'Excel', 'PowerPoint', 'Outlook', 'Access'];
+      var QUIZ = [
+        { q: 'Bemorni rentgen tekshiruviga yuborish uchun yo‘llanma yozish kerak.', a: 'Word', why: 'Yo‘llanma — matnli hujjat. Matnli hujjatlar Word’da yoziladi.' },
+        { q: 'Bo‘limdagi 40 nafar bemorning har kungi harorati va qon bosimini jadvalda yuritish kerak.', a: 'Excel', why: 'Raqamli ma’lumotlar jadvali va ular ustida hisob-kitob — Excel’ning vazifasi.' },
+        { q: 'Maktab o‘quvchilariga gripp profilaktikasi haqida rasmli ma’ruza qilish kerak.', a: 'PowerPoint', why: 'Auditoriyaga ekranda ko‘rsatiladigan slaydlar PowerPoint’da tayyorlanadi.' },
+        { q: 'Bosh shifokorga elektron xat yuborish va ertangi majlisni kalendarga belgilash kerak.', a: 'Outlook', why: 'Elektron pochta va kalendar — Outlook dasturining vazifasi.' },
+        { q: 'Poliklinikaga biriktirilgan 5000 nafar aholi haqidagi ma’lumotlarni bog‘langan jadvallar va so‘rovlar bilan saqlash kerak.', a: 'Access', why: 'Katta hajmdagi bog‘langan ma’lumotlar uchun ma’lumotlar bazasi — Access ishlatiladi.' },
+        { q: 'Dorixonadagi dorilarning oylik sarfini hisoblab, diagramma qurish kerak.', a: 'Excel', why: 'Hisob-kitob (formulalar) va diagramma qurish Excel’da bajariladi.' },
+        { q: 'Ta’tilga chiqish uchun bosh hamshira nomiga ariza yozish kerak.', a: 'Word', why: 'Ariza — rasmiy matnli hujjat, u Word’da tayyorlanadi.' },
+        { q: 'Texnikum konferensiyasida kurs ishining natijalarini slaydlar bilan himoya qilish kerak.', a: 'PowerPoint', why: 'Ma’ruzani slaydlar bilan namoyish qilish uchun PowerPoint kerak.' }
+      ];
+
+      var list = document.getElementById('quiz-list');
+      var scoreEl = document.getElementById('quiz-score');
+      if (!list) return;
+      var right = 0, answered = 0;
+
+      function render() {
+        right = 0; answered = 0;
+        var html = '';
+        QUIZ.forEach(function (it, i) {
+          html += '<div class="quiz-item" data-i="' + i + '">' +
+            '<div class="quiz-q"><span class="qa-num">' + (i + 1) + '</span><span>' + it.q + '</span></div>' +
+            '<div class="quiz-opts">' + APPS.map(function (a) { return '<button type="button" data-app="' + a + '">' + a + '</button>'; }).join('') + '</div>' +
+            '<div class="quiz-why" hidden></div></div>';
+        });
+        list.innerHTML = html;
+        score();
+      }
+
+      function score() {
+        var txt = 'To‘g‘ri javoblar: <b>' + right + '</b> / ' + QUIZ.length;
+        if (answered === QUIZ.length) txt += right === QUIZ.length ? ' — A’lo!' : ' — xatolarni izohdan o‘qing';
+        scoreEl.innerHTML = txt;
+      }
+
+      list.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-app]');
+        if (!btn || btn.disabled) return;
+        var item = btn.closest('.quiz-item');
+        var it = QUIZ[+item.getAttribute('data-i')];
+        var ok = btn.getAttribute('data-app') === it.a;
+        var btns = item.querySelectorAll('button');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].disabled = true;
+          if (btns[i].getAttribute('data-app') === it.a) btns[i].classList.add('right');
+        }
+        if (!ok) btn.classList.add('wrong');
+        item.classList.add(ok ? 'ok' : 'bad');
+        var why = item.querySelector('.quiz-why');
+        why.innerHTML = '<b>' + (ok ? 'To‘g‘ri!' : 'Noto‘g‘ri. To‘g‘ri javob: ' + it.a + '.') + '</b> ' + it.why;
+        why.hidden = false;
+        answered++;
+        if (ok) right++;
+        score();
+      });
+
+      document.getElementById('quiz-reset').addEventListener('click', render);
+      render();
+    })();
+
+    // ======================================================================
+    // NAZORAT SAVOLLARI VA JAVOBLARI (faqat o'qituvchi rolida ko'rinadi)
+    // ======================================================================
+    var QA = [
+      ['Microsoft Office nima?',
+       '<p>Microsoft Office — Microsoft kompaniyasi tomonidan yaratilgan, ofis ishlari uchun mo‘ljallangan amaliy dasturlar paketi (to‘plami).</p>'],
+      ['Dasturlar paketi nima? Office nima uchun amaliy dasturlarga kiradi?',
+       '<p>Dasturlar paketi — bitta kompaniya yaratgan, birgalikda o‘rnatiladigan va bir-biri bilan ishlay oladigan dasturlar to‘plami. Office foydalanuvchining kundalik ishini (hujjat, jadval, taqdimot tayyorlash) bajaradi, shuning uchun u amaliy dasturiy ta’minotga kiradi.</p>'],
+      ['Dasturlarning paket ko‘rinishida bo‘lishi qanday afzalliklar beradi?',
+       '<ul><li>barcha dasturlarning ko‘rinishi bir xil — o‘rganish oson;</li><li>dasturlar o‘zaro ma’lumot almashadi;</li><li>tezkor tugmalar umumiy;</li><li>bitta litsenziya bilan o‘rnatiladi va birga yangilanadi.</li></ul>'],
+      ['Office paketiga qaysi dasturlar kiradi?',
+       '<p>Word (matn), Excel (elektron jadval), PowerPoint (taqdimot), Outlook (pochta va kalendar), Access (ma’lumotlar bazasi), OneNote (elektron daftar), Teams (jamoa bilan ishlash, videoaloqa), OneDrive (bulutli xotira).</p>'],
+      ['Word, Excel va PowerPoint’ning vazifalari va tibbiyotda qo‘llanilishi qanday?',
+       '<ul><li><strong>Word</strong> — matnli hujjatlar: yo‘llanma, ma’lumotnoma, hisobot, ariza;</li><li><strong>Excel</strong> — jadval va hisob-kitob: bemorlar ro‘yxati, harorat varaqasi, dori sarfi;</li><li><strong>PowerPoint</strong> — taqdimot: seminar, sanitariya-oqartuv suhbati, konferensiya.</li></ul>'],
+      ['Outlook va Access dasturlari nima uchun kerak?',
+       '<p><strong>Outlook</strong> — elektron xatlar yuborish va qabul qilish, kalendar, kontaktlar va vazifalar uchun. <strong>Access</strong> — katta hajmdagi bog‘langan ma’lumotlarni ma’lumotlar bazasi ko‘rinishida saqlash va qidirish uchun (masalan, bemorlar bazasi).</p>'],
+      ['OneNote, Teams va OneDrive qanday dasturlar?',
+       '<p><strong>OneNote</strong> — qaydlar uchun elektron daftar; <strong>Teams</strong> — videoqo‘ng‘iroq, onlayn yig‘ilish va guruh chatlari; <strong>OneDrive</strong> — fayllarni internetdagi bulutli xotirada saqlash va ulashish.</p>'],
+      ['Office dasturlarini Win + R orqali qanday ishga tushirish mumkin?',
+       '<p><span class="key-cap">Win</span> + <span class="key-cap">R</span> bosiladi va buyruq yoziladi: <code>winword</code> — Word, <code>excel</code> — Excel, <code>powerpnt</code> — PowerPoint, <code>outlook</code> — Outlook, <code>msaccess</code> — Access. So‘ng <span class="key-cap">Enter</span>.</p>'],
+      ['Office tarixidagi muhim bosqichlarni ayting.',
+       '<p>1983 — Word paydo bo‘ldi; 1990 — Word, Excel va PowerPoint bitta paketga jamlandi; 1997–2003 — <code>.doc</code> formatidagi versiyalar; 2007 — Lenta (Ribbon) va <code>.docx</code> formati; 2010–2016 — bulut bilan ishlash; 2019–2024 — bir martalik versiyalar; Microsoft 365 — obuna asosidagi doimiy yangilanadigan versiya.</p>'],
+      ['Office 2024 va Microsoft 365 ning farqi nimada?',
+       '<p><strong>Office 2024</strong> bir marta sotib olinadi va doimiy ishlaydi, lekin unga yangi imkoniyatlar qo‘shilmaydi. <strong>Microsoft 365</strong> — oylik yoki yillik obuna: dasturlar doim eng yangi holatda bo‘ladi va OneDrive’da katta joy beriladi, ammo obuna to‘xtasa, tahrirlash cheklanadi.</p>'],
+      ['Office’ning onlayn versiyasi nima?',
+       '<p>Word, Excel va PowerPoint’ning brauzerda ishlaydigan bepul versiyalari. Ular uchun Microsoft hisobi va internet kerak, kompyuterga o‘rnatish shart emas. Imkoniyatlari kompyuter versiyasidan kamroq.</p>'],
+      ['Barcha Office dasturlari oynasida qanday umumiy qismlar bor?',
+       '<p>Sarlavha qatori, tezkor kirish paneli, Fayl menyusi, Lenta (yorliqlar va guruhlar), ish maydoni, holat qatori va masshtab. Dastur ochilganda bosh oyna (Start ekrani) chiqadi.</p>'],
+      ['Barcha Office dasturlarida bir xil ishlaydigan tezkor tugmalarni ayting.',
+       '<p><span class="key-cap">Ctrl</span> + <span class="key-cap">N</span> — yangi, <span class="key-cap">Ctrl</span> + <span class="key-cap">O</span> — ochish, <span class="key-cap">Ctrl</span> + <span class="key-cap">S</span> — saqlash, <span class="key-cap">F12</span> — boshqacha saqlash, <span class="key-cap">Ctrl</span> + <span class="key-cap">P</span> — chop etish, <span class="key-cap">Ctrl</span> + <span class="key-cap">Z</span> / <span class="key-cap">Y</span> — bekor qilish / qaytarish, <span class="key-cap">Ctrl</span> + <span class="key-cap">C</span> / <span class="key-cap">X</span> / <span class="key-cap">V</span> — nusxalash / kesish / qo‘yish, <span class="key-cap">Ctrl</span> + <span class="key-cap">F</span> — qidirish.</p>'],
+      ['Office fayllarining kengaytmalarini ayting. Oxiridagi “x” nimani bildiradi?',
+       '<p>Word — <code>.docx</code> (eski <code>.doc</code>), Excel — <code>.xlsx</code> (eski <code>.xls</code>), PowerPoint — <code>.pptx</code> (eski <code>.ppt</code>), Access — <code>.accdb</code> (eski <code>.mdb</code>). “x” harfi faylning 2007-yildan keyingi yangi formatda saqlanganini bildiradi.</p>'],
+      ['Microsoft Office’ning qanday muqobil dasturlarini bilasiz?',
+       '<p><strong>LibreOffice</strong> (Writer, Calc, Impress) — bepul; <strong>Google</strong> Docs, Sheets, Slides — brauzerda ishlaydi; <strong>WPS Office</strong> — kompyuter va telefon uchun.</p>']
+    ];
+
+    (function () {
+      var list = document.getElementById('qa-list');
+      if (!list) return;
+      var chevron = '<svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+      var html = '';
+      for (var i = 0; i < QA.length; i++) {
+        html += '<details class="qa-item"><summary><span class="qa-num">' + (i + 1) + '</span><span class="qa-q">' + QA[i][0] + '</span>' + chevron + '</summary>' +
+                '<div class="qa-a"><span class="qa-label">Javob</span>' + QA[i][1] + '</div></details>';
+      }
+      list.innerHTML = html;
+      var el = document.getElementById('qa-count');
+      if (el) el.textContent = QA.length + ' ta savol';
+    })();
+
+    // Barcha javoblarni ochish / yopish
+    function toggleAllAnswers() {
+      var items = document.querySelectorAll('#qa-list .qa-item');
+      var anyClosed = false;
+      for (var i = 0; i < items.length; i++) {
+        if (!items[i].open) { anyClosed = true; break; }
+      }
+      for (var j = 0; j < items.length; j++) items[j].open = anyClosed;
+      var label = document.querySelector('#qa-toggle span');
+      if (label) label.textContent = anyClosed ? 'Barcha javoblarni yopish' : 'Barcha javoblarni ochish';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,3349 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8-Dars: Microsoft Office Word matn muharriri bilan tanishuv — Tibbiyotda Axborot Texnologiyalari</title>
+  <meta name="description" content="Word matn muharririni ishga tushirish, Word oynasi tuzilishi, hujjat yaratish, saqlash va ochish, matn kiritish qoidalari, shrift va abzatsni formatlash, tezkor tugmalar va amaliy topshiriq.">
+  <link rel="icon" type="image/svg+xml" href="./images/logos/word.svg">
+  <script>
+    // Rol mundarijadagi tanlovdan olinadi: faqat o'qituvchida savol-javob bo'limi ochiladi
+    try {
+      if (localStorage.getItem('tat-role') === 'teacher') {
+        document.documentElement.setAttribute('data-role', 'teacher');
+      }
+    } catch (e) {}
+  </script>
+  <style>
+    :root {
+      --bg-page: #07090e;
+      --bg-card: #0e121a;
+      --bg-card-hover: #131926;
+      --border-color: #1e2638;
+      --border-accent: rgba(0, 120, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --win-blue: #0078d4;
+      --folder: #f5b83d;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --purple: #8b5cf6;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Nazorat savollari javoblari bilan faqat o'qituvchi rolida ko'rinadi
+       (rol mundarijada tanlanadi va localStorage'da 'tat-role' sifatida saqlanadi) */
+    html:not([data-role="teacher"]) .teacher-only {
+      display: none !important;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(0, 120, 212, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 10% 30%, rgba(245, 184, 61, 0.06) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+    }
+
+    p, h1, h2, h3, h4, li, span, td, th, code, strong {
+      overflow-wrap: break-word;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      padding: 0.05rem 0.35rem;
+      color: #e2e8f0;
+    }
+
+    strong { color: var(--text-main); }
+
+    /* ====================================================================== */
+    /* TOP NAVIGATION BAR                                                     */
+    /* ====================================================================== */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+
+    .nav-logo-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(245, 184, 61, 0.14);
+      border: 1px solid rgba(245, 184, 61, 0.35);
+      color: var(--folder);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-title-block { min-width: 0; }
+
+    .nav-title-block h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .nav-title-block p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: inherit;
+      padding: 0.5rem 0.95rem;
+      border-radius: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-muted);
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      border-color: #3b82f6;
+      background: var(--bg-card-hover);
+    }
+
+    .nav-btn-primary {
+      background: var(--win-blue);
+      border-color: var(--win-blue);
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(0, 120, 212, 0.35);
+    }
+
+    .nav-btn-primary:hover {
+      background: #0066b8;
+      transform: translateY(-1px);
+    }
+
+    /* ====================================================================== */
+    /* HERO BANNER                                                            */
+    /* ====================================================================== */
+    .hero {
+      padding: 3rem 0 2.25rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(245, 184, 61, 0.13);
+      color: var(--folder);
+      border: 1px solid rgba(245, 184, 61, 0.32);
+      white-space: nowrap;
+    }
+
+    .hero-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.18;
+      margin-bottom: 0.85rem;
+      max-width: 900px;
+    }
+
+    .hero-title span { color: var(--folder); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 0.55rem 1.1rem;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .hero-chip svg { flex-shrink: 0; }
+
+    .hero-chip:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .hero-chip.chip-test {
+      background: rgba(0, 120, 212, 0.18);
+      border-color: #0078d4;
+      color: #60a5fa;
+    }
+
+    /* ====================================================================== */
+    /* SECTIONS LAYOUT                                                        */
+    /* ====================================================================== */
+    main { padding: 3rem 0 4.5rem 0; }
+
+    .section-block {
+      margin-bottom: 4rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-head {
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .section-num {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 800px;
+    }
+
+    .sub-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin: 2.25rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .sub-title svg { color: var(--folder); flex-shrink: 0; }
+
+    .grid-2, .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+    }
+
+    /* Grid bolasi o'z mazmuni (masalan, papkalar daraxti) sabab kengayib ketmasin */
+    .grid-2 > *, .grid-3 > *, .sc-grid > *, .folder-ways > * { min-width: 0; }
+
+    @media (min-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ====================================================================== */
+    /* CARDS                                                                  */
+    /* ====================================================================== */
+    .concept-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.65rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .concept-card.highlight {
+      border-color: var(--border-accent);
+      background: linear-gradient(135deg, rgba(0, 120, 212, 0.08) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .concept-card.folder {
+      border-color: rgba(245, 184, 61, 0.35);
+      background: linear-gradient(135deg, rgba(245, 184, 61, 0.08) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(0, 120, 212, 0.15);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon.yellow { background: rgba(245, 184, 61, 0.15); color: var(--folder); }
+    .card-icon.green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .card-icon.rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+    .card-icon.purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+
+    .concept-card h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .concept-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .concept-card p:last-child { margin-bottom: 0; }
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    /* li oddiy blok: ichidagi <strong>/<code> matn bilan birga o'raladi */
+    .check-list li {
+      position: relative;
+      padding-left: 1.75rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .check-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
+    }
+
+    .check-list.cross li::before {
+      background: rgba(244, 63, 94, 0.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fb7185' stroke-width='3.2' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / 11px no-repeat;
+    }
+
+    .callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      border-radius: 14px;
+      padding: 0.9rem 1.05rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-top: 1.15rem;
+      background: rgba(0, 120, 212, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: #cfe8fb;
+    }
+
+    .callout svg { flex-shrink: 0; margin-top: 2px; }
+    .callout.warn { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #fde68a; }
+    .callout.danger { background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3); color: #fecdd3; }
+    .callout.good { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #a7f3d0; }
+
+    /* "Qachon foydalanamiz?" — vaziyat va yechim */
+    .scenario {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .scenario-tag {
+      align-self: flex-start;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(245, 184, 61, 0.14);
+      color: var(--folder);
+      white-space: nowrap;
+    }
+
+    .scenario-q {
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .scenario-a {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.6rem;
+    }
+
+    .scenario-a strong { color: #34d399; }
+
+    /* ====================================================================== */
+    /* TABLES                                                                 */
+    /* ====================================================================== */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 1.25rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .ext-table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+
+    .ext-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.72rem;
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .ext-table td {
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      vertical-align: top;
+    }
+
+    .ext-table tr:last-child td { border-bottom: none; }
+
+    .ext-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .ext-badge.blue { background: rgba(0, 120, 212, 0.2); color: #60a5fa; }
+    .ext-badge.green { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .ext-badge.orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+    .ext-badge.red { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .ext-badge.purple { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+    .ext-badge.yellow { background: rgba(245, 184, 61, 0.18); color: var(--folder); }
+
+    /* ====================================================================== */
+    /* AMALLAR (sichqoncha + klaviatura)                                      */
+    /* ====================================================================== */
+    .op-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .op-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .op-head .card-icon { width: 38px; height: 38px; border-radius: 11px; margin: 0; flex-shrink: 0; }
+
+    .op-head h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .op-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .op-label {
+      flex-shrink: 0;
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.45rem;
+      border-radius: 6px;
+      margin-top: 2px;
+      white-space: nowrap;
+      width: 88px;
+      text-align: center;
+    }
+
+    .op-label.mouse { background: rgba(245, 184, 61, 0.14); color: var(--folder); }
+    .op-label.keys { background: rgba(0, 120, 212, 0.18); color: #60a5fa; }
+
+    .crumb {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .crumb b {
+      color: var(--folder);
+      font-weight: 700;
+    }
+
+    /* ====================================================================== */
+    /* TEZKOR TUGMALAR                                                        */
+    /* ====================================================================== */
+    .key-cap {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom-width: 3px;
+      border-radius: 7px;
+      padding: 0.18rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
+
+    .keys {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .keys .plus {
+      color: var(--text-subtle);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .keys .or {
+      color: var(--text-subtle);
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin: 0 0.15rem;
+    }
+
+    .kbd-hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(245, 184, 61, 0.12) 0%, rgba(14, 18, 26, 0.96) 70%);
+      border: 1px solid rgba(245, 184, 61, 0.4);
+      border-radius: 22px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (min-width: 860px) {
+      .kbd-hero { grid-template-columns: auto 1fr; gap: 2rem; }
+    }
+
+    .kbd-hero .keys { gap: 0.5rem; }
+
+    .kbd-hero .key-cap {
+      font-size: 1.35rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 11px;
+      border-bottom-width: 4px;
+      color: var(--folder);
+      border-color: rgba(245, 184, 61, 0.45);
+      background: rgba(245, 184, 61, 0.1);
+    }
+
+    .kbd-hero .keys .plus { font-size: 1.2rem; }
+
+    .kbd-hero h3 {
+      font-size: 1.3rem;
+      font-weight: 850;
+      margin-bottom: 0.35rem;
+    }
+
+    .kbd-hero p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .kbd-hero-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #0b0d12;
+      background: var(--folder);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+    }
+
+    .folder-ways {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .folder-ways { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .way-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .way-card .way-num {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+      margin-bottom: 0.35rem;
+    }
+
+    .way-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .sc-group-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-subtle);
+      margin: 1.75rem 0 0.75rem 0;
+    }
+
+    .sc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .sc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .sc-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .sc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 0.95rem 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sc-card.danger { border-color: rgba(244, 63, 94, 0.35); }
+
+    .sc-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .sc-when {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.35rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .tool-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+
+    .tool-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+    .tool-top h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .tool-top span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .tool-steps-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+    }
+
+    .tool-steps {
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tool-steps li::marker { color: var(--folder); font-weight: 800; }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .tool-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tool-tag.good { color: #34d399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08); }
+
+    /* ====================================================================== */
+    /* NAZORAT SAVOLLARI (SAVOL-JAVOB)                                        */
+    /* ====================================================================== */
+    .qa-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .qa-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .qa-item[open] { border-color: rgba(56, 189, 248, 0.45); }
+
+    .qa-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.95rem 1.1rem;
+      font-size: 0.95rem;
+      font-weight: 750;
+      line-height: 1.45;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .qa-item summary::-webkit-details-marker { display: none; }
+
+    .qa-num {
+      flex-shrink: 0;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(0, 120, 212, 0.18);
+      color: #60a5fa;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qa-q { flex: 1; padding-top: 2px; }
+
+    .qa-chevron {
+      flex-shrink: 0;
+      margin-top: 4px;
+      color: var(--text-subtle);
+      transition: transform 0.2s ease;
+    }
+
+    .qa-item[open] .qa-chevron { transform: rotate(180deg); color: #38bdf8; }
+
+    .qa-a {
+      padding: 0 1.1rem 1.05rem calc(1.1rem + 28px + 0.75rem);
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.65;
+    }
+
+    .qa-a p + p, .qa-a p + ul, .qa-a ul + p { margin-top: 0.5rem; }
+
+    .qa-a ul {
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .qa-a .qa-label {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #34d399;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ====================================================================== */
+    /* TEST CTA                                                               */
+    /* ====================================================================== */
+    .test-cta {
+      text-align: center;
+      padding: 2.25rem 1.5rem;
+    }
+
+    .test-cta-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: rgba(0, 120, 212, 0.18);
+      border: 1px solid rgba(0, 120, 212, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .test-cta h3 { font-size: 1.3rem; }
+
+    .test-cta p {
+      max-width: 580px;
+      margin: 0 auto 1.25rem !important;
+    }
+
+    .test-cta .nav-btn {
+      font-size: 1rem;
+      padding: 0.85rem 2.25rem;
+    }
+
+    /* ====================================================================== */
+    /* FOOTER                                                                 */
+    /* ====================================================================== */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: rgba(7, 9, 14, 0.95);
+      padding: 2rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-inner a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; text-align: left; }
+    }
+
+    /* ====================================================================== */
+    /* FULL-SCREEN SPLASH COVER (100VH: FAQAT MAVZU VA SANA)                  */
+    /* ====================================================================== */
+    .splash-overlay {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      background-image: url('./images/win11_bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+      overflow: hidden;
+    }
+
+    .splash-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(7, 9, 14, 0.62);
+    }
+
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 2.5rem;
+      max-width: 920px;
+    }
+
+    .splash-title {
+      font-size: clamp(2rem, 5.2vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 1.1rem;
+    }
+
+    .splash-date {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* ====================================================================== */
+    /* TELEFON UCHUN MOSLASHTIRISH                                            */
+    /* ====================================================================== */
+    @media (max-width: 768px) {
+      body, .splash-overlay { background-attachment: scroll !important; }
+
+      .splash-overlay {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 1rem;
+      }
+
+      .splash-content {
+        padding: 1.5rem 0.85rem;
+        width: 100%;
+      }
+
+      .splash-title {
+        font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+        line-height: 1.22;
+        margin-bottom: 0.9rem;
+      }
+
+      .splash-date { font-size: 0.96rem; }
+
+      .container { padding: 0 0.9rem; }
+
+      .top-nav { padding: 0.55rem 0; }
+
+      .nav-inner { gap: 0.45rem; }
+
+      .nav-brand { gap: 0.5rem; flex: 1; }
+
+      .nav-logo-box { width: 32px; height: 32px; border-radius: 8px; }
+
+      .nav-logo-box svg { width: 17px; height: 17px; }
+
+      .nav-title-block { overflow: hidden; }
+
+      .nav-title-block h1 {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nav-title-block p { display: none; }
+
+      .nav-actions { gap: 0.35rem; }
+
+      .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.74rem;
+        border-radius: 8px;
+        gap: 0.28rem;
+      }
+
+      .hero { padding: 1.5rem 0 1.35rem 0; }
+
+      .hero-title { font-size: 1.45rem; line-height: 1.25; }
+
+      .hero-desc { font-size: 0.9rem; margin-bottom: 1.15rem; }
+
+      .hero-quick-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+      }
+
+      .hero-chip {
+        font-size: 0.76rem;
+        padding: 0.55rem 0.6rem;
+        gap: 0.35rem;
+        line-height: 1.25;
+      }
+
+      .hero-chip svg { width: 14px; height: 14px; }
+
+      main { padding: 1.5rem 0 2.75rem 0; }
+
+      .section-block { margin-bottom: 2.75rem; scroll-margin-top: 60px; }
+
+      .section-title { font-size: 1.28rem; line-height: 1.3; }
+
+      .section-desc { font-size: 0.88rem; }
+
+      .sub-title { font-size: 1rem; margin-top: 1.75rem; }
+
+      .concept-card, .tool-card { padding: 1.15rem 1rem; border-radius: 16px; }
+
+      .op-card, .scenario { padding: 1rem; }
+
+      .kbd-hero { padding: 1.25rem 1.1rem; border-radius: 18px; }
+
+      .kbd-hero .key-cap { font-size: 1.1rem; padding: 0.35rem 0.7rem; }
+
+      .kbd-hero h3 { font-size: 1.12rem; }
+
+      .qa-item summary { padding: 0.85rem 0.9rem; font-size: 0.9rem; gap: 0.6rem; }
+
+      .qa-a { padding: 0 0.9rem 0.95rem 0.9rem; font-size: 0.86rem; }
+
+      .test-cta { padding: 1.75rem 1rem; }
+
+      .test-cta .nav-btn { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
+
+      footer { padding: 1.5rem 0; }
+    }
+
+    @media (max-width: 380px) {
+      .op-row { flex-direction: column; gap: 0.3rem; }
+      .op-label { width: auto; }
+      .hero-chip { font-size: 0.72rem; padding: 0.55rem 0.45rem; }
+      .hero-chip svg { display: none; }
+    }
+
+    /* ====================================================================== */
+    /* 8-DARS: WORD RANGLARI                                                  */
+    /* ====================================================================== */
+    :root {
+      --word: #41a5ee;
+      --word-mid: #2b7cd3;
+      --word-deep: #185abd;
+    }
+
+    body {
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(43, 124, 211, 0.16) 0%, transparent 50%),
+        radial-gradient(circle at 10% 30%, rgba(65, 165, 238, 0.07) 0%, transparent 40%);
+    }
+
+    .nav-logo-box {
+      background: rgba(43, 124, 211, 0.16);
+      border-color: rgba(65, 165, 238, 0.4);
+      padding: 6px;
+    }
+
+    .nav-logo-box img { width: 100%; height: 100%; object-fit: contain; }
+
+    .hero-badge {
+      background: rgba(43, 124, 211, 0.16);
+      color: #7cc0f5;
+      border-color: rgba(65, 165, 238, 0.38);
+    }
+
+    .hero-title span { color: var(--word); }
+
+    .hero-chip.chip-practice {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+
+    .concept-card.word {
+      border-color: rgba(65, 165, 238, 0.38);
+      background: linear-gradient(135deg, rgba(43, 124, 211, 0.12) 0%, rgba(14, 18, 26, 0.95) 100%);
+    }
+
+    .sub-title svg { color: var(--word); }
+
+    /* ====================================================================== */
+    /* OFFICE DASTURLARI                                                      */
+    /* ====================================================================== */
+    .app-tile {
+      width: 100%;
+      height: 100%;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #ffffff;
+    }
+
+    .app-tile.outlook { background: linear-gradient(135deg, #28a8ea, #0364b8); }
+    .app-tile.access { background: linear-gradient(135deg, #c13b3b, #841f1f); }
+    .app-tile.onenote { background: linear-gradient(135deg, #ca64ea, #7719aa); }
+    .app-tile.teams { background: linear-gradient(135deg, #7b83eb, #4b53bc); }
+
+    .tool-card.main-app {
+      border-color: rgba(65, 165, 238, 0.45);
+      background: linear-gradient(135deg, rgba(43, 124, 211, 0.12) 0%, rgba(14, 18, 26, 0.96) 100%);
+    }
+
+    .tool-card p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .tool-use {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      line-height: 1.5;
+    }
+
+    .tool-use b { color: #34d399; }
+
+    /* Versiyalar lentasi */
+    .timeline {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .timeline { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .tl-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--word-mid);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tl-item strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--word);
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-item.key { border-left-color: var(--folder); }
+    .tl-item.key strong { color: var(--folder); }
+
+    /* ====================================================================== */
+    /* WORD OYNASI SIMULYATORI                                                */
+    /* ====================================================================== */
+    .ww-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+      align-items: start;
+    }
+
+    .ww-layout > * { min-width: 0; }
+
+    @media (min-width: 1024px) {
+      .ww-layout { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+    }
+
+    .ww {
+      background: #f3f3f3;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #2a3348;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      color: #1f2937;
+      font-family: "Segoe UI", var(--font-sans);
+      user-select: none;
+    }
+
+    .ww-part {
+      position: relative;
+    }
+
+    .ww-part.active::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 3px solid #f59e0b;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .ww-tabs-wrap { background: var(--word-deep); }
+
+    .ww-ribbon-wrap {
+      background: #f3f3f3;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    .ww-pin {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #f59e0b;
+      color: #111827;
+      font-size: 0.72rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+      z-index: 3;
+      font-family: var(--font-sans);
+      padding: 0;
+    }
+
+    .ww-pin:hover, .ww-part.active .ww-pin { background: #fbbf24; transform: translateY(-50%) scale(1.12); }
+
+    .ww-title {
+      background: var(--word-deep);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 2.2rem 0.4rem 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .ww-qat { display: flex; gap: 0.45rem; align-items: center; opacity: 0.95; }
+    .ww-qat svg { display: block; }
+
+    .ww-docname {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    .ww-winbtns { display: flex; gap: 0.7rem; font-size: 0.8rem; opacity: 0.9; }
+
+    .ww-tabs {
+      background: var(--word-deep);
+      display: flex;
+      gap: 0.1rem;
+      padding: 0 2.2rem 0 0.35rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .ww-tabs::-webkit-scrollbar { display: none; }
+
+    .ww-tab {
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #e0ecff;
+      background: transparent;
+      border: none;
+      padding: 0.4rem 0.65rem;
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .ww-tab:hover { background: rgba(255, 255, 255, 0.12); }
+
+    .ww-tab.active {
+      background: #f3f3f3;
+      color: var(--word-deep);
+    }
+
+    .ww-tab.file-tab { color: #ffffff; font-weight: 700; }
+
+    .ww-ribbon {
+      display: flex;
+      gap: 0;
+      padding: 0.45rem 2.2rem 0.3rem 0.35rem;
+      min-height: 86px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .rb-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 0.6rem;
+      border-right: 1px solid #d4d4d4;
+      flex-shrink: 0;
+      gap: 0.35rem;
+    }
+
+    .rb-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      max-width: 210px;
+    }
+
+    .rb-btn {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: #ffffff;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      padding: 0.12rem 0.4rem;
+      white-space: nowrap;
+      color: #334155;
+    }
+
+    .rb-name {
+      font-size: 0.66rem;
+      color: #64748b;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .ww-ruler {
+      height: 22px;
+      background: #e9e9e9;
+      border-bottom: 1px solid #d4d4d4;
+      padding-right: 2.2rem;
+    }
+
+    .ww-ruler-inner {
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      top: 5px;
+      bottom: 5px;
+      background:
+        repeating-linear-gradient(90deg, #9ca3af 0 1px, transparent 1px 12px) bottom / 100% 5px no-repeat,
+        #ffffff;
+      border: 1px solid #cbd5e1;
+    }
+
+    .ww-body {
+      background: #d6d6d6;
+      padding: 1rem 2.2rem 1rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .ww-page {
+      background: #ffffff;
+      width: 100%;
+      max-width: 430px;
+      min-height: 180px;
+      padding: 1.3rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      font-family: "Times New Roman", Times, serif;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #111827;
+    }
+
+    .ww-page h5 {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+      letter-spacing: 0.04em;
+    }
+
+    .ww-page p { text-indent: 1.25em; text-align: justify; }
+
+    .ww-cursor {
+      display: inline-block;
+      width: 1px;
+      height: 1em;
+      background: #111827;
+      vertical-align: -2px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .ww-status {
+      background: #f3f3f3;
+      border-top: 1px solid #d4d4d4;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.7rem;
+      color: #475569;
+      padding: 0.3rem 2.2rem 0.3rem 0.7rem;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .ww-zoom { margin-left: auto; display: flex; align-items: center; gap: 0.35rem; }
+
+    .ww-zoom i {
+      display: inline-block;
+      width: 60px;
+      height: 3px;
+      background: #94a3b8;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    .ww-zoom i::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      width: 3px;
+      height: 11px;
+      background: #334155;
+    }
+
+    /* Ma'lumot paneli */
+    .ww-info {
+      background: var(--bg-card);
+      border: 1px solid rgba(65, 165, 238, 0.4);
+      border-radius: 18px;
+      padding: 1.25rem 1.3rem;
+      position: sticky;
+      top: 84px;
+    }
+
+    .ww-info-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #0b0d12;
+      background: var(--word);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.55rem;
+    }
+
+    .ww-info h3 {
+      font-size: 1.12rem;
+      font-weight: 850;
+      line-height: 1.3;
+      margin-bottom: 0.25rem;
+    }
+
+    .ww-info .ww-alt {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+    }
+
+    .ww-info p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .ww-info ul {
+      margin-top: 0.6rem;
+      padding-left: 1.1rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .ww-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .ww-legend button {
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .ww-legend button:hover { color: var(--text-main); border-color: #3b82f6; }
+
+    .ww-legend button.active {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: rgba(245, 158, 11, 0.6);
+      color: #fcd34d;
+    }
+
+    .ww-hint {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: flex-start;
+    }
+
+    /* ====================================================================== */
+    /* MATN KIRITISH: TO'G'RI / NOTO'G'RI                                     */
+    /* ====================================================================== */
+    .rule-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+    }
+
+    .rule-row h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .rule-ex {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 0.95rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 9px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .rule-ex b {
+      font-family: var(--font-sans);
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .rule-ex.bad { background: rgba(244, 63, 94, 0.08); color: #fecdd3; }
+    .rule-ex.bad b { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .rule-ex.good { background: rgba(16, 185, 129, 0.08); color: #bbf7d0; }
+    .rule-ex.good b { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+    .rule-ex mark {
+      background: rgba(244, 63, 94, 0.35);
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+
+    .rule-ex.good mark { background: rgba(16, 185, 129, 0.3); }
+
+    /* ====================================================================== */
+    /* FORMATLASH TRENAJYORI                                                  */
+    /* ====================================================================== */
+    .fmt-sim {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+      align-items: start;
+    }
+
+    .fmt-sim > * { min-width: 0; }
+
+    @media (min-width: 1024px) {
+      .fmt-sim { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+    }
+
+    .fmt-editor {
+      background: #f3f3f3;
+      border: 1px solid #2a3348;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      outline: none;
+    }
+
+    .fmt-editor:focus-visible { box-shadow: 0 0 0 3px rgba(65, 165, 238, 0.6); }
+
+    .fmt-target {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--word-deep);
+      padding: 0.45rem 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .fmt-target span {
+      font-size: 0.74rem;
+      color: #dbeafe;
+      font-weight: 700;
+      margin-right: 0.2rem;
+    }
+
+    .fmt-target button {
+      font-family: var(--font-sans);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: transparent;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .fmt-target button.active { background: #ffffff; color: var(--word-deep); border-color: #ffffff; }
+
+    .fmt-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    .fmt-sep { width: 1px; height: 22px; background: #d4d4d4; margin: 0 0.15rem; }
+
+    .fmt-bar select {
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      padding: 0.25rem 0.3rem;
+      border: 1px solid #c7c7c7;
+      border-radius: 4px;
+      background: #ffffff;
+      color: #111827;
+      cursor: pointer;
+    }
+
+    .fmt-btn {
+      min-width: 30px;
+      height: 28px;
+      padding: 0 0.4rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: #1f2937;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .fmt-btn:hover { background: #e2e8f0; }
+
+    .fmt-btn.on {
+      background: #cfe3fa;
+      border-color: #8bb8ea;
+    }
+
+    .fmt-reset {
+      margin-left: auto;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid #c7c7c7;
+      background: #ffffff;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .fmt-paper-wrap {
+      background: #d6d6d6;
+      padding: 1rem;
+    }
+
+    .fmt-paper {
+      background: #ffffff;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 1.5rem 1.6rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      color: #111827;
+      min-height: 230px;
+    }
+
+    .fmt-el {
+      cursor: pointer;
+      border-radius: 3px;
+      outline: 1px dashed transparent;
+      outline-offset: 3px;
+      transition: outline-color 0.15s ease;
+    }
+
+    .fmt-el.selected { outline-color: #60a5fa; background: rgba(96, 165, 250, 0.08); }
+
+    #fmt-title { margin-bottom: 0.7rem; }
+
+    .fmt-goal {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+    }
+
+    .fmt-goal h3 {
+      font-size: 1.05rem;
+      font-weight: 850;
+      margin-bottom: 0.3rem;
+    }
+
+    .fmt-goal > p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .goal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .goal-list li {
+      position: relative;
+      padding-left: 1.75rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .goal-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid #334155;
+      background: transparent;
+    }
+
+    .goal-list li.done { color: var(--text-main); }
+
+    .goal-list li.done::before {
+      border-color: transparent;
+      background: rgba(16, 185, 129, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
+    }
+
+    .goal-list .gl-head {
+      padding-left: 0;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #38bdf8;
+      margin-top: 0.35rem;
+    }
+
+    .goal-list .gl-head::before { display: none; }
+
+    .goal-progress {
+      margin-top: 1rem;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .goal-progress i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: #10b981;
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    .goal-status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    .goal-status.win { color: #34d399; }
+
+    /* ====================================================================== */
+    /* AMALIY TOPSHIRIQ                                                       */
+    /* ====================================================================== */
+    .task-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      counter-reset: step;
+    }
+
+    .task-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 0.95rem 1.05rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .task-step:hover { border-color: #334155; }
+
+    .task-step input {
+      appearance: none;
+      -webkit-appearance: none;
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid #475569;
+      margin-top: 1px;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+    }
+
+    .task-step input:checked {
+      background: #10b981 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 13px no-repeat;
+      border-color: #10b981;
+    }
+
+    .task-step.done {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, var(--bg-card) 100%);
+    }
+
+    .task-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    .task-body strong:first-child {
+      display: block;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .task-step.done .task-body strong:first-child { color: #34d399; }
+
+    .sample-doc {
+      background: #ffffff;
+      color: #111827;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .sample-doc h5 {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+
+    .sample-doc p { text-align: justify; text-indent: 1.25cm; line-height: 1.5; }
+
+    .sample-doc .sign {
+      text-indent: 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .task-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .task-progress-row .goal-progress { flex: 1; min-width: 160px; margin: 0; }
+
+    .task-progress-row span { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+
+    @media (max-width: 768px) {
+      .ww-info { position: static; padding: 1.1rem 1rem; }
+      .ww-page { padding: 1rem 1.05rem; font-size: 0.76rem; }
+      .ww-body { padding: 0.75rem 2rem 0.75rem 0.6rem; }
+      .ww-winbtns { display: none; }
+      .ww-status .ww-hide-sm { display: none; }
+      .fmt-paper { padding: 1.1rem 1rem; }
+      .fmt-paper-wrap { padding: 0.6rem; }
+      .sample-doc { padding: 1.1rem 1rem; font-size: 0.92rem; }
+      .rule-row, .task-step { padding: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MUQOVA (100VH: FAQAT MAVZU VA SANA) -->
+  <div class="splash-overlay" id="splash" onclick="scrollToLesson()">
+    <div class="splash-content">
+      <h1 class="splash-title">Microsoft Office Word<br>matn muharriri bilan tanishuv</h1>
+      <p class="splash-date" id="splash-date-text">Bugun</p>
+    </div>
+  </div>
+
+  <!-- YUQORI MENYU -->
+  <header class="top-nav" id="lesson-start">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand" title="Bosh Mundarijaga qaytish">
+          <div class="nav-logo-box">
+            <img src="./images/logos/word.svg" alt="">
+          </div>
+          <div class="nav-title-block">
+            <h1>8-Dars: Word matn muharriri bilan tanishuv</h1>
+            <p>Shahrisabz Tibbiyot Texnikumi • Hamshiralik ishi</p>
+          </div>
+        </a>
+
+        <div class="nav-actions">
+          <a href="../index.html" class="nav-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>Mundarija</span>
+          </a>
+          <a href="#sec-practice" class="nav-btn nav-btn-primary">
+            <span>Amaliy ish</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-badge-row">
+        <span class="hero-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          8-Dars • 2-mavzu
+        </span>
+        <span class="hero-date" id="hero-live-date">Bugun</span>
+      </div>
+
+      <h1 class="hero-title"><span>Microsoft Office Word</span> matn muharriri bilan tanishuv</h1>
+      <p class="hero-desc">
+        Word qanday ishga tushiriladi, uning oynasi qanday tuzilgan, hujjat qanday yaratiladi, saqlanadi va ochiladi, matn qanday to‘g‘ri kiritiladi va formatlanadi. Dars oxirida interaktiv trenajyor va amaliy topshiriq bor. Office paketi haqidagi oldingi mavzu — <a href="./office.html" style="color:#7cc0f5;font-weight:700;">Microsoft Office dasturlari</a>. Word bo‘yicha keyingi amaliy darslar — <a href="../WORD 6 darsi/index.html" style="color:#7cc0f5;font-weight:700;">6 ta amaliy mashg‘ulot</a>.
+      </p>
+
+      <div class="hero-quick-links">
+        <a href="#sec-why" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          1. Nima uchun kerak?
+        </a>
+        <a href="#sec-word" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          2. Word nima?
+        </a>
+        <a href="#sec-window" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          3. Word oynasi
+        </a>
+        <a href="#sec-file" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          4. Saqlash va ochish
+        </a>
+        <a href="#sec-typing" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          5. Matn kiritish
+        </a>
+        <a href="#sec-format" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          6. Formatlash
+        </a>
+        <a href="#sec-shortcuts" class="hero-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+          7. Tezkor tugmalar
+        </a>
+        <a href="#sec-practice" class="hero-chip chip-practice">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          8. Amaliy topshiriq
+        </a>
+        <a href="#sec-qa" class="hero-chip teacher-only">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          9. Savol-javob
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+
+      <!-- ==================== 1-QISM: NIMA UCHUN KERAK ==================== -->
+      <section id="sec-why" class="section-block">
+        <div class="section-head">
+          <span class="section-num">1-Qism</span>
+          <h2 class="section-title">Bu mavzu nima uchun kerak va qachon foydalanamiz?</h2>
+          <p class="section-desc">Hamshiraning ish kunida yozma hujjatlar ko‘p: yo‘llanmalar, hisobotlar, bemorlar uchun eslatmalar, arizalar. Ularni qo‘lda yozish uzoq vaqt oladi, yozuv ham har doim ham tushunarli bo‘lmaydi. Word’da yozilgan hujjat aniq o‘qiladi, tez tuzatiladi va uni istalgancha nusxada chop etish mumkin.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="concept-card word">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+            </div>
+            <h3>Word hamshiraga nima beradi?</h3>
+            <p><strong>Microsoft Word</strong> — kompyuterda matnli hujjat yaratish, tahrirlash, bezash va chop etish dasturi.</p>
+            <ul class="check-list">
+              <li>Hujjat aniq, chiroyli va bir xil ko‘rinishda bo‘ladi.</li>
+              <li>Xatoni butun sahifani qayta yozmasdan tuzatish mumkin.</li>
+              <li>Bir marta tayyorlangan namuna (shablon) har kuni qayta ishlatiladi.</li>
+              <li>Hujjat elektron pochta yoki Telegram orqali bir zumda yuboriladi.</li>
+            </ul>
+          </div>
+
+          <div class="concept-card folder">
+            <div class="card-icon yellow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3>Nega butun Office paketini bilish kerak?</h3>
+            <p>Shifoxona va poliklinikalarda deyarli barcha elektron hujjatlar <strong>Office</strong> dasturlarida tayyorlanadi.</p>
+            <ul class="check-list">
+              <li><strong>Word</strong> — yo‘llanma, ma’lumotnoma, hisobot, ariza.</li>
+              <li><strong>Excel</strong> — bemorlar ro‘yxati, harorat va bosim jadvallari.</li>
+              <li><strong>PowerPoint</strong> — seminar va konferensiya uchun taqdimot.</li>
+              <li>Batafsil: <a href="./office.html" style="color:var(--folder);font-weight:700;">Microsoft Office dasturlari</a> mavzusi.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Qachon foydalanamiz? Hamshira ishidan misollar
+        </h3>
+
+        <div class="grid-3">
+          <div class="scenario">
+            <span class="scenario-tag">Har kuni</span>
+            <div class="scenario-q">Bemorni laboratoriyaga qon tahliliga yuborish uchun yo‘llanma kerak.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Word’da yo‘llanma namunasi bir marta tayyorlanadi. Har safar faqat bemorning F.I.O. va sanasi o‘zgartirilib, chop etiladi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Smena oxirida</span>
+            <div class="scenario-q">Navbatchilik yakunida smenani topshirish hisobotini yozish kerak.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Hisobot Word’da yoziladi va <code>2026-10-01_Navbatchilik.docx</code> nomi bilan bo‘lim papkasiga saqlanadi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Bemor uchun</span>
+            <div class="scenario-q">Keksa bemorga dori ichish tartibini tushunarli qilib yozib berish kerak.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Eslatma <strong>katta shriftda</strong> (16–18 pt), qalin sarlavha va raqamli ro‘yxat bilan yozilib chop etiladi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Oy oxirida</span>
+            <div class="scenario-q">Bosh hamshira bo‘lim bo‘yicha oylik hisobot so‘radi.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Hisobot Word’da yoziladi, jadval qo‘shiladi va <strong>PDF</strong> ko‘rinishida yuboriladi, shunda u hamma qurilmada bir xil ochiladi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">Hujjatlar</span>
+            <div class="scenario-q">Ta’tilga chiqish uchun ariza yoki tushuntirish xati yozish kerak.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Word’da rasmiy talablar bo‘yicha (Times New Roman, 14 pt) yozib, chop etiladi va imzolanadi.</div>
+          </div>
+          <div class="scenario">
+            <span class="scenario-tag">O‘qishda</span>
+            <div class="scenario-q">Talaba sifatida referat yoki mustaqil ish topshirish kerak.</div>
+            <div class="scenario-a"><strong>Yechim:</strong> Matn Word’da teriladi, formatlanadi, sahifalar raqamlanadi va <span class="key-cap">Ctrl</span> + <span class="key-cap">P</span> bilan chop etiladi.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 2-QISM: WORD BILAN TANISHUV ==================== -->
+      <section id="sec-word" class="section-block">
+        <div class="section-head">
+          <span class="section-num">2-Qism</span>
+          <h2 class="section-title">Microsoft Word nima va u qanday ishga tushiriladi?</h2>
+          <p class="section-desc"><strong>Microsoft Word</strong> — matnli hujjatlarni yaratish, tahrirlash, formatlash, saqlash va chop etish uchun mo‘ljallangan dastur. U Office paketining eng ko‘p ishlatiladigan dasturi.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="concept-card highlight">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            </div>
+            <h3>Matn muharriri va matn protsessori</h3>
+            <p><strong>Matn muharriri</strong> — matnni kiritish va tahrirlash dasturi. Masalan, <strong>Bloknot</strong> (Notepad) faqat oddiy matn bilan ishlaydi (<code>.txt</code>): unda shriftni qalin qilib, rasm yoki jadval qo‘yib bo‘lmaydi.</p>
+            <p><strong>Matn protsessori</strong> — matnni tahrirlashdan tashqari uni to‘liq bezash (formatlash), jadval, rasm qo‘shish va sahifani sozlash imkonini beruvchi dastur. <strong>Word</strong> — matn protsessori, lekin odatda uni ham “matn muharriri” deb atashadi.</p>
+          </div>
+
+          <div class="concept-card word">
+            <div class="card-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Word’ning asosiy imkoniyatlari</h3>
+            <ul class="check-list">
+              <li>Matn kiritish, tahrirlash, nusxalash va ko‘chirish.</li>
+              <li>Shrift va abzatsni formatlash, ro‘yxatlar.</li>
+              <li>Jadval, rasm, shakl va SmartArt qo‘shish.</li>
+              <li>Sahifa raqami, kolontitul va avtomatik mundarija.</li>
+              <li>Imlo xatolarini tekshirish, so‘zlarni sanash.</li>
+              <li>Tayyor shablonlar, PDF ga saqlash va chop etish.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Word’ni ishga tushirish usullari
+        </h3>
+        <div class="folder-ways">
+          <div class="way-card">
+            <span class="way-num">1-usul</span>
+            <h4>Start menyusi orqali</h4>
+            <span class="key-cap">Win</span> tugmasi yoki <strong>Pusk</strong> (Start) → dasturlar ro‘yxatidan <strong>Word</strong>. Yoki <span class="key-cap">Win</span> bosib, <code>word</code> deb yozing va <span class="key-cap">Enter</span>.
+          </div>
+          <div class="way-card">
+            <span class="way-num">2-usul</span>
+            <h4>“Bajarish” oynasi orqali</h4>
+            <span class="keys"><span class="key-cap">Win</span><span class="plus">+</span><span class="key-cap">R</span></span> → <code>winword</code> deb yozing → <span class="key-cap">Enter</span>. Bu usul Word yorlig‘i topilmaganda ham ishlaydi.
+          </div>
+          <div class="way-card">
+            <span class="way-num">3-usul</span>
+            <h4>Tayyor hujjat orqali</h4>
+            Kompyuterdagi istalgan <code>.docx</code> faylni sichqoncha bilan <strong>2 marta</strong> bosing — Word shu hujjat bilan birga ochiladi.
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="concept-card">
+            <h3>Word ochilgandan keyin: bosh oyna</h3>
+            <p>Word ishga tushganda avval <strong>bosh oyna</strong> (Start ekrani) chiqadi. Unda:</p>
+            <ul class="check-list">
+              <li><strong>Yangi hujjat</strong> (Blank document / Новый документ) — bo‘sh varaq ochadi.</li>
+              <li><strong>Shablonlar</strong> — tayyor namunalar: rezyume, xat, hisobot va boshqalar.</li>
+              <li><strong>So‘nggi hujjatlar</strong> — oxirgi ochilgan fayllar ro‘yxati.</li>
+            </ul>
+          </div>
+          <div class="concept-card">
+            <h3>Word interfeysi qaysi tilda bo‘ladi?</h3>
+            <p>Kompyuterlarda Word ko‘pincha <strong>o‘zbek</strong>, <strong>rus</strong> yoki <strong>ingliz</strong> tilidagi interfeys bilan o‘rnatilgan bo‘ladi. Shuning uchun bu darsda buyruqlar uch tilda beriladi:</p>
+            <p><strong>Bosh sahifa</strong> (Home / Главная), <strong>Qo‘yish</strong> (Insert / Вставка), <strong>Saqlash</strong> (Save / Сохранить).</p>
+            <p>Buyruqlarning joylashuvi va tezkor tugmalar har qanday tilda bir xil.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4-QISM: WORD OYNASI ==================== -->
+      <section id="sec-window" class="section-block">
+        <div class="section-head">
+          <span class="section-num">3-Qism • Interaktiv</span>
+          <h2 class="section-title">Word oynasining tuzilishi</h2>
+          <p class="section-desc">Pastdagi Word oynasida sariq raqamlarni bosing, o‘ng tomonda shu qism haqida tushuntirish chiqadi. <strong>Yorliqlarni</strong> (Fayl, Bosh sahifa, Qo‘yish…) ham bosib ko‘ring: lentadagi buyruqlar o‘zgaradi.</p>
+        </div>
+
+        <div class="ww-layout">
+          <div class="ww" id="ww">
+            <div class="ww-part ww-title" data-part="title">
+              <div class="ww-qat" title="Tezkor kirish paneli">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </div>
+              <div class="ww-docname">Hujjat1 — Word</div>
+              <div class="ww-winbtns"><span>—</span><span>☐</span><span>✕</span></div>
+              <button type="button" class="ww-pin" data-pin="title" aria-label="Sarlavha qatori">1</button>
+            </div>
+
+            <div class="ww-part ww-tabs-wrap" data-part="tabs">
+              <div class="ww-tabs" id="ww-tabs" role="tablist"></div>
+              <button type="button" class="ww-pin" data-pin="tabs" aria-label="Lenta yorliqlari">2</button>
+            </div>
+
+            <div class="ww-part ww-ribbon-wrap" data-part="ribbon">
+              <div class="ww-ribbon" id="ww-ribbon"></div>
+              <button type="button" class="ww-pin" data-pin="ribbon" aria-label="Lenta">3</button>
+            </div>
+
+            <div class="ww-part ww-ruler" data-part="ruler">
+              <div class="ww-ruler-inner"></div>
+              <button type="button" class="ww-pin" data-pin="ruler" aria-label="Chizg‘ich">4</button>
+            </div>
+
+            <div class="ww-part ww-body" data-part="page">
+              <div class="ww-page">
+                <h5>ESLATMA</h5>
+                <p>Dori vositasini kuniga 3 mahal, ovqatdan keyin, bir stakan suv bilan iching. Davolash muddati — 7 kun.<span class="ww-cursor"></span></p>
+              </div>
+              <button type="button" class="ww-pin" data-pin="page" aria-label="Ish maydoni">5</button>
+            </div>
+
+            <div class="ww-part ww-status" data-part="status">
+              <span>1-sahifa, jami 1</span>
+              <span>17 ta so‘z</span>
+              <span class="ww-hide-sm">O‘zbek</span>
+              <span class="ww-zoom"><span class="ww-hide-sm">▤ ▥</span> − <i></i> + 100%</span>
+              <button type="button" class="ww-pin" data-pin="status" aria-label="Holat qatori">6</button>
+            </div>
+          </div>
+
+          <aside class="ww-info" id="ww-info" aria-live="polite">
+            <span class="ww-info-tag" id="ww-info-tag">1-qism</span>
+            <h3 id="ww-info-title">Sarlavha qatori</h3>
+            <div class="ww-alt" id="ww-info-alt"></div>
+            <div id="ww-info-body"></div>
+            <div class="ww-legend" id="ww-legend"></div>
+            <div class="ww-hint">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Lentani yashirish yoki ko‘rsatish: <span class="key-cap">Ctrl</span> + <span class="key-cap">F1</span>. Yorliqlarga klaviatura bilan o‘tish: <span class="key-cap">Alt</span> bosilganda harflar chiqadi.</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ==================== 5-QISM: HUJJAT BILAN ISHLASH ==================== -->
+      <section id="sec-file" class="section-block">
+        <div class="section-head">
+          <span class="section-num">4-Qism</span>
+          <h2 class="section-title">Hujjat yaratish, saqlash, ochish va chop etish</h2>
+          <p class="section-desc">Hujjat bilan bog‘liq barcha asosiy buyruqlar <strong>Fayl</strong> (File / Файл) menyusida joylashgan. Ularning har birining tezkor tugmasi ham bor.</p>
+        </div>
+
+        <div class="kbd-hero">
+          <div class="keys">
+            <span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">S</span>
+          </div>
+          <div>
+            <span class="kbd-hero-tag">Eng muhim birikma</span>
+            <h3>Saqlash (Save / Сохранить)</h3>
+            <p>Yangi hujjatda birinchi marta bosilsa, fayl nomi va joyini so‘raydi. Keyingi safar esa hech narsa so‘ramay o‘zgarishlarni saqlaydi. <strong>Har 5–10 daqiqada</strong> bosib turing: elektr o‘chib qolsa yoki kompyuter qotib qolsa, ishingiz yo‘qolmaydi. <strong>S</strong> — inglizcha <em>Save</em> so‘zidan.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+              <h4>Yangi hujjat yaratish</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Yaratish</b> (New) › <b>Yangi hujjat</b></span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">N</span></span></div>
+          </div>
+
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon yellow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+              <h4>Hujjatni ochish</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Ochish</b> (Open) › <b>Ko‘rib chiqish</b> › faylni tanlash</span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">O</span></span></div>
+          </div>
+
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div>
+              <h4>Saqlash</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Saqlash</b> yoki tezkor kirish panelidagi disket belgisi</span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">S</span></span></div>
+          </div>
+
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M12 11v6M9 14h6"/></svg></div>
+              <h4>Boshqacha saqlash</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Boshqacha saqlash</b> (Save As / Сохранить как)</span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span class="keys"><span class="key-cap">F12</span></span></div>
+            <div class="op-row"><span class="op-label" style="background:rgba(139,92,246,0.16);color:#c4b5fd;">Natija</span><span>Hujjatning nusxasi boshqa nom, boshqa joy yoki boshqa formatda (masalan, PDF) saqlanadi.</span></div>
+          </div>
+
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+              <h4>Chop etish (Pechat)</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Chop etish</b> (Print / Печать) › nusxa soni › <b>Chop etish</b></span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">P</span></span></div>
+            <div class="op-row"><span class="op-label" style="background:rgba(16,185,129,0.14);color:#34d399;">Foyda</span><span>O‘ng tomonda varaq qanday chiqishi oldindan ko‘rsatiladi — xatoni chop etishdan oldin ko‘rasiz.</span></div>
+          </div>
+
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon rose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <h4>Hujjatni yopish</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">Sichqoncha</span><span class="crumb"><b>Fayl</b> › <b>Yopish</b> yoki oynaning o‘ng yuqori burchagidagi <b>✕</b></span></div>
+            <div class="op-row"><span class="op-label keys">Klaviatura</span><span><span class="key-cap">Ctrl</span> + <span class="key-cap">W</span> — hujjatni yopish; <span class="key-cap">Alt</span> + <span class="key-cap">F4</span> — oynani yopish.</span></div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:1.15rem;">
+          <div class="concept-card highlight">
+            <h3>Saqlash va Boshqacha saqlashning farqi</h3>
+            <p><strong>Saqlash</strong> (<span class="key-cap">Ctrl</span> + <span class="key-cap">S</span>) — o‘zgarishlar <strong>shu faylning o‘ziga</strong> yoziladi, eski holati yo‘qoladi.</p>
+            <p><strong>Boshqacha saqlash</strong> (<span class="key-cap">F12</span>) — hujjatdan <strong>yangi fayl</strong> hosil qilinadi, eski fayl o‘zgarmay qoladi. Masalan, kechagi hisobotni ochib, F12 bilan bugungi sana nomida saqlab, keyin uni o‘zgartirasiz.</p>
+          </div>
+
+          <div class="concept-card">
+            <h3>Saqlash oynasida nima qilinadi?</h3>
+            <ul class="check-list">
+              <li><strong>Joy</strong> tanlanadi: kerakli disk va papka (masalan, <code>D:\Hamshira_ishi\2026</code>).</li>
+              <li><strong>Fayl nomi</strong> yoziladi: <code>Aliyev_Yollanma</code>.</li>
+              <li><strong>Fayl turi</strong> tanlanadi: odatda <code>Word hujjati (*.docx)</code>.</li>
+              <li><strong>Saqlash</strong> tugmasi bosiladi.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Word hujjatini qaysi formatlarda saqlash mumkin?
+        </h3>
+        <div class="table-container">
+          <table class="ext-table">
+            <thead>
+              <tr><th>Format</th><th>Nomi</th><th>Qachon ishlatiladi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="ext-badge blue">.docx</span></td><td>Word hujjati</td><td>Asosiy format. Hujjatni keyin yana tahrirlash uchun.</td></tr>
+              <tr><td><span class="ext-badge blue">.doc</span></td><td>Word 97–2003 hujjati</td><td>Hujjat juda eski Word o‘rnatilgan kompyuterda ochilishi kerak bo‘lsa.</td></tr>
+              <tr><td><span class="ext-badge red">.pdf</span></td><td>PDF hujjat</td><td>Tayyor hujjatni yuborish va chop etish uchun: har qanday qurilmada bir xil ko‘rinadi, oson o‘zgartirib bo‘lmaydi.</td></tr>
+              <tr><td><span class="ext-badge purple">.dotx</span></td><td>Word shabloni</td><td>Ko‘p marta to‘ldiriladigan namuna: yo‘llanma, ma’lumotnoma blanki.</td></tr>
+              <tr><td><span class="ext-badge yellow">.rtf</span></td><td>Formatlangan matn</td><td>Boshqa matn muharrirlari bilan moslik kerak bo‘lganda.</td></tr>
+              <tr><td><span class="ext-badge green">.txt</span></td><td>Oddiy matn</td><td>Faqat matn kerak bo‘lsa. Diqqat: barcha formatlash (qalin, shrift, jadval) yo‘qoladi.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout good">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Avtosaqlash.</strong> Word har <strong>10 daqiqada</strong> hujjatning zaxira nusxasini avtomatik yozib boradi (Fayl → Parametrlar → Saqlash). Kompyuter kutilmaganda o‘chsa, Word qayta ochilganda hujjatni tiklashni taklif qiladi. Lekin bunga tayanmang — <span class="key-cap">Ctrl</span> + <span class="key-cap">S</span> ni o‘zingiz bosing.</span>
+        </div>
+      </section>
+
+      <!-- ==================== 6-QISM: MATN KIRITISH ==================== -->
+      <section id="sec-typing" class="section-block">
+        <div class="section-head">
+          <span class="section-num">5-Qism</span>
+          <h2 class="section-title">Matn kiritish va tahrirlash qoidalari</h2>
+          <p class="section-desc">Ish maydonidagi miltillab turgan vertikal chiziq — <strong>kursor</strong>. Matn aynan kursor turgan joyga yoziladi. Kursorni sichqoncha bilan bosib yoki strelka tugmalari bilan siljitish mumkin.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="rule-row">
+            <h4>1. <span class="key-cap">Enter</span> faqat abzats (xatboshi) oxirida bosiladi</h4>
+            <div class="rule-ex bad"><b>Xato</b><span>Bemor 2026-yil 1-oktabrda<mark>↵</mark>
+bo‘limga yotqizildi.</span></div>
+            <div class="rule-ex good"><b>To‘g‘ri</b><span>Bemor 2026-yil 1-oktabrda bo‘limga yotqizildi.<mark>↵</mark></span></div>
+            <p class="task-body">Qator oxiriga yetganda Word matnni o‘zi keyingi qatorga o‘tkazadi.</p>
+          </div>
+
+          <div class="rule-row">
+            <h4>2. So‘zlar orasida faqat bitta probel bo‘ladi</h4>
+            <div class="rule-ex bad"><b>Xato</b><span>Bemorning<mark>···</mark>harorati<mark>··</mark>37,8 °C.</span></div>
+            <div class="rule-ex good"><b>To‘g‘ri</b><span>Bemorning harorati 37,8 °C.</span></div>
+            <p class="task-body">Matnni probellar bilan surish yoki markazga keltirish mumkin emas — buning uchun tekislash tugmalari bor.</p>
+          </div>
+
+          <div class="rule-row">
+            <h4>3. Tinish belgisidan <u>oldin</u> probel qo‘yilmaydi, <u>keyin</u> qo‘yiladi</h4>
+            <div class="rule-ex bad"><b>Xato</b><span>Bemor keldi<mark>·</mark>,shikoyati yo‘q<mark>·</mark>.</span></div>
+            <div class="rule-ex good"><b>To‘g‘ri</b><span>Bemor keldi, shikoyati yo‘q.</span></div>
+          </div>
+
+          <div class="rule-row">
+            <h4>4. Qavs va qo‘shtirnoq ichida chetga probel qo‘yilmaydi</h4>
+            <div class="rule-ex bad"><b>Xato</b><span>Qon bosimi<mark>(·</mark>120/80<mark>·)</mark> me’yorda.</span></div>
+            <div class="rule-ex good"><b>To‘g‘ri</b><span>Qon bosimi (120/80) me’yorda.</span></div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span><strong>Yashirin belgilarni ko‘rish.</strong> <strong>Bosh sahifa</strong> → <strong>Abzats</strong> guruhidagi <strong>¶</strong> tugmasi (yoki <span class="key-cap">Ctrl</span> + <span class="key-cap">Shift</span> + <span class="key-cap">8</span>) bosilsa, har bir probel <strong>·</strong> nuqta bilan, har bir <span class="key-cap">Enter</span> esa <strong>¶</strong> belgisi bilan ko‘rinadi. Ortiqcha probel va Enter’larni topishning eng oson yo‘li. Bu belgilar chop etilmaydi.</span>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+          Matn terishda kerakli tugmalar
+        </h3>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Backspace</span></span><span class="sc-name">Chapdagi belgini o‘chirish</span><span class="sc-when">Kursordan oldingi (chapdagi) belgi o‘chadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Delete</span></span><span class="sc-name">O‘ngdagi belgini o‘chirish</span><span class="sc-when">Kursordan keyingi (o‘ngdagi) belgi o‘chadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Shift</span><span class="plus">+</span><span class="key-cap">harf</span></span><span class="sc-name">Bosh harf</span><span class="sc-when">Bitta bosh harf yozish: gap boshi, ism-familiya.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Caps Lock</span></span><span class="sc-name">Doimiy bosh harflar</span><span class="sc-when">BUTUN SO‘ZNI bosh harflarda yozish. Qayta bossangiz o‘chadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Shift</span><span class="plus">+</span><span class="key-cap">Enter</span></span><span class="sc-name">Abzatssiz yangi qator</span><span class="sc-when">Yangi qatorga o‘tadi, lekin abzats tugamaydi (manzil, imzo qatorlari).</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Enter</span></span><span class="sc-name">Yangi sahifa</span><span class="sc-when">Keyingi sahifaga o‘tish. Ko‘p Enter bosib sahifa “to‘ldirmang”.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Z</span></span><span class="sc-name">Bekor qilish</span><span class="sc-when">Oxirgi amalni bekor qiladi. Ketma-ket bosib bir necha qadam orqaga qaytish mumkin.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Y</span></span><span class="sc-name">Qaytarish</span><span class="sc-when">Bekor qilingan amalni qayta bajaradi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Alt</span><span class="plus">+</span><span class="key-cap">0145</span></span><span class="sc-name">o‘ va g‘ harflaridagi belgi</span><span class="sc-when"><span class="key-cap">Alt</span> bosib turib, raqamlar blokida 0145 terilsa <strong>‘</strong> chiqadi: o‘, g‘.</span></div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Matnni belgilash (ajratish)
+        </h3>
+        <div class="grid-2">
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon yellow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></div>
+              <h4>Sichqoncha bilan</h4>
+            </div>
+            <div class="op-row"><span class="op-label mouse">2 marta</span><span>so‘z ustida — <strong>bitta so‘z</strong> belgilanadi.</span></div>
+            <div class="op-row"><span class="op-label mouse">3 marta</span><span>abzats ustida — <strong>butun abzats</strong> belgilanadi.</span></div>
+            <div class="op-row"><span class="op-label mouse">Tortish</span><span>chap tugmani bosib turib matn ustidan sudrash — <strong>istalgan qism</strong>.</span></div>
+            <div class="op-row"><span class="op-label mouse">Chap chet</span><span>sahifaning chap maydonida bosish — <strong>butun qator</strong>.</span></div>
+          </div>
+          <div class="op-card">
+            <div class="op-head">
+              <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg></div>
+              <h4>Klaviatura bilan</h4>
+            </div>
+            <div class="op-row"><span class="op-label keys">Hammasi</span><span><span class="key-cap">Ctrl</span> + <span class="key-cap">A</span> — butun hujjat.</span></div>
+            <div class="op-row"><span class="op-label keys">Belgima-belgi</span><span><span class="key-cap">Shift</span> + <span class="key-cap">←</span> / <span class="key-cap">→</span></span></div>
+            <div class="op-row"><span class="op-label keys">So‘zma-so‘z</span><span><span class="key-cap">Ctrl</span> + <span class="key-cap">Shift</span> + <span class="key-cap">←</span> / <span class="key-cap">→</span></span></div>
+            <div class="op-row"><span class="op-label keys">Qator</span><span><span class="key-cap">Shift</span> + <span class="key-cap">Home</span> / <span class="key-cap">End</span> — qator boshigacha / oxirigacha.</span></div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span><strong>Asosiy qoida: avval belgilang, keyin buyruq bering.</strong> Nusxalash (<span class="key-cap">Ctrl</span> + <span class="key-cap">C</span>), kesish (<span class="key-cap">Ctrl</span> + <span class="key-cap">X</span>), qo‘yish (<span class="key-cap">Ctrl</span> + <span class="key-cap">V</span>) va formatlash faqat belgilangan matnga ta’sir qiladi. Matn belgilangan holda biror harf bossangiz, belgilangan qism o‘chib ketadi — <span class="key-cap">Ctrl</span> + <span class="key-cap">Z</span> bilan qaytaring.</span>
+        </div>
+      </section>
+
+      <!-- ==================== 7-QISM: FORMATLASH ==================== -->
+      <section id="sec-format" class="section-block">
+        <div class="section-head">
+          <span class="section-num">6-Qism • Trenajyor</span>
+          <h2 class="section-title">Shrift va abzatsni formatlash</h2>
+          <p class="section-desc"><strong>Formatlash</strong> — matnning tashqi ko‘rinishini o‘zgartirish: shrift, o‘lcham, qalinlik, tekislash, qatorlar oralig‘i. Buyruqlar <strong>Bosh sahifa</strong> (Home / Главная) yorlig‘ining <strong>Shrift</strong> va <strong>Abzats</strong> guruhlarida joylashgan.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="concept-card highlight">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            </div>
+            <h3>Shrift (belgilar) formatlash</h3>
+            <ul class="check-list">
+              <li><strong>Shrift turi</strong>: rasmiy hujjatlarda — <span style="font-family:'Times New Roman',serif;font-size:1.05em">Times New Roman</span>, e’lon va ekran uchun — <span style="font-family:Arial,sans-serif">Arial</span> yoki Calibri.</li>
+              <li><strong>O‘lcham</strong> punktlarda (pt) o‘lchanadi: oddiy matn 12–14 pt, sarlavha 14–16 pt.</li>
+              <li><strong>Qalin</strong> (<span class="key-cap">Ctrl</span> + <span class="key-cap">B</span>), <em>kursiv</em> (<span class="key-cap">Ctrl</span> + <span class="key-cap">I</span>), <u>tagiga chizilgan</u> (<span class="key-cap">Ctrl</span> + <span class="key-cap">U</span>).</li>
+              <li><strong>Matn rangi</strong> va <strong>belgilash rangi</strong> (marker) — muhim joylarni ajratish uchun.</li>
+            </ul>
+          </div>
+          <div class="concept-card word">
+            <div class="card-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+            </div>
+            <h3>Abzats formatlash</h3>
+            <ul class="check-list">
+              <li><strong>Tekislash</strong>: chapga (<span class="key-cap">Ctrl</span> + <span class="key-cap">L</span>), markazga (<span class="key-cap">Ctrl</span> + <span class="key-cap">E</span>), o‘ngga (<span class="key-cap">Ctrl</span> + <span class="key-cap">R</span>), ikki tomonga (<span class="key-cap">Ctrl</span> + <span class="key-cap">J</span>).</li>
+              <li><strong>Qatorlar oralig‘i</strong> (interval): 1,0 / 1,15 / 1,5 / 2,0.</li>
+              <li><strong>Xatboshi</strong> (birinchi qator chekinishi) — odatda 1,25 sm.</li>
+              <li><strong>Ro‘yxatlar</strong>: markerli (•) va raqamli (1, 2, 3).</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Rasmiy hujjatlarga ko‘p qo‘yiladigan talablar
+        </h3>
+        <div class="table-container">
+          <table class="ext-table">
+            <thead><tr><th>Parametr</th><th>Qiymat</th><th>Qayerda sozlanadi</th></tr></thead>
+            <tbody>
+              <tr><td>Shrift</td><td><strong>Times New Roman</strong></td><td>Bosh sahifa → Shrift</td></tr>
+              <tr><td>Shrift o‘lchami</td><td><strong>14 pt</strong> (jadval ichida 12 pt)</td><td>Bosh sahifa → Shrift</td></tr>
+              <tr><td>Tekislash</td><td><strong>Ikki tomonga</strong> (sarlavha — markazga)</td><td>Bosh sahifa → Abzats</td></tr>
+              <tr><td>Qatorlar oralig‘i</td><td><strong>1,0 yoki 1,5</strong></td><td>Bosh sahifa → Abzats → Interval</td></tr>
+              <tr><td>Xatboshi</td><td><strong>1,25 sm</strong></td><td>Abzats oynasi → Birinchi qator</td></tr>
+              <tr><td>Sahifa maydonlari</td><td>chap <strong>3 sm</strong>, o‘ng <strong>1,5 sm</strong>, yuqori va pastki <strong>2 sm</strong></td><td>Maket → Maydonlar → Maxsus maydonlar</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Aniq talablarni har bir tashkilot o‘zi belgilaydi. Yangi hujjat ochilganda Word odatda <strong>Calibri 11 pt</strong> (yangi Microsoft 365 da <strong>Aptos 11 pt</strong>) shriftini qo‘yadi — rasmiy hujjat uchun uni o‘zgartirish kerak.</span>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Trenajyor: ma’lumotnomani talab bo‘yicha formatlang
+        </h3>
+        <p class="section-desc" style="margin-bottom:1rem;">Varaqdagi sarlavha yoki matnni bosib tanlang (yoki yuqoridagi “Sarlavha / Matn” tugmalari), so‘ng asboblar paneli bilan formatlang. Tezkor tugmalar ham ishlaydi: avval varaqni bir marta bosing, keyin <span class="key-cap">Ctrl</span> + <span class="key-cap">B</span>, <span class="key-cap">Ctrl</span> + <span class="key-cap">E</span>, <span class="key-cap">Ctrl</span> + <span class="key-cap">J</span>…</p>
+
+        <div class="fmt-sim">
+          <div class="fmt-editor" id="fmt-editor" tabindex="0" aria-label="Formatlash trenajyori">
+            <div class="fmt-target">
+              <span>Tanlangan:</span>
+              <button type="button" data-target="title" class="active">Sarlavha</button>
+              <button type="button" data-target="body">Matn</button>
+            </div>
+            <div class="fmt-bar">
+              <select id="fmt-font" aria-label="Shrift turi">
+                <option value="Calibri">Calibri</option>
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+              </select>
+              <select id="fmt-size" aria-label="Shrift o‘lchami">
+                <option>10</option><option>11</option><option>12</option><option>14</option><option>16</option><option>18</option>
+              </select>
+              <span class="fmt-sep"></span>
+              <button type="button" class="fmt-btn" data-cmd="b" title="Qalin (Ctrl + B)"><b>Q</b></button>
+              <button type="button" class="fmt-btn" data-cmd="i" title="Kursiv (Ctrl + I)"><i>K</i></button>
+              <button type="button" class="fmt-btn" data-cmd="u" title="Tagiga chizilgan (Ctrl + U)"><u>T</u></button>
+              <span class="fmt-sep"></span>
+              <button type="button" class="fmt-btn" data-align="left" title="Chapga tekislash (Ctrl + L)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></button>
+              <button type="button" class="fmt-btn" data-align="center" title="Markazga tekislash (Ctrl + E)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg></button>
+              <button type="button" class="fmt-btn" data-align="right" title="O‘ngga tekislash (Ctrl + R)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></svg></button>
+              <button type="button" class="fmt-btn" data-align="justify" title="Ikki tomonga tekislash (Ctrl + J)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg></button>
+              <span class="fmt-sep"></span>
+              <select id="fmt-spacing" aria-label="Qatorlar oralig‘i" title="Qatorlar oralig‘i">
+                <option value="1">1,0</option><option value="1.15">1,15</option><option value="1.5">1,5</option><option value="2">2,0</option>
+              </select>
+              <button type="button" class="fmt-reset" id="fmt-reset">Boshidan</button>
+            </div>
+            <div class="fmt-paper-wrap">
+              <div class="fmt-paper">
+                <div class="fmt-el selected" id="fmt-title" data-el="title">MA’LUMOTNOMA</div>
+                <div class="fmt-el" id="fmt-body" data-el="body">Ushbu ma’lumotnoma “Hamshiralik ishi” yo‘nalishi 1-kurs talabasi Aliyeva Malika Rustamovnaga berildi. U 2026-yil 1-sentyabrdan buyon texnikumda kunduzgi ta’lim shaklida o‘qiydi. Ma’lumotnoma talab qilingan joyga taqdim etish uchun berildi.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fmt-goal">
+            <h3>Topshiriq talablari</h3>
+            <p>Har bir talab bajarilganda yashil belgi qo‘yiladi.</p>
+            <ul class="goal-list" id="goal-list"></ul>
+            <div class="goal-progress"><i id="goal-bar"></i></div>
+            <div class="goal-status" id="goal-status">0 / 8 talab bajarildi</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 8-QISM: TEZKOR TUGMALAR ==================== -->
+      <section id="sec-shortcuts" class="section-block">
+        <div class="section-head">
+          <span class="section-num">7-Qism</span>
+          <h2 class="section-title">Word’dagi asosiy tezkor tugmalar</h2>
+          <p class="section-desc">Avval birinchi tugma (<span class="key-cap">Ctrl</span>) bosib turiladi, so‘ng qolgani bosiladi. Ko‘pchilik birikma inglizcha so‘zning birinchi harfidan olingan: <strong>S</strong>ave, <strong>O</strong>pen, <strong>P</strong>rint, <strong>B</strong>old.</p>
+        </div>
+
+        <div class="sc-group-title">Hujjat bilan ishlash</div>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">N</span></span><span class="sc-name">Yangi hujjat</span><span class="sc-when">Bo‘sh hujjat ochiladi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">O</span></span><span class="sc-name">Ochish</span><span class="sc-when">Kompyuterdagi hujjatni ochish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">S</span></span><span class="sc-name">Saqlash</span><span class="sc-when">Har 5–10 daqiqada bosing.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">F12</span></span><span class="sc-name">Boshqacha saqlash</span><span class="sc-when">Yangi nom, joy yoki format (PDF) bilan saqlash.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">P</span></span><span class="sc-name">Chop etish</span><span class="sc-when">Chop etish oynasi va oldindan ko‘rish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">W</span></span><span class="sc-name">Hujjatni yopish</span><span class="sc-when">Saqlanmagan bo‘lsa, Word saqlashni so‘raydi.</span></div>
+        </div>
+
+        <div class="sc-group-title">Tahrirlash va qidirish</div>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">C</span></span><span class="sc-name">Nusxalash</span><span class="sc-when">Belgilangan matn xotiraga (buferga) olinadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">X</span></span><span class="sc-name">Kesish</span><span class="sc-when">Matn joyidan olinadi va buferga tushadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">V</span></span><span class="sc-name">Qo‘yish</span><span class="sc-when">Buferdagi matn kursor turgan joyga qo‘yiladi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">F</span></span><span class="sc-name">Qidirish</span><span class="sc-when">Hujjatdan so‘z topish (Navigatsiya paneli).</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">H</span></span><span class="sc-name">Almashtirish</span><span class="sc-when">Bir so‘zni butun hujjat bo‘yicha boshqasiga almashtirish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">F7</span></span><span class="sc-name">Imloni tekshirish</span><span class="sc-when">Imlo va grammatik xatolarni ko‘rsatadi.</span></div>
+        </div>
+
+        <div class="sc-group-title">Formatlash</div>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">B</span> <span class="key-cap">I</span> <span class="key-cap">U</span></span><span class="sc-name">Qalin, kursiv, tagiga chizilgan</span><span class="sc-when">Qayta bosilsa, formatlash olib tashlanadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">L</span> <span class="key-cap">E</span> <span class="key-cap">R</span> <span class="key-cap">J</span></span><span class="sc-name">Tekislash</span><span class="sc-when">Chapga, markazga, o‘ngga, ikki tomonga.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">]</span> / <span class="key-cap">[</span></span><span class="sc-name">Shriftni kattalashtirish / kichraytirish</span><span class="sc-when">Har bosishda 1 pt ga o‘zgaradi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">1</span> <span class="key-cap">5</span> <span class="key-cap">2</span></span><span class="sc-name">Qatorlar oralig‘i</span><span class="sc-when">1 — bir, 5 — bir yarim (1,5), 2 — ikki interval.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Shift</span><span class="plus">+</span><span class="key-cap">F3</span></span><span class="sc-name">Registrni almashtirish</span><span class="sc-when">kichik → Bosh harf bilan → KATTA harflar.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Space</span></span><span class="sc-name">Belgi formatini tozalash</span><span class="sc-when">Qalin, kursiv va boshqa belgi formatlari olib tashlanadi.</span></div>
+        </div>
+
+        <div class="sc-group-title">Kursorni tez harakatlantirish</div>
+        <div class="sc-grid">
+          <div class="sc-card"><span class="keys"><span class="key-cap">Home</span> / <span class="key-cap">End</span></span><span class="sc-name">Qator boshi / oxiri</span><span class="sc-when">Kursor joriy qatorning boshiga yoki oxiriga o‘tadi.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">Home</span> / <span class="key-cap">End</span></span><span class="sc-name">Hujjat boshi / oxiri</span><span class="sc-when">Uzun hujjatda bir zumda boshiga yoki oxiriga o‘tish.</span></div>
+          <div class="sc-card"><span class="keys"><span class="key-cap">Ctrl</span><span class="plus">+</span><span class="key-cap">←</span> / <span class="key-cap">→</span></span><span class="sc-name">So‘zma-so‘z o‘tish</span><span class="sc-when">Kursor bitta so‘z chapga yoki o‘ngga sakraydi.</span></div>
+        </div>
+      </section>
+
+      <!-- ==================== 9-QISM: AMALIY TOPSHIRIQ ==================== -->
+      <section id="sec-practice" class="section-block">
+        <div class="section-head">
+          <span class="section-num">8-Qism • Kompyuterda bajariladi</span>
+          <h2 class="section-title">Amaliy topshiriq: Word’da ma’lumotnoma tayyorlash</h2>
+          <p class="section-desc">Topshiriqni haqiqiy Word dasturida bajaring. Har bir qadamni bajarib, belgini qo‘yib boring — natija shu qurilmada eslab qolinadi.</p>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <div class="task-progress-row">
+              <div class="goal-progress"><i id="task-bar"></i></div>
+              <span id="task-count">0 / 8</span>
+            </div>
+            <ol class="task-steps" id="task-steps">
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Word’ni ishga tushiring</strong><span class="key-cap">Win</span> + <span class="key-cap">R</span> → <code>winword</code> → <span class="key-cap">Enter</span>, so‘ng <strong>Yangi hujjat</strong> ni tanlang.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Sahifa maydonlarini sozlang</strong><strong>Maket</strong> → <strong>Maydonlar</strong> → <strong>Maxsus maydonlar</strong>: chap 3 sm, o‘ng 1,5 sm, yuqori va pastki 2 sm.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Shriftni tanlang</strong><strong>Bosh sahifa</strong> → <strong>Shrift</strong>: Times New Roman, 14 pt.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Namunadagi matnni tering</strong>Ism-familiya o‘rniga o‘zingiznikini yozing. Enter’ni faqat abzats oxirida bosing.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Formatlang</strong>Sarlavha — qalin va markazda (<span class="key-cap">Ctrl</span> + <span class="key-cap">B</span>, <span class="key-cap">Ctrl</span> + <span class="key-cap">E</span>). Matn — ikki tomonga (<span class="key-cap">Ctrl</span> + <span class="key-cap">J</span>), interval 1,5 (<span class="key-cap">Ctrl</span> + <span class="key-cap">5</span>).</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Yashirin belgilarni tekshiring</strong><strong>¶</strong> tugmasini bosib, ortiqcha probel va Enter’larni o‘chiring.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>Saqlang</strong><span class="key-cap">Ctrl</span> + <span class="key-cap">S</span> → 7-darsda yaratilgan <code>Hamshira_ishi</code> papkasi → nom: <code>Familiya_Malumotnoma</code> → turi: <code>.docx</code>.</span></label></li>
+              <li><label class="task-step"><input type="checkbox"><span class="task-body"><strong>PDF nusxasini yarating</strong><span class="key-cap">F12</span> → fayl turi: <strong>PDF</strong> → Saqlash. So‘ng <span class="key-cap">Ctrl</span> + <span class="key-cap">P</span> bilan oldindan ko‘ring va hujjatni yoping (<span class="key-cap">Ctrl</span> + <span class="key-cap">W</span>).</span></label></li>
+            </ol>
+          </div>
+
+          <div>
+            <div class="sample-doc">
+              <h5>MA’LUMOTNOMA</h5>
+              <p>Ushbu ma’lumotnoma “Hamshiralik ishi” yo‘nalishi 1-kurs talabasi <strong>[Familiya Ism Otasining ismi]</strong>ga berildi. U 2026-yil 1-sentyabrdan buyon texnikumda kunduzgi ta’lim shaklida o‘qiydi.</p>
+              <p>Ma’lumotnoma talab qilingan joyga taqdim etish uchun berildi.</p>
+              <p class="sign"><span>Bo‘lim mudiri:</span><span>__________ (imzo)</span></p>
+            </div>
+            <div class="callout warn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span><strong>Qizil to‘lqinli chiziqlar</strong> — Word imlo xatosi deb hisoblagan so‘zlar. O‘zbek tilidagi matnda ular hamma vaqt ham xato emas: Word o‘zbek tilini har doim ham tanimaydi. So‘zni o‘zingiz tekshiring.</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Hamshira uchun eslatma
+        </h3>
+        <div class="grid-2">
+          <div class="concept-card">
+            <h3>Qilish kerak</h3>
+            <ul class="check-list">
+              <li>Hujjatni ishlash davomida tez-tez saqlash (<span class="key-cap">Ctrl</span> + <span class="key-cap">S</span>).</li>
+              <li>Fayl nomiga bemor familiyasi va sanani yozish: <code>Aliyev_2026-10-01.docx</code>.</li>
+              <li>Tayyor hujjatni boshqalarga PDF ko‘rinishida yuborish.</li>
+              <li>Kompyuterdan uzoqlashganda ekranni qulflash: <span class="key-cap">Win</span> + <span class="key-cap">L</span>.</li>
+            </ul>
+          </div>
+          <div class="concept-card">
+            <h3>Qilish mumkin emas</h3>
+            <ul class="check-list cross">
+              <li>Matnni probellar bilan surib, markazga keltirish.</li>
+              <li>Ko‘p Enter bosib, keyingi sahifaga o‘tish.</li>
+              <li>Bemor ma’lumotlari yozilgan hujjatni begona kompyuter yoki fleshkada qoldirish.</li>
+              <li>Hujjatni saqlamasdan Word’ni yopish.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 10-QISM: NAZORAT SAVOLLARI (FAQAT O'QITUVCHI) ==================== -->
+      <section id="sec-qa" class="section-block teacher-only" style="margin-bottom: 1rem;">
+        <div class="section-head">
+          <span class="section-num">9-Qism • Faqat o‘qituvchi</span>
+          <h2 class="section-title">Nazorat savollari va javoblari</h2>
+          <p class="section-desc">Savol ustiga bosing, javobi ochiladi. Avval javobni o‘zingiz eslashga harakat qiling, so‘ng tekshiring.</p>
+        </div>
+
+        <div class="qa-toolbar">
+          <span class="qa-count" id="qa-count">25 ta savol</span>
+          <button type="button" class="nav-btn" id="qa-toggle" onclick="toggleAllAnswers()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span>Barcha javoblarni ochish</span>
+          </button>
+        </div>
+
+        <div class="qa-list" id="qa-list"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong>Shahrisabz Tibbiyot Texnikumi</strong> — Tibbiyotda axborot texnologiyalari fani
+        </div>
+        <div>
+          <span>100% Offline rejim • 8-Dars</span> •
+          <a href="../index.html">Mundarija</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Jonli sana (hero va muqova)
+    (function () {
+      var now = new Date();
+      var months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentyabr','oktyabr','noyabr','dekabr'];
+      var days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+      var str = now.getFullYear() + '-yil ' + now.getDate() + '-' + months[now.getMonth()] + ', ' + days[now.getDay()];
+      var ids = ['hero-live-date', 'splash-date-text'];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el) el.textContent = str;
+      }
+    })();
+
+    // Muqovadan darsga o'tish
+    function scrollToLesson() {
+      var target = document.getElementById('lesson-start');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ======================================================================
+    // WORD OYNASI SIMULYATORI
+    // ======================================================================
+    (function () {
+      // Oyna qismlari (sariq raqamlar)
+      var PARTS = {
+        title: {
+          n: 1, name: 'Sarlavha qatori', alt: 'Title bar / Строка заголовка',
+          body: '<p>Eng yuqoridagi qator. O‘rtada <strong>hujjat nomi</strong> yoziladi (yangi hujjat — “Hujjat1”), o‘ngda oynani yig‘ish, kattalashtirish va yopish tugmalari.</p>' +
+                '<p>Chap tomonda <strong>tezkor kirish paneli</strong> (Quick Access Toolbar) joylashgan:</p>' +
+                '<ul><li>disket — <strong>Saqlash</strong> (Ctrl + S);</li><li>orqaga strelka — <strong>Bekor qilish</strong> (Ctrl + Z);</li><li>oldinga strelka — <strong>Qaytarish</strong> (Ctrl + Y).</li></ul>'
+        },
+        tabs: {
+          n: 2, name: 'Lenta yorliqlari', alt: 'Tabs / Вкладки',
+          body: '<p>Lenta bir nechta <strong>yorliqqa</strong> (bo‘limga) bo‘lingan: Fayl, Bosh sahifa, Qo‘yish, Dizayn, Maket, Havolalar, Pochta jo‘natmalari, Taqriz, Ko‘rinish.</p>' +
+                '<p>Yorliq bosilganda lentadagi buyruqlar almashadi. <strong>Yuqoridagi yorliqlarni bosib ko‘ring.</strong></p>'
+        },
+        ribbon: {
+          n: 3, name: 'Lenta (buyruqlar paneli)', alt: 'Ribbon / Лента',
+          body: '<p>Barcha buyruqlar shu yerda tugmalar ko‘rinishida joylashgan. Buyruqlar ma’nosiga ko‘ra <strong>guruhlarga</strong> ajratilgan, guruh nomi uning pastida yoziladi (Bufer, Shrift, Abzats, Uslublar…).</p>' +
+                '<p>Lenta 2007-yilgi Word’dan beri ishlatiladi. Uni <strong>Ctrl + F1</strong> bilan yashirish yoki qayta ko‘rsatish mumkin.</p>'
+        },
+        ruler: {
+          n: 4, name: 'Chizg‘ich', alt: 'Ruler / Линейка',
+          body: '<p>Sahifa kengligini santimetrlarda ko‘rsatadi. Undagi kichik uchburchak belgilarni surib <strong>abzats chekinishlari</strong> va <strong>xatboshi</strong> o‘rnatiladi, kulrang qismlar esa sahifa <strong>maydonlarini</strong> bildiradi.</p>' +
+                '<p>Chizg‘ich ko‘rinmasa: <strong>Ko‘rinish</strong> → <strong>Chizg‘ich</strong> belgisini qo‘ying.</p>'
+        },
+        page: {
+          n: 5, name: 'Ish maydoni (hujjat sahifasi)', alt: 'Document area / Рабочая область',
+          body: '<p>Oq varaq — matn yoziladigan joy. Miltillab turgan vertikal chiziq — <strong>kursor</strong>: harf aynan shu yerga yoziladi.</p>' +
+                '<p>O‘ng tomonda (va kerak bo‘lsa pastda) <strong>aylantirish chizig‘i</strong> bor: uzun hujjatni yuqori-pastga surish uchun. Sichqoncha g‘ildiragi ham shu vazifani bajaradi.</p>'
+        },
+        status: {
+          n: 6, name: 'Holat qatori', alt: 'Status bar / Строка состояния',
+          body: '<p>Eng pastki qator. Unda hujjat haqida ma’lumot ko‘rinadi:</p>' +
+                '<ul><li>joriy <strong>sahifa raqami</strong> va jami sahifalar soni;</li><li><strong>so‘zlar soni</strong>;</li><li>imlo tekshiriladigan <strong>til</strong>;</li><li>o‘ng tomonda — <strong>ko‘rinish rejimlari</strong> va <strong>masshtab</strong> (zoom) surgichi. Masshtab: Ctrl + sichqoncha g‘ildiragi.</li></ul>'
+        }
+      };
+
+      // Lenta yorliqlari va ulardagi guruhlar
+      var TABS = [
+        { id: 'file', name: 'Fayl', alt: 'File / Файл', file: true,
+          desc: 'Hujjatning o‘zi bilan ishlash menyusi (Backstage): yaratish, ochish, saqlash, chop etish, yopish va Word parametrlari. Bu yorliq lenta emas, butun oynani egallaydigan menyu ochadi.',
+          groups: [{ g: 'Fayl menyusi', items: ['Ma’lumot', 'Yaratish', 'Ochish', 'Saqlash', 'Boshqacha saqlash', 'Chop etish', 'Eksport (PDF)', 'Yopish', 'Parametrlar'] }] },
+        { id: 'home', name: 'Bosh sahifa', alt: 'Home / Главная',
+          desc: 'Eng ko‘p ishlatiladigan yorliq. Word ochilganda aynan shu yorliq faol bo‘ladi.',
+          groups: [
+            { g: 'Bufer', items: ['Qo‘yish', 'Kesish', 'Nusxalash', 'Format namunasi'] },
+            { g: 'Shrift', items: ['Times New Roman', '14', 'Q', 'K', 'T', 'Rang', 'Marker'] },
+            { g: 'Abzats', items: ['• Ro‘yxat', '1. Ro‘yxat', 'Tekislash', 'Interval', '¶'] },
+            { g: 'Uslublar', items: ['Oddiy', 'Sarlavha 1', 'Sarlavha 2'] },
+            { g: 'Tahrirlash', items: ['Topish', 'Almashtirish'] }
+          ] },
+        { id: 'insert', name: 'Qo‘yish', alt: 'Insert / Вставка',
+          desc: 'Hujjatga turli obyektlarni joylash: jadval, rasm, shakl, SmartArt, diagramma, havola, sahifa raqami, belgi (Ω) va formula.',
+          groups: [
+            { g: 'Sahifalar', items: ['Titul sahifa', 'Bo‘sh sahifa', 'Sahifa uzilishi'] },
+            { g: 'Jadvallar', items: ['Jadval'] },
+            { g: 'Tasvirlar', items: ['Rasmlar', 'Shakllar', 'SmartArt', 'Diagramma'] },
+            { g: 'Kolontitullar', items: ['Yuqori', 'Pastki', 'Sahifa raqami'] },
+            { g: 'Belgilar', items: ['Formula', 'Ω Belgi'] }
+          ] },
+        { id: 'design', name: 'Dizayn', alt: 'Design / Конструктор',
+          desc: 'Butun hujjatning umumiy ko‘rinishi: mavzular, rang va shrift to‘plamlari, suv belgisi, sahifa rangi va sahifa chegaralari (ramka).',
+          groups: [
+            { g: 'Hujjatni formatlash', items: ['Mavzular', 'Ranglar', 'Shriftlar'] },
+            { g: 'Sahifa foni', items: ['Suv belgisi', 'Sahifa rangi', 'Sahifa chegaralari'] }
+          ] },
+        { id: 'layout', name: 'Maket', alt: 'Layout / Макет',
+          desc: 'Sahifa parametrlari: maydonlar, yo‘nalish (kitob yoki albom), qog‘oz o‘lchami (A4), ustunlar, uzilishlar, abzats chekinishi va intervallari.',
+          groups: [
+            { g: 'Sahifa parametrlari', items: ['Maydonlar', 'Yo‘nalish', 'O‘lcham', 'Ustunlar', 'Uzilishlar'] },
+            { g: 'Abzats', items: ['Chekinish', 'Interval'] },
+            { g: 'Joylashtirish', items: ['Matn bilan o‘rash', 'Tekislash'] }
+          ] },
+        { id: 'refs', name: 'Havolalar', alt: 'References / Ссылки',
+          desc: 'Katta hujjatlar uchun: avtomatik mundarija, sahifa osti izohlari, adabiyotlar ro‘yxati va rasmlarga nom qo‘yish.',
+          groups: [
+            { g: 'Mundarija', items: ['Mundarija', 'Jadvalni yangilash'] },
+            { g: 'Izohlar', items: ['Sahifa osti izohi'] },
+            { g: 'Iqtiboslar', items: ['Iqtibos', 'Adabiyotlar'] }
+          ] },
+        { id: 'mail', name: 'Pochta jo‘natmalari', alt: 'Mailings / Рассылки',
+          desc: 'Bitta namunadan ko‘p xat yoki taklifnoma yaratish (birlashtirish). Masalan, 30 ta bemorga ismi yozilgan eslatma.',
+          groups: [
+            { g: 'Yaratish', items: ['Konvertlar', 'Yorliqlar'] },
+            { g: 'Birlashtirish', items: ['Qabul qiluvchilar', 'Maydon qo‘yish', 'Tugatish'] }
+          ] },
+        { id: 'review', name: 'Taqriz', alt: 'Review / Рецензирование',
+          desc: 'Hujjatni tekshirish: imlo (F7), so‘zlar soni, tarjima, izohlar qoldirish va kim nimani o‘zgartirganini kuzatish.',
+          groups: [
+            { g: 'Imlo', items: ['Imlo va grammatika', 'So‘zlar soni'] },
+            { g: 'Til', items: ['Tarjima', 'Til'] },
+            { g: 'Izohlar', items: ['Izoh yaratish'] },
+            { g: 'Kuzatish', items: ['Tuzatishlarni kuzatish', 'Qabul qilish'] },
+            { g: 'Himoya', items: ['Tahrirni cheklash'] }
+          ] },
+        { id: 'view', name: 'Ko‘rinish', alt: 'View / Вид',
+          desc: 'Hujjatni ekranda qanday ko‘rish: o‘qish rejimi, sahifa belgisi, chizg‘ich, navigatsiya paneli va masshtab.',
+          groups: [
+            { g: 'Ko‘rinishlar', items: ['O‘qish rejimi', 'Sahifa belgisi', 'Veb-hujjat'] },
+            { g: 'Ko‘rsatish', items: ['Chizg‘ich', 'To‘r chiziqlari', 'Navigatsiya'] },
+            { g: 'Masshtab', items: ['Masshtab', '100%', 'Bir sahifa'] }
+          ] }
+      ];
+
+      var ww = document.getElementById('ww');
+      if (!ww) return;
+      var tabsEl = document.getElementById('ww-tabs');
+      var ribbonEl = document.getElementById('ww-ribbon');
+      var legendEl = document.getElementById('ww-legend');
+      var infoTag = document.getElementById('ww-info-tag');
+      var infoTitle = document.getElementById('ww-info-title');
+      var infoAlt = document.getElementById('ww-info-alt');
+      var infoBody = document.getElementById('ww-info-body');
+
+      function esc(s) {
+        return String(s).replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+
+      // Yorliqlar qatori
+      var tabsHtml = '';
+      TABS.forEach(function (t) {
+        tabsHtml += '<button type="button" role="tab" class="ww-tab' + (t.file ? ' file-tab' : '') + '" data-tab="' + t.id + '">' + esc(t.name) + '</button>';
+      });
+      tabsEl.innerHTML = tabsHtml;
+
+      function renderRibbon(tab) {
+        var html = '';
+        tab.groups.forEach(function (gr) {
+          html += '<div class="rb-group"><div class="rb-items">';
+          gr.items.forEach(function (it) { html += '<span class="rb-btn">' + esc(it) + '</span>'; });
+          html += '</div><div class="rb-name">' + esc(gr.g) + '</div></div>';
+        });
+        ribbonEl.innerHTML = html;
+        var btns = tabsEl.querySelectorAll('.ww-tab');
+        for (var i = 0; i < btns.length; i++) {
+          var on = btns[i].getAttribute('data-tab') === tab.id;
+          btns[i].classList.toggle('active', on);
+          btns[i].setAttribute('aria-selected', on ? 'true' : 'false');
+        }
+      }
+
+      function markPart(key) {
+        var parts = ww.querySelectorAll('.ww-part');
+        for (var i = 0; i < parts.length; i++) {
+          parts[i].classList.toggle('active', parts[i].getAttribute('data-part') === key);
+        }
+        var lb = legendEl.querySelectorAll('button');
+        for (var j = 0; j < lb.length; j++) {
+          lb[j].classList.toggle('active', lb[j].getAttribute('data-pin') === key);
+        }
+      }
+
+      function showPart(key) {
+        var p = PARTS[key];
+        infoTag.textContent = p.n + '-qism';
+        infoTitle.textContent = p.name;
+        infoAlt.textContent = p.alt;
+        infoBody.innerHTML = p.body;
+        markPart(key);
+      }
+
+      function showTab(tab) {
+        renderRibbon(tab);
+        infoTag.textContent = 'Yorliq';
+        infoTitle.textContent = '“' + tab.name + '” yorlig‘i';
+        infoAlt.textContent = tab.alt;
+        var groups = tab.groups.map(function (g) { return '<li><strong>' + esc(g.g) + '</strong>: ' + esc(g.items.join(', ')) + '</li>'; }).join('');
+        infoBody.innerHTML = '<p>' + esc(tab.desc) + '</p><ul>' + groups + '</ul>';
+        markPart('ribbon');
+      }
+
+      // Qismlar ro'yxati (ma'lumot panelining pastida)
+      var legendHtml = '';
+      Object.keys(PARTS).forEach(function (k) {
+        legendHtml += '<button type="button" data-pin="' + k + '">' + PARTS[k].n + '. ' + esc(PARTS[k].name.split(' (')[0]) + '</button>';
+      });
+      legendEl.innerHTML = legendHtml;
+
+      document.addEventListener('click', function (e) {
+        var p = e.target.closest('[data-pin]');
+        if (p && (ww.contains(p) || legendEl.contains(p))) {
+          showPart(p.getAttribute('data-pin'));
+          return;
+        }
+        var t = e.target.closest('.ww-tab');
+        if (t && tabsEl.contains(t)) {
+          var id = t.getAttribute('data-tab');
+          for (var i = 0; i < TABS.length; i++) if (TABS[i].id === id) showTab(TABS[i]);
+        }
+      });
+
+      renderRibbon(TABS[1]);
+      showPart('title');
+    })();
+
+    // ======================================================================
+    // FORMATLASH TRENAJYORI
+    // ======================================================================
+    (function () {
+      var editor = document.getElementById('fmt-editor');
+      if (!editor) return;
+      var els = { title: document.getElementById('fmt-title'), body: document.getElementById('fmt-body') };
+      var fontSel = document.getElementById('fmt-font');
+      var sizeSel = document.getElementById('fmt-size');
+      var spacingSel = document.getElementById('fmt-spacing');
+      var goalList = document.getElementById('goal-list');
+      var goalBar = document.getElementById('goal-bar');
+      var goalStatus = document.getElementById('goal-status');
+
+      function initial() {
+        return { font: 'Calibri', size: 11, b: false, i: false, u: false, align: 'left', spacing: 1 };
+      }
+
+      var state = { title: initial(), body: initial() };
+      var target = 'title';
+
+      var GOALS = [
+        { head: 'Sarlavha' },
+        { t: 'title', text: 'Shrift: Times New Roman', ok: function (s) { return s.font === 'Times New Roman'; } },
+        { t: 'title', text: 'O‘lcham: 14 pt', ok: function (s) { return s.size === 14; } },
+        { t: 'title', text: 'Qalin (Ctrl + B)', ok: function (s) { return s.b; } },
+        { t: 'title', text: 'Markazga tekislash (Ctrl + E)', ok: function (s) { return s.align === 'center'; } },
+        { head: 'Asosiy matn' },
+        { t: 'body', text: 'Shrift: Times New Roman', ok: function (s) { return s.font === 'Times New Roman'; } },
+        { t: 'body', text: 'O‘lcham: 14 pt', ok: function (s) { return s.size === 14; } },
+        { t: 'body', text: 'Ikki tomonga tekislash (Ctrl + J)', ok: function (s) { return s.align === 'justify'; } },
+        { t: 'body', text: 'Qatorlar oralig‘i: 1,5', ok: function (s) { return s.spacing === 1.5; } }
+      ];
+
+      function apply() {
+        ['title', 'body'].forEach(function (k) {
+          var s = state[k], el = els[k];
+          el.style.fontFamily = '"' + s.font + '", serif';
+          el.style.fontSize = (s.size * 1.2) + 'px';
+          el.style.fontWeight = s.b ? '700' : '400';
+          el.style.fontStyle = s.i ? 'italic' : 'normal';
+          el.style.textDecoration = s.u ? 'underline' : 'none';
+          el.style.textAlign = s.align;
+          el.style.lineHeight = String(s.spacing * 1.2);
+          el.classList.toggle('selected', k === target);
+        });
+
+        var cur = state[target];
+        fontSel.value = cur.font;
+        sizeSel.value = String(cur.size);
+        spacingSel.value = String(cur.spacing);
+        var cmdBtns = editor.querySelectorAll('[data-cmd]');
+        for (var i = 0; i < cmdBtns.length; i++) cmdBtns[i].classList.toggle('on', !!cur[cmdBtns[i].getAttribute('data-cmd')]);
+        var alBtns = editor.querySelectorAll('[data-align]');
+        for (var j = 0; j < alBtns.length; j++) alBtns[j].classList.toggle('on', alBtns[j].getAttribute('data-align') === cur.align);
+        var tBtns = editor.querySelectorAll('[data-target]');
+        for (var m = 0; m < tBtns.length; m++) tBtns[m].classList.toggle('active', tBtns[m].getAttribute('data-target') === target);
+
+        // Talablarni tekshirish
+        var html = '', done = 0, total = 0;
+        GOALS.forEach(function (g) {
+          if (g.head) { html += '<li class="gl-head">' + g.head + '</li>'; return; }
+          total++;
+          var ok = g.ok(state[g.t]);
+          if (ok) done++;
+          html += '<li class="' + (ok ? 'done' : '') + '">' + g.text + '</li>';
+        });
+        goalList.innerHTML = html;
+        goalBar.style.width = Math.round(done / total * 100) + '%';
+
+        var extra = state.title.i || state.title.u || state.body.i || state.body.u || state.body.b;
+        goalStatus.classList.remove('win');
+        if (done === total && !extra) {
+          goalStatus.textContent = 'Barakalla! Ma’lumotnoma talab bo‘yicha to‘g‘ri formatlandi.';
+          goalStatus.classList.add('win');
+        } else if (done === total) {
+          goalStatus.textContent = done + ' / ' + total + ' — lekin ortiqcha formatlash bor: matndagi qalin, kursiv yoki tagiga chizishni olib tashlang.';
+        } else {
+          goalStatus.textContent = done + ' / ' + total + ' talab bajarildi';
+        }
+      }
+
+      function select(k) { target = k; apply(); }
+
+      editor.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-el]');
+        if (el) { select(el.getAttribute('data-el')); return; }
+        var tb = e.target.closest('[data-target]');
+        if (tb) { select(tb.getAttribute('data-target')); return; }
+        var cb = e.target.closest('[data-cmd]');
+        if (cb) { var c = cb.getAttribute('data-cmd'); state[target][c] = !state[target][c]; apply(); return; }
+        var ab = e.target.closest('[data-align]');
+        if (ab) { state[target].align = ab.getAttribute('data-align'); apply(); }
+      });
+
+      fontSel.addEventListener('change', function () { state[target].font = fontSel.value; apply(); });
+      sizeSel.addEventListener('change', function () { state[target].size = parseInt(sizeSel.value, 10); apply(); });
+      spacingSel.addEventListener('change', function () { state[target].spacing = parseFloat(spacingSel.value); apply(); });
+
+      document.getElementById('fmt-reset').addEventListener('click', function () {
+        state = { title: initial(), body: initial() };
+        target = 'title';
+        apply();
+      });
+
+      // Word'dagi kabi tezkor tugmalar (trenajyor ichida)
+      var KEYS = {
+        b: function (s) { s.b = !s.b; },
+        i: function (s) { s.i = !s.i; },
+        u: function (s) { s.u = !s.u; },
+        l: function (s) { s.align = 'left'; },
+        e: function (s) { s.align = 'center'; },
+        r: function (s) { s.align = 'right'; },
+        j: function (s) { s.align = 'justify'; },
+        '1': function (s) { s.spacing = 1; },
+        '5': function (s) { s.spacing = 1.5; },
+        '2': function (s) { s.spacing = 2; }
+      };
+
+      editor.addEventListener('keydown', function (e) {
+        if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey) return;
+        var fn = KEYS[e.key.toLowerCase()];
+        if (!fn) return;
+        e.preventDefault();
+        fn(state[target]);
+        apply();
+      });
+
+      apply();
+    })();
+
+    // ======================================================================
+    // AMALIY TOPSHIRIQ (belgilar shu brauzerda eslab qolinadi)
+    // ======================================================================
+    (function () {
+      var KEY = 'tat-dars8-topshiriq';
+      var list = document.getElementById('task-steps');
+      if (!list) return;
+      var boxes = list.querySelectorAll('input[type="checkbox"]');
+      var bar = document.getElementById('task-bar');
+      var count = document.getElementById('task-count');
+
+      var saved = [];
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '[]') || []; } catch (e) { saved = []; }
+
+      function update() {
+        var done = 0, arr = [];
+        for (var i = 0; i < boxes.length; i++) {
+          var on = boxes[i].checked;
+          if (on) done++;
+          arr.push(on ? 1 : 0);
+          boxes[i].closest('.task-step').classList.toggle('done', on);
+        }
+        bar.style.width = Math.round(done / boxes.length * 100) + '%';
+        count.textContent = done + ' / ' + boxes.length;
+        try { localStorage.setItem(KEY, JSON.stringify(arr)); } catch (e) {}
+      }
+
+      for (var i = 0; i < boxes.length; i++) {
+        boxes[i].checked = !!saved[i];
+        boxes[i].addEventListener('change', update);
+      }
+      update();
+    })();
+
+    // ======================================================================
+    // NAZORAT SAVOLLARI VA JAVOBLARI (faqat o'qituvchi rolida ko'rinadi)
+    // ======================================================================
+    var QA = [
+      ['Matn muharriri va matn protsessorining farqi nimada?',
+       '<p><strong>Matn muharriri</strong> (masalan, Bloknot) faqat matnni kiritish va tahrirlash imkonini beradi, formatlash yo‘q. <strong>Matn protsessori</strong> (Word) matnni to‘liq formatlash, jadval, rasm qo‘shish, sahifani sozlash imkoniyatiga ega.</p>'],
+      ['Word’ni ishga tushirishning qanday usullari bor?',
+       '<ul><li>Start menyusi → Word (yoki Win bosib “word” deb yozish);</li><li><span class="key-cap">Win</span> + <span class="key-cap">R</span> → <code>winword</code> → Enter;</li><li>ish stoli yoki vazifalar panelidagi yorliq;</li><li>tayyor <code>.docx</code> faylni 2 marta bosish.</li></ul>'],
+      ['Word oynasi qanday asosiy qismlardan iborat?',
+       '<p>Sarlavha qatori (tezkor kirish paneli bilan), lenta yorliqlari, lenta (buyruqlar guruhlari bilan), chizg‘ich, ish maydoni (hujjat sahifasi va kursor), aylantirish chiziqlari va holat qatori (sahifa, so‘zlar soni, til, masshtab).</p>'],
+      ['Lenta (Ribbon) nima? Unda qanday yorliqlar bor?',
+       '<p>Lenta — Word buyruqlari tugmalar ko‘rinishida joylashgan panel. U yorliqlarga bo‘lingan: <strong>Fayl, Bosh sahifa, Qo‘yish, Dizayn, Maket, Havolalar, Pochta jo‘natmalari, Taqriz, Ko‘rinish</strong>. Har bir yorliqdagi buyruqlar guruhlarga ajratilgan. Lentani <span class="key-cap">Ctrl</span> + <span class="key-cap">F1</span> bilan yashirish mumkin.</p>'],
+      ['Tezkor kirish paneli nima va unda qaysi tugmalar bor?',
+       '<p>Sarlavha qatorining chap tomonidagi kichik panel. Unda doimo kerak bo‘ladigan buyruqlar bor: <strong>Saqlash</strong>, <strong>Bekor qilish</strong> (Ctrl + Z) va <strong>Qaytarish</strong> (Ctrl + Y). Unga o‘zingizga kerakli buyruqlarni ham qo‘shish mumkin.</p>'],
+      ['Holat qatorida qanday ma’lumotlar ko‘rsatiladi?',
+       '<p>Joriy sahifa raqami va jami sahifalar soni, hujjatdagi so‘zlar soni, imlo tekshirish tili, ko‘rinish rejimlari tugmalari va masshtab (zoom) surgichi.</p>'],
+      ['Yangi hujjat qanday yaratiladi?',
+       '<p><strong>Fayl</strong> → <strong>Yaratish</strong> → <strong>Yangi hujjat</strong> yoki <span class="key-cap">Ctrl</span> + <span class="key-cap">N</span>. Word endi ochilganda esa bosh oynada “Yangi hujjat” tanlanadi.</p>'],
+      ['“Saqlash” va “Boshqacha saqlash” buyruqlarining farqi nima?',
+       '<p><strong>Saqlash</strong> (<span class="key-cap">Ctrl</span> + <span class="key-cap">S</span>) — o‘zgarishlar shu faylning o‘ziga yoziladi. <strong>Boshqacha saqlash</strong> (<span class="key-cap">F12</span>) — hujjat yangi nom, boshqa joy yoki boshqa formatda yangi fayl sifatida saqlanadi, eski fayl o‘zgarmay qoladi. Yangi hujjatda birinchi marta “Saqlash” bosilganda ham “Boshqacha saqlash” oynasi chiqadi.</p>'],
+      ['Word hujjatini qaysi formatlarda saqlash mumkin?',
+       '<p><code>.docx</code> — asosiy format; <code>.doc</code> — eski Word 97–2003 uchun; <code>.pdf</code> — yuborish va chop etish uchun; <code>.dotx</code> — shablon; <code>.rtf</code> — boshqa dasturlar bilan moslik; <code>.txt</code> — faqat matn (formatlash yo‘qoladi).</p>'],
+      ['Hujjatni PDF formatida saqlash nima uchun kerak?',
+       '<p>PDF hujjat har qanday kompyuter va telefonda bir xil ko‘rinadi, shriftlar va joylashuv buzilmaydi, uni oson o‘zgartirib bo‘lmaydi. Shuning uchun tayyor hisobot va ma’lumotnomalar PDF ko‘rinishida yuboriladi. Saqlash: <span class="key-cap">F12</span> → fayl turi PDF.</p>'],
+      ['Hujjat qanday chop etiladi?',
+       '<p><strong>Fayl</strong> → <strong>Chop etish</strong> yoki <span class="key-cap">Ctrl</span> + <span class="key-cap">P</span>. Printer, nusxalar soni va sahifalar tanlanadi, o‘ng tomonda oldindan ko‘rish chiqadi, so‘ng <strong>Chop etish</strong> tugmasi bosiladi.</p>'],
+      ['Kursor nima?',
+       '<p>Kursor — ish maydonida miltillab turuvchi vertikal chiziq. U matn qayerga yozilishini ko‘rsatadi. Kursor sichqoncha bilan bosib yoki strelka, <span class="key-cap">Home</span>, <span class="key-cap">End</span> tugmalari bilan siljitiladi.</p>'],
+      ['Matn kiritishning asosiy qoidalarini ayting.',
+       '<ul><li><span class="key-cap">Enter</span> faqat abzats oxirida bosiladi;</li><li>so‘zlar orasida bitta probel;</li><li>tinish belgisidan oldin probel qo‘yilmaydi, keyin qo‘yiladi;</li><li>qavs va qo‘shtirnoq ichida chetga probel qo‘yilmaydi;</li><li>matn probellar bilan surilmaydi — tekislash tugmalari ishlatiladi.</li></ul>'],
+      ['Backspace va Delete tugmalarining farqi nima?',
+       '<p><span class="key-cap">Backspace</span> kursordan <strong>chapdagi</strong> belgini, <span class="key-cap">Delete</span> esa kursordan <strong>o‘ngdagi</strong> belgini o‘chiradi. Matn belgilangan bo‘lsa, ikkalasi ham belgilangan qismni o‘chiradi.</p>'],
+      ['Matnni belgilashning qanday usullari bor?',
+       '<ul><li>so‘z ustida 2 marta bosish — so‘z; 3 marta — abzats;</li><li>sichqonchani bosib turib sudrash;</li><li>chap maydonda bosish — qator;</li><li><span class="key-cap">Shift</span> + strelkalar;</li><li><span class="key-cap">Ctrl</span> + <span class="key-cap">A</span> — butun hujjat.</li></ul>'],
+      ['Shrift formatlashga nimalar kiradi?',
+       '<p>Shrift turi (Times New Roman, Arial…), o‘lchami (pt), qalin (<span class="key-cap">Ctrl</span> + <span class="key-cap">B</span>), kursiv (<span class="key-cap">Ctrl</span> + <span class="key-cap">I</span>), tagiga chizilgan (<span class="key-cap">Ctrl</span> + <span class="key-cap">U</span>), matn rangi va belgilash (marker) rangi, registr.</p>'],
+      ['Abzatsni tekislashning qanday turlari bor? Ularning tezkor tugmalari qanday?',
+       '<p>Chapga — <span class="key-cap">Ctrl</span> + <span class="key-cap">L</span>, markazga — <span class="key-cap">Ctrl</span> + <span class="key-cap">E</span>, o‘ngga — <span class="key-cap">Ctrl</span> + <span class="key-cap">R</span>, ikki tomonga (kenglik bo‘yicha) — <span class="key-cap">Ctrl</span> + <span class="key-cap">J</span>. Rasmiy hujjat matni odatda ikki tomonga, sarlavha esa markazga tekislanadi.</p>'],
+      ['Rasmiy hujjatlarga odatda qanday talablar qo‘yiladi?',
+       '<p>Shrift — Times New Roman, 14 pt; qatorlar oralig‘i — 1,0 yoki 1,5; matn ikki tomonga tekislanadi; xatboshi — 1,25 sm; maydonlar: chap 3 sm, o‘ng 1,5 sm, yuqori va pastki 2 sm. Aniq talablarni tashkilot belgilaydi.</p>'],
+      ['Yashirin belgilar (¶) nima va ular nima uchun kerak?',
+       '<p>Bosh sahifa → Abzats guruhidagi <strong>¶</strong> tugmasi (yoki <span class="key-cap">Ctrl</span> + <span class="key-cap">Shift</span> + <span class="key-cap">8</span>) bosilganda probellar nuqta (·), Enter esa ¶ belgisi bilan ko‘rinadi. Ular ortiqcha probel va bo‘sh qatorlarni topish uchun kerak. Bu belgilar chop etilmaydi.</p>']
+    ];
+
+    (function () {
+      var list = document.getElementById('qa-list');
+      if (!list) return;
+      var chevron = '<svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+      var html = '';
+      for (var i = 0; i < QA.length; i++) {
+        html += '<details class="qa-item"><summary><span class="qa-num">' + (i + 1) + '</span><span class="qa-q">' + QA[i][0] + '</span>' + chevron + '</summary>' +
+                '<div class="qa-a"><span class="qa-label">Javob</span>' + QA[i][1] + '</div></details>';
+      }
+      list.innerHTML = html;
+      var el = document.getElementById('qa-count');
+      if (el) el.textContent = QA.length + ' ta savol';
+    })();
+
+    // Barcha javoblarni ochish / yopish
+    function toggleAllAnswers() {
+      var items = document.querySelectorAll('#qa-list .qa-item');
+      var anyClosed = false;
+      for (var i = 0; i < items.length; i++) {
+        if (!items[i].open) { anyClosed = true; break; }
+      }
+      for (var j = 0; j < items.length; j++) items[j].open = anyClosed;
+      var label = document.querySelector('#qa-toggle span');
+      if (label) label.textContent = anyClosed ? 'Barcha javoblarni yopish' : 'Barcha javoblarni ochish';
+    }
+  </script>
+</body>
+</html>

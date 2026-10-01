@@ -412,6 +412,13 @@
       --atmosphere-bg: radial-gradient(circle at 75% 20%, #fcd34d 0%, #d97706 45%, #422006 85%);
     }
 
+    /* Card 8: Word Royal Blue Glow */
+    .theme-word {
+      --glow-color: #7cc0f5;
+      --glow-aura: rgba(65, 165, 238, 0.5);
+      --atmosphere-bg: radial-gradient(circle at 75% 20%, #41a5ee 0%, #185abd 45%, #0b1e45 85%);
+    }
+
     /* Upcoming Card State */
     .upcoming-wrapper .taskello-card {
       cursor: default;
@@ -2217,7 +2224,7 @@
         <button type="button" class="kmr-header-btn" onclick="openKmrModal()" title="KMR 2026–2027 jadvalini ochish">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span>KMR Jadvali</span>
-          <span class="kmr-header-count" id="kmr-header-badge">0/160</span>
+          <span class="kmr-header-count" id="kmr-header-badge">0/35</span>
         </button>
         <button type="button" class="role-pill" id="role-pill" onclick="openRoleGate()" title="Rolni almashtirish">
           <span class="role-dot"></span>
@@ -2237,7 +2244,7 @@
           </div>
           <div class="kmr-launcher-text">
             <h3>Taqvim-Mavzular Rejasi (KMR • 2026–2027)</h3>
-            <p>32 ta mavzu • Guruhlar: 26-02, 26-03, 26-04, 26-05, 26-06 • <strong id="kmr-launcher-stat" style="color:#34d399;">Bajarildi: 0 / 160 (0%)</strong></p>
+            <p><span id="kmr-launcher-topics-count">7 ta mavzu</span> • Guruhlar: 26-02, 26-03, 26-04, 26-05, 26-06 • <strong id="kmr-launcher-stat" style="color:#34d399;">Bajarildi: 0 / 35 (0%)</strong></p>
           </div>
         </div>
         <button type="button" class="kmr-launcher-btn">
@@ -2265,8 +2272,8 @@
       <div class="kmr-modal-window" onclick="event.stopPropagation()">
         <div class="kmr-modal-header">
           <div class="kmr-modal-title-wrap">
-            <h3>KMR 2026–2027 • Darslar jadvali</h3>
-            <span id="kmr-overall-count">0 / 160 (0%)</span>
+            <h3>KMR 2026–2027 • Darslar jadvali (<span id="kmr-modal-topics-num">7</span> ta mavzu)</h3>
+            <span id="kmr-overall-count">0 / 35 (0%)</span>
           </div>
           <button type="button" class="kmr-modal-close" onclick="closeKmrModal()" title="Yopish">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -2298,11 +2305,11 @@
               <tr>
                 <th class="kmr-col-num">№</th>
                 <th>Mavzu nomi</th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-02</span><span class="kmr-th-group-sub" id="th-sub-26-02">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-03</span><span class="kmr-th-group-sub" id="th-sub-26-03">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-04</span><span class="kmr-th-group-sub" id="th-sub-26-04">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-05</span><span class="kmr-th-group-sub" id="th-sub-26-05">0/32</span></div></th>
-                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-06</span><span class="kmr-th-group-sub" id="th-sub-26-06">0/32</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-02</span><span class="kmr-th-group-sub" id="th-sub-26-02">0/7</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-03</span><span class="kmr-th-group-sub" id="th-sub-26-03">0/7</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-04</span><span class="kmr-th-group-sub" id="th-sub-26-04">0/7</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-05</span><span class="kmr-th-group-sub" id="th-sub-26-05">0/7</span></div></th>
+                <th class="col-group"><div class="kmr-th-group-badge"><span class="kmr-th-group-code">26-06</span><span class="kmr-th-group-sub" id="th-sub-26-06">0/7</span></div></th>
               </tr>
             </thead>
             <tbody id="kmr-tbody"></tbody>
@@ -2338,7 +2345,7 @@
     <main class="cards-grid" id="cards-container">
 
       <!-- ==================== CARD 1 (1-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-blue">
+      <div class="taskello-card-wrapper theme-blue" data-kmr-id="1" data-kmr-type="Nazariy" data-kmr-title="Axborot haqida tushuncha. Axborot shakllari va kompyuter asoslari.">
         <a href="./1. Axborot/offline/1-dars.html" class="taskello-card" data-search="1-dars axborot haqida tushuncha axborot texnologiyalari kompyuter qismlari klaviatura sichqoncha ish stoli test">
           <!-- Atmosphere with Glowing Bokeh -->
           <div class="card-atmosphere">
@@ -2381,7 +2388,7 @@
       </div>
 
       <!-- ==================== CARD 2 (2-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-purple">
+      <div class="taskello-card-wrapper theme-purple" data-kmr-id="2" data-kmr-type="Nazariy" data-kmr-title="Sanoq sistemalari & Xavfsizlik. 2 lik va 10 lik sanoq, texnika xavfsizligi.">
         <a href="./2. Sanoq sistemalari/offline/2-dars.html" class="taskello-card" data-search="2-dars sanoq sistemalari axborot turlari texnika xavfsizligi ikkilik onlik sanoq test">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2419,7 +2426,7 @@
       </div>
 
       <!-- ==================== CARD 3 (3-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-teal">
+      <div class="taskello-card-wrapper theme-teal" data-kmr-id="3" data-kmr-type="Nazariy" data-kmr-title="Ishchi o‘rinlari & O‘lchov birliklari. AIO, o‘lchov birliklari va EMR karta.">
         <a href="javascript:void(0)" onclick="openLesson3Modal(event)" class="taskello-card" data-search="3-dars tibbiyotda ishchi o'rinlarini avtomatlashtirish aio emr elektron tibbiy karta o'lchov birliklari bit bayt kb mb gb tb parol qoidalari tibbiy sir windows papka fayl amaliyot test admin talaba profili">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2457,7 +2464,7 @@
       </div>
 
       <!-- ==================== CARD 4 (4-DARS) ==================== -->
-      <div class="taskello-card-wrapper theme-sapphire">
+      <div class="taskello-card-wrapper theme-sapphire" data-kmr-id="4" data-kmr-type="Amaliy" data-kmr-title="Klaviatura va sichqoncha asoslari. Klaviatura zonalari, tez yozish va sichqoncha.">
         <a href="./4-dars/offline/4-dars.html" class="taskello-card" data-search="4-dars klaviatura va sichqoncha asoslari klaviatura zonalari 10 barmoq tez yozish teztype hotkeys tezkor tugmalar sichqoncha texnikasi dpi sensor kursor viktorina trenajyor">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2495,7 +2502,7 @@
       </div>
 
       <!-- ==================== CARD 5 (5-DARS: KOMPYUTER VA UNING QURILMALARI) ==================== -->
-      <div class="taskello-card-wrapper theme-flame">
+      <div class="taskello-card-wrapper theme-flame" data-kmr-id="5" data-kmr-type="Amaliy" data-kmr-title="Kompyuter va uning qurilmalari. Asosiy, qo‘shimcha qurilmalar va xotira (HDD & SSD).">
         <a href="./5. Kompyuter va uning qurilmalari/dars.html" class="taskello-card" data-search="5-dars kompyuter va uning qurilmalari protsessor cpu ram operativ xotira ona plata videokarta gpu quvvat bloki kuler korpus monitor klaviatura sichqoncha printer skaner hdd ssd xotira test">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2533,7 +2540,7 @@
       </div>
 
       <!-- ==================== CARD 6 (6-DARS: WINDOWS OPERATSION TIZIMI) ==================== -->
-      <div class="taskello-card-wrapper theme-indigo">
+      <div class="taskello-card-wrapper theme-indigo" data-kmr-id="6" data-kmr-type="Amaliy" data-kmr-title="Windows operatsion tizimi. OT tushunchasi, dasturlar logolari, fayllar & trenajyor.">
         <a href="./6. Windows operatsion tizimi/dars.html" class="taskello-card" data-search="6-dars windows operatsion tizim ot dasturlar logo dasturiy taminot tizimli amaliy utilita fayl papka kengaytma trenajyor test">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2571,7 +2578,7 @@
       </div>
 
       <!-- ==================== CARD 7 (7-DARS: FAYLLAR, PAPKALAR VA ARXIVLASH) ==================== -->
-      <div class="taskello-card-wrapper theme-amber">
+      <div class="taskello-card-wrapper theme-amber" data-kmr-id="7" data-kmr-type="Amaliy" data-kmr-title="Fayllar, papkalar va arxivlash. Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z.">
         <a href="./7. Fayllar va arxivlash/dars.html" class="taskello-card" data-search="7-dars fayl papka katalog arxiv arxivlash zip rar 7z winrar 7-zip siqish nusxalash kochirish ochirish savat tezkor tugmalar ctrl shift n zaxira nusxa backup">
           <div class="card-atmosphere">
             <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2603,6 +2610,120 @@
                 <span class="folder-unit-label">Dars</span>
               </div>
               <div class="folder-stat-right">20 Test</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 8a (8-DARS, 1-MAVZU: MS OFFICE DASTURLARI) ==================== -->
+      <div class="taskello-card-wrapper theme-word" data-kmr-skip="1">
+        <a href="./8. MS Office va Word/office.html" class="taskello-card" data-search="8-dars microsoft office paket dasturlar word excel powerpoint outlook access onenote teams onedrive versiya microsoft 365 docx xlsx pptx libreoffice">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>8-Dars • 1-mavzu
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Microsoft Office dasturlari</div>
+              <div class="folder-subtitle">Paket tarkibi, versiyalar, umumiy oyna va mashq</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">08</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">8 ta dastur &amp; Mashq</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD 8b (8-DARS, 2-MAVZU: WORD MATN MUHARRIRI) ==================== -->
+      <div class="taskello-card-wrapper theme-word" data-kmr-id="8" data-kmr-type="Amaliy" data-kmr-title="MS Office va Word bilan tanishuv. Office dasturlari, Word oynasi, matnni formatlash.">
+        <a href="./8. MS Office va Word/dars.html" class="taskello-card" data-search="8-dars microsoft office ms word matn muharriri excel powerpoint outlook access lenta ribbon hujjat saqlash docx pdf formatlash shrift abzats tekislash tezkor tugmalar ctrl s">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>8-Dars • 2-mavzu
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">Word matn muharriri</div>
+              <div class="folder-subtitle">Word oynasi, hujjat bilan ishlash, formatlash</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">08</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">Trenajyor &amp; Amaliyot</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ==================== CARD W (MS WORD: 6 TA AMALIY MASHG‘ULOT) ==================== -->
+      <div class="taskello-card-wrapper theme-word" data-kmr-skip="1">
+        <a href="./WORD 6 darsi/index.html" class="taskello-card" data-search="word amaliy mashg'ulot 6 dars ariza jadval tablitsa rasm shakl ro'yxat almashtirish ustun kolonki wordart ramka pdf chop etish printer tarqatma">
+          <div class="card-atmosphere">
+            <svg width="100%" height="100%" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="70" r="75" fill="#41a5ee" fill-opacity="0.45" filter="blur(25px)"/>
+              <circle cx="170" cy="40" r="50" fill="#2b7cd3" fill-opacity="0.35" filter="blur(18px)"/>
+              <circle cx="90" cy="90" r="40" fill="#185abd" fill-opacity="0.4" filter="blur(14px)"/>
+            </svg>
+          </div>
+
+          <div class="card-top-tag">
+            Tibbiyotda AT<br>Word amaliyoti
+          </div>
+
+          <div class="folder-sheet-svg-wrap">
+            <svg class="folder-sheet-svg" viewBox="0 0 340 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,116 L 125,116 C 136,116 142,122 147,129 C 152,136 158,138 170,138 L 340,138 L 340,340 L 0,340 Z" fill="#141518"/>
+            </svg>
+          </div>
+
+          <div class="card-folder-content">
+            <div class="folder-upper-block">
+              <div class="folder-main-title">MS Word amaliy mashg‘ulotlari</div>
+              <div class="folder-subtitle">Ariza, jadval, rasm, ro‘yxat, ustunlar, PDF va chop etish</div>
+            </div>
+
+            <div class="folder-bottom-row">
+              <div class="folder-stat-left">
+                <span class="folder-big-number">6×</span>
+                <span class="folder-unit-label">Dars</span>
+              </div>
+              <div class="folder-stat-right">6 ta tarqatma PDF</div>
             </div>
           </div>
         </a>
@@ -2722,39 +2843,50 @@
     var currentKmrFilter = 'all';
 
     var KMR_TOPICS = [
-      { id: 1, title: 'Axborot haqida tushuncha. Axborot texnologiyalari haqida ma’lumot.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 2, title: 'Axborot turlari. Sanoq sistemalari. Texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 3, title: 'Tibbiyotda ishchi o‘rinlarini avtomatlashtirishda va tibbiy masalalarini yechishda axborot texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 4, title: 'Tibbiyot masalalarini yechishda axborot-kommunikatsiya texnologiyalari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 5, title: 'Tibbiyot masalalarini yechishda axborot texnologiyalar dasturiy ta’minoti.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 6, title: 'Windows operatsion tizimi tarixi va unda ishlash asoslari.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 7, title: 'Tibbiyot axborotlarini arxivlash usullari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 8, title: 'Tibbiyotda matnli axborotlarni qayta ishlash texnologiyasi.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 9, title: 'Microsoft Word matn muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 10, title: 'Matn muharriri yordamida jadvallar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 11, title: 'Avtomatlashtirilgan vositalar va shablonlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 12, title: 'Tibbiyotda jadval ma’lumotlarini qayta ishlash texnologiyasi.', hours: 2, type: 'Nazariy', mt: 0, control: 'ON' },
-      { id: 13, title: 'Microsoft Excel jadval muharririning keng imkoniyatlaridan foydalanish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 14, title: 'Microsoft Excel jadval muharririda formulalar, standart funksiyalar va ulardan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 15, title: 'Diagrammalar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 16, title: 'Tibbiyot ma’lumotlarini taqdim etish uchun taqdimotlar yaratish.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 17, title: 'MS PowerPoint dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 18, title: 'Kompyuterda grafik obyektlar bilan ishlash.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
-      { id: 19, title: 'Photoshop dasturidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 20, title: 'Tibbiyot axborot tizimlari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
-      { id: 21, title: 'MS Access dasturiy ta’minotidan foydalanish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 22, title: 'Ma’lumotlar bazasiga ma’lumotlar kiritish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 23, title: 'Kompyuter tarmoqlari va uning turlari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 24, title: 'Internet.', hours: 2, type: 'Amaliy', mt: 0, control: 'ON' },
-      { id: 25, title: 'Internet tarmog‘ida foydalanuvchilar registratsiyasi.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 26, title: 'Web saytlar yaratishga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 27, title: 'Web-sahifalar yaratish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 28, title: 'Web-sahifalar yaratishda matnlar, grafiklar va jadvallar ustida ishlash.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 29, title: 'Tibbiyotda elektron va masofaviy o‘qitish.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 30, title: 'Zoom dasturi va unda videokonferensiya tashkil qilish.', hours: 2, type: 'Amaliy', mt: 0, control: 'JN' },
-      { id: 31, title: 'Tibbiyot tizimlarining axborot xavfsizligini ta’minlash asoslari.', hours: 2, type: 'Amaliy', mt: 2, control: 'JN' },
-      { id: 32, title: 'Teletibbiyot. Teletibbiyot tizimlari. Teletibbiyotga yo‘naltirilgan dasturiy ta’minotlar.', hours: 2, type: 'Amaliy', mt: 0, control: 'YN' }
+      { id: 1, title: 'Axborot haqida tushuncha. Axborot shakllari va kompyuter asoslari.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 2, title: 'Sanoq sistemalari & Xavfsizlik. 2 lik va 10 lik sanoq, texnika xavfsizligi.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 3, title: 'Ishchi o‘rinlari & O‘lchov birliklari. AIO, o‘lchov birliklari va EMR karta.', hours: 2, type: 'Nazariy', mt: 1, control: 'JN' },
+      { id: 4, title: 'Klaviatura va sichqoncha asoslari. Klaviatura zonalari, tez yozish va sichqoncha.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 5, title: 'Kompyuter va uning qurilmalari. Asosiy, qo‘shimcha qurilmalar va xotira (HDD & SSD).', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 6, title: 'Windows operatsion tizimi. OT tushunchasi, dasturlar logolari, fayllar & trenajyor.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 7, title: 'Fayllar, papkalar va arxivlash. Papka yaratish, tezkor tugmalar, ZIP / RAR / 7z.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' },
+      { id: 8, title: 'MS Office va Word bilan tanishuv. Office dasturlari, Word oynasi, matnni formatlash.', hours: 2, type: 'Amaliy', mt: 1, control: 'JN' }
     ];
+
+    /**
+     * Mundarijadagi dars kartalaridan (#cards-container) KMR mavzularini
+     * dinamik ravishda yig'adi. Har gal yangi mavzu qo'shilganda (masalan, 8, 9, 10-darslar),
+     * KMR jadvali va barcha hisoblagichlar avtomatik yangilanib boraveradi.
+     */
+    function syncKmrTopicsWithCards() {
+      var cards = document.querySelectorAll('#cards-container .taskello-card-wrapper');
+      if (cards && cards.length > 0) {
+        var list = [];
+        cards.forEach(function(card, idx) {
+          // Bitta KMR mavzusining qo'shimcha kartasi (masalan, 8-darsning 1-mavzusi) jadvalga alohida qator bo'lmaydi
+          if (card.hasAttribute('data-kmr-skip')) return;
+          var numEl = card.querySelector('.folder-big-number');
+          var parsedId = numEl ? parseInt(numEl.textContent.trim(), 10) : (idx + 1);
+          var id = parseInt(card.getAttribute('data-kmr-id') || parsedId, 10);
+
+          var customTitle = card.getAttribute('data-kmr-title');
+          var titleEl = card.querySelector('.folder-main-title');
+          var subEl = card.querySelector('.folder-subtitle');
+          var mainTitle = titleEl ? titleEl.textContent.trim() : ('Dars ' + id);
+          var subtitle = subEl ? subEl.textContent.trim() : '';
+          var title = customTitle || (subtitle ? (mainTitle + '. ' + subtitle + '.') : mainTitle);
+
+          var type = card.getAttribute('data-kmr-type') || (id <= 3 ? 'Nazariy' : 'Amaliy');
+          var hours = parseInt(card.getAttribute('data-kmr-hours') || '2', 10);
+          var control = card.getAttribute('data-kmr-control') || 'JN';
+
+          list.push({ id: id, title: title, hours: hours, type: type, control: control });
+        });
+        if (list.length > 0) {
+          KMR_TOPICS = list;
+        }
+      }
+    }
 
     function closeRoleGate() {
       var gate = document.getElementById('role-gate');
@@ -2888,13 +3020,14 @@
 
     function updateKmrCounters() {
       if (!Array.isArray(KMR_TOPICS) || !Array.isArray(KMR_GROUPS)) return;
+      var totalTopics = KMR_TOPICS.length;
       var state = loadKmrState();
       var totalChecks = 0;
-      var maxChecks = KMR_TOPICS.length * KMR_GROUPS.length; // 160
+      var maxChecks = totalTopics * KMR_GROUPS.length;
       var groupCounts = {};
       KMR_GROUPS.forEach(function(g) { groupCounts[g] = 0; });
 
-      for (var i = 0; i < KMR_TOPICS.length; i++) {
+      for (var i = 0; i < totalTopics; i++) {
         var tid = KMR_TOPICS[i].id;
         for (var j = 0; j < KMR_GROUPS.length; j++) {
           var g = KMR_GROUPS[j];
@@ -2905,12 +3038,18 @@
         }
       }
 
-      var overallPct = Math.round((totalChecks / maxChecks) * 100);
+      var overallPct = maxChecks > 0 ? Math.round((totalChecks / maxChecks) * 100) : 0;
       var countEl = document.getElementById('kmr-overall-count');
       if (countEl) countEl.textContent = totalChecks + ' / ' + maxChecks + ' (' + overallPct + '%)';
 
       var headerBadge = document.getElementById('kmr-header-badge');
       if (headerBadge) headerBadge.textContent = totalChecks + '/' + maxChecks;
+
+      var launcherTopics = document.getElementById('kmr-launcher-topics-count');
+      if (launcherTopics) launcherTopics.textContent = totalTopics + ' ta mavzu';
+
+      var modalTopicsNum = document.getElementById('kmr-modal-topics-num');
+      if (modalTopicsNum) modalTopicsNum.textContent = totalTopics;
 
       var launcherStat = document.getElementById('kmr-launcher-stat');
       if (launcherStat) launcherStat.textContent = 'Bajarildi: ' + totalChecks + ' / ' + maxChecks + ' (' + overallPct + '%)';
@@ -2920,9 +3059,9 @@
         var gc = KMR_GROUPS[m];
         var cnt = groupCounts[gc] || 0;
         var thSub = document.getElementById('th-sub-' + gc);
-        if (thSub) thSub.textContent = cnt + '/32';
+        if (thSub) thSub.textContent = cnt + '/' + totalTopics;
 
-        chipsHtml += '<span class="kmr-grp-chip"><b>' + gc + ':</b> <i>' + cnt + '/32</i></span>';
+        chipsHtml += '<span class="kmr-grp-chip"><b>' + gc + ':</b> <i>' + cnt + '/' + totalTopics + '</i></span>';
       }
       var groupsGrid = document.getElementById('kmr-groups-summary');
       if (groupsGrid) groupsGrid.innerHTML = chipsHtml;
@@ -3072,6 +3211,7 @@
     }
 
     function initKmrTracker() {
+      syncKmrTopicsWithCards();
       renderKmrAll();
     }
 
@@ -3121,6 +3261,8 @@
     }
 
     function openKmrModal() {
+      syncKmrTopicsWithCards();
+      renderKmrAll();
       var modal = document.getElementById('kmr-modal');
       if (modal) {
         modal.classList.add('active');

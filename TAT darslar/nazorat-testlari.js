@@ -53,5 +53,23 @@ window.NAZORAT_TESTLARI = [
     nom: 'Fayllar, papkalar va arxivlash — Test (20 ta savol)',
     havola: './7. Fayllar va arxivlash/test.html',
     izoh: 'F.I.O va guruh bilan; 30 talik bankdan tasodifiy 20 ta savol. Natija Telegram botga keladi.'
+  },
+  {
+    dars: '8-dars',
+    nom: 'Microsoft Office dasturlari — Darslik (1-mavzu)',
+    havola: './8. MS Office va Word/office.html',
+    izoh: 'Office paketi tarkibi, versiyalar, umumiy oyna, “Qaysi dasturni tanlaysiz?” mashqi va 15 ta nazorat savoli.'
+  },
+  {
+    dars: '8-dars',
+    nom: 'Word matn muharriri bilan tanishuv — Darslik (2-mavzu)',
+    havola: './8. MS Office va Word/dars.html',
+    izoh: 'Word oynasi simulyatori, formatlash trenajyori, amaliy topshiriq va 19 ta nazorat savoli.'
+  },
+  {
+    dars: 'Word amaliyoti',
+    nom: 'MS Word — 6 ta amaliy mashg‘ulot va tarqatmalar',
+    havola: './WORD 6 darsi/index.html',
+    izoh: 'Ariza, jadval, rasm, ro‘yxat, ustunlar, PDF/chop etish. Har bir darsga A4 tarqatma PDF; barchasi bitta PDF da ham bor.'
   }
 ];

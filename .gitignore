@@ -35,3 +35,8 @@ desktop.ini
 .env.local
 .env.*.local
 
+
+# Python kesh va Word darslari generatorining oraliq fayllari
+__pycache__/
+**/__pycache__/
+TAT darslar/WORD 6 darsi/_build/out/
