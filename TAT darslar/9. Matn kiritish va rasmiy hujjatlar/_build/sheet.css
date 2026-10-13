@@ -1,0 +1,280 @@
+    /* ====================================================================== */
+    /* A4 VARAQ (tarqatma PDF va sahifadagi namuna uchun umumiy)              */
+    /* Barcha o'lchamlar haqiqiy: sm va pt — Word'dagi bilan bir xil          */
+    /* ====================================================================== */
+    .sheet {
+      width: 21cm;
+      height: 29.7cm;
+      background: #ffffff;
+      color: #000000;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14pt;
+      line-height: 1.32;
+      text-align: left;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet * { box-sizing: border-box; }
+    .sheet p, .sheet h1, .sheet h2, .sheet h3, .sheet ul, .sheet ol { margin: 0; padding: 0; }
+    .sheet strong { color: inherit; }
+
+    /* Namuna varag'i: maydonlar chap 3, o'ng 1,5, yuqori 2, pastki 2 sm */
+    .sheet.doc { padding: 2cm 1.5cm 2cm 3cm; }
+    .sheet.doc .r { text-align: right; }
+    .sheet.doc .c { text-align: center; }
+    .sheet.doc .j { text-align: justify; }
+    .sheet.doc .b { font-weight: 700; }
+    .sheet.doc .ind { text-indent: 1.25cm; }
+    .sheet.doc .gap { height: 1.32em; }
+    .sheet.doc.ls15 { line-height: 1.72; }
+    .sheet.doc.ls15 .gap { height: 1.72em; }
+
+    /* 1-dars: ariza */
+    .sheet .sign-row { display: flex; justify-content: space-between; }
+
+    /* 2-dars: jadval */
+    .sheet table.w-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12pt;
+      line-height: 1.2;
+    }
+
+    .sheet table.w-table td, .sheet table.w-table th {
+      border: 0.75pt solid #000000;
+      padding: 4pt 5pt;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: 400;
+    }
+
+    .sheet table.w-table .w-head { background: #bfbfbf; font-weight: 700; padding: 7pt 5pt; }
+    .sheet table.w-table .w-cols td { font-weight: 700; }
+
+    /* 3-dars: shakl va rasm */
+    .sheet .w-shape {
+      background: #2f5597;
+      border: 1pt solid #1f3864;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 20pt;
+      height: 2.2cm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 0.6cm;
+    }
+
+    .sheet .w-pic {
+      float: left;
+      width: 5cm;
+      height: 5cm;
+      margin: 0.1cm 0.4cm 0.2cm 0;
+      background: linear-gradient(160deg, #deebf7 0%, #bdd7ee 100%);
+      border: 0.75pt solid #9dc3e6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2cm;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 9pt;
+      color: #1f3864;
+      font-weight: 700;
+    }
+
+    /* 4-dars: ro'yxatlar */
+    .sheet ol.w-num { list-style: none; counter-reset: wn; }
+    .sheet ol.w-num > li { counter-increment: wn; position: relative; padding-left: 1.27cm; }
+    .sheet ol.w-num > li::before { content: counter(wn) "."; position: absolute; left: 0.63cm; font-weight: 700; }
+    .sheet ol.w-num > li > span { font-weight: 700; }
+    .sheet ul.w-bul { list-style: none; }
+    .sheet ul.w-bul > li { position: relative; padding-left: 0.63cm; text-align: justify; }
+    .sheet ul.w-bul > li::before { content: "•"; position: absolute; left: 0; }
+    .sheet .page-tag {
+      position: absolute;
+      right: 1.5cm;
+      bottom: 1cm;
+      font-size: 10pt;
+      color: #7f7f7f;
+    }
+
+    /* 5-dars: ramka, WordArt, ustunlar */
+    .sheet .w-frame {
+      position: absolute;
+      inset: 24pt;
+      border: 1.5pt solid #1f3864;
+      pointer-events: none;
+    }
+
+    .sheet .w-art {
+      text-align: center;
+      font-family: "Arial Black", Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 24pt;
+      line-height: 1.2;
+      color: #2e75b6;
+      -webkit-text-stroke: 0.6pt #1f3864;
+      text-shadow: 2pt 2pt 0 #bdd7ee;
+      margin-bottom: 0.7cm;
+    }
+
+    .sheet .w-cols2 {
+      column-count: 2;
+      column-gap: 1.25cm;
+      column-rule: 0.75pt solid #000000;
+      text-align: justify;
+    }
+
+    .sheet .w-cols2 p { text-indent: 1.25cm; }
+
+    /* ====================================================================== */
+    /* TOPSHIRIQ VARAG'I (tarqatmaning 1-beti)                                */
+    /* ====================================================================== */
+    .sheet.info {
+      padding: 1.4cm 1.6cm 1.2cm 1.6cm;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.42;
+      color: #111111;
+    }
+
+    .info-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 0.5cm;
+      border-bottom: 2pt solid #185abd;
+      padding-bottom: 0.2cm;
+      font-size: 9pt;
+      color: #444444;
+    }
+
+    .info-top b { color: #185abd; font-size: 10pt; }
+
+    .info-num {
+      background: #185abd;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 11pt;
+      padding: 0.08cm 0.35cm;
+      border-radius: 4pt;
+      white-space: nowrap;
+    }
+
+    .info-fio {
+      display: flex;
+      gap: 0.5cm;
+      margin: 0.35cm 0 0.4cm 0;
+      font-size: 10pt;
+    }
+
+    .info-fio span { flex: 1; border-bottom: 0.75pt solid #000000; padding-bottom: 1pt; white-space: nowrap; }
+    .info-fio span:nth-child(2), .info-fio span:nth-child(3) { flex: 0.45; }
+
+    .sheet.info h1 {
+      font-size: 16pt;
+      line-height: 1.25;
+      color: #0b2a5b;
+      margin-bottom: 0.15cm;
+    }
+
+    .info-goal {
+      font-size: 10pt;
+      color: #333333;
+      margin-bottom: 0.3cm !important;
+    }
+
+    .sheet.info h2 {
+      font-size: 11pt;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #185abd;
+      margin: 0.35cm 0 0.15cm 0;
+      padding-bottom: 2pt;
+      border-bottom: 0.75pt solid #c9d6ea;
+    }
+
+    .sheet.info ol.steps { padding-left: 0.6cm; }
+    .sheet.info ol.steps li { margin-bottom: 0.08cm; padding-left: 0.1cm; }
+    .sheet.info ol.steps li::marker { font-weight: 700; color: #185abd; }
+
+    .sheet.info .key-cap {
+      display: inline-block;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0b2a5b;
+      background: #eef3fb;
+      border: 0.75pt solid #9fb4d6;
+      border-bottom-width: 1.5pt;
+      border-radius: 3pt;
+      padding: 0 3pt;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .sheet.info .path {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      color: #0b2a5b;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4cm;
+    }
+
+    .sheet.info table.kt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+    }
+
+    .sheet.info table.kt td {
+      border: 0.75pt solid #c9d6ea;
+      padding: 2.5pt 4pt;
+      vertical-align: top;
+    }
+
+    .sheet.info table.kt td:first-child { width: 36%; white-space: nowrap; }
+
+    .sheet.info ul.checks { list-style: none; }
+    .sheet.info ul.checks li { position: relative; padding-left: 0.55cm; margin-bottom: 0.06cm; }
+    .sheet.info ul.checks li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2.5pt;
+      width: 9pt;
+      height: 9pt;
+      border: 1pt solid #333333;
+      border-radius: 1.5pt;
+    }
+
+    .info-note {
+      margin-top: 0.35cm;
+      background: #eef3fb;
+      border-left: 3pt solid #185abd;
+      padding: 0.18cm 0.3cm;
+      font-size: 9.5pt;
+    }
+
+    .info-foot {
+      position: absolute;
+      left: 1.6cm;
+      right: 1.6cm;
+      bottom: 0.7cm;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8pt;
+      color: #777777;
+      border-top: 0.75pt solid #dddddd;
+      padding-top: 3pt;
+    }

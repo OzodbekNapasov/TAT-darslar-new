@@ -71,6 +71,11 @@
       "permanent": false
     },
     {
+      "source": "/9-dars",
+      "destination": "/TAT%20darslar/9.%20Matn%20kiritish%20va%20rasmiy%20hujjatlar/dars.html",
+      "permanent": false
+    },
+    {
       "source": "/word",
       "destination": "/TAT%20darslar/WORD%206%20darsi/index.html",
       "permanent": false

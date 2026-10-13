@@ -27,6 +27,7 @@ PAGES = [
     (7, 'splash', ['7. Fayllar va arxivlash/dars.html']),
     ('8o', 'splash', ['8. MS Office va Word/office.html']),
     ('8w', 'splash', ['8. MS Office va Word/dars.html']),
+    (9, 'splash', ['9. Matn kiritish va rasmiy hujjatlar/dars.html']),
 ]
 
 # Ranglar mundarijadagi dars kartalariga mos. Rasmlar 400x300 maydonda, matnsiz.
@@ -104,6 +105,20 @@ THEMES = {
         '<line x1="128" y1="146" x2="272" y2="146"/><line x1="128" y1="162" x2="272" y2="162"/><line x1="128" y1="178" x2="272" y2="178"/>'
         '<line x1="128" y1="194" x2="272" y2="194"/><line x1="128" y1="210" x2="220" y2="210"/>'
         '<path d="M226 202v16M221 202h10M221 218h10"/>')),
+    # 9-dars: matn kiritish va rasmiy hujjat — A4 varaq, belgilangan qator, kursor va ¶ belgisi
+    9: dict(acc='#2dd4bf', motif=(
+        '<rect x="70" y="20" width="190" height="262" rx="6"/>'
+        '<rect x="88" y="38" width="154" height="226" stroke-dasharray="6 6" stroke-width="1.5"/>'
+        '<line x1="170" y1="56" x2="232" y2="56"/><line x1="182" y1="70" x2="232" y2="70"/>'
+        '<line x1="140" y1="96" x2="190" y2="96" stroke-width="5"/>'
+        '<line x1="112" y1="120" x2="232" y2="120"/><line x1="98" y1="136" x2="232" y2="136"/>'
+        '<rect x="96" y="145" width="138" height="16" rx="3" fill-opacity="0.35"/>'
+        '<line x1="98" y1="153" x2="232" y2="153"/><line x1="98" y1="170" x2="190" y2="170"/>'
+        '<line x1="112" y1="190" x2="232" y2="190"/><line x1="98" y1="206" x2="170" y2="206"/>'
+        '<line x1="98" y1="236" x2="130" y2="236"/><line x1="182" y1="250" x2="232" y2="250"/>'
+        '<path d="M174 196v20M169 196h10M169 216h10"/>'
+        '<path d="M318 70h-14a18 18 0 0 0 0 36h14M318 70v110M334 70v110M300 70h40"/>'
+        '<path d="M290 214l18 44 6-18 18-6z" fill-opacity="0.35"/>')),
 }
 
 
